@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/testplop.wav-a6f00cb9e3d1233f69398202fa4c7491.sample"
+
+[deps]
+
+source_file="res://Musik/testplop.wav"
+dest_files=[ "res://.import/testplop.wav-a6f00cb9e3d1233f69398202fa4c7491.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
