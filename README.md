@@ -33,9 +33,9 @@ Hier gibt es zwei Möglichkeiten das Projekt zu importieren.
 1. Die wohl einfachste Methode ist nach dem Projekt zu scannen.
     Hierzu wählt man rechts den Punkt Scannen aus. Wählt dann einen Übergeordneten Ordner aus und klickt dann unten auf "Diesen Ordner auswählen". Danach erscheint das Projekt mit dem Namen "Bloinz 2D" und dem Projektpfad in der Projektliste.
 
-    ![Projekt_scannen](uploads/9c83019da2cf56576d0ea1c12d1841d2/Projekt_scannen.png)
+    ![Projekt_scannen](https://projectbase.medien.hs-duesseldorf.de/dahm/godot-tutorial/wikis/uploads/9c83019da2cf56576d0ea1c12d1841d2/Projekt_scannen.png)
 
 2. Bei der anderen Variante geht man über den Punkt "Import".
     Im Dialog klickt man auf die Schaltfläche "Durchsuchen" und navigiert zum Projektordner. Hier wählt man die Datei `project.godot`. Hat man alles richtig gemacht erscheint ein grüner Haken neben dem Pfad. Nach klick auf "Importieren & Bearbeiten" erscheint das Projekt in der Projektliste.
 
-    ![Projekt importieren](uploads/855679abd3110a953348c6aeeafc6ef8/Projekt_importieren.png)
+    ![Projekt importieren](https://projectbase.medien.hs-duesseldorf.de/dahm/godot-tutorial/wikis/uploads/9c83019da2cf56576d0ea1c12d1841d2/Projekt_scannen.png)
