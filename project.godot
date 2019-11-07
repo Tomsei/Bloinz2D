@@ -16,7 +16,13 @@ _global_script_class_icons={
 [application]
 
 config/name="Bloinz 2D"
+run/main_scene="res://Szenen/Spieloberflaeche.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=384
+window/size/height=512
 
 [rendering]
 
