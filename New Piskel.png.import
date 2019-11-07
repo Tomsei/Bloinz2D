@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/blob.png-0e120fb111676d7db8197c65bb8cdab4.stex"
+path="res://.import/New Piskel.png-4b57200a9b5d4d6f89cce1bdbbdb2eec.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Bilder/blob.png"
-dest_files=[ "res://.import/blob.png-0e120fb111676d7db8197c65bb8cdab4.stex" ]
+source_file="res://New Piskel.png"
+dest_files=[ "res://.import/New Piskel.png-4b57200a9b5d4d6f89cce1bdbbdb2eec.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

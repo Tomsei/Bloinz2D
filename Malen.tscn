@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Node2D.gd" type="Script" id=1]
+[ext_resource path="res://New Piskel.png" type="Texture" id=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 256, 0 )
+script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+visible = false
+margin_left = -0.195923
+margin_top = 1.02974
+margin_right = 63.8041
+margin_bottom = 65.0297
+rect_scale = Vector2( 8, 8 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 9.26749
+margin_top = 72.0804
+margin_right = 50.2675
+margin_bottom = 92.0804
+text = "save"
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 88.4705, 412.203 )
+texture = ExtResource( 2 )
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+margin_left = 11.3269
+margin_top = 109.15
+margin_right = 23.3269
+margin_bottom = 129.15
+
+[node name="Stift" type="Button" parent="."]
+margin_left = 9.26749
+margin_top = 43.2482
+margin_right = 46.2675
+margin_bottom = 63.2482
+text = "Stift"
+
+[node name="Linie" type="Button" parent="."]
+margin_left = 7.20804
+margin_top = 15.4458
+margin_right = 50.208
+margin_bottom = 35.4458
+text = "Linie"
+[connection signal="pressed" from="Button" to="Node2D" method="_on_Button_pressed"]
+[connection signal="popup_closed" from="ColorPickerButton" to="Node2D" method="_on_ColorPickerButton_popup_closed"]
+[connection signal="pressed" from="Stift" to="Node2D" method="_on_Stift_pressed"]
+[connection signal="pressed" from="Linie" to="Node2D" method="_on_Linie_pressed"]
