@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Skripte/Bewegung/Player.gd" type="Script" id=1]
+[ext_resource path="res://Szenen/Münze.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 20.0025, 20 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 9.59491, 10 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 220.504, 10 )
+
+[node name="Node" type="Node"]
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 229.977, 416.32 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="Player"]
+margin_left = -20.0716
+margin_top = -20.3978
+margin_right = 19.9284
+margin_bottom = 19.6022
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 1 )
+
+[node name="Münze" type="KinematicBody2D" parent="."]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Münze"]
+shape = SubResource( 2 )
+
+[node name="Münzen" type="ColorRect" parent="Münze"]
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+color = Color( 0.823529, 0.054902, 0.054902, 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 219.505, 612.626 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 3 )
