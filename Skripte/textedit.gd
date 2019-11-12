@@ -12,7 +12,7 @@ func _ready():
 
 # Die Funktion wird automatisch bei jedem Frameändern aufgerufen.
 func _process(delta):
-	#print("test1")
+	#print("juhu.")
 	pass
 
 # Lädt eine Datei und gibt den Text der Datei zurück.
