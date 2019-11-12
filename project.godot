@@ -21,11 +21,6 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=384
-window/size/height=512
-
-[display]
-
 window/size/width=440
 window/size/height=720
 
