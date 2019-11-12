@@ -9,7 +9,7 @@ var cur_tab = 0
 func _ready():
 	# Rufe die Funktion init_te auf.
 	init_te()
-
+	OS.set_window_size(Vector2(800,600))
 # Die Funktion wird automatisch bei jedem Frameändern aufgerufen.
 func _process(delta):
 	#print("juhu")
@@ -54,13 +54,13 @@ func save_te1():
 	save_file(te1.get_text(), "res://Skripte/textedit.gd")
 	print("speichern")
 	get_tree().change_scene("res://Szenen/Player.tscn")
-	print("wechsle")
+	OS.set_window_size(Vector2(440,720))
 
 # Verarbeite das Speichern des Inhalts von TextEdit2.
 func save_te2():
 	var label = get_node("Label")
 	label.set_text(te2.get_text())
-	("changed label")
+	print("changed label")
 
 # Wenn ein anderer Tab sichtbar wird, wird dieser in cur_tab gespeichert.
 func _on_TabContainer_tab_changed(tab):
