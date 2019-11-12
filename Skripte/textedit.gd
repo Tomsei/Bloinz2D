@@ -12,7 +12,7 @@ func _ready():
 
 # Die Funktion wird automatisch bei jedem Frameändern aufgerufen.
 func _process(delta):
-	#print("juhu.")
+	#print("juhu")
 	pass
 
 # Lädt eine Datei und gibt den Text der Datei zurück.
@@ -53,7 +53,8 @@ func _on_Button_button_up():
 func save_te1():
 	save_file(te1.get_text(), "res://Skripte/textedit.gd")
 	print("speichern")
-	get_tree().change_scene("res://Szenen/bufferscreen.tscn")
+	get_tree().change_scene("res://Szenen/Player.tscn")
+	print("wechsle")
 
 # Verarbeite das Speichern des Inhalts von TextEdit2.
 func save_te2():

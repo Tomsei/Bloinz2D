@@ -90,3 +90,5 @@ margin_bottom = 40.0
 text = "Malen"
 flat = true
 [connection signal="button_up" from="Menu/MenuIcon" to="Menu" method="_on_MenuIcon_button_up"]
+[connection signal="button_up" from="Menu/CodeEditor" to="Menu" method="_on_CodeEditor_button_up"]
+[connection signal="button_up" from="Menu/MalEditor" to="Menu" method="_on_MalEditor_button_up"]
