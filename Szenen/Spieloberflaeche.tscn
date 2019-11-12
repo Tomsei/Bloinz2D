@@ -1,144 +1,45 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Bilder/Hintergruende/HimmelVerlauf0.png" type="Texture" id=1]
-[ext_resource path="res://Bilder/Hintergruende/Boden.png" type="Texture" id=2]
-[ext_resource path="res://Bilder/Hintergruende/HimmelVerlauf1.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Hintergruende/HimmelVerlauf2.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Hintergruende/HimmelVerlauf3.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Hintergruende/HimmelVerlauf4.png" type="Texture" id=6]
-[ext_resource path="res://Bilder/Hintergruende/HimmelVerlauf5.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Hintergruende/HimmelVerlauf6.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin1.png" type="Texture" id=9]
-[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin2.png" type="Texture" id=10]
-[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin1.png" type="Texture" id=11]
-[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin2.png" type="Texture" id=12]
-[ext_resource path="res://Bilder/Standardspielfiguren/RandomCoin.png" type="Texture" id=13]
-[ext_resource path="res://Bilder/Standardspielfiguren/BlobGerade.png" type="Texture" id=14]
-[ext_resource path="res://Bilder/Standardspielfiguren/BlobSeitlich.png" type="Texture" id=15]
-
-[sub_resource type="TileSet" id=1]
-0/name = "HimmelVerlauf0.png 0"
-0/texture = ExtResource( 1 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 23, 27, 1, 1 )
-0/tile_mode = 0
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shapes = [  ]
-0/z_index = 0
-1/name = "Boden.png 1"
-1/texture = ExtResource( 2 )
-1/tex_offset = Vector2( 0, 0 )
-1/modulate = Color( 1, 1, 1, 1 )
-1/region = Rect2( 0, 0, 64, 64 )
-1/tile_mode = 0
-1/occluder_offset = Vector2( 0, 0 )
-1/navigation_offset = Vector2( 0, 0 )
-1/shapes = [  ]
-1/z_index = 0
-2/name = "HimmelVerlauf0.png 2"
-2/texture = ExtResource( 1 )
-2/tex_offset = Vector2( 0, 0 )
-2/modulate = Color( 1, 1, 1, 1 )
-2/region = Rect2( 0, 0, 64, 64 )
-2/tile_mode = 0
-2/occluder_offset = Vector2( 0, 0 )
-2/navigation_offset = Vector2( 0, 0 )
-2/shapes = [  ]
-2/z_index = 0
-3/name = "HimmelVerlauf1.png 3"
-3/texture = ExtResource( 3 )
-3/tex_offset = Vector2( 0, 0 )
-3/modulate = Color( 1, 1, 1, 1 )
-3/region = Rect2( 0, 0, 64, 64 )
-3/tile_mode = 0
-3/occluder_offset = Vector2( 0, 0 )
-3/navigation_offset = Vector2( 0, 0 )
-3/shapes = [  ]
-3/z_index = 0
-4/name = "HimmelVerlauf2.png 4"
-4/texture = ExtResource( 4 )
-4/tex_offset = Vector2( 0, 0 )
-4/modulate = Color( 1, 1, 1, 1 )
-4/region = Rect2( 0, 0, 64, 64 )
-4/tile_mode = 0
-4/occluder_offset = Vector2( 0, 0 )
-4/navigation_offset = Vector2( 0, 0 )
-4/shapes = [  ]
-4/z_index = 0
-5/name = "HimmelVerlauf3.png 5"
-5/texture = ExtResource( 5 )
-5/tex_offset = Vector2( 0, 0 )
-5/modulate = Color( 1, 1, 1, 1 )
-5/region = Rect2( 0, 0, 64, 64 )
-5/tile_mode = 0
-5/occluder_offset = Vector2( 0, 0 )
-5/navigation_offset = Vector2( 0, 0 )
-5/shapes = [  ]
-5/z_index = 0
-6/name = "HimmelVerlauf4.png 6"
-6/texture = ExtResource( 6 )
-6/tex_offset = Vector2( 0, 0 )
-6/modulate = Color( 1, 1, 1, 1 )
-6/region = Rect2( 0, 0, 64, 64 )
-6/tile_mode = 0
-6/occluder_offset = Vector2( 0, 0 )
-6/navigation_offset = Vector2( 0, 0 )
-6/shapes = [  ]
-6/z_index = 0
-7/name = "HimmelVerlauf5.png 7"
-7/texture = ExtResource( 7 )
-7/tex_offset = Vector2( 0, 0 )
-7/modulate = Color( 1, 1, 1, 1 )
-7/region = Rect2( 0, 0, 64, 64 )
-7/tile_mode = 0
-7/occluder_offset = Vector2( 0, 0 )
-7/navigation_offset = Vector2( 0, 0 )
-7/shapes = [  ]
-7/z_index = 0
-8/name = "HimmelVerlauf6.png 8"
-8/texture = ExtResource( 8 )
-8/tex_offset = Vector2( 0, 0 )
-8/modulate = Color( 1, 1, 1, 1 )
-8/region = Rect2( 0, 0, 64, 64 )
-8/tile_mode = 0
-8/occluder_offset = Vector2( 0, 0 )
-8/navigation_offset = Vector2( 0, 0 )
-8/shapes = [  ]
-8/z_index = 0
+[ext_resource path="res://Bilder/Hintergruende/Spieloberflaeche.tres" type="TileSet" id=1]
+[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin1.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin2.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin1.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin2.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Standardspielfiguren/RandomCoin.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/BlobGerade.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Standardspielfiguren/BlobSeitlich.png" type="Texture" id=8]
 
 [node name="Game" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = SubResource( 1 )
+tile_set = ExtResource( 1 )
 format = 1
 tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 65536, 3, 0, 65537, 3, 0, 65538, 3, 0, 65539, 3, 0, 65540, 3, 0, 65541, 3, 0, 131072, 4, 0, 131073, 4, 0, 131074, 4, 0, 131075, 4, 0, 131076, 4, 0, 131077, 4, 0, 131078, 0, 0, 131079, 0, 0, 196608, 5, 0, 196609, 5, 0, 196610, 5, 0, 196611, 5, 0, 196612, 5, 0, 196613, 5, 0, 196614, 0, 0, 196615, 0, 0, 262144, 6, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 327680, 7, 0, 327681, 7, 0, 327682, 7, 0, 327683, 7, 0, 327684, 7, 0, 327685, 7, 0, 393216, 8, 0, 393217, 8, 0, 393218, 8, 0, 393219, 8, 0, 393220, 8, 0, 393221, 8, 0, 458752, 1, 0, 458753, 1, 0, 458754, 1, 0, 458755, 1, 0, 458756, 1, 0, 458757, 1, 0 )
 
 [node name="BadCoin1" type="Sprite" parent="."]
 position = Vector2( 266.331, 188.211 )
-texture = ExtResource( 9 )
+texture = ExtResource( 2 )
 
 [node name="BadCoin2" type="Sprite" parent="."]
 position = Vector2( 146.299, 51.8883 )
-texture = ExtResource( 10 )
+texture = ExtResource( 3 )
 
 [node name="GoodCoin1" type="Sprite" parent="."]
 position = Vector2( 167.733, 258.516 )
-texture = ExtResource( 11 )
+texture = ExtResource( 4 )
 
 [node name="GoodCoin2" type="Sprite" parent="."]
 position = Vector2( 52.8447, 167.634 )
-texture = ExtResource( 12 )
+texture = ExtResource( 5 )
 
 [node name="RandomCoin" type="Sprite" parent="."]
 position = Vector2( 333.206, 54.4604 )
-texture = ExtResource( 13 )
+texture = ExtResource( 6 )
 
 [node name="BlobGerade" type="Sprite" parent="."]
 position = Vector2( 163.446, 424.846 )
-texture = ExtResource( 14 )
+texture = ExtResource( 7 )
 
 [node name="BlobSeitlich" type="Sprite" parent="."]
 position = Vector2( 69.9922, 425.704 )
-texture = ExtResource( 15 )
+texture = ExtResource( 8 )
