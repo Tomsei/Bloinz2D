@@ -17,7 +17,7 @@ func _ready():
 func _process(delta):
 	
 	fallen()
-	kollisionspruefung()
+	kollisionPruefung()
 	
 	move_and_slide(Bewegung, UP_Vektor)
 
@@ -36,6 +36,18 @@ func ZufallsPosition():
 
 
 #prüft auf eine Kollision und setzt Münze nach oben sofern eien Stattgefunden hatt
-func kollisionspruefung():
-	if is_on_floor():
-		ZufallsPosition()
+#Prüft welche Collision stattfinden
+func kollisionPruefung():
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		var kollisionObjekt = collision.collider.name
+		
+		print(kollisionObjekt)
+		
+		if kollisionObjekt == "Player":
+			print("Münze berührt den blob")
+			ZufallsPosition()
+		if kollisionObjekt == "BodenCollisionShape":
+			print("Münze berührt den Bode")
+			ZufallsPosition()
+			
