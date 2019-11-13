@@ -2,9 +2,9 @@ extends Node2D
 
 
 var array;
-var arraylength=128;
+var arraylength=64;
 var aktuelleFarbe;
-var modus;
+var modus = "Stift";
 var linienStart;
 var linienEnde;
 var bresenham;
@@ -21,72 +21,58 @@ func _draw():
 	for zeile in range(0, arraylength):
 		for spalte in range(0, arraylength):
 			if array[zeile][spalte] != null:
-				var color = PoolColorArray( [array[zeile][spalte]] );
-				var zeilegross = zeile*4;
-				var spaltegross = spalte*4;
-				var point1 = PoolVector2Array([Vector2(zeilegross,spaltegross)]);
-				var point2 = PoolVector2Array([Vector2(zeilegross+1,spaltegross)]);
-				var point3 = PoolVector2Array([Vector2(zeilegross,spaltegross+1)]);
-				var point4 = PoolVector2Array([Vector2(zeilegross+1,spaltegross+1)]);
-				var point5 = PoolVector2Array([Vector2(zeilegross+2,spaltegross)]);
-				var point6 = PoolVector2Array([Vector2(zeilegross+2,spaltegross+1)]);
-				var point7 = PoolVector2Array([Vector2(zeilegross+1,spaltegross+2)]);
-				var point8 = PoolVector2Array([Vector2(zeilegross+2,spaltegross+2)]);
-				var point9 = PoolVector2Array([Vector2(zeilegross,spaltegross+2)]);
-				var point10 = PoolVector2Array([Vector2(zeilegross+3,spaltegross+1)]);
-				var point11 = PoolVector2Array([Vector2(zeilegross+1,spaltegross+3)]);
-				var point12 = PoolVector2Array([Vector2(zeilegross,spaltegross+3)]);
-				var point13 = PoolVector2Array([Vector2(zeilegross+3,spaltegross)]);
-				var point14 = PoolVector2Array([Vector2(zeilegross+2,spaltegross+3)]);
-				var point15 = PoolVector2Array([Vector2(zeilegross+3,spaltegross+2)]);
-				var point16 = PoolVector2Array([Vector2(zeilegross+3,spaltegross+3)]);
-				draw_primitive (point1,color, PoolVector2Array() );
-				draw_primitive (point2,color, PoolVector2Array() );
-				draw_primitive (point3,color, PoolVector2Array() );
-				draw_primitive (point4,color, PoolVector2Array() );
-				draw_primitive (point5,color, PoolVector2Array() );
-				draw_primitive (point6,color, PoolVector2Array() );
-				draw_primitive (point7,color, PoolVector2Array() );
-				draw_primitive (point8,color, PoolVector2Array() );
-				draw_primitive (point9,color, PoolVector2Array() );
-				draw_primitive (point10,color, PoolVector2Array() );
-				draw_primitive (point11,color, PoolVector2Array() );
-				draw_primitive (point12,color, PoolVector2Array() );
-				draw_primitive (point13,color, PoolVector2Array() );
-				draw_primitive (point14,color, PoolVector2Array() );
-				draw_primitive (point15,color, PoolVector2Array() );
-				draw_primitive (point16,color, PoolVector2Array() );
-	
-	linie_malen();
+				punkt_malen(zeile, spalte);
 	if modus=="Linie":
 		if bresenham == true:
-			pass;
+			bresenham = false;
 		else:
 			draw_line(linienStart, linienEnde, Color(1,1,1));
-	#	linie_malen();
-	
 
 
 func linie_malen():
 	draw_primitive( PoolVector2Array([Vector2(303,303)]), PoolColorArray( [Color(1,1,1)]), PoolVector2Array());
 
-func punkt_malen():
-	pass;
+""" 
+malt einen 8*8 großen Punkt auf die Zeichenfläche
+Eingabe x: x-Wert vom Pixel unten links
+Eingabe y: y-Wert vom Pixel unten links 
+"""
+	
+func punkt_malen(x, y):
+	var xgross = x*8;
+	var ygross = y*8;
+	for zeile in range (9):
+		for spalte in range(9):
+			var color = PoolColorArray( [array[x][y]] );
+			var punkt = PoolVector2Array([Vector2(xgross+zeile,ygross+spalte)]);
+			draw_primitive (punkt,color, PoolVector2Array() );
+	
 
 func _process(delta):
 	if Input.is_action_just_pressed("draw"):
 		var mouseposition = get_global_mouse_position();
 		if mouseposition.x >= 256:
 			if modus== "Stift":
-				array[(mouseposition.x-256)/4][mouseposition.y/4]= aktuelleFarbe;
+				array[(mouseposition.x-256)/8][mouseposition.y/8]= aktuelleFarbe;
 				update();
 			elif modus == "Linie":
 				linienStart= mouseposition;
+			elif modus == "Radierer":
+				array[(mouseposition.x-256)/8][mouseposition.y/8]= null;
+				update();
 	elif Input.is_action_pressed("draw"):
-		if modus=="Linie":
-			linienEnde = get_global_mouse_position();
-			bresenham = false;
-			update();
+		var mouseposition = get_global_mouse_position();
+		if mouseposition.x >= 256:
+			if modus=="Linie":
+				linienEnde = get_global_mouse_position();
+				bresenham = false;
+				update();
+			elif modus=="Stift":
+				array[(mouseposition.x-256)/8][mouseposition.y/8]= aktuelleFarbe;
+				update();
+			elif modus == "Radierer":
+				array[(mouseposition.x-256)/8][mouseposition.y/8]= null;
+				update();
 	elif Input.is_action_just_released("draw"):
 		if modus=="Linie":
 			linienEnde = get_global_mouse_position();
@@ -139,3 +125,66 @@ func _on_Stift_pressed():
 
 func _on_Linie_pressed():
 	modus = "Linie";
+
+
+func _on_Radierer_pressed():
+	modus = "Radierer";
+
+
+func _on_Spiegeln_pressed():
+	var hilfe;
+	for zeile in range(64):
+		for spalte in range(32):
+			if array[zeile][spalte] != null:
+				hilfe =array[zeile][spalte];
+				print(zeile)
+				print( spalte)
+				print(63-spalte);
+				array[zeile][spalte] = array[zeile][(63-spalte)];
+				array[zeile][(63-spalte)] = hilfe;
+	update();
+
+
+func _on_Farbe1_pressed():
+	aktuelleFarbe = Color(0.07,0.93,0.06);
+
+
+
+func _on_Farbe2_pressed():
+	pass # Replace with function body.
+
+
+func _on_Farbe3_pressed():
+	pass # Replace with function body.
+
+
+func _on_Farbe4_pressed():
+	pass # Replace with function body.
+
+
+func _on_Farbe5_pressed():
+	pass # Replace with function body.
+
+
+func _on_Farbe6_pressed():
+	pass # Replace with function body.
+
+
+func _on_Farbe7_pressed():
+	pass # Replace with function body.
+
+
+func _on_Farbe8_pressed():
+	pass # Replace with function body.
+
+
+func _on_Farbe9_pressed():
+	pass # Replace with function body.
+
+
+func _on_Farbe10_pressed():
+	pass # Replace with function body.
+
+
+func _on_Button2_pressed():
+	pass # Replace with function body.
