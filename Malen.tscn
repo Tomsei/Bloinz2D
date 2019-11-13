@@ -145,6 +145,7 @@ texture = ExtResource( 2 )
 points = PoolVector2Array( 251, 0, 251, 512, 768, 512 )
 width = 4.0
 default_color = Color( 0, 0, 0, 1 )
+texture_mode = -1094114483
 __meta__ = {
 "_edit_group_": true
 }
@@ -232,6 +233,27 @@ margin_top = 583.662
 margin_right = 712.108
 margin_bottom = 653.662
 icon = ExtResource( 2 )
+
+[node name="klein" type="Button" parent="."]
+margin_left = 124.298
+margin_top = 93.2233
+margin_right = 167.298
+margin_bottom = 113.223
+text = "klein"
+
+[node name="mittel" type="Button" parent="."]
+margin_left = 123.295
+margin_top = 131.314
+margin_right = 166.295
+margin_bottom = 151.314
+text = "mittel"
+
+[node name="groß" type="Button" parent="."]
+margin_left = 128.307
+margin_top = 167.401
+margin_right = 171.307
+margin_bottom = 187.401
+text = "groß"
 [connection signal="pressed" from="Button" to="Node2D" method="_on_Button_pressed"]
 [connection signal="popup_closed" from="ColorPickerButton" to="Node2D" method="_on_ColorPickerButton_popup_closed"]
 [connection signal="pressed" from="Stift" to="Node2D" method="_on_Stift_pressed"]
@@ -249,3 +271,6 @@ icon = ExtResource( 2 )
 [connection signal="pressed" from="Farbe9" to="Node2D" method="_on_Farbe9_pressed"]
 [connection signal="pressed" from="Farbe10" to="Node2D" method="_on_Farbe10_pressed"]
 [connection signal="pressed" from="Button2" to="Node2D" method="_on_Button2_pressed"]
+[connection signal="pressed" from="klein" to="Node2D" method="_on_klein_pressed"]
+[connection signal="pressed" from="mittel" to="Node2D" method="_on_mittel_pressed"]
+[connection signal="pressed" from="groß" to="Node2D" method="_on_gro_pressed"]

@@ -8,6 +8,7 @@ var modus = "Stift";
 var linienStart;
 var linienEnde;
 var bresenham;
+var stiftgroesse;
 
 
 # Called when the node enters the scene tree for the first time.
@@ -15,6 +16,7 @@ func _ready():
 	array = create_2d_array(arraylength, arraylength, null);
 	aktuelleFarbe = Color(1,1,1,1);
 	get_node("../ColorPickerButton").color = Color(1,1,1,1);
+	stiftgroesse = 0;
 	
 
 func _draw():
@@ -53,12 +55,16 @@ func _process(delta):
 		var mouseposition = get_global_mouse_position();
 		if mouseposition.x >= 256:
 			if modus== "Stift":
-				array[(mouseposition.x-256)/8][mouseposition.y/8]= aktuelleFarbe;
+				for i in range( 0, pow(2,stiftgroesse)):
+					for j in range(0, pow(2, stiftgroesse)):
+						array[((mouseposition.x-256)/8)+(i-stiftgroesse)][(mouseposition.y/8)+(j-stiftgroesse)]= aktuelleFarbe;
 				update();
 			elif modus == "Linie":
 				linienStart= mouseposition;
 			elif modus == "Radierer":
-				array[(mouseposition.x-256)/8][mouseposition.y/8]= null;
+				for i in range( 0, pow(2,stiftgroesse)):
+					for j in range(0, pow(2, stiftgroesse)):
+						array[((mouseposition.x-256)/8)+(i-stiftgroesse)][(mouseposition.y/8)+(j-stiftgroesse)]= null;
 				update();
 	elif Input.is_action_pressed("draw"):
 		var mouseposition = get_global_mouse_position();
@@ -68,10 +74,14 @@ func _process(delta):
 				bresenham = false;
 				update();
 			elif modus=="Stift":
-				array[(mouseposition.x-256)/8][mouseposition.y/8]= aktuelleFarbe;
+				for i in range( 0, pow(2,stiftgroesse)):
+					for j in range(0, pow(2, stiftgroesse)):
+						array[((mouseposition.x-256)/8)+(i-stiftgroesse)][(mouseposition.y/8)+(j-stiftgroesse)]= aktuelleFarbe;
 				update();
 			elif modus == "Radierer":
-				array[(mouseposition.x-256)/8][mouseposition.y/8]= null;
+				for i in range( 0, pow(2,stiftgroesse)):
+					for j in range(0, pow(2, stiftgroesse)):
+						array[((mouseposition.x-256)/8)+(i-stiftgroesse)][(mouseposition.y/8)+(j-stiftgroesse)]= null;
 				update();
 	elif Input.is_action_just_released("draw"):
 		if modus=="Linie":
@@ -188,3 +198,15 @@ func _on_Farbe10_pressed():
 
 func _on_Button2_pressed():
 	pass # Replace with function body.
+
+
+func _on_klein_pressed():
+	stiftgroesse= 0;
+
+
+func _on_mittel_pressed():
+	stiftgroesse= 1;
+
+
+func _on_gro_pressed():
+	stiftgroesse=2;
