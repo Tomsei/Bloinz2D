@@ -2,17 +2,17 @@
 
 [ext_resource path="res://Skripte/Bewegung/Player.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Standardspielfiguren/BlobGerade.png" type="Texture" id=2]
-[ext_resource path="res://Szenen/Muenze.gd" type="Script" id=3]
+[ext_resource path="res://Skripte/Bewegung/Muenze.gd" type="Script" id=3]
 [ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin1.png" type="Texture" id=4]
 [ext_resource path="res://Bilder/Hintergruende/Spieloberflaeche.tres" type="TileSet" id=5]
 [ext_resource path="res://Skripte/Menu.gd" type="Script" id=6]
 [ext_resource path="res://Bilder/menu_icon_small.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 20.003, 25 )
+extents = Vector2( 20.003, 29.0214 )
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 9.59491, 10 )
+[sub_resource type="CircleShape2D" id=2]
+radius = 21.0595
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 220.504, 10 )
@@ -20,18 +20,19 @@ extents = Vector2( 220.504, 10 )
 [node name="Node" type="Node"]
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 228.429, 417.094 )
+position = Vector2( 226.924, 416.772 )
+collision_mask = 0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2( 0, 7 )
-shape = SubResource( 1 )
-
 [node name="Sprite" type="Sprite" parent="Player"]
 texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0.967194, 2.97 )
+shape = SubResource( 1 )
 
 [node name="Münze" type="KinematicBody2D" parent="."]
 script = ExtResource( 3 )
@@ -39,19 +40,19 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Münze"]
-shape = SubResource( 2 )
-
 [node name="Sprite" type="Sprite" parent="Münze"]
 texture = ExtResource( 4 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Münze"]
+shape = SubResource( 2 )
+
+[node name="BodenCollisionShape" type="StaticBody2D" parent="."]
 position = Vector2( 218.731, 649.767 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodenCollisionShape"]
 shape = SubResource( 3 )
 
 [node name="TileMap" type="TileMap" parent="."]

@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="BloinZ2D"
+config/name="Bloinz 2D"
 run/main_scene="res://Szenen/Player.tscn"
 config/icon="res://icon.png"
 
