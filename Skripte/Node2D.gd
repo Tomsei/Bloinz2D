@@ -12,6 +12,7 @@ var bresenham;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	OS.set_window_size(Vector2(768,660))
 	array = create_2d_array(arraylength, arraylength, null);
 	aktuelleFarbe = Color(1,1,1,1);
 	get_node("../ColorPickerButton").color = Color(1,1,1,1);
