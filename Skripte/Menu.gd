@@ -23,4 +23,4 @@ func _on_CodeEditor_button_up():
 
 func _on_MalEditor_button_up():
 	print("Wechsle zum malen")
-	get_tree().change_scene("res://Malen.tscn")
+	get_tree().change_scene("res://Szenen/Malen.tscn")
