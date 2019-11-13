@@ -189,3 +189,8 @@ func _on_Farbe10_pressed():
 
 func _on_Button2_pressed():
 	pass # Replace with function body.
+
+
+func _on_Zurueck_button_up():
+	get_tree().change_scene("res://Szenen/Player.tscn")
+	OS.set_window_size(Vector2(440,700))

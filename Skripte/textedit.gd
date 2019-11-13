@@ -51,10 +51,10 @@ func _on_Button_button_up():
 
 # Verarbeite das Speichern des Inhalts von TextEdit.
 func save_te1():
-	save_file(te1.get_text(), "res://Skripte/textedit.gd")
+	save_file(te1.get_text(), "res://Skripte/Bewegung/Player.gd")
 	print("speichern")
 	get_tree().change_scene("res://Szenen/Player.tscn")
-	OS.set_window_size(Vector2(440,720))
+	OS.set_window_size(Vector2(440,700))
 
 # Verarbeite das Speichern des Inhalts von TextEdit2.
 func save_te2():
@@ -72,6 +72,6 @@ func init_te():
 	te1 = get_node("TabContainer/TextEdit")
 	te2 = get_node("TabContainer/TextEdit2")
 	
-	te1.set_text(lade_datei("res://Skripte/textedit.gd"))
+	te1.set_text(lade_datei("res://Skripte/Bewegung/Player.gd"))
 	var label = get_node("Label")
 	te2.set_text(label.get_text())

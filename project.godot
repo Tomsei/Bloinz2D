@@ -22,7 +22,7 @@ config/icon="res://icon.png"
 [display]
 
 window/size/width=440
-window/size/height=720
+window/size/height=700
 
 [input]
 
