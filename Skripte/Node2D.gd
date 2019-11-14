@@ -13,6 +13,8 @@ var stiftgroesse;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Setze Bildschirmgroesse.
+	OS.set_window_size(Vector2(768,660));
 	array = create_2d_array(arraylength, arraylength, null);
 	aktuelleFarbe = Color(1,1,1,1);
 	get_node("../ColorPickerButton").color = Color(1,1,1,1);
@@ -225,4 +227,4 @@ func _on_Button2_button_up():
 
 func _on_Zurueck_button_up():
 	get_tree().change_scene("res://Szenen/Player.tscn")
-	OS.set_window_size(Vector2(440,700))
+	OS.set_window_size(Vector2(384,512))

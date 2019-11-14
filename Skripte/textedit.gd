@@ -54,7 +54,7 @@ func save_te1():
 	save_file(te1.get_text(), "res://Skripte/Bewegung/Player.gd")
 	print("speichern")
 	get_tree().change_scene("res://Szenen/Player.tscn")
-	OS.set_window_size(Vector2(440,700))
+	OS.set_window_size(Vector2(384,512))
 
 # Verarbeite das Speichern des Inhalts von TextEdit2.
 func save_te2():
