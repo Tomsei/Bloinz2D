@@ -13,7 +13,6 @@ var stiftgroesse;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	OS.set_window_size(Vector2(768,660));
 	array = create_2d_array(arraylength, arraylength, null);
 	aktuelleFarbe = Color(1,1,1,1);
 	get_node("../ColorPickerButton").color = Color(1,1,1,1);
@@ -219,7 +218,7 @@ func _on_Button2_button_up():
 	bild.lock();
 	#for zeile in range(63):
 	#	for spalte in range(63):
-	array[3][6]= Color(0,1,1) #bild.get_pixel(i,j); 
+	#		array[zeile][spalte]= bild.get_pixel(zeile,spalte); 
 	bild.unlock();
 	update();
 	print("fertig");
