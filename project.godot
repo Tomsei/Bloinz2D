@@ -16,13 +16,13 @@ _global_script_class_icons={
 [application]
 
 config/name="malentest2"
-run/main_scene="res://Malen.tscn"
+run/main_scene="res://Szenen/Malen.tscn"
 config/icon="res://icon.png"
 
 [display]
 
 window/size/width=768
-window/size/height=640
+window/size/height=670
 window/size/resizable=false
 
 [importer_defaults]
