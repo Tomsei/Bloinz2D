@@ -24,7 +24,7 @@ func _draw():
 		for spalte in range(0, arraylength):
 			if array[zeile][spalte] != null:
 				punkt_malen(zeile, spalte);
-	if modus=="Linie":
+	if modus=="Linidfe":
 		if bresenham == true:
 			bresenham = false;
 		else:
@@ -53,7 +53,7 @@ func punkt_malen(x, y):
 func _process(delta):
 	if Input.is_action_just_pressed("draw"):
 		var mouseposition = get_global_mouse_position();
-		if mouseposition.x >= 256:
+		if mouseposition.x >= 256 and mouseposition.y <= 512:
 			if modus== "Stift":
 				for i in range( 0, pow(2,stiftgroesse)):
 					for j in range(0, pow(2, stiftgroesse)):
@@ -68,7 +68,7 @@ func _process(delta):
 				update();
 	elif Input.is_action_pressed("draw"):
 		var mouseposition = get_global_mouse_position();
-		if mouseposition.x >= 256:
+		if mouseposition.x >= 256 and mouseposition.y <= 512:
 			if modus=="Linie":
 				linienEnde = get_global_mouse_position();
 				bresenham = false;
@@ -84,10 +84,12 @@ func _process(delta):
 						array[((mouseposition.x-256)/8)+(i-stiftgroesse)][(mouseposition.y/8)+(j-stiftgroesse)]= null;
 				update();
 	elif Input.is_action_just_released("draw"):
-		if modus=="Linie":
-			linienEnde = get_global_mouse_position();
-			bresenham = true;
-			update();
+		var mouseposition = get_global_mouse_position();
+		if mouseposition.x >= 256 and mouseposition.y <= 512:
+			if modus=="Linie":
+				linienEnde = get_global_mouse_position();
+				bresenham = true;
+				update();
 	
 	
 	
@@ -196,9 +198,6 @@ func _on_Farbe10_pressed():
 	pass # Replace with function body.
 
 
-func _on_Button2_pressed():
-	pass # Replace with function body.
-
 
 func _on_klein_pressed():
 	stiftgroesse= 0;
@@ -210,3 +209,16 @@ func _on_mittel_pressed():
 
 func _on_gro_pressed():
 	stiftgroesse=2;
+
+
+func _on_Button2_button_up():
+	var bild = Image.new();
+	bild.load("figur.png");
+	print("da");
+	bild.lock();
+	#for zeile in range(63):
+	#	for spalte in range(63):
+	array[3][6]= Color(0,1,1) #bild.get_pixel(i,j); 
+	bild.unlock();
+	update();
+	print("fertig");
