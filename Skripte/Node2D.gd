@@ -26,11 +26,11 @@ func _draw():
 		for spalte in range(0, arraylength):
 			if array[zeile][spalte] != null:
 				punkt_malen(zeile, spalte);
-	if modus=="Linidfe":
-		if bresenham == true:
-			bresenham = false;
-		else:
-			draw_line(linienStart, linienEnde, Color(1,1,1));
+	#if modus=="Linidfe":
+	#	if bresenham == true:
+	#		bresenham = false;
+	#	else:
+	#		draw_line(linienStart, linienEnde, Color(1,1,1));
 
 
 func linie_malen():
@@ -160,44 +160,43 @@ func _on_Spiegeln_pressed():
 
 
 func _on_Farbe1_pressed():
-	aktuelleFarbe = Color(0.07,0.93,0.06);
-
+	aktuelleFarbe = Color(0.9,0.23,0.1);
 
 
 func _on_Farbe2_pressed():
-	pass # Replace with function body.
+	aktuelleFarbe = Color(0.9,0.72,0.1);
 
 
 func _on_Farbe3_pressed():
-	pass # Replace with function body.
+	aktuelleFarbe = Color(0.46,0.9,0.1);
 
 
 func _on_Farbe4_pressed():
-	pass # Replace with function body.
+	aktuelleFarbe = Color(0.1,0.9,0.81);
 
 
 func _on_Farbe5_pressed():
-	pass # Replace with function body.
+	aktuelleFarbe = Color(0.1,0.36,0.9);
 
 
 func _on_Farbe6_pressed():
-	pass # Replace with function body.
+	aktuelleFarbe = Color(0.63,0.1,0.9);
 
 
 func _on_Farbe7_pressed():
-	pass # Replace with function body.
+	aktuelleFarbe = Color(0.9,0.1,0.78);
 
 
 func _on_Farbe8_pressed():
-	pass # Replace with function body.
+	aktuelleFarbe = Color(0.95,0.78,0.59);
 
 
 func _on_Farbe9_pressed():
-	pass # Replace with function body.
+	aktuelleFarbe = Color(1,1,1);
 
 
 func _on_Farbe10_pressed():
-	pass # Replace with function body.
+	aktuelleFarbe = Color(0,0,0);
 
 
 
@@ -214,16 +213,16 @@ func _on_gro_pressed():
 
 
 func _on_Button2_button_up():
-	var bild = Image.new();
-	bild.load("res://Bilder/figur.png");
+	#var bild = Image.new();
+	#bild.load("Bilder/figur.png");
 	print("da");
-	bild.lock();
-	#for zeile in range(63):
-	#	for spalte in range(63):
-	#		array[zeile][spalte]= bild.get_pixel(zeile,spalte); 
-	bild.unlock();
+	#bild.lock();
+	for zeile in range(64):
+		for spalte in range(64):
+			array[zeile][spalte]= Color(1,1,1);#bild.get_pixel(zeile,spalte); 
+	#bild.unlock();
 	update();
-	print("fertig");
+
 
 func _on_Zurueck_button_up():
 	get_tree().change_scene("res://Szenen/Player.tscn")
