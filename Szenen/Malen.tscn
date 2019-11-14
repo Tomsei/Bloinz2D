@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Skripte/Node2D.gd" type="Script" id=1]
-[ext_resource path="res://Bilder/test.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/test.png" type="Texture" id=3]
 
 [node name="Node2D" type="Node2D"]
 
@@ -145,7 +146,7 @@ texture = ExtResource( 2 )
 points = PoolVector2Array( 251, 0, 251, 512, 768, 512 )
 width = 4.0
 default_color = Color( 0, 0, 0, 1 )
-texture_mode = 3080292
+texture_mode = -1094114483
 __meta__ = {
 "_edit_group_": true
 }
@@ -155,94 +156,116 @@ margin_left = 249.861
 margin_top = 513.739
 margin_right = 325.861
 margin_bottom = 583.739
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button4" type="Button" parent="."]
 margin_left = 403.375
 margin_top = 514.282
 margin_right = 479.375
 margin_bottom = 584.282
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button3" type="Button" parent="."]
 margin_left = 325.504
 margin_top = 513.739
 margin_right = 401.504
 margin_bottom = 583.739
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button5" type="Button" parent="."]
 margin_left = 480.648
 margin_top = 514.51
 margin_right = 556.648
 margin_bottom = 584.51
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button6" type="Button" parent="."]
 margin_left = 557.835
 margin_top = 513.739
 margin_right = 633.835
 margin_bottom = 583.739
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button7" type="Button" parent="."]
 margin_left = 637.108
 margin_top = 513.739
 margin_right = 713.108
 margin_bottom = 583.739
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button8" type="Button" parent="."]
 margin_left = 250.177
 margin_top = 584.75
 margin_right = 326.177
 margin_bottom = 654.75
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button9" type="Button" parent="."]
 margin_left = 327.363
 margin_top = 583.978
 margin_right = 403.363
 margin_bottom = 653.978
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button10" type="Button" parent="."]
 margin_left = 403.778
 margin_top = 583.978
 margin_right = 479.778
 margin_bottom = 653.978
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button11" type="Button" parent="."]
 margin_left = 480.192
 margin_top = 585.206
 margin_right = 556.192
 margin_bottom = 655.206
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button12" type="Button" parent="."]
 margin_left = 557.378
 margin_top = 585.206
 margin_right = 633.378
 margin_bottom = 655.206
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Button13" type="Button" parent="."]
 margin_left = 636.108
 margin_top = 583.662
 margin_right = 712.108
 margin_bottom = 653.662
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
+
+[node name="klein" type="Button" parent="."]
+margin_left = 124.298
+margin_top = 93.2233
+margin_right = 167.298
+margin_bottom = 113.223
+text = "klein"
+
+[node name="mittel" type="Button" parent="."]
+margin_left = 123.295
+margin_top = 131.314
+margin_right = 166.295
+margin_bottom = 151.314
+text = "mittel"
+
+[node name="groß" type="Button" parent="."]
+margin_left = 128.307
+margin_top = 167.401
+margin_right = 171.307
+margin_bottom = 187.401
+text = "groß"
 
 [node name="Zurueck" type="Button" parent="."]
-margin_left = 8.0
-margin_top = 625.0
-margin_right = 20.0
-margin_bottom = 645.0
+margin_left = 11.34
+margin_top = 621.078
+margin_right = 23.34
+margin_bottom = 641.078
 text = "Zurück"
 [connection signal="pressed" from="Button" to="Node2D" method="_on_Button_pressed"]
 [connection signal="popup_closed" from="ColorPickerButton" to="Node2D" method="_on_ColorPickerButton_popup_closed"]
 [connection signal="pressed" from="Stift" to="Node2D" method="_on_Stift_pressed"]
+[connection signal="button_up" from="Linie" to="Node2D" method="_on_Linie_button_up"]
 [connection signal="pressed" from="Linie" to="Node2D" method="_on_Linie_pressed"]
 [connection signal="pressed" from="Radierer" to="Node2D" method="_on_Radierer_pressed"]
 [connection signal="pressed" from="Spiegeln" to="Node2D" method="_on_Spiegeln_pressed"]
@@ -256,5 +279,8 @@ text = "Zurück"
 [connection signal="pressed" from="Farbe8" to="Node2D" method="_on_Farbe8_pressed"]
 [connection signal="pressed" from="Farbe9" to="Node2D" method="_on_Farbe9_pressed"]
 [connection signal="pressed" from="Farbe10" to="Node2D" method="_on_Farbe10_pressed"]
-[connection signal="pressed" from="Button2" to="Node2D" method="_on_Button2_pressed"]
+[connection signal="button_up" from="Button2" to="Node2D" method="_on_Button2_button_up"]
+[connection signal="pressed" from="klein" to="Node2D" method="_on_klein_pressed"]
+[connection signal="pressed" from="mittel" to="Node2D" method="_on_mittel_pressed"]
+[connection signal="pressed" from="groß" to="Node2D" method="_on_gro_pressed"]
 [connection signal="button_up" from="Zurueck" to="Node2D" method="_on_Zurueck_button_up"]
