@@ -36,3 +36,8 @@ func _on_MalenEditor_button_up():
 func _on_SpielStarten_button_up():
 	print("Spiel starten")
 	get_tree().change_scene("res://Szenen/Player.tscn")
+
+
+func _on_NochmalSpielen_button_up():
+	print("Erneut spielen")
+	get_tree().change_scene("res://Szenen/Player.tscn")

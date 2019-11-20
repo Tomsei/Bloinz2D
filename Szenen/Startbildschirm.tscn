@@ -34,10 +34,10 @@ texture_normal = ExtResource( 5 )
 script = ExtResource( 4 )
 
 [node name="SpielStarten" type="TextureButton" parent="."]
-margin_left = 68.4948
-margin_top = 192.561
-margin_right = 324.495
-margin_bottom = 247.561
+margin_left = 69.4948
+margin_top = 185.561
+margin_right = 325.495
+margin_bottom = 241.561
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 script = ExtResource( 4 )
