@@ -12,7 +12,6 @@ func _ready():
 	OS.set_window_size(Vector2(800,600))
 # Die Funktion wird automatisch bei jedem Frameändern aufgerufen.
 func _process(delta):
-	#print("juhu")
 	pass
 
 # Lädt eine Datei und gibt den Text der Datei zurück.
@@ -73,5 +72,7 @@ func init_te():
 	te2 = get_node("TabContainer/TextEdit2")
 	
 	te1.set_text(lade_datei("res://Skripte/Bewegung/Player.gd"))
+	# Farbe fuer Kommentare auf Gruen setzen.
+	te1.add_color_region("#", ".", Color(0,1.0,0), true)
 	var label = get_node("Label")
 	te2.set_text(label.get_text())
