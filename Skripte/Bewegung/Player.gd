@@ -1,14 +1,9 @@
 extends KinematicBody2D
 
-signal hit
-
 #Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
 export var speed = 300
 export var Schwerkraft = 400
-export var Sprungkraft = 500
-
-
-
+export var Sprungkraft = 510
 
 var screen_size
 
@@ -60,9 +55,10 @@ func _process(delta):
 	#nach einem Sprung soll die Bounce Fähigkeit gegeben sein
 	sprungUpdate()
 	
-	
 	#Ausführen der Bewegung fürr den Cinematic Body | Up Vektor um zu erkennen was der Boden ist
 	move_and_slide(Bewegung, UP_Vector);
+	
+	kollisionsPruefung()
 	
 	#Sicherstellen, dass abhängig von der Bildschirmgröße das Objekt nicht raus laufen kann
 	position.x = clamp(position.x, 0, screen_size.x)
@@ -100,15 +96,18 @@ func sprung():
 		Bewegung.y = - Sprungkraft
 		sprungRestBewegung = 0 #verhindert, das vom Boden Aus Sprung richtung weiter Rutscht
 		
+		#es soll nicht gesprungen werden, wenn der Blob gerade am Bounce ist!
+		if bounceAnzahl == 3:
+			bounceAnzahl = 0 #Bei einem neuen Sprung, soll Bounce wieder neu berechnet werden können
+		
 	#Wenn noch kein doppelSprung ausgeführt wurde, ist ein weiter Impuls nach oben möglich
 	elif doppelterSprung == false:
 		Bewegung.y = -Sprungkraft
 		doppelterSprung = true
 		
-	bounceAnzahl = 0 #Bei einem neuen Sprung, soll Bounce wieder neu berechnet werden können
 	
 	
-
+	
 
 #Prozedur welche die Höchste Position in einem Flug abspeichert
 func ermittelMaximalHoehe():
@@ -118,13 +117,14 @@ func ermittelMaximalHoehe():
 			blobHoehe = position.y
 
 
+
 #beinhaltet Funktionen, das beispielsweise ein Bounce des Blobs statfindet
 #Auch das die Sprungrichtung noch leicht "nachzieht" ist hier mit enthalten
 func sprungUpdate():
 	
 	#Ein weiterer Impuls soll gebeben werden, sofern Blob auf dem Boden und nicht zu oft gesprungen ist. 
-	#Außerdem wird unterbunden, dass ein Sprung von den Effekten beeinflusst wird 
-	if is_on_floor() and bounceAnzahl < 3 and !Input.is_action_just_pressed("jump"): 
+	#Sicherstellen, dass on Floor nur für den Boden getriggert
+	if is_on_floor() and bounceAnzahl < 3 and position.y > 607 and not Input.is_action_just_pressed("jump"):
 		bounceEffekt = bounceEffekt/2
 		Bewegung.y = -bounceEffekt
 		bounceAnzahl = bounceAnzahl+1
@@ -134,3 +134,23 @@ func sprungUpdate():
 		sprungRestBewegung = sprungRestBewegung / 1.05
 		Bewegung.x = sprungRestBewegung
 
+
+
+func kollisionsPruefung():
+	for body in $Hitbox.get_overlapping_bodies():
+		if body.has_method("blobKollision"):
+			body.blobKollision()
+
+
+
+
+
+#abhängig von der Punkzahl des spielers wird die passende Blob Größe gewählt
+func blobVeranederung():
+	pass
+	
+#interner Blob Score
+
+func _on_Muenze_m1_beruerht():
+	blobVeranederung()
+	pass # Replace with function body.

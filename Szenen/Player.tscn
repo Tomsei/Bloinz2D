@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Skripte/Bewegung/Player.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Standardspielfiguren/BlobGerade.png" type="Texture" id=2]
@@ -8,43 +8,43 @@
 [ext_resource path="res://Skripte/Menu.gd" type="Script" id=6]
 [ext_resource path="res://Bilder/menu_icon_small.png" type="Texture" id=7]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 20.003, 29.0214 )
-
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=1]
 radius = 21.0595
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 220.504, 10 )
 
 [node name="Node" type="Node"]
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 226.924, 416.772 )
+position = Vector2( 212.854, 416.976 )
 collision_mask = 0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Sprite" type="Sprite" parent="Player"]
 texture = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2( 0.967194, 2.97 )
-shape = SubResource( 1 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
+polygon = PoolVector2Array( -10.8731, -29.6913, 10.9068, -29.4409, 29.933, -6.15894, 28.6812, 26.8865, 6.1066, 31.7385, -8.24741, 31.7385, -28.6476, 26.8865, -29.1483, -4.90723 )
 
-[node name="Münze" type="KinematicBody2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="Player"]
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Player/Hitbox"]
+position = Vector2( -0.461012, 0.398466 )
+scale = Vector2( 1.05869, 1.03862 )
+polygon = PoolVector2Array( -10.8731, -29.6913, 10.9068, -29.4409, 29.933, -6.15894, 28.1146, 31.587, 5.97496, 37.9283, -10.6756, 37.5552, -28.4239, 30.8409, -29.1483, -4.90723 )
+
+[node name="Muenze" type="KinematicBody2D" parent="."]
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Münze"]
+[node name="Sprite" type="Sprite" parent="Muenze"]
 texture = ExtResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Münze"]
-shape = SubResource( 2 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Muenze"]
+shape = SubResource( 1 )
 
 [node name="BodenCollisionShape" type="StaticBody2D" parent="."]
 position = Vector2( 218.731, 649.767 )
@@ -53,7 +53,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BodenCollisionShape"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1

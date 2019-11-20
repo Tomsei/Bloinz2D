@@ -1,7 +1,17 @@
 extends KinematicBody2D
 
+#Signale bei Erkennung einer Kollision
+signal m1_beruerht
+signal m2_beruehrt
+signal negativ1_beruehrt
+signal negativ2_beruehrt
+
+
+#Abgepeicherte Coin Informationen
+
+
 #Variablen zur Bewegung der Coins
-export var Geschwindigkeit = 50
+export var Geschwindigkeit = 100
 var Bewegung = Vector2(0,0)
 
 var UP_Vektor = Vector2(0, -1)
@@ -17,8 +27,6 @@ func _ready():
 func _process(delta):
 	
 	fallen()
-	kollisionPruefung()
-	
 	move_and_slide(Bewegung, UP_Vektor)
 
 
@@ -33,21 +41,13 @@ func ZufallsPosition():
 	position.y = 0
 	
 
+#Münze soll entfernt werden
+func blobKollision():
+	
+	print("Münze Kollidiert")
+	queue_free()
 
 
-#prüft auf eine Kollision und setzt Münze nach oben sofern eien Stattgefunden hatt
-#Prüft welche Collision stattfinden
-func kollisionPruefung():
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		var kollisionObjekt = collision.collider.name
-		
-		print(kollisionObjekt)
-		
-		if kollisionObjekt == "Player":
-			print("Münze berührt den blob")
-			ZufallsPosition()
-		if kollisionObjekt == "BodenCollisionShape":
-			print("Münze berührt den Bode")
-			ZufallsPosition()
-			
+
+
+
