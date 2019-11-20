@@ -1,32 +1,31 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Skripte/Malen_Node2D.gd" type="Script" id=1]
-[ext_resource path="res://Bilder/Farbe_0.png" type="Texture" id=2]
-[ext_resource path="res://Bilder/Farbe_1.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Farbe_2.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Farbe_3.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Farbe_4.png" type="Texture" id=6]
-[ext_resource path="res://Bilder/Farbe_5.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Farbe_6.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Farbe_7.png" type="Texture" id=9]
-[ext_resource path="res://Bilder/Farbe_8.png" type="Texture" id=10]
-[ext_resource path="res://Bilder/Farbe_9.png" type="Texture" id=11]
-[ext_resource path="res://Bilder/icon.png" type="Texture" id=12]
-[ext_resource path="res://Bilder/test.png" type="Texture" id=13]
+[ext_resource path="res://Skripte/Malen.gd" type="Script" id=1]
+[ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Farbe_0.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Farbe_1.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Farbe_2.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Farbe_3.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Farbe_4.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Farbe_5.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Farbe_6.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Farbe_7.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Farbe_8.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Farbe_9.png" type="Texture" id=12]
+[ext_resource path="res://Bilder/icon.png" type="Texture" id=13]
+[ext_resource path="res://Bilder/test.png" type="Texture" id=14]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 256, 0 )
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( 512, 256 )
 script = ExtResource( 1 )
 
-[node name="ColorRect" type="ColorRect" parent="Node2D"]
-visible = false
-margin_left = -0.195923
-margin_top = 1.02974
-margin_right = 63.8041
-margin_bottom = 65.0297
-rect_scale = Vector2( 8, 8 )
+[node name="Malenhintergrund" type="Sprite" parent="."]
+position = Vector2( 512, 256 )
+scale = Vector2( 8, 8 )
+z_index = -1
+texture = ExtResource( 2 )
 
 [node name="Button" type="Button" parent="."]
 margin_left = 9.26749
@@ -76,70 +75,70 @@ margin_left = 19.0
 margin_top = 223.0
 margin_right = 47.0
 margin_bottom = 245.0
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="Farbe2" type="Button" parent="."]
 margin_left = 18.0
 margin_top = 253.0
 margin_right = 46.0
 margin_bottom = 275.0
-icon = ExtResource( 3 )
+icon = ExtResource( 4 )
 
 [node name="Farbe3" type="Button" parent="."]
 margin_left = 19.0
 margin_top = 279.0
 margin_right = 47.0
 margin_bottom = 301.0
-icon = ExtResource( 4 )
+icon = ExtResource( 5 )
 
 [node name="Farbe4" type="Button" parent="."]
 margin_left = 21.0
 margin_top = 304.0
 margin_right = 49.0
 margin_bottom = 326.0
-icon = ExtResource( 5 )
+icon = ExtResource( 6 )
 
 [node name="Farbe5" type="Button" parent="."]
 margin_left = 22.0
 margin_top = 331.0
 margin_right = 50.0
 margin_bottom = 353.0
-icon = ExtResource( 6 )
+icon = ExtResource( 7 )
 
 [node name="Farbe6" type="Button" parent="."]
 margin_left = 76.0
 margin_top = 219.0
 margin_right = 104.0
 margin_bottom = 241.0
-icon = ExtResource( 7 )
+icon = ExtResource( 8 )
 
 [node name="Farbe7" type="Button" parent="."]
 margin_left = 78.0
 margin_top = 250.0
 margin_right = 106.0
 margin_bottom = 272.0
-icon = ExtResource( 8 )
+icon = ExtResource( 9 )
 
 [node name="Farbe8" type="Button" parent="."]
 margin_left = 80.0
 margin_top = 277.0
 margin_right = 108.0
 margin_bottom = 299.0
-icon = ExtResource( 9 )
+icon = ExtResource( 10 )
 
 [node name="Farbe9" type="Button" parent="."]
 margin_left = 80.0
 margin_top = 306.0
 margin_right = 108.0
 margin_bottom = 328.0
-icon = ExtResource( 10 )
+icon = ExtResource( 11 )
 
 [node name="Farbe10" type="Button" parent="."]
 margin_left = 76.7841
 margin_top = 333.585
 margin_right = 104.784
 margin_bottom = 355.585
-icon = ExtResource( 11 )
+icon = ExtResource( 12 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = 97.8234
@@ -150,7 +149,7 @@ text = "weitere Farben:"
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 80.8241, 423.915 )
-texture = ExtResource( 12 )
+texture = ExtResource( 13 )
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PoolVector2Array( 251, 0, 251, 512, 768, 512 )
@@ -166,84 +165,84 @@ margin_left = 249.861
 margin_top = 513.739
 margin_right = 325.861
 margin_bottom = 583.739
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button4" type="Button" parent="."]
 margin_left = 403.375
 margin_top = 514.282
 margin_right = 479.375
 margin_bottom = 584.282
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button3" type="Button" parent="."]
 margin_left = 325.504
 margin_top = 513.739
 margin_right = 401.504
 margin_bottom = 583.739
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button5" type="Button" parent="."]
 margin_left = 480.648
 margin_top = 514.51
 margin_right = 556.648
 margin_bottom = 584.51
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button6" type="Button" parent="."]
 margin_left = 557.835
 margin_top = 513.739
 margin_right = 633.835
 margin_bottom = 583.739
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button7" type="Button" parent="."]
 margin_left = 637.108
 margin_top = 513.739
 margin_right = 713.108
 margin_bottom = 583.739
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button8" type="Button" parent="."]
 margin_left = 250.177
 margin_top = 584.75
 margin_right = 326.177
 margin_bottom = 654.75
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button9" type="Button" parent="."]
 margin_left = 327.363
 margin_top = 583.978
 margin_right = 403.363
 margin_bottom = 653.978
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button10" type="Button" parent="."]
 margin_left = 403.778
 margin_top = 583.978
 margin_right = 479.778
 margin_bottom = 653.978
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button11" type="Button" parent="."]
 margin_left = 480.192
 margin_top = 585.206
 margin_right = 556.192
 margin_bottom = 655.206
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button12" type="Button" parent="."]
 margin_left = 557.378
 margin_top = 585.206
 margin_right = 633.378
 margin_bottom = 655.206
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Button13" type="Button" parent="."]
 margin_left = 636.108
 margin_top = 583.662
 margin_right = 712.108
 margin_bottom = 653.662
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="klein" type="Button" parent="."]
 margin_left = 124.298
@@ -272,25 +271,31 @@ margin_top = 629.947
 margin_right = 28.245
 margin_bottom = 649.947
 text = "Zurück"
-[connection signal="pressed" from="Button" to="Node2D" method="_on_Button_pressed"]
-[connection signal="popup_closed" from="ColorPickerButton" to="Node2D" method="_on_ColorPickerButton_popup_closed"]
-[connection signal="pressed" from="Stift" to="Node2D" method="_on_Stift_pressed"]
-[connection signal="button_up" from="Linie" to="Node2D" method="_on_Linie_button_up"]
-[connection signal="pressed" from="Linie" to="Node2D" method="_on_Linie_pressed"]
-[connection signal="pressed" from="Radierer" to="Node2D" method="_on_Radierer_pressed"]
-[connection signal="pressed" from="Spiegeln" to="Node2D" method="_on_Spiegeln_pressed"]
-[connection signal="pressed" from="Farbe1" to="Node2D" method="_on_Farbe1_pressed"]
-[connection signal="pressed" from="Farbe2" to="Node2D" method="_on_Farbe2_pressed"]
-[connection signal="pressed" from="Farbe3" to="Node2D" method="_on_Farbe3_pressed"]
-[connection signal="pressed" from="Farbe4" to="Node2D" method="_on_Farbe4_pressed"]
-[connection signal="pressed" from="Farbe5" to="Node2D" method="_on_Farbe5_pressed"]
-[connection signal="pressed" from="Farbe6" to="Node2D" method="_on_Farbe6_pressed"]
-[connection signal="pressed" from="Farbe7" to="Node2D" method="_on_Farbe7_pressed"]
-[connection signal="pressed" from="Farbe8" to="Node2D" method="_on_Farbe8_pressed"]
-[connection signal="pressed" from="Farbe9" to="Node2D" method="_on_Farbe9_pressed"]
-[connection signal="pressed" from="Farbe10" to="Node2D" method="_on_Farbe10_pressed"]
-[connection signal="button_up" from="Button2" to="Node2D" method="_on_Button2_button_up"]
-[connection signal="pressed" from="klein" to="Node2D" method="_on_klein_pressed"]
-[connection signal="pressed" from="mittel" to="Node2D" method="_on_mittel_pressed"]
-[connection signal="pressed" from="groß" to="Node2D" method="_on_gro_pressed"]
-[connection signal="button_up" from="Zurueck" to="Node2D" method="_on_Zurueck_button_up"]
+
+[node name="Fuellen" type="Button" parent="."]
+margin_left = 9.92374
+margin_top = 192.962
+margin_right = 60.9237
+margin_bottom = 212.962
+text = "Füllen"
+[connection signal="pressed" from="Button" to="Sprite2" method="_on_Button_pressed"]
+[connection signal="popup_closed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_popup_closed"]
+[connection signal="pressed" from="Stift" to="Sprite2" method="_on_Stift_pressed"]
+[connection signal="pressed" from="Radierer" to="Sprite2" method="_on_Radierer_pressed"]
+[connection signal="pressed" from="Spiegeln" to="Sprite2" method="_on_Spiegeln_pressed"]
+[connection signal="pressed" from="Farbe1" to="Sprite2" method="_on_Farbe1_pressed"]
+[connection signal="pressed" from="Farbe2" to="Sprite2" method="_on_Farbe2_pressed"]
+[connection signal="pressed" from="Farbe3" to="Sprite2" method="_on_Farbe3_pressed"]
+[connection signal="pressed" from="Farbe4" to="Sprite2" method="_on_Farbe4_pressed"]
+[connection signal="pressed" from="Farbe5" to="Sprite2" method="_on_Farbe5_pressed"]
+[connection signal="pressed" from="Farbe6" to="Sprite2" method="_on_Farbe6_pressed"]
+[connection signal="pressed" from="Farbe7" to="Sprite2" method="_on_Farbe7_pressed"]
+[connection signal="pressed" from="Farbe8" to="Sprite2" method="_on_Farbe8_pressed"]
+[connection signal="pressed" from="Farbe9" to="Sprite2" method="_on_Farbe9_pressed"]
+[connection signal="pressed" from="Farbe10" to="Sprite2" method="_on_Farbe10_pressed"]
+[connection signal="button_up" from="Button2" to="Sprite2" method="_on_Button2_button_up"]
+[connection signal="pressed" from="klein" to="Sprite2" method="_on_klein_pressed"]
+[connection signal="pressed" from="mittel" to="Sprite2" method="_on_mittel_pressed"]
+[connection signal="pressed" from="groß" to="Sprite2" method="_on_gro_pressed"]
+[connection signal="button_up" from="Zurueck" to="Sprite2" method="_on_Zurueck_button_up"]
+[connection signal="pressed" from="Fuellen" to="Sprite2" method="_on_Fuellen_pressed"]
