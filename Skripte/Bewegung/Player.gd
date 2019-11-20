@@ -3,7 +3,7 @@ extends KinematicBody2D
 #Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
 export var speed = 300
 export var Schwerkraft = 400
-export var Sprungkraft = 510
+export var Sprungkraft = 500
 
 var screen_size
 
@@ -22,6 +22,9 @@ var bounceAnzahl = 0
 var bounceEffekt = 1000 - position.y # Wie start soll er wieder springen
 var sprungRestBewegung = 0
 
+var blobGroesse = 2 #die aktuelle Größe und das Blob Aussehen wird hierraus bestimmt
+# --> Unterschiedliche Blobphasen aufgeteilt in 10 Schritte --> -10 | -5 | 0 | 5 | 10
+var bilderSeitlich = false
 
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
@@ -71,16 +74,33 @@ func checkTastenEingabe():
 	if Input.is_action_pressed("ui_right"):
 		Bewegung.x += 1 * speed
 		sprungRestBewegung = 1*speed
+		
+		#Wenn nötig die Textur des Sprites passend ändern
+		if spriteUpdateNoetig():
+			blobVeranederung(true)
+			$Sprite.flip_h = false #Spiegelung des seitlichen Richtung
 	
 	#Nach links --> Blob nach links bewegen
 	if Input.is_action_pressed("ui_left"):
 		Bewegung.x -= 1 * speed
 		sprungRestBewegung = -1*speed
+		
+		#Wenn nötig die Textur des Sprites passen ändern
+		if spriteUpdateNoetig():
+			blobVeranederung(true)
+			$Sprite.flip_h = true #Spiegelung des seitlichen Richtung
 	
-	#Wenn der Input für das Springen gerade gekommen ist und der Spieler ein Boden berÃ¼hrt
+	#Wenn keine Bewegung stattfindet muss das Bild auf den Stand gewechselt werden
+	if !Input.is_action_just_pressed("ui_left") and !Input.is_action_just_pressed("ui_right"):
+		if spriteUpdateNoetig():
+			blobVeranederung(false)
+	
+	#Wenn der Input für das Springen gerade gekommen ist und der Spieler ein Boden berührt
 	if Input.is_action_just_pressed("jump"):
 		#Dann soll gesprungen werden
 		sprung() #Die Methode zum Springen wird genutzt
+
+
 
 
 
@@ -104,10 +124,7 @@ func sprung():
 	elif doppelterSprung == false:
 		Bewegung.y = -Sprungkraft
 		doppelterSprung = true
-		
-	
-	
-	
+
 
 #Prozedur welche die Höchste Position in einem Flug abspeichert
 func ermittelMaximalHoehe():
@@ -135,7 +152,7 @@ func sprungUpdate():
 		Bewegung.x = sprungRestBewegung
 
 
-
+#Methode ruft für alle Objekte welche in die Area des Blobs kommen die Methode blobKollision auf, damit sie im Anschluss passend reagieren können
 func kollisionsPruefung():
 	for body in $Hitbox.get_overlapping_bodies():
 		if body.has_method("blobKollision"):
@@ -145,12 +162,72 @@ func kollisionsPruefung():
 
 
 
-#abhängig von der Punkzahl des spielers wird die passende Blob Größe gewählt
-func blobVeranederung():
-	pass
+#abhängig von der Punkzahl und der Ausrichtung des Spielers wird die passende Texture gesetzt
+# seitlich: soll eine seitliche Änderung stattfinden oder nicht
+func blobVeranederung(var seitlich):
 	
-#interner Blob Score
+	#switch Casse über alle Größen des Blobs es wird jeweils das passende Bild gesetzt
+	#Zustäzlich wird auch hier geprüft ob ein Blob sich in der Bewegung befindet
+	match blobGroesse:		
+		-11:
+			print ("verloren")
+		-10, -9, -8 -7, -6:
+			if seitlich:
+				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_1_seitlich.png")
+			else:
+				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_1_gerade.png")
+			
+		-5, -4, -3, -2, -1:
+			if seitlich:
+				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_2_seitlich.png")
+			else:
+				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_2_gerade.png")
+				
+		0, 1, 2, 3, 4:
+			if seitlich:
+				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_3_seitlich.png")
+			else:
+				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_3_gerade.png")
+				
+		5, 6, 7, 8,  9:
+			if seitlich:
+				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_4_seitlich.png")
+			else:
+				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_4_gerade.png")
+				
+		10, 11, 12, 13, 14:
+			if seitlich:
+				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_5_seitlich.png")
+			else:
+				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_5_gerade.png")
+		15:
+			print ("gewonnen")
+	
 
-func _on_Muenze_m1_beruerht():
-	blobVeranederung()
-	pass # Replace with function body.
+
+"""
+Methode zum überprüfen ob eine neue Textur geladen werden muss, oder ob die aktuelle Textur noch
+zum Verhalten des Users passt
+
+Rückgabe von True: wenn die aktuelle Textur sich von der neuen unterscheiden würde (bild ist noch seitlich, aber keine Bewegung mehr + anders herum)
+Sonst False
+"""
+func spriteUpdateNoetig():
+	#keine Bewegung und noch Seitlich
+	if Bewegung.x == 0 and bilderSeitlich == true:
+		bilderSeitlich = false
+		return true
+	#Bewegung und noch Starr
+	elif Bewegung.x != 0 and bilderSeitlich == false:
+		bilderSeitlich = true
+		return true
+	else:
+		return false
+
+
+
+#Wenn eine Münze Berührt wurde passend drauf reagieren | Blobgröße Verändern und Anzeige Texture ggf. aktualisieren
+func _on_Muenze_m1_beruerht(wert):
+	blobGroesse = blobGroesse + wert
+	blobVeranederung(false)
+
