@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Skripte/Malen.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
@@ -14,6 +14,13 @@
 [ext_resource path="res://Bilder/Farbe_9.png" type="Texture" id=12]
 [ext_resource path="res://Bilder/icon.png" type="Texture" id=13]
 [ext_resource path="res://Bilder/test.png" type="Texture" id=14]
+[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin1.png" type="Texture" id=15]
+[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin2.png" type="Texture" id=16]
+[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin1.png" type="Texture" id=17]
+[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin2.png" type="Texture" id=18]
+[ext_resource path="res://Bilder/Standardspielfiguren/RandomCoin.png" type="Texture" id=19]
+
+[sub_resource type="ImageTexture" id=1]
 
 [node name="Node2D" type="Node2D"]
 
@@ -165,6 +172,7 @@ margin_left = 249.861
 margin_top = 513.739
 margin_right = 325.861
 margin_bottom = 583.739
+rect_pivot_offset = Vector2( 50.139, 26.261 )
 icon = ExtResource( 14 )
 
 [node name="Button4" type="Button" parent="."]
@@ -202,40 +210,42 @@ margin_right = 713.108
 margin_bottom = 583.739
 icon = ExtResource( 14 )
 
-[node name="Button8" type="Button" parent="."]
+[node name="BadCoin1" type="Button" parent="."]
 margin_left = 250.177
 margin_top = 584.75
 margin_right = 326.177
 margin_bottom = 654.75
-icon = ExtResource( 14 )
+toggle_mode = true
+shortcut_in_tooltip = false
+icon = ExtResource( 15 )
 
-[node name="Button9" type="Button" parent="."]
+[node name="BadCoin2" type="Button" parent="."]
 margin_left = 327.363
 margin_top = 583.978
 margin_right = 403.363
 margin_bottom = 653.978
-icon = ExtResource( 14 )
+icon = ExtResource( 16 )
 
-[node name="Button10" type="Button" parent="."]
-margin_left = 403.778
+[node name="GoodCoin1" type="Button" parent="."]
+margin_left = 404.939
 margin_top = 583.978
-margin_right = 479.778
+margin_right = 480.939
 margin_bottom = 653.978
-icon = ExtResource( 14 )
+icon = ExtResource( 17 )
 
-[node name="Button11" type="Button" parent="."]
+[node name="GoodCoin2" type="Button" parent="."]
 margin_left = 480.192
 margin_top = 585.206
 margin_right = 556.192
 margin_bottom = 655.206
-icon = ExtResource( 14 )
+icon = ExtResource( 18 )
 
-[node name="Button12" type="Button" parent="."]
+[node name="RandomCoin" type="Button" parent="."]
 margin_left = 557.378
 margin_top = 585.206
 margin_right = 633.378
 margin_bottom = 655.206
-icon = ExtResource( 14 )
+icon = ExtResource( 19 )
 
 [node name="Button13" type="Button" parent="."]
 margin_left = 636.108
@@ -243,6 +253,48 @@ margin_top = 583.662
 margin_right = 712.108
 margin_bottom = 653.662
 icon = ExtResource( 14 )
+
+[node name="Button18" type="Button" parent="."]
+margin_left = 790.228
+margin_top = 370.098
+margin_right = 866.228
+margin_bottom = 440.098
+icon = ExtResource( 14 )
+
+[node name="Button15" type="Button" parent="."]
+margin_left = 788.549
+margin_top = 300.458
+margin_right = 864.549
+margin_bottom = 370.458
+icon = ExtResource( 14 )
+
+[node name="Button16" type="Button" parent="."]
+margin_left = 786.549
+margin_top = 228.336
+margin_right = 862.549
+margin_bottom = 298.336
+icon = ExtResource( 14 )
+
+[node name="Button17" type="Button" parent="."]
+margin_left = 789.906
+margin_top = 443.221
+margin_right = 865.906
+margin_bottom = 513.221
+icon = ExtResource( 14 )
+
+[node name="Button19" type="Button" parent="."]
+margin_left = 788.228
+margin_top = 155.374
+margin_right = 864.228
+margin_bottom = 225.374
+icon = ExtResource( 14 )
+
+[node name="Standard" type="Button" parent="."]
+margin_left = 790.549
+margin_top = 45.1104
+margin_right = 866.549
+margin_bottom = 115.11
+icon = SubResource( 1 )
 
 [node name="klein" type="Button" parent="."]
 margin_left = 124.298
@@ -278,6 +330,63 @@ margin_top = 192.962
 margin_right = 60.9237
 margin_bottom = 212.962
 text = "Füllen"
+
+[node name="Button14" type="Button" parent="."]
+margin_left = 120.063
+margin_top = 218.381
+margin_right = 218.063
+margin_bottom = 238.381
+text = "Fläche leeren"
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 775.197
+margin_top = 136.571
+margin_right = 876.197
+margin_bottom = 167.571
+text = "Eigene Designs:"
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 772.875
+margin_top = 19.6787
+margin_right = 948.875
+margin_bottom = 50.6787
+text = "Zurück zum Standarddesign
+"
+
+[node name="1" type="Label" parent="."]
+margin_left = 770.571
+margin_top = 183.482
+margin_right = 789.571
+margin_bottom = 197.482
+text = "1:"
+
+[node name="2" type="Label" parent="."]
+margin_left = 772.161
+margin_top = 258.444
+margin_right = 791.161
+margin_bottom = 272.444
+text = "2:"
+
+[node name="3" type="Label" parent="."]
+margin_left = 771.731
+margin_top = 328.566
+margin_right = 790.731
+margin_bottom = 342.566
+text = "3:"
+
+[node name="4" type="Label" parent="."]
+margin_left = 769.41
+margin_top = 402.849
+margin_right = 788.41
+margin_bottom = 416.849
+text = "4:"
+
+[node name="5" type="Label" parent="."]
+margin_left = 773.643
+margin_top = 470.319
+margin_right = 792.643
+margin_bottom = 484.319
+text = "5:"
 [connection signal="pressed" from="Button" to="Sprite2" method="_on_Button_pressed"]
 [connection signal="popup_closed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_popup_closed"]
 [connection signal="pressed" from="Stift" to="Sprite2" method="_on_Stift_pressed"]
@@ -294,6 +403,7 @@ text = "Füllen"
 [connection signal="pressed" from="Farbe9" to="Sprite2" method="_on_Farbe9_pressed"]
 [connection signal="pressed" from="Farbe10" to="Sprite2" method="_on_Farbe10_pressed"]
 [connection signal="button_up" from="Button2" to="Sprite2" method="_on_Button2_button_up"]
+[connection signal="button_down" from="BadCoin1" to="Sprite2" method="_on_BadCoin1_button_down"]
 [connection signal="pressed" from="klein" to="Sprite2" method="_on_klein_pressed"]
 [connection signal="pressed" from="mittel" to="Sprite2" method="_on_mittel_pressed"]
 [connection signal="pressed" from="groß" to="Sprite2" method="_on_gro_pressed"]

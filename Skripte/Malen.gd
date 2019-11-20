@@ -11,19 +11,27 @@ var stiftgroesse;
 var bild;
 var textur;
 var array;
+var aktiverButton;
+var badcoin1;
+var badcoin1standard;
+var badcoinliste;
+
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Setze Bildschirmgroesse.
-	OS.set_window_size(Vector2(768,660));
+	OS.set_window_size(Vector2(900,660));
 	aktuelleFarbe = Color(1,1,1,1);
 	get_node("../ColorPickerButton").color = Color(1,1,1,1);
 	stiftgroesse = 1;
 	bildgroesse = 512;
 	bild = Image.new();
 	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA8);
-	textur = ImageTexture.new()
+	textur = ImageTexture.new();
+	badcoin1= "Bilder/Standardspielfiguren/BadCoin1.png";
+	badcoin1standard = "Bilder/Standardspielfiguren/BadCoin1.png";
+	badcoinliste= [];
 
 func create_2d_array(width, height, value):
     var a = []
@@ -97,7 +105,7 @@ func befuellen():
 func _process(delta):
 	if Input.is_action_just_pressed("draw"):
 		var mouseposition = get_global_mouse_position();
-		if mouseposition.x >= 256 and mouseposition.y <= 512:
+		if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
 			if modus == "Linie":
 				linienStart= mouseposition;
 			elif modus =="Fuellen":
@@ -119,7 +127,7 @@ func _process(delta):
 						punkt_loeschen(((mouseposition.x-256)/8)+(i-stiftgroesse),(mouseposition.y/8)+(j-stiftgroesse));
 	elif Input.is_action_pressed("draw"):
 		var mouseposition = get_global_mouse_position();
-		if mouseposition.x >= 256 and mouseposition.y <= 512:
+		if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
 			if modus=="Linie":
 				linienEnde = get_global_mouse_position();
 				bresenham = false;
@@ -317,3 +325,18 @@ func fuellenrekursiv(neueFarbe,x,y,alteFarbe):
 		bild.set_pixel(x-i,y,farbe);
 		i= i+1;"""
 
+
+func _on_BadCoin1_button_down():
+	bild = Image.new();
+	bild.load(badcoin1);
+	bild.lock();
+	bild.resize(512,512,1);
+	bild.unlock();
+	textur = ImageTexture.new();
+	textur.create_from_image(bild);
+	texture = textur;
+	var icon = Image.new();
+	icon.load(badcoin1standard);
+	var buttontextur = ImageTexture.new();
+	buttontextur.create_from_image(icon);
+	get_node("../Standard").icon= buttontextur;
