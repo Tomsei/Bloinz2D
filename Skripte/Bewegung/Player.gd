@@ -28,9 +28,12 @@ var bilderSeitlich = false
 
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
-	#Die BildschirmgrÃ¶ÃŸe abspeichern
+	#Die Bildschirmgröße abspeichern
 	screen_size = get_viewport_rect().size
 	position.x = screen_size.x/2
+	
+	#Am Start ist der blob im neutralen Zustand
+	$AnimatedSprite.play("neutral_gerade")
 
 
 
@@ -78,7 +81,7 @@ func checkTastenEingabe():
 		#Wenn nötig die Textur des Sprites passend ändern
 		if spriteUpdateNoetig():
 			blobVeranederung(true)
-			$Sprite.flip_h = false #Spiegelung des seitlichen Richtung
+			$AnimatedSprite.flip_h = false #Spiegelung des seitlichen Richtung
 	
 	#Nach links --> Blob nach links bewegen
 	if Input.is_action_pressed("ui_left"):
@@ -88,7 +91,7 @@ func checkTastenEingabe():
 		#Wenn nötig die Textur des Sprites passen ändern
 		if spriteUpdateNoetig():
 			blobVeranederung(true)
-			$Sprite.flip_h = true #Spiegelung des seitlichen Richtung
+			$AnimatedSprite.flip_h = true #Spiegelung des seitlichen Richtung
 	
 	#Wenn keine Bewegung stattfindet muss das Bild auf den Stand gewechselt werden
 	if !Input.is_action_just_pressed("ui_left") and !Input.is_action_just_pressed("ui_right"):
@@ -174,8 +177,10 @@ func blobVeranederung(var seitlich):
 		-10, -9, -8 -7, -6:
 			if seitlich:
 				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_1_seitlich.png")
+				$AnimatedSprite.play("negativ_2_seitlich")
 			else:
 				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_1_gerade.png")
+				$AnimatedSprite.play("negativ_2_gerade")
 			
 		-5, -4, -3, -2, -1:
 			if seitlich:
@@ -186,20 +191,26 @@ func blobVeranederung(var seitlich):
 		0, 1, 2, 3, 4:
 			if seitlich:
 				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_3_seitlich.png")
+				$AnimatedSprite.play("neutral_seitlich")
 			else:
 				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_3_gerade.png")
+				$AnimatedSprite.play("neutral_gerade")
 				
 		5, 6, 7, 8,  9:
 			if seitlich:
 				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_4_seitlich.png")
+				$AnimatedSprite.play("positiv_1_seitlich")
 			else:
 				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_4_gerade.png")
+				$AnimatedSprite.play("positiv_1_gerade")
 				
 		10, 11, 12, 13, 14:
 			if seitlich:
 				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_5_seitlich.png")
+				$AnimatedSprite.play("positiv_2_seitlich")
 			else:
 				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_5_gerade.png")
+				$AnimatedSprite.play("positiv_2_gerade")
 		15:
 			print ("gewonnen")
 	
