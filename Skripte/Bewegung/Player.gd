@@ -176,40 +176,32 @@ func blobVeranederung(var seitlich):
 			print ("verloren")
 		-10, -9, -8 -7, -6:
 			if seitlich:
-				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_1_seitlich.png")
-				$AnimatedSprite.play("negativ_2_seitlich")
+				$AnimatedSprite.play("negativ_1_seitlich")
 			else:
-				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_1_gerade.png")
-				$AnimatedSprite.play("negativ_2_gerade")
+				$AnimatedSprite.play("negativ_1_gerade")
 			
 		-5, -4, -3, -2, -1:
 			if seitlich:
-				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_2_seitlich.png")
+				$AnimatedSprite.play("negativ_2_seitlich")
 			else:
-				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_2_gerade.png")
-				
+				$AnimatedSprite.play("negativ_2_gerade")
+		
 		0, 1, 2, 3, 4:
 			if seitlich:
-				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_3_seitlich.png")
 				$AnimatedSprite.play("neutral_seitlich")
 			else:
-				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_3_gerade.png")
 				$AnimatedSprite.play("neutral_gerade")
 				
 		5, 6, 7, 8,  9:
 			if seitlich:
-				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_4_seitlich.png")
 				$AnimatedSprite.play("positiv_1_seitlich")
 			else:
-				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_4_gerade.png")
 				$AnimatedSprite.play("positiv_1_gerade")
 				
 		10, 11, 12, 13, 14:
 			if seitlich:
-				$Sprite.texture = load("res://Bilder/Standardspielfiguren/Blob_5_seitlich.png")
 				$AnimatedSprite.play("positiv_2_seitlich")
 			else:
-				$Sprite.texture = load ("res://Bilder/Standardspielfiguren/Blob_5_gerade.png")
 				$AnimatedSprite.play("positiv_2_gerade")
 		15:
 			print ("gewonnen")
