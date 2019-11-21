@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Bilder/Hintergruende/Spieloberflaeche.tres" type="TileSet" id=1]
+[ext_resource path="res://Bilder/Buttons/nochmal_normal.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Buttons/nochmal_pressed.png" type="Texture" id=3]
+[ext_resource path="res://Skripte/TextureButton.gd" type="Script" id=4]
+[ext_resource path="res://Bilder/Buttons/nochmalSpielen_normal.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Buttons/nochmalSpielen_pressed.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Hintergruende/Zahnrad.png" type="Texture" id=7]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 65536, 3, 0, 65537, 3, 0, 65538, 3, 0, 65539, 3, 0, 65540, 3, 0, 65541, 3, 0, 131072, 4, 0, 131073, 4, 0, 131074, 4, 0, 131075, 4, 0, 131076, 4, 0, 131077, 4, 0, 196608, 5, 0, 196609, 5, 0, 196610, 5, 0, 196611, 5, 0, 196612, 5, 0, 196613, 5, 0, 262144, 6, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 327680, 7, 0, 327681, 7, 0, 327682, 7, 0, 327683, 7, 0, 327684, 7, 0, 327685, 7, 0, 393216, 8, 0, 393217, 8, 0, 393218, 8, 0, 393219, 8, 0, 393220, 8, 0, 393221, 8, 0, 458752, 1, 0, 458753, 1, 0, 458754, 1, 0, 458755, 1, 0, 458756, 1, 0, 458757, 1, 0 )
+
+[node name="Nochmal" type="TextureButton" parent="."]
+visible = false
+margin_left = 56.8637
+margin_top = 343.135
+margin_right = 334.864
+margin_bottom = 416.135
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="NochmalSpielen" type="TextureButton" parent="."]
+margin_left = 68.8637
+margin_top = 346.135
+margin_right = 324.864
+margin_bottom = 402.135
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+script = ExtResource( 4 )
+
+[node name="Optionen" type="TextureButton" parent="."]
+margin_left = 316.042
+margin_top = 3.87708
+margin_right = 380.042
+margin_bottom = 67.8771
+texture_normal = ExtResource( 7 )
+script = ExtResource( 4 )
+[connection signal="button_up" from="Nochmal" to="Nochmal" method="_on_Nochmal_button_up"]
+[connection signal="button_up" from="NochmalSpielen" to="NochmalSpielen" method="_on_NochmalSpielen_button_up"]
+[connection signal="button_up" from="Optionen" to="Optionen" method="_on_Optionen_button_up"]

@@ -1,5 +1,7 @@
 [gd_scene load_steps=14 format=2]
 
+[ext_resource path="res://Skripte/Node2D.gd" type="Script" id=1]
+[ext_resource path="res://Bilder/test.png" type="Texture" id=2]
 [ext_resource path="res://Skripte/Malen_Node2D.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Farbe_0.png" type="Texture" id=2]
 [ext_resource path="res://Bilder/Farbe_1.png" type="Texture" id=3]

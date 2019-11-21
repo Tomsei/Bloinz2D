@@ -5,8 +5,8 @@
 [ext_resource path="res://Skripte/Bewegung/Muenze.gd" type="Script" id=3]
 [ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin1.png" type="Texture" id=4]
 [ext_resource path="res://Bilder/Hintergruende/Spieloberflaeche.tres" type="TileSet" id=5]
-[ext_resource path="res://Skripte/Menu.gd" type="Script" id=6]
-[ext_resource path="res://Bilder/menu_icon_small.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Hintergruende/Zahnrad.png" type="Texture" id=6]
+[ext_resource path="res://Skripte/TextureButton.gd" type="Script" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20.003, 29.0214 )
@@ -59,37 +59,13 @@ shape = SubResource( 3 )
 z_index = -1
 tile_set = ExtResource( 5 )
 format = 1
-tile_data = PoolIntArray( 65535, 9, 0, 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 9, 0, 131071, 9, 0, 65536, 3, 0, 65537, 3, 0, 65538, 3, 0, 65539, 3, 0, 65540, 3, 0, 65541, 3, 0, 65542, 9, 0, 196607, 9, 0, 131072, 4, 0, 131073, 4, 0, 131074, 4, 0, 131075, 4, 0, 131076, 4, 0, 131077, 4, 0, 131078, 9, 0, 262143, 9, 0, 196608, 5, 0, 196609, 5, 0, 196610, 5, 0, 196611, 5, 0, 196612, 5, 0, 196613, 5, 0, 196614, 9, 0, 327679, 9, 0, 262144, 6, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262150, 9, 0, 393215, 9, 0, 327680, 7, 0, 327681, 7, 0, 327682, 7, 0, 327683, 7, 0, 327684, 7, 0, 327685, 7, 0, 327686, 9, 0, 458751, 9, 0, 393216, 8, 0, 393217, 8, 0, 393218, 8, 0, 393219, 8, 0, 393220, 8, 0, 393221, 8, 0, 393222, 9, 0, 524287, 9, 0, 458752, 1, 0, 458753, 1, 0, 458754, 1, 0, 458755, 1, 0, 458756, 1, 0, 458757, 1, 0, 458758, 9, 0, 589823, 9, 0, 524288, 9, 0, 524289, 9, 0, 524290, 9, 0, 524291, 9, 0, 524292, 9, 0, 524293, 9, 0, 524294, 9, 0 )
+tile_data = PoolIntArray( 65535, 9, 0, 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 9, 0, 131071, 9, 0, 65536, 3, 0, 65537, 3, 0, 65538, 3, 0, 65539, 3, 0, 65540, 3, 0, 65541, 3, 0, 65542, 9, 0, 196607, 9, 0, 131072, 4, 0, 131073, 4, 0, 131074, 4, 0, 131075, 4, 0, 131076, 4, 0, 131077, 4, 0, 131078, 9, 0, 262143, 9, 0, 196608, 5, 0, 196609, 5, 0, 196610, 5, 0, 196611, 5, 0, 196612, 5, 0, 196613, 5, 0, 196614, 9, 0, 327679, 9, 0, 262144, 6, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262150, 9, 0, 393215, 9, 0, 327680, 7, 0, 327681, 7, 0, 327682, 7, 0, 327683, 7, 0, 327684, 7, 0, 327685, 7, 0, 327686, 9, 0, 458751, 9, 0, 393216, 8, 0, 393217, 8, 0, 393218, 8, 0, 393219, 8, 0, 393220, 8, 0, 393221, 8, 0, 393222, 9, 0, 524287, 9, 0, 458752, 1, 0, 458753, 1, 0, 458754, 1, 0, 458755, 1, 0, 458756, 1, 0, 458757, 1, 0, 458758, 9, 0, 589819, 9, 0, 589820, 9, 0, 589821, 9, 0, 589822, 9, 0, 589823, 9, 0, 524288, 9, 0, 524289, 9, 0, 524290, 9, 0, 524291, 9, 0, 524292, 9, 0, 524293, 9, 0, 524294, 9, 0 )
 
-[node name="Menu" type="VBoxContainer" parent="."]
-margin_left = 300.212
-margin_top = 4.45551
-margin_right = 382.212
-margin_bottom = 92.4555
-script = ExtResource( 6 )
-
-[node name="MenuIcon" type="TextureButton" parent="Menu"]
-margin_left = 33.0
-margin_right = 49.0
-margin_bottom = 16.0
-size_flags_horizontal = 4
-texture_normal = ExtResource( 7 )
-
-[node name="CodeEditor" type="Button" parent="Menu"]
-visible = false
-margin_top = 20.0
-margin_right = 82.0
-margin_bottom = 40.0
-text = "Codeeditor"
-flat = true
-
-[node name="MalEditor" type="Button" parent="Menu"]
-visible = false
-margin_top = 20.0
-margin_right = 82.0
-margin_bottom = 40.0
-text = "Malen"
-flat = true
-[connection signal="button_up" from="Menu/MenuIcon" to="Menu" method="_on_MenuIcon_button_up"]
-[connection signal="button_up" from="Menu/CodeEditor" to="Menu" method="_on_CodeEditor_button_up"]
-[connection signal="button_up" from="Menu/MalEditor" to="Menu" method="_on_MalEditor_button_up"]
+[node name="Optionen" type="TextureButton" parent="."]
+margin_left = 315.927
+margin_top = 1.96881
+margin_right = 379.927
+margin_bottom = 65.9688
+texture_normal = ExtResource( 6 )
+script = ExtResource( 7 )
+[connection signal="button_up" from="Optionen" to="Optionen" method="_on_Optionen_button_up"]
