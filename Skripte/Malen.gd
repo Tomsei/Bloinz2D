@@ -11,10 +11,12 @@ var stiftgroesse;
 var bild;
 var textur;
 var array;
-var aktiverButton;
+var aktiverKnopf;
 var badcoin1;
 var badcoin1standard;
 var badcoinliste;
+var goodcoin1;
+var goodcoinstandard;
 
 
 
@@ -27,11 +29,14 @@ func _ready():
 	stiftgroesse = 1;
 	bildgroesse = 512;
 	bild = Image.new();
-	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA8);
+	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA4444);
 	textur = ImageTexture.new();
 	badcoin1= "Bilder/Standardspielfiguren/BadCoin1.png";
-	badcoin1standard = "Bilder/Standardspielfiguren/BadCoin1.png";
+	badcoin1standard = "Bilder/Standardspielfiguren/BadCoin1Standard.png";
 	badcoinliste= [];
+	goodcoin1= "Bilder/Standardspielfiguren/GoodCoin1.png";
+	goodcoinstandard="Bilder/Standardspielfiguren/GoodCoin1Standard.png";
+	aktiverKnopf="";
 
 func create_2d_array(width, height, value):
     var a = []
@@ -45,6 +50,9 @@ func create_2d_array(width, height, value):
 
     return a
 
+
+func Knoepfe_zuruecksetzen():
+	pass
 
 func linie_malen():
 	draw_primitive( PoolVector2Array([Vector2(303,303)]), PoolColorArray( [Color(1,1,1)]), PoolVector2Array());
@@ -76,7 +84,7 @@ func punkt_malen_pixel(x,y):
 	bild.lock();
 	for zeile in range (8*stiftgroesse):
 		for spalte in range(8*stiftgroesse):
-			bild.set_pixel(xneu+zeile, yneu+spalte, aktuelleFarbe)
+			bild.set_pixel(xneu+zeile-1, yneu+spalte-1, aktuelleFarbe)
 	bild.unlock();
 	textur = ImageTexture.new();
 	textur.create_from_image(bild);
@@ -153,25 +161,25 @@ func _process(delta):
 	
 	
 
-func speichern():
-	var img;
-	img = Image.new();
-	#img.create(arraylength, arraylength, false, Image.FORMAT_RGBA8);
-	img.lock();
-	#for zeile in range(arraylength):
-	#	for spalte in range(arraylength):
-	#		if array[zeile][spalte] != null:
-	#			img.set_pixel(zeile, spalte,array[zeile][spalte]);
-	#		else:
-	#			img.set_pixel(zeile, spalte,Color(0,0,0,1));
-	img.unlock();
-	var itex = ImageTexture.new()
-	itex.create_from_image(img);
-	get_node("../Sprite").texture= itex;
-
-func _on_Button_pressed():
-	speichern();
+func speichern(alterKnopf):
 	
+	if( alterKnopf != ""):
+		#Spielfigur setzen mit Bild
+		var bildkopie = Image.new();
+		bildkopie.copy_from(bild);
+		bildkopie.lock();
+		bildkopie.resize(64,64,1);
+		bildkopie.unlock();
+		var buttontextur = ImageTexture.new()
+		buttontextur.create_from_image(bildkopie);
+		get_node("../Sprite").texture= buttontextur;
+		
+		#Knopf mit aktualisiertem Bild
+		var Pfad = "../"+ alterKnopf;
+		get_node(Pfad).icon= buttontextur;
+	
+
+
 
 
 func _on_ColorPickerButton_popup_closed():
@@ -327,16 +335,66 @@ func fuellenrekursiv(neueFarbe,x,y,alteFarbe):
 
 
 func _on_BadCoin1_button_down():
+	CoinWechsel("BadCoin1", badcoin1, badcoin1standard);
+
+func _on_GoodCoin1_button_down():
+	CoinWechsel("GoodCoin1", goodcoin1, goodcoinstandard);
+
+	
+	
+func CoinWechsel(name, pfad, standardpfad):
+	
+	#Speichern des alten Bildes
+	speichern(aktiverKnopf);
+	
+	# aktiven Knopf auf nicht pressed setzen
+	if(aktiverKnopf != ""):
+		get_node("../"+aktiverKnopf).pressed = false;
+	
+	#neuen Knopf aktiv setzen
+	aktiverKnopf= name;
+	
+	#Einladen auf die Zeichenfläche
+	einladen(pfad);
+	
+	#Standardbutton setzen
+	setze_Standardbutton(standardpfad);
+	
+func einladen(pfad):
 	bild = Image.new();
-	bild.load(badcoin1);
+	bild.load(pfad);
 	bild.lock();
 	bild.resize(512,512,1);
 	bild.unlock();
 	textur = ImageTexture.new();
 	textur.create_from_image(bild);
 	texture = textur;
+	
+func setze_Standardbutton(pfad):
 	var icon = Image.new();
-	icon.load(badcoin1standard);
+	icon.load(pfad);
 	var buttontextur = ImageTexture.new();
 	buttontextur.create_from_image(icon);
 	get_node("../Standard").icon= buttontextur;
+
+func _on_Speichern_pressed():
+	var bildkopie = Image.new();
+	bildkopie.copy_from(bild);
+	bildkopie.lock();
+	bildkopie.resize(64,64,1);
+	bildkopie.unlock();
+	bildkopie.save_png("Bilder/Standardspielfiguren/"+aktiverKnopf+".png");
+	speichern(aktiverKnopf);
+	
+
+func _on_Vorlage_pressed():
+	get_node("../VorlageBestaetigen").show();
+
+
+func _on_Design1_pressed():
+	#TODO Malen ausschalten
+	print("geschafft!");
+	get_node("../VorlageBestaetigen").hide();
+
+func _on_Leeren_pressed():
+	pass

@@ -15,10 +15,10 @@
 [ext_resource path="res://Bilder/icon.png" type="Texture" id=13]
 [ext_resource path="res://Bilder/test.png" type="Texture" id=14]
 [ext_resource path="res://Bilder/Standardspielfiguren/BadCoin1.png" type="Texture" id=15]
-[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin2.png" type="Texture" id=16]
-[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin1.png" type="Texture" id=17]
-[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin2.png" type="Texture" id=18]
-[ext_resource path="res://Bilder/Standardspielfiguren/RandomCoin.png" type="Texture" id=19]
+[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin2Standard.png" type="Texture" id=16]
+[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin1Standard.png" type="Texture" id=17]
+[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin2Standardä.png" type="Texture" id=18]
+[ext_resource path="res://Bilder/Standardspielfiguren/RandomCoinStandard.png" type="Texture" id=19]
 
 [sub_resource type="ImageTexture" id=1]
 
@@ -34,12 +34,19 @@ scale = Vector2( 8, 8 )
 z_index = -1
 texture = ExtResource( 2 )
 
-[node name="Button" type="Button" parent="."]
-margin_left = 9.26749
-margin_top = 72.0804
-margin_right = 50.2675
-margin_bottom = 92.0804
-text = "save"
+[node name="Speichern" type="Button" parent="."]
+margin_left = 784.596
+margin_top = 593.222
+margin_right = 859.596
+margin_bottom = 613.222
+text = "speichern"
+
+[node name="Vorlage" type="Button" parent="."]
+margin_left = 764.865
+margin_top = 546.795
+margin_right = 912.865
+margin_bottom = 566.795
+text = "als Vorlage Speichern"
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="."]
 margin_left = 131.507
@@ -211,10 +218,10 @@ margin_bottom = 583.739
 icon = ExtResource( 14 )
 
 [node name="BadCoin1" type="Button" parent="."]
-margin_left = 250.177
-margin_top = 584.75
-margin_right = 326.177
-margin_bottom = 654.75
+margin_left = 251.103
+margin_top = 581.692
+margin_right = 332.103
+margin_bottom = 653.692
 toggle_mode = true
 shortcut_in_tooltip = false
 icon = ExtResource( 15 )
@@ -231,6 +238,7 @@ margin_left = 404.939
 margin_top = 583.978
 margin_right = 480.939
 margin_bottom = 653.978
+toggle_mode = true
 icon = ExtResource( 17 )
 
 [node name="GoodCoin2" type="Button" parent="."]
@@ -331,7 +339,7 @@ margin_right = 60.9237
 margin_bottom = 212.962
 text = "Füllen"
 
-[node name="Button14" type="Button" parent="."]
+[node name="Leeren" type="Button" parent="."]
 margin_left = 120.063
 margin_top = 218.381
 margin_right = 218.063
@@ -339,11 +347,11 @@ margin_bottom = 238.381
 text = "Fläche leeren"
 
 [node name="Label2" type="Label" parent="."]
-margin_left = 775.197
-margin_top = 136.571
-margin_right = 876.197
-margin_bottom = 167.571
-text = "Eigene Designs:"
+margin_left = 794.928
+margin_top = 133.089
+margin_right = 895.928
+margin_bottom = 164.089
+text = "Vorlagen:"
 
 [node name="Label3" type="Label" parent="."]
 margin_left = 772.875
@@ -387,7 +395,56 @@ margin_top = 470.319
 margin_right = 792.643
 margin_bottom = 484.319
 text = "5:"
-[connection signal="pressed" from="Button" to="Sprite2" method="_on_Button_pressed"]
+
+[node name="VorlageBestaetigen" type="WindowDialog" parent="."]
+margin_left = 320.968
+margin_top = 202.989
+margin_right = 621.968
+margin_bottom = 368.989
+
+[node name="Design1" type="Button" parent="VorlageBestaetigen"]
+margin_left = 18.2576
+margin_top = 74.0641
+margin_right = 62.2576
+margin_bottom = 107.064
+text = "1"
+
+[node name="Design2" type="Button" parent="VorlageBestaetigen"]
+margin_left = 63.5731
+margin_top = 72.3858
+margin_right = 107.573
+margin_bottom = 105.386
+text = "2"
+
+[node name="Design3" type="Button" parent="VorlageBestaetigen"]
+margin_left = 120.637
+margin_top = 72.3858
+margin_right = 164.637
+margin_bottom = 105.386
+text = "3"
+
+[node name="Design4" type="Button" parent="VorlageBestaetigen"]
+margin_left = 176.023
+margin_top = 77.4209
+margin_right = 220.023
+margin_bottom = 110.421
+text = "4"
+
+[node name="Design5" type="Button" parent="VorlageBestaetigen"]
+margin_left = 241.479
+margin_top = 79.0992
+margin_right = 285.479
+margin_bottom = 112.099
+text = "5"
+
+[node name="Label" type="Label" parent="VorlageBestaetigen"]
+margin_left = 28.5321
+margin_top = 28.532
+margin_right = 257.532
+margin_bottom = 42.532
+text = "Speicherplatz für Vorlage auswählen"
+[connection signal="pressed" from="Speichern" to="Sprite2" method="_on_Speichern_pressed"]
+[connection signal="pressed" from="Vorlage" to="Sprite2" method="_on_Vorlage_pressed"]
 [connection signal="popup_closed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_popup_closed"]
 [connection signal="pressed" from="Stift" to="Sprite2" method="_on_Stift_pressed"]
 [connection signal="pressed" from="Radierer" to="Sprite2" method="_on_Radierer_pressed"]
@@ -404,8 +461,11 @@ text = "5:"
 [connection signal="pressed" from="Farbe10" to="Sprite2" method="_on_Farbe10_pressed"]
 [connection signal="button_up" from="Button2" to="Sprite2" method="_on_Button2_button_up"]
 [connection signal="button_down" from="BadCoin1" to="Sprite2" method="_on_BadCoin1_button_down"]
+[connection signal="button_down" from="GoodCoin1" to="Sprite2" method="_on_GoodCoin1_button_down"]
 [connection signal="pressed" from="klein" to="Sprite2" method="_on_klein_pressed"]
 [connection signal="pressed" from="mittel" to="Sprite2" method="_on_mittel_pressed"]
 [connection signal="pressed" from="groß" to="Sprite2" method="_on_gro_pressed"]
 [connection signal="button_up" from="Zurueck" to="Sprite2" method="_on_Zurueck_button_up"]
 [connection signal="pressed" from="Fuellen" to="Sprite2" method="_on_Fuellen_pressed"]
+[connection signal="pressed" from="Leeren" to="Sprite2" method="_on_Leeren_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design1" to="Sprite2" method="_on_Design1_pressed"]
