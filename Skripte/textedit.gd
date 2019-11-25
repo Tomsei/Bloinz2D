@@ -75,5 +75,6 @@ func init_te():
 	te1.set_text(lade_datei("res://Skripte/Bewegung/Player.gd"))
 	# Farbe fuer Kommentare auf Gruen setzen.
 	te1.add_color_region("#", ".", Color(0,1.0,0), true)
+	te1.name = "Spieler"
 	var label = get_node("Label")
 	te2.set_text(label.get_text())
