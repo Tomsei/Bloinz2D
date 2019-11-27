@@ -1,21 +1,20 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Skripte/vewarltungSpawnen.gd" type="Script" id=1]
 [ext_resource path="res://Skripte/Bewegung/Player.gd" type="Script" id=2]
 [ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_seitlich.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_seitlich.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_gerade.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_seitlich.png" type="Texture" id=6]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_seitlich.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_gerade.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_gerade.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_seitlich.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_seitlich.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_gerade.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_seitlich.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_gerade.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_gerade.png" type="Texture" id=9]
 [ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_gerade.png" type="Texture" id=10]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_seitlich.png" type="Texture" id=11]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_gerade.png" type="Texture" id=12]
-[ext_resource path="res://Szenen/Muenze.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Bilder/Hintergruende/Spieloberflaeche.tres" type="TileSet" id=14]
-[ext_resource path="res://Skripte/Menu.gd" type="Script" id=15]
-[ext_resource path="res://Bilder/menu_icon_small.png" type="Texture" id=16]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_seitlich.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_gerade.png" type="Texture" id=12]
+[ext_resource path="res://Bilder/Hintergruende/Spieloberflaeche.tres" type="TileSet" id=13]
+[ext_resource path="res://Skripte/Menu.gd" type="Script" id=14]
+[ext_resource path="res://Bilder/menu_icon_small.png" type="Texture" id=15]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -26,32 +25,32 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "positiv_2_seitlich",
+"name": "negativ_2_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "positiv_1_gerade",
+"name": "positiv_2_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "negativ_1_seitlich",
+"name": "positiv_2_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "negativ_2_seitlich",
+"name": "positiv_1_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
-"name": "negativ_1_gerade",
+"name": "positiv_1_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "neutral_gerade",
+"name": "negativ_1_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
@@ -61,12 +60,12 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "positiv_1_seitlich",
+"name": "negativ_1_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 12 ) ],
 "loop": true,
-"name": "positiv_2_gerade",
+"name": "neutral_gerade",
 "speed": 5.0
 } ]
 
@@ -98,8 +97,6 @@ position = Vector2( -0.461012, 0.398466 )
 scale = Vector2( 1.05869, 1.03862 )
 polygon = PoolVector2Array( -10.8731, -29.6913, 10.9068, -29.4409, 29.933, -6.15894, 28.1146, 31.587, 5.97496, 37.9283, -10.6756, 37.5552, -28.4239, 30.8409, -29.1483, -4.90723 )
 
-[node name="Muenze" parent="." instance=ExtResource( 13 )]
-
 [node name="BodenCollisionShape" type="StaticBody2D" parent="."]
 position = Vector2( 218.731, 649.767 )
 __meta__ = {
@@ -111,7 +108,7 @@ shape = SubResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1
-tile_set = ExtResource( 14 )
+tile_set = ExtResource( 13 )
 format = 1
 tile_data = PoolIntArray( 65535, 9, 0, 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 9, 0, 131071, 9, 0, 65536, 2, 0, 65537, 2, 0, 65538, 2, 0, 65539, 2, 0, 65540, 2, 0, 65541, 2, 0, 65542, 2, 0, 65543, 9, 0, 196607, 9, 0, 131072, 2, 0, 131073, 2, 0, 131074, 2, 0, 131075, 2, 0, 131076, 2, 0, 131077, 2, 0, 131078, 2, 0, 131079, 9, 0, 262143, 9, 0, 196608, 2, 0, 196609, 2, 0, 196610, 2, 0, 196611, 2, 0, 196612, 2, 0, 196613, 2, 0, 196614, 2, 0, 196615, 9, 0, 327679, 9, 0, 262144, 3, 0, 262145, 3, 0, 262146, 3, 0, 262147, 3, 0, 262148, 3, 0, 262149, 3, 0, 262150, 3, 0, 262151, 9, 0, 393215, 9, 0, 327680, 4, 0, 327681, 4, 0, 327682, 4, 0, 327683, 4, 0, 327684, 4, 0, 327685, 4, 0, 327686, 4, 0, 327687, 9, 0, 458751, 9, 0, 393216, 5, 0, 393217, 5, 0, 393218, 5, 0, 393219, 5, 0, 393220, 5, 0, 393221, 5, 0, 393222, 5, 0, 393223, 9, 0, 524287, 9, 0, 458752, 6, 0, 458753, 6, 0, 458754, 6, 0, 458755, 6, 0, 458756, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 9, 0, 589823, 9, 0, 524288, 7, 0, 524289, 7, 0, 524290, 7, 0, 524291, 7, 0, 524292, 7, 0, 524293, 7, 0, 524294, 7, 0, 524295, 9, 0, 655359, 9, 0, 589824, 8, 0, 589825, 8, 0, 589826, 8, 0, 589827, 8, 0, 589828, 8, 0, 589829, 8, 0, 589830, 8, 0, 589831, 9, 0, 720895, 9, 0, 655360, 1, 0, 655361, 1, 0, 655362, 1, 0, 655363, 1, 0, 655364, 1, 0, 655365, 1, 0, 655366, 1, 0, 655367, 9, 0 )
 
@@ -120,14 +117,14 @@ margin_left = 362.317
 margin_top = 4.45551
 margin_right = 444.317
 margin_bottom = 92.4555
-script = ExtResource( 15 )
+script = ExtResource( 14 )
 
 [node name="MenuIcon" type="TextureButton" parent="Menu"]
 margin_left = 33.0
 margin_right = 49.0
 margin_bottom = 16.0
 size_flags_horizontal = 4
-texture_normal = ExtResource( 16 )
+texture_normal = ExtResource( 15 )
 
 [node name="CodeEditor" type="Button" parent="Menu"]
 visible = false
@@ -144,8 +141,18 @@ margin_right = 82.0
 margin_bottom = 40.0
 text = "Malen"
 flat = true
-[connection signal="m1_beruerht" from="Muenze" to="Player" method="_on_Muenze_m1_beruerht"]
-[connection signal="neueMuenze" from="Muenze" to="." method="_on_Muenze_neueMuenze"]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 224.0
+margin_top = 64.0
+margin_right = 353.0
+margin_bottom = 97.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+visible_characters = 2
+tab_size = 10
 [connection signal="button_up" from="Menu/MenuIcon" to="Menu" method="_on_MenuIcon_button_up"]
 [connection signal="button_up" from="Menu/CodeEditor" to="Menu" method="_on_CodeEditor_button_up"]
 [connection signal="button_up" from="Menu/MalEditor" to="Menu" method="_on_MalEditor_button_up"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

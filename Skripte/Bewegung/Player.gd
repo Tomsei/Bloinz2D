@@ -155,7 +155,14 @@ func sprungUpdate():
 		Bewegung.x = sprungRestBewegung
 
 
-#Methode ruft für alle Objekte welche in die Area des Blobs kommen die Methode blobKollision auf, damit sie im Anschluss passend reagieren können
+
+"""
+Methode zum erkennen von Kollisionen mit anderen Objekten
+
+für alle erkannten Objekte welche in die Area des Blobs gekommen sind 
+wird die Methode blobKollision aufgerufen, sofern diese vorhanden ist
+--> somit können die Objekte passend auf Kollision mit Spielfigur reagieren
+"""
 func kollisionsPruefung():
 	for body in $Hitbox.get_overlapping_bodies():
 		if body.has_method("blobKollision"):
@@ -165,55 +172,62 @@ func kollisionsPruefung():
 
 
 
-#abhängig von der Punkzahl und der Ausrichtung des Spielers wird die passende Texture gesetzt
-# seitlich: soll eine seitliche Änderung stattfinden oder nicht
+"""
+Abhängig von der Blobgroese und Ausrichtung des Spielers soll die passende Textur geladen werden
+
+Sobald die Blobgröße kleiner 10 ist, ist das Spiel verloren
+Sobald die Blobgrößer größer als 15 ist, ist das Spiel gewonnen
+
+@param setilich gibt an ob sich der Blob gerade in einer seitlichen Bewegung befindet
+"""
 func blobVeranederung(var seitlich):
 	
 	#switch Casse über alle Größen des Blobs es wird jeweils das passende Bild gesetzt
-	#Zustäzlich wird auch hier geprüft ob ein Blob sich in der Bewegung befindet
+	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
 	match blobGroesse:		
 		-11:
 			print ("verloren")
-		-10, -9, -8 -7, -6:
-			if seitlich:
-				$AnimatedSprite.play("negativ_1_seitlich")
-			else:
-				$AnimatedSprite.play("negativ_1_gerade")
-			
-		-5, -4, -3, -2, -1:
+		-10, -9, -8, -7, -6:
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
 			else:
 				$AnimatedSprite.play("negativ_2_gerade")
+		
+		-5, -4, -3, -2, -1:
+			if seitlich:
+				$AnimatedSprite.play("negativ_1_seitlich")
+			else:
+				$AnimatedSprite.play("negativ_1_gerade")
 		
 		0, 1, 2, 3, 4:
 			if seitlich:
 				$AnimatedSprite.play("neutral_seitlich")
 			else:
 				$AnimatedSprite.play("neutral_gerade")
-				
+		
 		5, 6, 7, 8,  9:
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
 			else:
 				$AnimatedSprite.play("positiv_1_gerade")
-				
+		
 		10, 11, 12, 13, 14:
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")
 			else:
 				$AnimatedSprite.play("positiv_2_gerade")
+		
 		15:
 			print ("gewonnen")
-	
+
 
 
 """
 Methode zum überprüfen ob eine neue Textur geladen werden muss, oder ob die aktuelle Textur noch
 zum Verhalten des Users passt
 
-Rückgabe von True: wenn die aktuelle Textur sich von der neuen unterscheiden würde (bild ist noch seitlich, aber keine Bewegung mehr + anders herum)
-Sonst False
+@return true: wenn die aktuelle Textur sich von der neuen unterscheiden würde (bild ist noch seitlich, aber keine Bewegung mehr + anders herum)
+Sonst false
 """
 func spriteUpdateNoetig():
 	#keine Bewegung und noch Seitlich
@@ -230,7 +244,27 @@ func spriteUpdateNoetig():
 
 
 #Wenn eine Münze Berührt wurde passend drauf reagieren | Blobgröße Verändern und Anzeige Texture ggf. aktualisieren
-func _on_Muenze_m1_beruerht(wert):
+
+"""
+Wenn eine Münze berührt wurde muss blob passend darauf reagieren
+
+Blobgröße wird in abhängigkeit von dem Wert der Münze verändert
+Ebenfalls werden im Anschluss die Texturen verändert, sofern das nötig ist
+
+@param wert: der Wert den die kollidierte Münze hatte
+"""
+func _on_Muenze_muenze_beruehrt(wert):
 	blobGroesse = blobGroesse + wert
 	blobVeranederung(false)
 
+
+
+"""
+Wenn die Kanone das berührt wurde, soll Blob passend darauf reagieren
+--> Blobgroeße wird um eine Stufe (5) reduziert
+
+Textur des Blobs wird ebenfalls angepasst
+"""
+func _on_Kanone_kanoneberuehrte():
+	blobGroesse = blobGroesse - 5
+	blobVeranederung(false)
