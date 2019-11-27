@@ -16,7 +16,7 @@ var screen_size
 var Bewegung = Vector2()
 
 #ein Vektor der nach oben Zeigt (Zum Top des Spiels) | y = -1 wegen gedrehter Y Achse
-var UP_Vector = Vector2(0, -1)
+var UP_Vector = Vector2(0,-1)
 
 
 #Blob Eigenschaften
