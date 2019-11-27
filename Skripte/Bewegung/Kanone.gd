@@ -25,7 +25,7 @@ func bewegungrechts():
 	Bewegung.x = speed
 	move_and_slide(Bewegung)
 	$Sprite.flip_h = true
-	if is_on_wall() and position.x > 200:
+	if is_on_wall() and position.x > 500:
 		queue_free()
 	
 	
