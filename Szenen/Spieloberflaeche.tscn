@@ -1,13 +1,19 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Bilder/Hintergruende/Spieloberflaeche.tres" type="TileSet" id=1]
-[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin1.png" type="Texture" id=2]
-[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin2.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin1.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin2.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Standardspielfiguren/RandomCoin.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin1Standard.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Standardspielfiguren/BadCoin2Standard.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin1Standard.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/GoodCoin2Standard.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Standardspielfiguren/RandomCoinStandard.png" type="Texture" id=6]
 [ext_resource path="res://Bilder/Standardspielfiguren/BlobGerade.png" type="Texture" id=7]
 [ext_resource path="res://Bilder/Standardspielfiguren/BlobSeitlich.png" type="Texture" id=8]
+
+
+
+
+
+
 
 [node name="Game" type="Node2D"]
 
