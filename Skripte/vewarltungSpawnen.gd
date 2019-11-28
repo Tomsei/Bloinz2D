@@ -63,3 +63,7 @@ func _on_Muenze_neueMuenze():
 #Gerade wird alle 10 Sekunden die Kanone erzeugt
 func _on_Timer_timeout():
 	erstelleKanone()
+
+
+func _on_Optionen_button_up():
+	get_tree().change_scene("res://Szenen/Optionen.tscn")
