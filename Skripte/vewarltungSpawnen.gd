@@ -67,3 +67,7 @@ func _on_Timer_timeout():
 
 func _on_Optionen_button_up():
 	get_tree().change_scene("res://Szenen/Optionen.tscn")
+
+
+func _on_TextureButton_button_up():
+	get_tree().change_scene("res://Szenen/Optionen.tscn")
