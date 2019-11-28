@@ -4,12 +4,29 @@ extends Node2D
 var te1
 var te2
 var cur_tab = 0
+var funktionen = [{}]
+var variablen = [{}]
+var funktionen_mit_variablen = [{}]
+var aktuell_angezeigte_funktion
 
 # Funktion welche beim start aufgerufen wird.
 func _ready():
-	# Rufe die Funktion init_te auf.
-	init_te()
+	# Initiiere Parameter.
+	init()
+	# Tests
+	#te1.cursor_set_column(30)
+	#print(funktionen_mit_variablen[0])
+
+func init():
 	OS.set_window_size(Vector2(800,600))
+	get_node("Funktionsauswahl").add_item("alle")
+	init_te()
+	# Zeige die ausgewaehlte Funktion an.
+	setze_aktuell_angezeigte_funktion()
+	_on_Funktionsauswahl_getroffen(0)
+	weise_variablen_funktionen_zu()
+	#zeige_zeilen(funktionen[0].get(aktuell_angezeigte_funktion)[0],funktionen[0].get(aktuell_angezeigte_funktion)[1], true)
+
 # Die Funktion wird automatisch bei jedem Frameändern aufgerufen.
 func _process(delta):
 	pass
@@ -22,6 +39,7 @@ func lade_datei(pfad):
 		printerr("Datei konnte nicht geladen werden, error code ", err)
 		return ""
 	var text = datei.get_as_text()
+	
 	datei.close()
 	return text
 
@@ -65,6 +83,8 @@ func save_te2():
 # Wenn ein anderer Tab sichtbar wird, wird dieser in cur_tab gespeichert.
 func _on_TabContainer_tab_changed(tab):
 	cur_tab = tab
+	# Setzt den Fokus auf den aktuellen Tab.
+	get_node("TabContainer").get_child(cur_tab).grab_focus()
 
 # Weise den Variabeln te1 und te2 ihre Nodes zu.
 # Lade den Inhalt der Textedits.
@@ -73,7 +93,111 @@ func init_te():
 	te2 = get_node("TabContainer/TextEdit2")
 	
 	te1.set_text(lade_datei("res://Skripte/Bewegung/Player.gd"))
+	
+	finde_funktionen(te1)
 	# Farbe fuer Kommentare auf Gruen setzen.
 	te1.add_color_region("#", ".", Color(0,1.0,0), true)
+	# Name des Tabs setzten.
+	te1.name = "Spieler"
+	# Erster Tab bekommt Fokus beim initialisieren.
+	te1.grab_focus()
+	#Deaktiviere eine Zeile.
+	#te1.set_line_as_hidden(3, true)
+	
+	# Setze Cursor auf Zeile 30.
+	#te1.cursor_set_line(30, false)
 	var label = get_node("Label")
 	te2.set_text(label.get_text())
+
+func finde_funktionen(textedit):
+	for i in (textedit.get_line_count()):
+		setze_funktion(textedit, textedit.get_line(i), i)
+		setze_variable(textedit, textedit.get_line(i), i)
+
+func setze_funktion(textedit, text, zeile):
+	var index = 0
+	var funktion_gefunden = (text.find("func ", index) != -1)
+	if funktion_gefunden:
+		var texts = text.split(" ")
+		for i in range (texts.size()):
+			if texts[i] == "func":
+				# Setze den Funktionsnamen und lösche den Doppelpunkt
+				var funktions_name = texts[i + 1].rstrip(":")
+				funktionen[cur_tab][funktions_name] = [gib_blockanfang(textedit, zeile + 1),gib_blockende(textedit,zeile + 1)]
+				get_node("Funktionsauswahl").add_item(funktions_name)
+				
+				break
+	return funktion_gefunden
+
+func setze_variable(textedit, text, zeile):
+	var index = 0
+	var variable_gefunden = (text.find("export", 0) != -1 || text.substr(0,3) == "var")
+	if variable_gefunden:
+		var woerter = text.split(" ")
+		for i in range(woerter.size()):
+			if woerter[i] == "var":
+				var variablen_name = woerter[i + 1]
+				variablen[cur_tab][variablen_name] = [gib_blockanfang(textedit, zeile + 1),zeile]
+				break
+
+# Gibt die Zeile des Blocks.
+func gib_blockende(textedit, zeile):
+	var endzeile = zeile
+	while (textedit.get_line(endzeile).substr(0,1) == "\t"):
+		endzeile += 1
+	return endzeile - 1
+
+# Gibt die Zeile des Blockanfangs. Die Zeilen sind immer +1 zu sehen.
+func gib_blockanfang(textedit, zeile):
+	var anfangszeile = zeile - 1
+	while ((anfangszeile == zeile - 1) || textedit.get_line(anfangszeile).substr(0,1) == "#"):
+		anfangszeile -= 1
+	return anfangszeile + 1
+
+# Zeigt Zeilen von start_zeile bis end_zeile an.
+func zeige_zeilen(start_zeile, end_zeile):
+	# end_zeile + 1 weil range exklusiv ist.
+	for i in range(start_zeile, end_zeile + 1):
+		get_node("TabContainer").get_child(cur_tab).set_line_as_hidden(i, false)
+
+func zeige_variablen_von_funktion(funktionsname):
+	var gelesene_variablen = funktionen_mit_variablen[cur_tab][funktionsname]
+	for variable in gelesene_variablen:
+		zeige_zeilen(variablen[cur_tab][variable][0], variablen[cur_tab][variable][1])
+
+func setze_aktuell_angezeigte_funktion():
+	aktuell_angezeigte_funktion = get_node("Funktionsauswahl").get_item_text(get_node("Funktionsauswahl").selected)
+
+# Wenn in der Funktionsauswahl etwas gewaehlt wurde.
+# ID ist dabei die stelle an der die Auswahl steht.
+func _on_Funktionsauswahl_getroffen(ID):
+	setze_aktuell_angezeigte_funktion()
+	if aktuell_angezeigte_funktion == "alle":
+		zeige_alles()
+	else:
+		verstecke_alles()
+		zeige_zeilen(funktionen[cur_tab].get(aktuell_angezeigte_funktion)[0],funktionen[cur_tab].get(aktuell_angezeigte_funktion)[1])
+		zeige_variablen_von_funktion(aktuell_angezeigte_funktion)
+
+func verstecke_alles():
+	for i in range(te1.get_line_count()):
+		te1.set_line_as_hidden(i, true)
+
+func zeige_alles():
+	te1.unhide_all_lines()
+
+func weise_variablen_funktionen_zu():
+	var gelesene_funktionen = funktionen[cur_tab].keys()
+	var gelesene_variablen = variablen[cur_tab].keys()
+	for i in range(gelesene_funktionen.size()):
+		suche_variable_in_funktion(gelesene_funktionen[i], funktionen[cur_tab].get(gelesene_funktionen[i])[0],funktionen[cur_tab].get(gelesene_funktionen[i])[1], gelesene_variablen)
+
+func suche_variable_in_funktion(funktions_name, funktions_anfang, funktions_ende, variablen):
+	var zeile
+	funktionen_mit_variablen[cur_tab][funktions_name] = []
+	
+	for i in range(funktions_anfang,funktions_ende + 1):
+		zeile = te1.get_line(i)
+		for j in range(variablen.size()):
+			if zeile.find(variablen[j], 0) != -1 && !funktionen_mit_variablen[cur_tab][funktions_name].has(variablen[j]):
+				funktionen_mit_variablen[cur_tab][funktions_name].append(variablen[j])

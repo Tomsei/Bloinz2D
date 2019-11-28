@@ -24,6 +24,8 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 syntax_highlighting = true
+show_line_numbers = true
+hiding_enabled = 1
 
 [node name="TextEdit2" type="TextEdit" parent="TabContainer"]
 visible = false
@@ -36,11 +38,18 @@ margin_bottom = -4.0
 syntax_highlighting = true
 
 [node name="Label" type="Label" parent="."]
-margin_left = 494.0
-margin_top = 26.0
-margin_right = 680.0
-margin_bottom = 175.0
-text = "Hier wird sich was verändern.
-TE2."
+margin_left = 478.0
+margin_top = 25.0
+margin_right = 560.0
+margin_bottom = 39.0
+text = "Funktionen:"
+
+[node name="Funktionsauswahl" type="OptionButton" parent="."]
+margin_left = 475.0
+margin_top = 46.0
+margin_right = 646.0
+margin_bottom = 66.0
+text = "Funktion auswählen!"
 [connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]
 [connection signal="tab_changed" from="TabContainer" to="." method="_on_TabContainer_tab_changed"]
+[connection signal="item_selected" from="Funktionsauswahl" to="." method="_on_Funktionsauswahl_getroffen"]

@@ -9,14 +9,14 @@ export var Sprungkraft = 500
 
 
 
-
+# Szenengroesse
 var screen_size
 
 #Die Bewegung als Klassen Variable, damit über Delta Verönderungen stattfinden können | Vektor um in alle Richtungen bewegen zu können
 var Bewegung = Vector2()
 
 #ein Vektor der nach oben Zeigt (Zum Top des Spiels) | y = -1 wegen gedrehter Y Achse
-var UP_Vector = Vector2(0, -1)
+var UP_Vector = Vector2(0,-1)
 
 
 #Blob Eigenschaften
@@ -27,14 +27,11 @@ var bounceAnzahl = 0
 var bounceEffekt = 1000 - position.y # Wie start soll er wieder springen
 var sprungRestBewegung = 0
 
-
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
 	#Die BildschirmgrÃ¶ÃŸe abspeichern
 	screen_size = get_viewport_rect().size
 	position.x = screen_size.x/2
-
-
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind
@@ -66,7 +63,6 @@ func _process(delta):
 	
 	#Sicherstellen, dass abhängig von der Bildschirmgröße das Objekt nicht raus laufen kann
 	position.x = clamp(position.x, 0, screen_size.x)
-
 
 #Funktion zum ermitteln welche Tasten gedrückt wurden 
 func checkTastenEingabe():
