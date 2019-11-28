@@ -1,0 +1,88 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Skripte/Bewegung/Player.gd" type="Script" id=1]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_gerade.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_seitlich.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_seitlich.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_gerade.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_gerade.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_seitlich.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_gerade.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_seitlich.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_seitlich.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_gerade.png" type="Texture" id=11]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "negativ_2_gerade",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "negativ_2_seitlich",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "positiv_1_seitlich",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "neutral_gerade",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "negativ_1_gerade",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "positiv_2_seitlich",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "positiv_1_gerade",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "neutral_seitlich",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "negativ_1_seitlich",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "positiv_2_gerade",
+"speed": 5.0
+} ]
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 1.85529, 0.205933 )
+collision_mask = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "positiv_2_seitlich"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -10.8731, -29.6913, 10.9068, -29.4409, 29.933, -6.15894, 28.6812, 26.8865, 6.1066, 31.7385, -8.24741, 31.7385, -28.6476, 26.8865, -29.1483, -4.90723 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Hitbox"]
+position = Vector2( -0.461012, 0.398466 )
+scale = Vector2( 1.05869, 1.03862 )
+polygon = PoolVector2Array( -10.8731, -29.6913, 10.9068, -29.4409, 29.933, -6.15894, 28.1146, 31.587, 5.97496, 37.9283, -10.6756, 37.5552, -28.4239, 30.8409, -29.1483, -4.90723 )

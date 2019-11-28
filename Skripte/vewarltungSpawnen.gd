@@ -13,7 +13,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$RichTextLabel.text = str($Player.blobGroesse)
+	$Punkte.text = str($Player.blobGroesse)
 	
 
 
@@ -64,9 +64,6 @@ func _on_Muenze_neueMuenze():
 func _on_Timer_timeout():
 	erstelleKanone()
 
-
-func _on_Optionen_button_up():
-	get_tree().change_scene("res://Szenen/Optionen.tscn")
 
 
 func _on_TextureButton_button_up():
