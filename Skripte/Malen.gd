@@ -12,11 +12,9 @@ var bild;
 var textur;
 var array;
 var aktiverKnopf;
-var badcoin1;
-var badcoin1standard;
-var badcoinliste;
-var goodcoin1;
-var goodcoinstandard;
+var alterModus;
+var Vorschau;
+var bildkopie;
 
 
 
@@ -31,12 +29,17 @@ func _ready():
 	bild = Image.new();
 	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA4444);
 	textur = ImageTexture.new();
-	badcoin1= "Bilder/Standardspielfiguren/BadCoin1.png";
-	badcoin1standard = "Bilder/Standardspielfiguren/BadCoin1Standard.png";
-	badcoinliste= [];
-	goodcoin1= "Bilder/Standardspielfiguren/GoodCoin1.png";
-	goodcoinstandard="Bilder/Standardspielfiguren/GoodCoin1Standard.png";
-	aktiverKnopf="";
+	aktiverKnopf=" ";
+	#Kopie der Zeichenfläche in 64*64
+	bildkopie = Image.new();
+		
+		
+		
+func bildkopie_erstellen():
+	bildkopie.copy_from(bild);
+	bildkopie.lock();
+	bildkopie.resize(64,64,1);
+	bildkopie.unlock();
 
 func create_2d_array(width, height, value):
     var a = []
@@ -92,12 +95,14 @@ func punkt_malen_pixel(x,y):
 
 
 func punkt_loeschen(x, y):
-	var xgross = x*8;
-	var ygross = y*8;
+	var xneu = floor(x/8)*8;
+	var yneu = floor(y/8)*8;
+	print(xneu);
+	print(yneu);
 	bild.lock();
-	for zeile in range (9):
-		for spalte in range(9):
-			bild.set_pixel(xgross+zeile,ygross+spalte, Color(0,0,0,0))
+	for zeile in range (8*stiftgroesse):
+		for spalte in range(8*stiftgroesse):
+			bild.set_pixel(xneu+zeile-1, yneu+spalte-1, Color(0,0,0,0));
 	bild.unlock();
 	textur = ImageTexture.new();
 	textur.create_from_image(bild);
@@ -129,10 +134,6 @@ func _process(delta):
 					textur.create_from_image(bild);
 					texture= textur;
 					print("durch");
-			elif modus == "Radierer":
-				for i in range( 0, pow(2,stiftgroesse)):
-					for j in range(0, pow(2, stiftgroesse)):
-						punkt_loeschen(((mouseposition.x-256)/8)+(i-stiftgroesse),(mouseposition.y/8)+(j-stiftgroesse));
 	elif Input.is_action_pressed("draw"):
 		var mouseposition = get_global_mouse_position();
 		if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
@@ -142,14 +143,10 @@ func _process(delta):
 				update();
 			elif modus=="Stift":
 				punkt_malen_pixel((mouseposition.x-256),mouseposition.y);
-				#for i in range( 0, pow(2,stiftgroesse)):
-				#	for j in range(0, pow(2, stiftgroesse)):
-						#punkt_malen(((mouseposition.x-256)/8)+(i-stiftgroesse),(mouseposition.y/8)+(j-stiftgroesse));
+				aktualisiere_Vorschau();
 			elif modus == "Radierer":
-				for i in range( 0, pow(2,stiftgroesse)):
-					for j in range(0, pow(2, stiftgroesse)):
-						punkt_loeschen(((mouseposition.x-256)/8)+(i-stiftgroesse),(mouseposition.y/8)+(j-stiftgroesse));
-				update();
+				punkt_loeschen((mouseposition.x-256),mouseposition.y);
+				aktualisiere_Vorschau();
 	elif Input.is_action_just_released("draw"):
 		var mouseposition = get_global_mouse_position();
 		if mouseposition.x >= 256 and mouseposition.y <= 512:
@@ -161,24 +158,25 @@ func _process(delta):
 	
 	
 
-func speichern(alterKnopf):
-	
-	if( alterKnopf != ""):
-		#Spielfigur setzen mit Bild
-		var bildkopie = Image.new();
-		bildkopie.copy_from(bild);
-		bildkopie.lock();
-		bildkopie.resize(64,64,1);
-		bildkopie.unlock();
-		var buttontextur = ImageTexture.new()
-		buttontextur.create_from_image(bildkopie);
-		get_node("../Sprite").texture= buttontextur;
-		
-		#Knopf mit aktualisiertem Bild
-		var Pfad = "../"+ alterKnopf;
-		get_node(Pfad).icon= buttontextur;
-	
 
+
+func speichern(bildname, Knopf):
+	
+	if Knopf != " ":
+
+		#Bild in den Dateien speichern
+		bildkopie.save_png("Bilder/Standardspielfiguren/"+bildname+".png");
+		
+		#Knopf aktualisieren
+		knopf_aktualisieren(Knopf, bildkopie);
+
+func knopf_aktualisieren(Name, bildkopie):
+	
+	var buttontextur = ImageTexture.new()
+	buttontextur.create_from_image(bildkopie);
+	#Knopf mit aktualisiertem Bild
+	var Pfad = "../"+ Name;
+	get_node(Pfad).icon= buttontextur;
 
 
 
@@ -282,7 +280,7 @@ func _on_Zurueck_button_up():
 func _on_Fuellen_pressed():
 	modus="Fuellen";
 
-#liste mit besuchten punkten
+#Dictonary mit besuchten Punkten
 #Floodfill
 func fuellen(neueFarbe,x,y, alteFarbe):
 	var Punktstapel;
@@ -335,34 +333,40 @@ func fuellenrekursiv(neueFarbe,x,y,alteFarbe):
 
 
 func _on_BadCoin1_button_down():
-	CoinWechsel("BadCoin1", badcoin1, badcoin1standard);
+	Vorschau = "Coin";
+	CoinWechsel("BadCoin1");
 
 func _on_GoodCoin1_button_down():
-	CoinWechsel("GoodCoin1", goodcoin1, goodcoinstandard);
+	Vorschau = "Coin";
+	CoinWechsel("GoodCoin1");
 
 	
 	
-func CoinWechsel(name, pfad, standardpfad):
+func CoinWechsel(name):
 	
-	#Speichern des alten Bildes
-	speichern(aktiverKnopf);
 	
 	# aktiven Knopf auf nicht pressed setzen
-	if(aktiverKnopf != ""):
+	if(aktiverKnopf != " "):
 		get_node("../"+aktiverKnopf).pressed = false;
 	
 	#neuen Knopf aktiv setzen
 	aktiverKnopf= name;
 	
 	#Einladen auf die Zeichenfläche
-	einladen(pfad);
+	einladen(name);
 	
 	#Standardbutton setzen
-	setze_Standardbutton(standardpfad);
+	setze_Standardbutton(name);
+	
+	#Vorlagebuttonssetzen
+	setze_Vorlagen();
+	
+	#Vorschau setzen
+	aktualisiere_Vorschau();
 	
 func einladen(pfad):
 	bild = Image.new();
-	bild.load(pfad);
+	bild.load("Bilder/Standardspielfiguren/"+pfad+".png");
 	bild.lock();
 	bild.resize(512,512,1);
 	bild.unlock();
@@ -372,29 +376,140 @@ func einladen(pfad):
 	
 func setze_Standardbutton(pfad):
 	var icon = Image.new();
-	icon.load(pfad);
+	icon.load("Bilder/Standardspielfiguren/"+pfad+"Standard.png");
 	var buttontextur = ImageTexture.new();
 	buttontextur.create_from_image(icon);
 	get_node("../Standard").icon= buttontextur;
 
+
+func setze_Vorlagen():
+	for i in range(1,6):
+		var icon = Image.new();
+		icon.load("Bilder/Standardspielfiguren/"+aktiverKnopf+"Design"+str(i)+".png");
+		var buttontextur = ImageTexture.new();
+		buttontextur.create_from_image(icon);
+		get_node("../Vorlage"+str(i)).icon= buttontextur;
+
+
+
+func aktualisiere_Vorschau():
+	bildkopie_erstellen();
+	var texturklein = ImageTexture.new();
+	texturklein.create_from_image(bildkopie);
+	get_node("../"+Vorschau).texture = texturklein;
+	
+	
 func _on_Speichern_pressed():
-	var bildkopie = Image.new();
-	bildkopie.copy_from(bild);
-	bildkopie.lock();
-	bildkopie.resize(64,64,1);
-	bildkopie.unlock();
-	bildkopie.save_png("Bilder/Standardspielfiguren/"+aktiverKnopf+".png");
-	speichern(aktiverKnopf);
+
+	speichern(aktiverKnopf, aktiverKnopf);
 	
 
 func _on_Vorlage_pressed():
+	alterModus=modus;
+	modus="Dialog";
+	
 	get_node("../VorlageBestaetigen").show();
 
 
 func _on_Design1_pressed():
-	#TODO Malen ausschalten
-	print("geschafft!");
 	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design1", "Vorlage1");
+	modus= alterModus;
+	
 
 func _on_Leeren_pressed():
-	pass
+	bild.fill(Color(0,0,0,0));
+	textur.create_from_image(bild);
+	texture = textur;
+
+func _on_Design2_pressed():
+	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design2", "Vorlage2");
+	modus= alterModus;
+
+
+func _on_Design3_pressed():
+	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design3", "Vorlage3");
+	modus= alterModus;
+
+
+
+func _on_Design4_pressed():
+	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design4", "Vorlage4");
+	modus= alterModus;
+
+
+
+func _on_Design5_pressed():
+	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design5", "Vorlage5");
+	modus= alterModus;
+
+
+func _on_Vorlage1_pressed():
+	#Vorlage einladen
+	einladen(aktiverKnopf+"Design1");
+
+
+
+
+func _on_Vorlage2_pressed():
+	#Vorlage einladen
+	einladen(aktiverKnopf+"Design2");
+
+
+
+func _on_Vorlage3_pressed():
+	#Vorlage einladen
+	einladen(aktiverKnopf+"Design3");
+
+
+
+
+func _on_Vorlage4_pressed():
+	#Vorlage einladen
+	einladen(aktiverKnopf+"Design4");
+
+
+
+func _on_Vorlage5_pressed():
+	#Vorlage einladen
+	einladen(aktiverKnopf+"Design5");
+
+
+func _on_Standard_pressed():
+	#Standard einladen
+	einladen(aktiverKnopf+"Standard");
+
+
+func _on_Button3_pressed():
+	pass # Replace with function body.
+
+
+func _on_Button5_pressed():
+	pass # Replace with function body.
+
+
+func _on_Button6_pressed():
+	pass # Replace with function body.
+
+
+func _on_Button7_pressed():
+	pass # Replace with function body.
+
+
+func _on_BadCoin2_pressed():
+	Vorschau = "Coin";
+	CoinWechsel("BadCoin2");
+
+
+func _on_GoodCoin2_pressed():
+	Vorschau = "Coin";
+	CoinWechsel("GoodCoin2");
+
+
+func _on_RandomCoin_pressed():
+	Vorschau = "Coin";
+	CoinWechsel("RandomCoin");
