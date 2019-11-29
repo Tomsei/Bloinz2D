@@ -18,7 +18,7 @@ var UP_Vector = Vector2(0,-1)
 #Blob Eigenschaften
 var doppelterSprung = false # wurde doppelSprung bereits ausgeführt oder nicht?
 
-var blobHoehe = 607 #maximaleBLobhöhe in Sprung
+var blobHoehe = 409 #maximaleBLobhöhe in Sprung
 var bounceAnzahl = 0
 var bounceEffekt = 1000 - position.y # Wie start soll er wieder springen
 var sprungRestBewegung = 0
@@ -26,6 +26,8 @@ var sprungRestBewegung = 0
 var blobGroesse = 2 #die aktuelle Größe und das Blob Aussehen wird hierraus bestimmt
 # --> Unterschiedliche Blobphasen aufgeteilt in 10 Schritte --> -10 | -5 | 0 | 5 | 10
 var bilderSeitlich = false
+
+var bodenhoehe = 409
 
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
@@ -109,7 +111,7 @@ func checkTastenEingabe():
 func sprung():
 	
 	#Die Blob Höhe auf Bodenhöhe setzen, damit für den Sprung neue höchste Höhe ermittelt werden kann
-	blobHoehe = 607
+	blobHoehe = bodenhoehe
 	
 	
 	if is_on_floor():
@@ -142,7 +144,7 @@ func sprungUpdate():
 	
 	#Ein weiterer Impuls soll gebeben werden, sofern Blob auf dem Boden und nicht zu oft gesprungen ist. 
 	#Sicherstellen, dass on Floor nur für den Boden getriggert
-	if is_on_floor() and bounceAnzahl < 3 and position.y > 607 and not Input.is_action_just_pressed("jump"):
+	if is_on_floor() and bounceAnzahl < 3 and position.y > bodenhoehe and not Input.is_action_just_pressed("jump"):
 		bounceEffekt = bounceEffekt/2
 		Bewegung.y = -bounceEffekt
 		bounceAnzahl = bounceAnzahl+1

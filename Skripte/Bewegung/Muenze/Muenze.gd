@@ -31,7 +31,7 @@ var UP_Vektor = Vector2(0, -1) #Wo ist Oben
 
 
 var screen_size
-
+var bodenhoehe = 409
 
 """
 Beim Initialisieren der Szene / Klasse (Konstruktor) der Münze werden
@@ -59,7 +59,7 @@ func fallen():
 	Bewegung.y = Geschwindigkeit
 	
 	#wenn der Boden brührt wird, soll die Münze auch verschwinden
-	if is_on_floor() and position.y > 607:
+	if is_on_floor() and position.y > bodenhoehe:
 		emit_signal("neueMuenze")
 		queue_free()
 
