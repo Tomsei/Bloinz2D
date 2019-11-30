@@ -273,7 +273,7 @@ func _on_Button2_button_up():
 
 
 func _on_Zurueck_button_up():
-	get_tree().change_scene("res://Szenen/Player.tscn")
+	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
 	OS.set_window_size(Vector2(384,512))
 
 
