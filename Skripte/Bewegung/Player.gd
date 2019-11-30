@@ -181,10 +181,9 @@ Sobald die Blobgrößer größer als 15 ist, ist das Spiel gewonnen
 @param setilich gibt an ob sich der Blob gerade in einer seitlichen Bewegung befindet
 """
 func blobVeranederung(var seitlich):
-	
 	#switch Casse über alle Größen des Blobs es wird jeweils das passende Bild gesetzt
 	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
-	match blobGroesse:		
+	match blobGroesse:
 		-11:
 			print ("verloren")
 		-10, -9, -8, -7, -6:
@@ -256,7 +255,10 @@ Ebenfalls werden im Anschluss die Texturen verändert, sofern das nötig ist
 func _on_Muenze_muenze_beruehrt(wert):
 	blobGroesse = blobGroesse + wert
 	blobVeranederung(false)
+	print("Spieler: " + str(blobGroesse))
 
+func verbinde_meunze(muenze):
+	muenze.connect("muenze_beruehrt", self, "_on_Muenze_muenze_beruehrt")
 
 
 """

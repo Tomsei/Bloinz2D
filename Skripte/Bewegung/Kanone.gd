@@ -12,7 +12,7 @@ var screen_size
 func _ready():
 	screen_size = get_viewport_rect().size
 	position.x = 0
-	position.y = 607
+	position.y = 400
 	
 
 	

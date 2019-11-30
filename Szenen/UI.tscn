@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Skripte/UI.gd" type="Script" id=1]
+[ext_resource path="res://Bilder/Hintergruende/Zahnrad.png" type="Texture" id=2]
+
+[node name="UI" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Optionen" type="TextureButton" parent="."]
+margin_left = 319.212
+margin_right = 383.212
+margin_bottom = 64.0
+texture_normal = ExtResource( 2 )
+
+[node name="Punkte" type="RichTextLabel" parent="."]
+margin_left = 169.428
+margin_top = 38.0599
+margin_right = 209.428
+margin_bottom = 78.0599
+text = "1"
+[connection signal="button_up" from="Optionen" to="." method="_on_Optionen_gedrueckt"]
