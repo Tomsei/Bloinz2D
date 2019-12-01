@@ -32,9 +32,21 @@ func _ready():
 	aktiverKnopf=" ";
 	#Kopie der Zeichenfläche in 64*64
 	bildkopie = Image.new();
-		
-		
-		
+	
+	#Anfangsknopf auf ersten Blob setzen
+	aktiverKnopf= "Blob_1_gerade";
+	get_node("../Blob_1_gerade").pressed = true;
+	einladen(aktiverKnopf);
+	#Standardbutton setzen
+	setze_Standardbutton(aktiverKnopf);
+	#Vorlagebuttonssetzen
+	setze_Vorlagen();
+	#Vorschau setzen
+	Vorschau= "Blob";
+	aktualisiere_Vorschau();
+	
+
+
 func bildkopie_erstellen():
 	bildkopie.copy_from(bild);
 	bildkopie.lock();
@@ -346,8 +358,7 @@ func CoinWechsel(name):
 	
 	
 	# aktiven Knopf auf nicht pressed setzen
-	if(aktiverKnopf != " "):
-		get_node("../"+aktiverKnopf).pressed = false;
+	get_node("../"+aktiverKnopf).pressed = false;
 	
 	#neuen Knopf aktiv setzen
 	aktiverKnopf= name;
@@ -411,16 +422,19 @@ func _on_Vorlage_pressed():
 	get_node("../VorlageBestaetigen").show();
 
 
+func _on_Leeren_pressed():
+	bild.fill(Color(0,0,0,0));
+	textur.create_from_image(bild);
+	texture = textur;
+
+
+
 func _on_Design1_pressed():
 	get_node("../VorlageBestaetigen").hide();
 	speichern(aktiverKnopf+"Design1", "Vorlage1");
 	modus= alterModus;
 	
 
-func _on_Leeren_pressed():
-	bild.fill(Color(0,0,0,0));
-	textur.create_from_image(bild);
-	texture = textur;
 
 func _on_Design2_pressed():
 	get_node("../VorlageBestaetigen").hide();
@@ -473,7 +487,6 @@ func _on_Vorlage4_pressed():
 	einladen(aktiverKnopf+"Design4");
 
 
-
 func _on_Vorlage5_pressed():
 	#Vorlage einladen
 	einladen(aktiverKnopf+"Design5");
@@ -513,3 +526,28 @@ func _on_GoodCoin2_pressed():
 func _on_RandomCoin_pressed():
 	Vorschau = "Coin";
 	CoinWechsel("RandomCoin");
+
+
+func _on_Blob_1_gerade_pressed():
+	Vorschau = "Blob";
+	CoinWechsel("Blob_1_gerade");
+
+
+func _on_Blob_3_gerade_pressed():
+	Vorschau = "Blob";
+	CoinWechsel("Blob_3_gerade");
+
+
+func _on_Blob_2_gerade_pressed():
+	Vorschau = "Blob";
+	CoinWechsel("Blob_2_gerade");
+
+
+func _on_Blob_4_gerade_pressed():
+	Vorschau = "Blob";
+	CoinWechsel("Blob_4_gerade");
+
+
+func _on_Blob_5_gerade_pressed():
+	Vorschau = "Blob";
+	CoinWechsel("Blob_5_gerade");
