@@ -31,7 +31,7 @@ var UP_Vektor = Vector2(0, -1) #Wo ist Oben
 
 
 var screen_size
-var bodenhoehe = 409
+var bodenhoehe = 473
 
 """
 Beim Initialisieren der Szene / Klasse (Konstruktor) der Münze werden

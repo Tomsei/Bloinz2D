@@ -14,11 +14,11 @@ func _ready():
 
 func _on_Start_button_up():
 	print("Spiel starten")
-	get_tree().change_scene("res://Szenen/Player.tscn")
+	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
 	
 func _on_Nochmal_button_up():
 	print("Erneut spielen")
-	get_tree().change_scene("res://Szenen/Player.tscn")
+	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
 	
 func _on_Optionen_button_up():
 	print("Einstellungen")
@@ -35,9 +35,24 @@ func _on_MalenEditor_button_up():
 
 func _on_SpielStarten_button_up():
 	print("Spiel starten")
-	get_tree().change_scene("res://Szenen/Player.tscn")
+	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
 
 
 func _on_NochmalSpielen_button_up():
 	print("Erneut spielen")
-	get_tree().change_scene("res://Szenen/Player.tscn")
+	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+
+
+func _on_mehr_pressed():
+	print("Weitere Einstellungen")
+	get_tree().change_scene("res://Szenen/WeitereOptionen.tscn")
+
+
+func _on_zurueck_button_up():
+	print("Zurück zu Einstellungen")
+	get_tree().change_scene("res://Szenen/Optionen.tscn")
+
+
+func _on_zumSpiel_button_up():
+	print("Spielen")
+	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")

@@ -70,7 +70,7 @@ func _on_Button_button_up():
 func save_te1():
 	save_file(te1.get_text(), "res://Skripte/Bewegung/Player.gd")
 	print("speichern")
-	OS.set_window_size(Vector2(384,512))
+	OS.set_window_size(Vector2(448,640))
 	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
 	
 
