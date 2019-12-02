@@ -17,6 +17,5 @@ func _ready():
 
 func _on_SprungkraftSlider_value_changed(value):
 	#spieler.sprungkraft = value
-	#print (value)
-	print(get_tree().get_root().get_child(0).get_child(0).get_node("Player"))
-
+	print (value)
+	#print(get_tree().get_root().get_child(0).get_child(0).get_node("Player"))
