@@ -40,7 +40,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind
-func _process(delta):
+func _physics_process(delta):
 	
 	#Grundätzlich soll keine Bewegung zur Zeite existieren
 	Bewegung.x = 0;
@@ -69,6 +69,7 @@ func _process(delta):
 	
 	#Sicherstellen, dass abhängig von der Bildschirmgröße das Objekt nicht raus laufen kann
 	position.x = clamp(position.x, 0, screen_size.x)
+
 
 #Funktion zum ermitteln welche Tasten gedrückt wurden 
 func checkTastenEingabe():

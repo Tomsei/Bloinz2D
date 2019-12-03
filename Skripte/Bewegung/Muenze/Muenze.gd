@@ -47,7 +47,7 @@ func _ready():
 Ablauf einer Münze --> wird bei jedem neuen Bild aufgerufen
 -die münze fällt / bewegt sich 
 """
-func _process(delta):	
+func _physics_process(delta):
 	fallen() #Berechnet Bewegung
 	move_and_slide(Bewegung, UP_Vektor) #führt die Bewegung aus
 
@@ -59,9 +59,16 @@ func fallen():
 	Bewegung.y = Geschwindigkeit
 	
 	#wenn der Boden brührt wird, soll die Münze auch verschwinden
-	if is_on_floor() and position.y > bodenhoehe:
+	if sollMuenzeVerschwinden():
 		emit_signal("neueMuenze")
 		queue_free()
+
+
+
+func sollMuenzeVerschwinden():
+	for body in $Area2D.get_overlapping_bodies():
+		if body.name == "Kanone" or body.name == "BodenCollisionShape":
+			return true 
 
 
 """
