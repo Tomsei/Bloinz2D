@@ -27,13 +27,15 @@ var blobGroesse = 2 #die aktuelle Größe und das Blob Aussehen wird hierraus be
 # --> Unterschiedliche Blobphasen aufgeteilt in 10 Schritte --> -10 | -5 | 0 | 5 | 10
 var bilderSeitlich = false
 
-var bodenhoehe = 409
+var bodenhoehe = 470
 
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
 	#Die Bildschirmgröße abspeichern
 	screen_size = get_viewport_rect().size
 	position.x = screen_size.x/2
+	
+	skalieren(0.8) #Kollisionshapes auf Startgröße skalieren
 	
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
@@ -179,46 +181,66 @@ Abhängig von der Blobgroese und Ausrichtung des Spielers soll die passende Text
 Sobald die Blobgröße kleiner 10 ist, ist das Spiel verloren
 Sobald die Blobgrößer größer als 15 ist, ist das Spiel gewonnen
 
+Zusätzlich wird das Kollisionshape bei einer Größen änderung angepasst
+
 @param setilich gibt an ob sich der Blob gerade in einer seitlichen Bewegung befindet
 """
+
 func blobVeranederung(var seitlich):
+	
 	#switch Casse über alle Größen des Blobs es wird jeweils das passende Bild gesetzt
 	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
+	
 	match blobGroesse:
 		-11:
 			print ("verloren")
 		-10, -9, -8, -7, -6:
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
+				skalieren(0.5)
 			else:
 				$AnimatedSprite.play("negativ_2_gerade")
+				skalieren(0.5)
 		
 		-5, -4, -3, -2, -1:
 			if seitlich:
 				$AnimatedSprite.play("negativ_1_seitlich")
+				skalieren(0.7)
 			else:
 				$AnimatedSprite.play("negativ_1_gerade")
+				skalieren(0.7)
 		
 		0, 1, 2, 3, 4:
 			if seitlich:
 				$AnimatedSprite.play("neutral_seitlich")
+				skalieren(0.8)
 			else:
 				$AnimatedSprite.play("neutral_gerade")
-		
+				skalieren(0.8)
 		5, 6, 7, 8,  9:
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
+				skalieren(0.9)
 			else:
 				$AnimatedSprite.play("positiv_1_gerade")
-		
+				skalieren(0.9)
 		10, 11, 12, 13, 14:
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")
+				skalieren(1.0)
 			else:
 				$AnimatedSprite.play("positiv_2_gerade")
-		
+				skalieren(1.0)
 		15:
 			print ("gewonnen")
+
+"""
+Methode um die Hitboxen des Spielers der Größe anzupassen
+@param faktor: um welchen Faktor das Shape skaliert werden soll
+"""
+func skalieren(var faktor):
+	$physischeKollisionBox.scale = (Vector2(faktor, faktor))
+	$Hitbox/areaKollisionBox.scale = (Vector2(faktor, faktor))
 
 
 
@@ -243,8 +265,6 @@ func spriteUpdateNoetig():
 
 
 
-#Wenn eine Münze Berührt wurde passend drauf reagieren | Blobgröße Verändern und Anzeige Texture ggf. aktualisieren
-
 """
 Wenn eine Münze berührt wurde muss blob passend darauf reagieren
 
@@ -254,9 +274,9 @@ Ebenfalls werden im Anschluss die Texturen verändert, sofern das nötig ist
 @param wert: der Wert den die kollidierte Münze hatte
 """
 func _on_Muenze_muenze_beruehrt(wert):
-	blobGroesse = blobGroesse + wert
-	blobVeranederung(false)
-	print("Spieler: " + str(blobGroesse))
+		blobGroesse = blobGroesse + wert
+		blobVeranederung(false)
+
 
 func verbinde_meunze(muenze):
 	muenze.connect("muenze_beruehrt", self, "_on_Muenze_muenze_beruehrt")

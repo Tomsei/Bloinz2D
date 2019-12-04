@@ -19,6 +19,7 @@ Implementierung von
 #Signale bei Erkennung einer Kollision um Reaktionen im Spieler ausführen zu können
 signal muenze_beruehrt (wert)
 signal neueMuenze
+signal randomAktion
 
 
 #Der Coin Wert muss abgespeichert werden --> beinhaltet somit auch Coin Typ
@@ -58,13 +59,17 @@ Methode um eine Münze konstant mit der Münz geschwindigkeit fallen zu lassen
 func fallen():
 	Bewegung.y = Geschwindigkeit
 	
-	#wenn der Boden brührt wird, soll die Münze auch verschwinden
+	#Wenn Münze verschwinden soll, die Münze "frei" setzen
 	if sollMuenzeVerschwinden():
 		emit_signal("neueMuenze")
 		queue_free()
 
 
-
+"""
+Methode zum überprüfen ob Münze verschwinden soll oder nicht
+Sie soll selbst verschwinden, wenn die Kanone / der Boden berührt wird
+Nicht wenn andere Münze / Spieler berührt wird --> Spieler kümmert sich darum
+"""
 func sollMuenzeVerschwinden():
 	for body in $Area2D.get_overlapping_bodies():
 		if body.name == "Kanone" or body.name == "BodenCollisionShape":
@@ -92,7 +97,6 @@ Senden des Signals der Münzberührung mit dem individuellen coinWert
 func blobKollision():
 	
 	emit_signal("muenze_beruehrt", coinWert)
-	print("Münze Kollidiert")
 	emit_signal("neueMuenze")
 	
 	queue_free()
