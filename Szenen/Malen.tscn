@@ -599,25 +599,33 @@ margin_bottom = 474.583
 text = "speichern=>"
 
 [node name="UebernehmenBestaetigen" type="ConfirmationDialog" parent="."]
-editor/display_folded = true
 margin_left = 351.56
 margin_top = 165.012
 margin_right = 698.56
 margin_bottom = 287.012
-
-[node name="Label2" type="Label" parent="UebernehmenBestaetigen"]
-margin_left = 8.0
-margin_top = 8.0
-margin_right = 339.0
-margin_bottom = 86.0
-text = "Das aktuelle Zeichnung als momentane Spielfigur übernehmen?
+window_title = "Bitte bestätigen"
+dialog_text = "Das aktuelle Zeichnung als momentane Spielfigur übernehmen?
 Das alte wird gelöscht, sofern es nicht in den Vorlagen gespeichert ist"
-autowrap = true
+
+[node name="Wiederholen" type="Button" parent="."]
+margin_left = 130.275
+margin_top = 315.182
+margin_right = 224.275
+margin_bottom = 335.182
+text = "Wiederholen"
+
+[node name="Rueckgaengig" type="Button" parent="."]
+margin_left = 129.0
+margin_top = 342.231
+margin_right = 223.0
+margin_bottom = 366.231
+text = "Rueckgaengig"
 [connection signal="pressed" from="Speichern" to="Sprite2" method="_on_Speichern_pressed"]
 [connection signal="pressed" from="Vorlage" to="Sprite2" method="_on_Vorlage_pressed"]
 [connection signal="popup_closed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_popup_closed"]
 [connection signal="pressed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_pressed"]
 [connection signal="pressed" from="Stift" to="Sprite2" method="_on_Stift_pressed"]
+[connection signal="pressed" from="Linie" to="Sprite2" method="_on_Linie_pressed"]
 [connection signal="pressed" from="Radierer" to="Sprite2" method="_on_Radierer_pressed"]
 [connection signal="pressed" from="Spiegeln" to="Sprite2" method="_on_Spiegeln_pressed"]
 [connection signal="pressed" from="Farbe1" to="Sprite2" method="_on_Farbe1_pressed"]
