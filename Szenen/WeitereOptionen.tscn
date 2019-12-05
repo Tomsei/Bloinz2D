@@ -41,11 +41,20 @@ margin_right = 112.0
 margin_bottom = 51.0
 custom_icons/grabber_highlight = ExtResource( 4 )
 custom_icons/grabber = ExtResource( 4 )
-min_value = 100.0
+min_value = 1.0
 max_value = 1000.0
-value = 300.0
+value = 500.0
 rounded = true
+ticks_on_borders = true
 script = ExtResource( 5 )
+
+[node name="SprungkraftAktuell" type="Label" parent="Sprungkraft/SprungkraftSlider"]
+margin_left = 226.894
+margin_top = 1.01746
+margin_right = 266.894
+margin_bottom = 15.0175
+custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
+text = "500"
 
 [node name="tempoBlob" type="Sprite" parent="."]
 position = Vector2( 224, 271 )
@@ -57,9 +66,19 @@ margin_top = 35.0
 margin_right = 112.0
 custom_icons/grabber_highlight = ExtResource( 4 )
 custom_icons/grabber = ExtResource( 4 )
-min_value = 100.0
+min_value = 1.0
 max_value = 1000.0
-value = 300.0
+value = 500.0
+ticks_on_borders = true
+script = ExtResource( 5 )
+
+[node name="BlobAktuell" type="Label" parent="tempoBlob/BlobSlider"]
+margin_left = 226.894
+margin_top = 0.963257
+margin_right = 266.894
+margin_bottom = 14.9633
+custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
+text = "500"
 
 [node name="tempoCoins" type="Sprite" parent="."]
 position = Vector2( 224, 371.815 )
@@ -71,9 +90,19 @@ margin_top = 35.0
 margin_right = 112.0
 custom_icons/grabber_highlight = ExtResource( 4 )
 custom_icons/grabber = ExtResource( 4 )
-min_value = 100.0
+min_value = 1.0
 max_value = 1000.0
-value = 300.0
+value = 500.0
+ticks_on_borders = false
+script = ExtResource( 5 )
+
+[node name="CoinAktuell" type="Label" parent="tempoCoins/CoinSlider"]
+margin_left = 227.216
+margin_top = 1.45944
+margin_right = 267.216
+margin_bottom = 15.4594
+custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
+text = "500"
 
 [node name="CodeAnpassen" type="TextureButton" parent="."]
 margin_left = 65.7565
@@ -103,5 +132,7 @@ texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
 script = ExtResource( 12 )
 [connection signal="value_changed" from="Sprungkraft/SprungkraftSlider" to="Sprungkraft/SprungkraftSlider" method="_on_SprungkraftSlider_value_changed"]
+[connection signal="value_changed" from="tempoBlob/BlobSlider" to="tempoBlob/BlobSlider" method="_on_BlobSlider_value_changed"]
+[connection signal="value_changed" from="tempoCoins/CoinSlider" to="tempoCoins/CoinSlider" method="_on_CoinSlider_value_changed"]
 [connection signal="button_up" from="zurueck" to="zurueck" method="_on_zurueck_button_up"]
 [connection signal="button_up" from="zumSpiel" to="zumSpiel" method="_on_zumSpiel_button_up"]
