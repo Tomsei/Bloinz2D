@@ -221,19 +221,19 @@ func _on_ColorPickerButton_popup_closed():
 
 func _on_Stift_pressed():
 	modus = "Stift";
-	aktuellerModusbutton.pressed= true;
+	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Stift");
 
 
 
 func _on_Linie_pressed():
-	aktuellerModusbutton.pressed= true;
+	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Linie");
 	modus = "Linie";
 
 
 func _on_Radierer_pressed():
-	aktuellerModusbutton.pressed= true;
+	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Radierer");
 	modus = "Radierer";
 
@@ -357,7 +357,7 @@ func _on_Zurueck_button_up():
 
 func _on_Fuellen_pressed():
 	modus="Fuellen";
-	aktuellerModusbutton.pressed= true;
+	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Fuellen");
 
 
