@@ -15,6 +15,10 @@ var aktiverKnopf;
 var alterModus;
 var Vorschau;
 var bildkopie;
+var aktuellerFarbbutton;
+var aktuellerStiftbutton;
+var aktuellerModusbutton;
+var Colorpickerb;
 
 
 
@@ -22,9 +26,21 @@ var bildkopie;
 func _ready():
 	# Setze Bildschirmgroesse.
 	OS.set_window_size(Vector2(900,660));
+	
+	#Farbe voreinstellen
+	aktuellerFarbbutton= get_node("../Farbe9");
+	aktuellerFarbbutton.pressed= true;
 	aktuelleFarbe = Color(1,1,1,1);
 	get_node("../ColorPickerButton").color = Color(1,1,1,1);
+	
+	#Stiftgroesse voreinstellen
 	stiftgroesse = 1;
+	aktuellerStiftbutton = get_node("../klein");
+	aktuellerStiftbutton.pressed= true;
+	aktuellerModusbutton = get_node("../Stift");
+	aktuellerModusbutton.pressed= true;
+	
+	
 	bildgroesse = 512;
 	bild = Image.new();
 	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA4444);
@@ -44,6 +60,9 @@ func _ready():
 	#Vorschau setzen
 	Vorschau= "Blob";
 	aktualisiere_Vorschau();
+	
+	#Colorpickerbutton ist zu
+	Colorpickerb = false;
 	
 
 
@@ -128,61 +147,61 @@ func befuellen():
 	bild.unlock();
 
 func _process(delta):
-	if Input.is_action_just_pressed("draw"):
-		var mouseposition = get_global_mouse_position();
-		if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
-			if modus == "Linie":
-				linienStart= mouseposition;
-			elif modus =="Fuellen":
-					array = create_2d_array(512,512,Color(0,0,0,0));
-					befuellen();
-					fuellen(aktuelleFarbe,mouseposition.x-256,mouseposition.y, array[mouseposition.x-256][mouseposition.y]);
-					bild.lock();
-					for zeile in range(511):
-						for spalte in range(511):
-							bild.set_pixel(zeile, spalte,array[zeile][spalte]);
-					bild.unlock();
-					textur = ImageTexture.new();
-					textur.create_from_image(bild);
-					texture= textur;
-					print("durch");
-	elif Input.is_action_pressed("draw"):
-		var mouseposition = get_global_mouse_position();
-		if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
-			if modus=="Linie":
-				linienEnde = get_global_mouse_position();
-				bresenham = false;
-				update();
-			elif modus=="Stift":
-				punkt_malen_pixel((mouseposition.x-256),mouseposition.y);
-				aktualisiere_Vorschau();
-			elif modus == "Radierer":
-				punkt_loeschen((mouseposition.x-256),mouseposition.y);
-				aktualisiere_Vorschau();
-	elif Input.is_action_just_released("draw"):
-		var mouseposition = get_global_mouse_position();
-		if mouseposition.x >= 256 and mouseposition.y <= 512:
-			if modus=="Linie":
-				linienEnde = get_global_mouse_position();
-				bresenham = true;
-				update();
-	
-	
-	
+	if Colorpickerb == false:
+		if Input.is_action_just_pressed("draw"):
+			var mouseposition = get_global_mouse_position();
+			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
+				if modus == "Linie":
+					linienStart= mouseposition;
+				elif modus =="Fuellen":
+						array = create_2d_array(512,512,Color(0,0,0,0));
+						befuellen();
+						fuellen(aktuelleFarbe,mouseposition.x-256,mouseposition.y, array[mouseposition.x-256][mouseposition.y]);
+						bild.lock();
+						for zeile in range(511):
+							for spalte in range(511):
+								bild.set_pixel(zeile, spalte,array[zeile][spalte]);
+						bild.unlock();
+						textur = ImageTexture.new();
+						textur.create_from_image(bild);
+						texture= textur;
+						print("durch");
+		elif Input.is_action_pressed("draw"):
+			var mouseposition = get_global_mouse_position();
+			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
+				if modus=="Linie":
+					linienEnde = get_global_mouse_position();
+					bresenham = false;
+					update();
+				elif modus=="Stift":
+					punkt_malen_pixel((mouseposition.x-256),mouseposition.y);
+					aktualisiere_Vorschau();
+				elif modus == "Radierer":
+					punkt_loeschen((mouseposition.x-256),mouseposition.y);
+					aktualisiere_Vorschau();
+		elif Input.is_action_just_released("draw"):
+			var mouseposition = get_global_mouse_position();
+			if mouseposition.x >= 256 and mouseposition.y <= 512:
+				if modus=="Linie":
+					linienEnde = get_global_mouse_position();
+					bresenham = true;
+					update();
+
 
 
 
 func speichern(bildname, Knopf):
 	
-	if Knopf != " ":
+	bildkopie_erstellen();
 
-		#Bild in den Dateien speichern
-		bildkopie.save_png("Bilder/Standardspielfiguren/"+bildname+".png");
-		
-		#Knopf aktualisieren
-		knopf_aktualisieren(Knopf, bildkopie);
+	#Bild in den Dateien speichern
+	bildkopie.save_png("Bilder/Standardspielfiguren/"+bildname+".png");
+	
+	#Knopf aktualisieren
+	knopf_aktualisieren(Knopf);
 
-func knopf_aktualisieren(Name, bildkopie):
+func knopf_aktualisieren(Name):
+	
 	
 	var buttontextur = ImageTexture.new()
 	buttontextur.create_from_image(bildkopie);
@@ -193,19 +212,29 @@ func knopf_aktualisieren(Name, bildkopie):
 
 
 func _on_ColorPickerButton_popup_closed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../ColorPickerButton");
 	aktuelleFarbe = get_node("../ColorPickerButton").color;
-	print(aktuelleFarbe);
+	modus="";
+	Colorpickerb= false;
 
 
 func _on_Stift_pressed():
 	modus = "Stift";
+	aktuellerModusbutton.pressed= true;
+	aktuellerModusbutton = get_node("../Stift");
+
 
 
 func _on_Linie_pressed():
+	aktuellerModusbutton.pressed= true;
+	aktuellerModusbutton = get_node("../Linie");
 	modus = "Linie";
 
 
 func _on_Radierer_pressed():
+	aktuellerModusbutton.pressed= true;
+	aktuellerModusbutton = get_node("../Radierer");
 	modus = "Radierer";
 
 
@@ -220,55 +249,92 @@ func _on_Spiegeln_pressed():
 
 
 func _on_Farbe1_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe1");
 	aktuelleFarbe = Color(0.9,0.23,0.1);
+	modus = "Stift";
 
 
 func _on_Farbe2_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe2");
 	aktuelleFarbe = Color(0.9,0.72,0.1);
+	modus = "Stift";
 
 
 func _on_Farbe3_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe3");
 	aktuelleFarbe = Color(0.46,0.9,0.1);
+	modus = "Stift";
 
 
 func _on_Farbe4_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe4");
 	aktuelleFarbe = Color(0.1,0.9,0.81);
+	modus = "Stift";
 
 
 func _on_Farbe5_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe5");
 	aktuelleFarbe = Color(0.1,0.36,0.9);
+	modus = "Stift";
 
 
 func _on_Farbe6_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe6");
 	aktuelleFarbe = Color(0.63,0.1,0.9);
+	modus = "Stift";
 
 
 func _on_Farbe7_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe7");
 	aktuelleFarbe = Color(0.9,0.1,0.78);
+	modus = "Stift";
 
 
 func _on_Farbe8_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe8");
 	aktuelleFarbe = Color(0.95,0.78,0.59);
+	modus = "Stift";
 
 
 func _on_Farbe9_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe9");
 	aktuelleFarbe = Color(1,1,1);
+	modus = "Stift";
 
 
 func _on_Farbe10_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe10");
 	aktuelleFarbe = Color(0,0,0);
+	modus = "Stift";
 
 
 
 func _on_klein_pressed():
+		
+	aktuellerStiftbutton.pressed= false;
+	aktuellerStiftbutton = get_node("../klein");
 	stiftgroesse= 1;
 
 
 func _on_mittel_pressed():
+	aktuellerStiftbutton.pressed= false;
+	aktuellerStiftbutton = get_node("../mittel");
 	stiftgroesse= 2;
 
 
 func _on_gro_pressed():
+	aktuellerStiftbutton.pressed= false;
+	aktuellerStiftbutton = get_node("../gross");
 	stiftgroesse= 3;
 
 
@@ -291,6 +357,9 @@ func _on_Zurueck_button_up():
 
 func _on_Fuellen_pressed():
 	modus="Fuellen";
+	aktuellerModusbutton.pressed= true;
+	aktuellerModusbutton = get_node("../Fuellen");
+
 
 #Dictonary mit besuchten Punkten
 #Floodfill
@@ -407,12 +476,18 @@ func aktualisiere_Vorschau():
 	bildkopie_erstellen();
 	var texturklein = ImageTexture.new();
 	texturklein.create_from_image(bildkopie);
-	get_node("../"+Vorschau).texture = texturklein;
+	if Vorschau == "Blob" or Vorschau == "Coin":
+		get_node("../"+Vorschau).texture = texturklein;
+	else:
+		for i in range(0,9):
+			get_node("../"+Vorschau+str(i)).texture = texturklein;	
 	
 	
 func _on_Speichern_pressed():
-
-	speichern(aktiverKnopf, aktiverKnopf);
+	get_node("../UebernehmenBestaetigen").show();
+	alterModus= modus;
+	modus="";
+	
 	
 
 func _on_Vorlage_pressed():
@@ -465,6 +540,7 @@ func _on_Design5_pressed():
 func _on_Vorlage1_pressed():
 	#Vorlage einladen
 	einladen(aktiverKnopf+"Design1");
+	aktualisiere_Vorschau();
 
 
 
@@ -472,12 +548,14 @@ func _on_Vorlage1_pressed():
 func _on_Vorlage2_pressed():
 	#Vorlage einladen
 	einladen(aktiverKnopf+"Design2");
+	aktualisiere_Vorschau();
 
 
 
 func _on_Vorlage3_pressed():
 	#Vorlage einladen
 	einladen(aktiverKnopf+"Design3");
+	aktualisiere_Vorschau();
 
 
 
@@ -485,32 +563,20 @@ func _on_Vorlage3_pressed():
 func _on_Vorlage4_pressed():
 	#Vorlage einladen
 	einladen(aktiverKnopf+"Design4");
+	aktualisiere_Vorschau();
 
 
 func _on_Vorlage5_pressed():
 	#Vorlage einladen
 	einladen(aktiverKnopf+"Design5");
+	aktualisiere_Vorschau();
 
 
 func _on_Standard_pressed():
 	#Standard einladen
 	einladen(aktiverKnopf+"Standard");
+	aktualisiere_Vorschau();
 
-
-func _on_Button3_pressed():
-	pass # Replace with function body.
-
-
-func _on_Button5_pressed():
-	pass # Replace with function body.
-
-
-func _on_Button6_pressed():
-	pass # Replace with function body.
-
-
-func _on_Button7_pressed():
-	pass # Replace with function body.
 
 
 func _on_BadCoin2_pressed():
@@ -551,3 +617,22 @@ func _on_Blob_4_gerade_pressed():
 func _on_Blob_5_gerade_pressed():
 	Vorschau = "Blob";
 	CoinWechsel("Blob_5_gerade");
+
+
+func _on_ColorPickerButton_pressed():
+	Colorpickerb= true;
+
+
+func _on_Hintergrund_pressed():
+	Vorschau = "Hintergrund";
+	CoinWechsel("Hintergrund");
+	
+
+
+func _on_Kanonenkugel_pressed():
+	Vorschau = "Blob";
+	CoinWechsel("Kanonenkugel");
+
+
+func _on_UebernehmenBestaetigen_confirmed():
+	speichern(aktiverKnopf, aktiverKnopf);
