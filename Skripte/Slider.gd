@@ -16,6 +16,11 @@ func _ready():
 
 
 func _on_SprungkraftSlider_value_changed(value):
-	#spieler.sprungkraft = value
-	print (value)
-	#print(get_tree().get_root().get_child(0).get_child(0).get_node("Player"))
+	$SprungkraftAktuell.text = str(value)
+
+
+func _on_BlobSlider_value_changed(value):
+	$BlobAktuell.text = str(value)
+
+func _on_CoinSlider_value_changed(value):
+	$CoinAktuell.text = str(value)
