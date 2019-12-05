@@ -15,7 +15,7 @@ text = "Speichern"
 
 [node name="TabContainer" type="TabContainer" parent="."]
 margin_right = 467.0
-margin_bottom = 430.0
+margin_bottom = 506.0
 
 [node name="TextEdit" type="TextEdit" parent="TabContainer"]
 anchor_right = 1.0
