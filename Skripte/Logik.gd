@@ -28,8 +28,11 @@ var test5 = 0
 func erstelleMuenze():
 	
 	
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var zufall = rng.randi_range(0,9)
 	#Zufalls auswahl von einer Münze
-	var zufall = randi() % 10
+	#var zufall = randi() % 10
 
 	
 	var muenze
@@ -97,7 +100,7 @@ func _on_randomMuenze_randomAktion():
 
 #Gerade wird alle 10 Sekunden die Kanone erzeugt
 func _on_Timer_timeout():
-	pass #erstelleKanone()
+	erstelleKanone()
 
 	
 
