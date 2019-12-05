@@ -5,7 +5,7 @@
 [ext_resource path="res://Szenen/Spieler.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Bilder/TileMaps/Spieloberflaeche.tres" type="TileSet" id=4]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Node
 
 
@@ -18,11 +18,11 @@ func _ready():
 func _process(delta):
 	pass"
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 220.504, 10 )
 
 [node name="Node" type="Node"]
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="Logik" parent="." instance=ExtResource( 1 )]
 
@@ -41,7 +41,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BodenCollisionShape"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1

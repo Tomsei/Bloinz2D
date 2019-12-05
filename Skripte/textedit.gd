@@ -78,7 +78,7 @@ func save_te1():
 func save_te2():
 	save_file(te2.get_text(), "res://Skripte/Bewegung/Muenze/badCoin1.gd")
 	print("speichern")
-	OS.set_window_size(Vector2(384,512))
+	OS.set_window_size(Vector2(448,640))
 	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
 
 # Wenn ein anderer Tab sichtbar wird, wird dieser in cur_tab gespeichert.

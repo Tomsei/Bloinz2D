@@ -32,7 +32,6 @@ func erstelleMuenze():
 	rng.randomize()
 	var zufall = rng.randi_range(0,9)
 	#Zufalls auswahl von einer Münze
-	#var zufall = randi() % 10
 
 	
 	var muenze
@@ -59,14 +58,9 @@ func erstelleMuenze():
 	
 	var neu = muenze.instance()
 	
-	print (str(test1) + "  " + str(test2) + "  " + str(test3) + "  " + str(test4) + "  " + str(test5))
+	#print (str(test1) + "  " + str(test2) + "  " + str(test3) + "  " + str(test4) + "  " + str(test5))
 	 
-	#var node = load("res://Szenen/Spieler.tscn").instance()
 	#die Signale müssen verknüpft werden
-	#print(spieler.get_script())
-	#spieler.verbinde_meunze(neu)
-	# node -> 
-	#print(get_tree().get_root().get_child(0).get_child(2))
 	neu.connect("muenze_beruehrt", spieler, "_on_Muenze_muenze_beruehrt")
 	neu.connect("neueMuenze", self, "_on_Muenze_neueMuenze")
 	
