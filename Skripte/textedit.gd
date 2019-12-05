@@ -76,9 +76,10 @@ func save_te1():
 
 # Verarbeite das Speichern des Inhalts von TextEdit2.
 func save_te2():
-	var label = get_node("Label")
-	label.set_text(te2.get_text())
-	print("changed label")
+	save_file(te2.get_text(), "res://Skripte/Bewegung/Muenze/badCoin1.gd")
+	print("speichern")
+	OS.set_window_size(Vector2(384,512))
+	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
 
 # Wenn ein anderer Tab sichtbar wird, wird dieser in cur_tab gespeichert.
 func _on_TabContainer_tab_changed(tab):
@@ -89,25 +90,26 @@ func _on_TabContainer_tab_changed(tab):
 # Weise den Variabeln te1 und te2 ihre Nodes zu.
 # Lade den Inhalt der Textedits.
 func init_te():
+	var tabcontainer = get_node("TabContainer")
+	# Setze das Icon fuer die Tabs.
+	tabcontainer.set_tab_icon(0, load("res://Bilder/Standardspielfiguren/Player_Icon.png"));
+	tabcontainer.set_tab_icon(1, load("res://Bilder/Standardspielfiguren/BadCoin1_Icon.png"));
 	te1 = get_node("TabContainer/TextEdit")
 	te2 = get_node("TabContainer/TextEdit2")
 	
 	te1.set_text(lade_datei("res://Skripte/Bewegung/Player.gd"))
+	te2.set_text(lade_datei("res://Skripte/Bewegung/Muenze/badCoin1.gd"))
 	
 	finde_funktionen(te1)
+	finde_funktionen(te2)
 	# Farbe fuer Kommentare auf Gruen setzen.
 	te1.add_color_region("#", ".", Color(0,1.0,0), true)
+	te2.add_color_region("#", ".", Color(0,1.0,0), true)
 	# Name des Tabs setzten.
 	te1.name = "Spieler"
+	te2.name = "Schlechte Münze"
 	# Erster Tab bekommt Fokus beim initialisieren.
 	te1.grab_focus()
-	#Deaktiviere eine Zeile.
-	#te1.set_line_as_hidden(3, true)
-	
-	# Setze Cursor auf Zeile 30.
-	#te1.cursor_set_line(30, false)
-	var label = get_node("Label")
-	te2.set_text(label.get_text())
 
 func finde_funktionen(textedit):
 	for i in (textedit.get_line_count()):
