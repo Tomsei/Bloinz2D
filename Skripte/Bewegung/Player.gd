@@ -199,10 +199,12 @@ func blobVeranederung(var seitlich):
 		-11:
 			print ("verloren")
 		-10, -9, -8, -7, -6:
+			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.NEGATIV2:
+				# Wenn der Blob vorher groesser war wird der aktuelle Status angepasst.
 				blobstatus = blobStati.NEGATIV2
-				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Schrumpfen"])
-				$AudioStreamPlayer2D.play()
+				# Spiele den Sound fuer das Schrumpfen.
+				$AudioStreamPlayer2D.abspielen("Schrumpfen")
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
 				skalieren(0.5)
@@ -211,14 +213,13 @@ func blobVeranederung(var seitlich):
 				skalieren(0.5)
 		
 		-5, -4, -3, -2, -1:
+			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.NEGATIV1:
 				blobstatus = blobStati.NEGATIV1
-				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Schrumpfen"])
-				$AudioStreamPlayer2D.play()
+				$AudioStreamPlayer2D.abspielen("Schrumpfen")
 			elif blobstatus < blobStati.NEGATIV1:
 				blobstatus = blobStati.NEGATIV1
-				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Wachsen"])
-				$AudioStreamPlayer2D.play()
+				$AudioStreamPlayer2D.abspielen("Wachsen")
 			
 			if seitlich:
 				$AnimatedSprite.play("negativ_1_seitlich")
@@ -228,14 +229,13 @@ func blobVeranederung(var seitlich):
 				skalieren(0.7)
 		
 		0, 1, 2, 3, 4:
+			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.NEUTRAL:
 				blobstatus = blobStati.NEUTRAL
-				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Schrumpfen"])
-				$AudioStreamPlayer2D.play()
+				$AudioStreamPlayer2D.abspielen("Schrumpfen")
 			elif blobstatus < blobStati.NEUTRAL:
 				blobstatus = blobStati.NEUTRAL
-				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Wachsen"])
-				$AudioStreamPlayer2D.play()
+				$AudioStreamPlayer2D.abspielen("Wachsen")
 			
 			if seitlich:
 				$AnimatedSprite.play("neutral_seitlich")
@@ -244,14 +244,13 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("neutral_gerade")
 				skalieren(0.8)
 		5, 6, 7, 8,  9:
+			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.POSITIV1:
 				blobstatus = blobStati.POSITIV1
-				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Schrumpfen"])
-				$AudioStreamPlayer2D.play()
+				$AudioStreamPlayer2D.abspielen("Schrumpfen")
 			elif blobstatus < blobStati.POSITIV1:
 				blobstatus = blobStati.POSITIV1
-				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Wachsen"])
-				$AudioStreamPlayer2D.play()
+				$AudioStreamPlayer2D.abspielen("Wachsen")
 			
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
@@ -259,11 +258,12 @@ func blobVeranederung(var seitlich):
 			else:
 				$AnimatedSprite.play("positiv_1_gerade")
 				skalieren(0.9)
+		
 		10, 11, 12, 13, 14:
+			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus < blobStati.POSITIV2:
 				blobstatus = blobStati.POSITIV2
-				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Wachsen"])
-				$AudioStreamPlayer2D.play()
+				$AudioStreamPlayer2D.abspielen("Wachsen")
 			
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")

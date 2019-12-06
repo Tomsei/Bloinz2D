@@ -2,15 +2,15 @@
 
 [ext_resource path="res://Skripte/Bewegung/Player.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_gerade.png" type="Texture" id=2]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_gerade.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_seitlich.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_seitlich.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_gerade.png" type="Texture" id=6]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_gerade.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_seitlich.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_gerade.png" type="Texture" id=9]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_seitlich.png" type="Texture" id=10]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_seitlich.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_gerade.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_seitlich.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_seitlich.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_gerade.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_seitlich.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_gerade.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_seitlich.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_gerade.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_seitlich.png" type="Texture" id=11]
 [ext_resource path="res://Sounds/Wachsen.wav" type="AudioStream" id=12]
 [ext_resource path="res://Skripte/Sounds.gd" type="Script" id=13]
 
@@ -23,47 +23,47 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "neutral_gerade",
+"name": "positiv_2_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "negativ_2_seitlich",
+"name": "positiv_2_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "positiv_2_seitlich",
+"name": "negativ_1_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "positiv_1_gerade",
+"name": "neutral_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "negativ_1_gerade",
+"name": "negativ_2_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
-"name": "positiv_1_seitlich",
+"name": "negativ_1_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "positiv_2_gerade",
+"name": "neutral_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
-"name": "neutral_seitlich",
+"name": "positiv_1_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "negativ_1_seitlich",
+"name": "positiv_1_seitlich",
 "speed": 5.0
 } ]
 
