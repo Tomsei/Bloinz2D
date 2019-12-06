@@ -1,6 +1,5 @@
 extends Node2D
 
-
 #ready startet erst wenn onready Variablen geladen sind
 onready var raktetenTimer = get_node("RaketenTimer")
 onready var muenzTimer = get_node("MuenzTimer")

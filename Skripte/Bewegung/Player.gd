@@ -39,6 +39,9 @@ func _ready():
 	
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
+	
+	var sprungskraft_signal = load("res://Skripte/Slider.gd")
+	sprungskraft_signal.connect("aendereSprungkraft",self,"sprungkraft_geaendert")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind

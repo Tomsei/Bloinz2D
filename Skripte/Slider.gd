@@ -1,5 +1,6 @@
 extends HSlider
 
+signal aendereSprungkraft(x)
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -17,6 +18,10 @@ func _ready():
 
 func _on_SprungkraftSlider_value_changed(value):
 	$SprungkraftAktuell.text = str(value)
+	#emit_signal("aendereSprungkraft",value)
+	#get_node("res://Szenen/Spieler.tscn".).Sprungkraft
+	print("Hier ")
+	print(value)
 
 
 func _on_BlobSlider_value_changed(value):
