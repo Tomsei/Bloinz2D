@@ -29,6 +29,11 @@ var bilderSeitlich = false
 
 var bodenhoehe = 470
 
+var blobstatus = blobStati.NEUTRAL
+
+# Repraesentation der Blobstati.
+enum blobStati {NEGATIV2, NEGATIV1, NEUTRAL, POSITIV1, POSITIV2}
+
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
 	#Die Bildschirmgröße abspeichern
@@ -190,11 +195,14 @@ func blobVeranederung(var seitlich):
 	
 	#switch Casse über alle Größen des Blobs es wird jeweils das passende Bild gesetzt
 	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
-	
 	match blobGroesse:
 		-11:
 			print ("verloren")
 		-10, -9, -8, -7, -6:
+			if blobstatus > blobStati.NEGATIV2:
+				blobstatus = blobStati.NEGATIV2
+				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Schrumpfen"])
+				$AudioStreamPlayer2D.play()
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
 				skalieren(0.5)
@@ -203,6 +211,15 @@ func blobVeranederung(var seitlich):
 				skalieren(0.5)
 		
 		-5, -4, -3, -2, -1:
+			if blobstatus > blobStati.NEGATIV1:
+				blobstatus = blobStati.NEGATIV1
+				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Schrumpfen"])
+				$AudioStreamPlayer2D.play()
+			elif blobstatus < blobStati.NEGATIV1:
+				blobstatus = blobStati.NEGATIV1
+				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Wachsen"])
+				$AudioStreamPlayer2D.play()
+			
 			if seitlich:
 				$AnimatedSprite.play("negativ_1_seitlich")
 				skalieren(0.7)
@@ -211,6 +228,15 @@ func blobVeranederung(var seitlich):
 				skalieren(0.7)
 		
 		0, 1, 2, 3, 4:
+			if blobstatus > blobStati.NEUTRAL:
+				blobstatus = blobStati.NEUTRAL
+				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Schrumpfen"])
+				$AudioStreamPlayer2D.play()
+			elif blobstatus < blobStati.NEUTRAL:
+				blobstatus = blobStati.NEUTRAL
+				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Wachsen"])
+				$AudioStreamPlayer2D.play()
+			
 			if seitlich:
 				$AnimatedSprite.play("neutral_seitlich")
 				skalieren(0.8)
@@ -218,6 +244,15 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("neutral_gerade")
 				skalieren(0.8)
 		5, 6, 7, 8,  9:
+			if blobstatus > blobStati.POSITIV1:
+				blobstatus = blobStati.POSITIV1
+				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Schrumpfen"])
+				$AudioStreamPlayer2D.play()
+			elif blobstatus < blobStati.POSITIV1:
+				blobstatus = blobStati.POSITIV1
+				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Wachsen"])
+				$AudioStreamPlayer2D.play()
+			
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
 				skalieren(0.9)
@@ -225,6 +260,11 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("positiv_1_gerade")
 				skalieren(0.9)
 		10, 11, 12, 13, 14:
+			if blobstatus < blobStati.POSITIV2:
+				blobstatus = blobStati.POSITIV2
+				$AudioStreamPlayer2D.set_stream($AudioStreamPlayer2D.sounds["Wachsen"])
+				$AudioStreamPlayer2D.play()
+			
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")
 				skalieren(1.0)

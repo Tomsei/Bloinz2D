@@ -1,16 +1,18 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Skripte/Bewegung/Player.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_gerade.png" type="Texture" id=2]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_gerade.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_gerade.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_gerade.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_seitlich.png" type="Texture" id=4]
 [ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_seitlich.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_gerade.png" type="Texture" id=6]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_gerade.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_1_seitlich.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_seitlich.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_gerade.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_gerade.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_seitlich.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_5_gerade.png" type="Texture" id=9]
 [ext_resource path="res://Bilder/Standardspielfiguren/Blob_3_seitlich.png" type="Texture" id=10]
-[ext_resource path="res://Bilder/Standardspielfiguren/Blob_4_seitlich.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Standardspielfiguren/Blob_2_seitlich.png" type="Texture" id=11]
+[ext_resource path="res://Sounds/Wachsen.wav" type="AudioStream" id=12]
+[ext_resource path="res://Skripte/Sounds.gd" type="Script" id=13]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -21,12 +23,12 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "negativ_1_gerade",
+"name": "neutral_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "positiv_1_gerade",
+"name": "negativ_2_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -36,22 +38,22 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "positiv_2_gerade",
+"name": "positiv_1_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "neutral_gerade",
+"name": "negativ_1_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
-"name": "negativ_2_seitlich",
+"name": "positiv_1_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "negativ_1_seitlich",
+"name": "positiv_2_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
@@ -61,7 +63,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "positiv_1_seitlich",
+"name": "negativ_1_seitlich",
 "speed": 5.0
 } ]
 
@@ -84,3 +86,7 @@ polygon = PoolVector2Array( -9.86449, -23.0926, 10.372, -22.8038, 26.445, -5.914
 
 [node name="areaKollisionBox" type="CollisionPolygon2D" parent="Hitbox"]
 polygon = PoolVector2Array( -5.8407, -32.552, 5.91586, -32.3725, 31.0444, -7.96197, 31.8161, 22.5932, 18.1726, 36.4104, -18.0842, 37.0386, -31.9798, 21.6015, -31.6493, -10.021 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+script = ExtResource( 13 )
