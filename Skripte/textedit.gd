@@ -92,8 +92,8 @@ func _on_TabContainer_tab_changed(tab):
 func init_te():
 	var tabcontainer = get_node("TabContainer")
 	# Setze das Icon fuer die Tabs.
-	tabcontainer.set_tab_icon(0, load("res://Bilder/Standardspielfiguren/Player_Icon.png"));
-	tabcontainer.set_tab_icon(1, load("res://Bilder/Standardspielfiguren/BadCoin1_Icon.png"));
+	tabcontainer.set_tab_icon(0, load("res://Bilder/Tabicons/Player_Icon.png"));
+	tabcontainer.set_tab_icon(1, load("res://Bilder/Tabicons/BadCoin1_Icon.png"));
 	te1 = get_node("TabContainer/TextEdit")
 	te2 = get_node("TabContainer/TextEdit2")
 	
