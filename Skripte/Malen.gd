@@ -18,6 +18,8 @@ var aktuellerFarbbutton;
 var aktuellerStiftbutton;
 var aktuellerModusbutton;
 var Colorpickerb;
+var rueckgaengigstapel;
+var wiederholenstapel;
 
 
 
@@ -63,6 +65,11 @@ func _ready():
 	#Colorpickerbutton ist zu
 	Colorpickerb = false;
 	
+	rueckgaengigstapel= [];
+	rueckgaengigstapel.append(bild);
+
+	
+	
 
 
 
@@ -95,7 +102,6 @@ func punkt_malen_pixel(x,y):
 	print(xneu);
 	print(yneu);
 	bild.lock();
-	#-1?
 	for i in range(0, stiftgroesse):
 		for j in range(0, stiftgroesse):
 			bild.set_pixel(xneu+i, yneu+j, aktuelleFarbe);
@@ -106,14 +112,14 @@ func punkt_malen_pixel(x,y):
 
 
 func punkt_loeschen(x, y):
-	var xneu = floor(x/8)*8;
-	var yneu = floor(y/8)*8;
+	var xneu = floor(x/8);
+	var yneu = floor(y/8);
 	print(xneu);
 	print(yneu);
 	bild.lock();
-	for zeile in range (8*stiftgroesse):
-		for spalte in range(8*stiftgroesse):
-			bild.set_pixel(xneu+zeile-1, yneu+spalte-1, Color(0,0,0,0));
+	for i in range(0, stiftgroesse):
+		for j in range(0, stiftgroesse):
+			bild.set_pixel(xneu+i, yneu+j, Color(0,0,0,0));
 	bild.unlock();
 	textur = ImageTexture.new();
 	textur.create_from_image(bild);
@@ -161,9 +167,17 @@ func _process(delta):
 				elif modus == "Radierer":
 					punkt_loeschen((mouseposition.x-256),mouseposition.y);
 					aktualisiere_Vorschau();
+					setze_Zeichenflaeche();
 		elif Input.is_action_just_released("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
+				if rueckgaengigstapel.size()< 10:
+					var bildkopie = Image.new();
+					bildkopie.copy_from(bild);
+					rueckgaengigstapel.append(bildkopie);
+				else:
+					rueckgaengigstapel.pop_front();
+					rueckgaengigstapel.append(bild);
 				if modus=="Linie":
 					linienEnde = get_global_mouse_position();
 
@@ -637,3 +651,11 @@ func _on_Kanonenkugel_pressed():
 
 func _on_UebernehmenBestaetigen_confirmed():
 	speichern(aktiverKnopf, aktiverKnopf);
+
+
+func _on_Rueckgaengig_pressed():
+	print(rueckgaengigstapel);
+	if rueckgaengigstapel.size() > 1:
+		rueckgaengigstapel.pop_back();
+		bild = rueckgaengigstapel.back();
+		setze_Zeichenflaeche();

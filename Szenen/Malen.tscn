@@ -678,3 +678,4 @@ text = "Rueckgaengig"
 [connection signal="pressed" from="speichernVorlage4" to="Sprite2" method="_on_Design4_pressed"]
 [connection signal="pressed" from="speichernVorlage5" to="Sprite2" method="_on_Design5_pressed"]
 [connection signal="confirmed" from="UebernehmenBestaetigen" to="Sprite2" method="_on_UebernehmenBestaetigen_confirmed"]
+[connection signal="pressed" from="Rueckgaengig" to="Sprite2" method="_on_Rueckgaengig_pressed"]
