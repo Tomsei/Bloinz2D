@@ -1,4 +1,4 @@
-#Abstrakte Klasse Münze --> gibt vor was alle Münzen haben können
+#Abstrakte Klasse Münze --> gibt vor was alle Münzen haben können.
 extends KinematicBody2D
 
 """
