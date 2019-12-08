@@ -8,18 +8,17 @@ var Skriptpfade = {}
 # Icons fuer die Tabs.
 var Icons = {}
 var cur_tab = 0
+var vorheriger_tab = -1
 var funktionen = [{}]
 var variablen = [{}]
 var funktionen_mit_variablen = [{}]
 var aktuell_angezeigte_funktion
+var code_veraendert = false
 
 # Funktion welche beim start aufgerufen wird.
 func _ready():
 	# Initiiere Parameter.
 	init()
-	
-	# Tests
-	#te1.cursor_set_column(30)
 
 func init():
 	OS.set_window_size(Vector2(800,600))
@@ -28,6 +27,7 @@ func init():
 	init_Codeeditoren()
 	# Fuellt die Funktionsauswahl mit den Werten des ersten Skripts.
 	fuelle_funktionsauswahl()
+	print($Speicherdialog.get_children())
 	#init_te()
 	# Zeige die ausgewaehlte Funktion an.
 	#setze_aktuell_angezeigte_funktion()
@@ -63,33 +63,18 @@ func save_file(text, pfad):
 
 # Wird aufgerufen, wenn der Knopf losgelassen wird.
 func _on_Button_button_up():
-	# Godot version von switch.
-	# cur_tab ist der aktuell sichtbare Tab.
-	match cur_tab:
-		0:
-			print("tab 1")
-			save_te1()
-		1:
-			print("tab 2")
-			save_te2()
+	speicher_skript(cur_tab)
 
-# Verarbeite das Speichern des Inhalts von TextEdit.
-func save_te1():
-	#save_file(te1.get_text(), "res://Skripte/Bewegung/Player.gd")
-	print("speichern")
-	OS.set_window_size(Vector2(448,640))
-	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
-	
-
-# Verarbeite das Speichern des Inhalts von TextEdit2.
-func save_te2():
-	#save_file(te2.get_text(), "res://Skripte/Bewegung/Muenze/badCoin1.gd")
-	print("speichern")
-	OS.set_window_size(Vector2(448,640))
-	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+# Ruft die Speicherfunktion fuer einen uebergebenen Tab auf.
+func speicher_skript(tabindex):
+	var texteditor = $TabContainer.get_child(tabindex)
+	save_file(texteditor.get_text(), Skriptpfade.get(texteditor.name))
 
 # Wenn ein anderer Tab sichtbar wird, wird dieser in cur_tab gespeichert.
 func _on_TabContainer_tab_changed(tab):
+	if code_veraendert:
+		vorheriger_tab = cur_tab
+		$Speicherdialog.popup()
 	cur_tab = tab
 	# Damit beim ersten Aufruf der Szene nicht unnoetig die Funktinoen geadded werden.
 	if !funktionen[cur_tab].empty():
@@ -138,6 +123,7 @@ func init_Codeeditoren():
 		tabcontainer.get_child(i).syntax_highlighting = true
 		# Zeigt Zeilennummern an.
 		tabcontainer.get_child(i).show_line_numbers = true
+		tabcontainer.get_child(i).connect("text_changed", self, "_text_wurde_veraendert")
 		# Suche nach Funktionen in dem Codeeditor.
 		finde_funktionen(tabcontainer.get_child(i) , i)
 	# Der erste Codeeditor bekommt den Fokus.
@@ -151,37 +137,15 @@ func fuelle_funktionsauswahl():
 	for i in range(funktionen[cur_tab].size()):
 		get_node("Funktionsauswahl").add_item(funktionen[cur_tab].keys()[i])
 
-
-# Weise den Variabeln te1 und te2 ihre Nodes zu.
-# Lade den Inhalt der Textedits.
-#func init_te():
-	#var tabcontainer = get_node("TabContainer")
-	# Setze das Icon fuer die Tabs.
-	#tabcontainer.set_tab_icon(0, load("res://Bilder/Tabicons/Player_Icon.png"));
-	#tabcontainer.set_tab_icon(1, load("res://Bilder/Tabicons/BadCoin1_Icon.png"));
-	#te1 = get_node("TabContainer/TextEdit")
-	#te2 = get_node("TabContainer/TextEdit2")
-	
-	#te1.set_text(lade_datei("res://Skripte/Bewegung/Player.gd"))
-	#te2.set_text(lade_datei("res://Skripte/Bewegung/Muenze/badCoin1.gd"))
-	
-	#finde_funktionen(te1)
-	#finde_funktionen(te2)
-	# Farbe fuer Kommentare auf Gruen setzen.
-	#te1.add_color_region("#", ".", Color(0,1.0,0), true)
-	#te2.add_color_region("#", ".", Color(0,1.0,0), true)
-	# Name des Tabs setzten.
-	#te1.name = "Spieler"
-	#te2.name = "Schlechte Münze"
-	# Erster Tab bekommt Fokus beim initialisieren.
-	#te1.grab_focus()
-
+# Findet Funktionen und Variablen in einem Codeeditor und speichert diese in Variablen.
+# Ebenfalls werden die in den Funktionen genutzten Variablen diesen zugewiesen.
 func finde_funktionen(textedit, skriptindex):
 	for i in (textedit.get_line_count()):
 		setze_funktion(textedit, textedit.get_line(i), i, skriptindex)
 		setze_variable(textedit, textedit.get_line(i), i, skriptindex)
 	weise_variablen_funktionen_zu(skriptindex)
 
+# Falls eine Funktion in der uebergebenen Zeile gefunden wird, wird sie in eine Variable geschrieben.
 func setze_funktion(textedit, text, zeile, skriptindex):
 	var index = 0
 	var funktion_gefunden = (text.find("func ", index) != -1)
@@ -199,6 +163,7 @@ func setze_funktion(textedit, text, zeile, skriptindex):
 				break
 	return funktion_gefunden
 
+# Falls in der uebergebenen Zeile eine Variable gefunden wurde, wird diese in eine Variable geschrieben.
 func setze_variable(textedit, text, zeile, skriptindex):
 	var index = 0
 	var variable_gefunden = (text.find("export", 0) != -1 || text.substr(0,3) == "var")
@@ -233,11 +198,13 @@ func zeige_zeilen(start_zeile, end_zeile):
 	for i in range(start_zeile, end_zeile + 1):
 		get_node("TabContainer").get_child(cur_tab).set_line_as_hidden(i, false)
 
+# Zeigt die Variblen die zu einer Funktion gehoeren.
 func zeige_variablen_von_funktion(funktionsname):
 	var gelesene_variablen = funktionen_mit_variablen[cur_tab][funktionsname]
 	for variable in gelesene_variablen:
 		zeige_zeilen(variablen[cur_tab][variable][0], variablen[cur_tab][variable][1])
 
+# Setzt die Variable fuer die aktuell angezeigte Funktion.
 func setze_aktuell_angezeigte_funktion():
 	aktuell_angezeigte_funktion = get_node("Funktionsauswahl").get_item_text(get_node("Funktionsauswahl").selected)
 
@@ -252,13 +219,16 @@ func _on_Funktionsauswahl_getroffen(ID):
 		zeige_zeilen(funktionen[cur_tab].get(aktuell_angezeigte_funktion)[0],funktionen[cur_tab].get(aktuell_angezeigte_funktion)[1])
 		zeige_variablen_von_funktion(aktuell_angezeigte_funktion)
 
+# Verstecke alle Zeilen.
 func verstecke_alles():
 	for i in range($TabContainer.get_child(cur_tab).get_line_count()):
 		$TabContainer.get_child(cur_tab).set_line_as_hidden(i, true)
 
+# Zeige alle Zeilen.
 func zeige_alles():
 	$TabContainer.get_child(cur_tab).unhide_all_lines()
 
+# Weist die Variablen welche in einer Funktion genutzt werden dieser zu.
 func weise_variablen_funktionen_zu(skriptindex):
 	# Hole zu letzt gefundene Funktionen
 	var gelesene_funktionen = funktionen[skriptindex].keys()
@@ -266,6 +236,7 @@ func weise_variablen_funktionen_zu(skriptindex):
 	for i in range(gelesene_funktionen.size()):
 		suche_variable_in_funktion(gelesene_funktionen[i], funktionen[skriptindex].get(gelesene_funktionen[i])[0],funktionen[skriptindex].get(gelesene_funktionen[i])[1], gelesene_variablen, skriptindex)
 
+# Sucht und speichert Variablen in Funktionen.
 func suche_variable_in_funktion(funktions_name, funktions_anfang, funktions_ende, variablen, skriptindex):
 	var zeile
 	# Ab dem Skriptindex 1 muss ein neuer Arraywert angehaengt werden.
@@ -277,3 +248,23 @@ func suche_variable_in_funktion(funktions_name, funktions_anfang, funktions_ende
 		for j in range(variablen.size()):
 			if zeile.find(variablen[j], 0) != -1 && !funktionen_mit_variablen[skriptindex][funktions_name].has(variablen[j]):
 				funktionen_mit_variablen[skriptindex][funktions_name].append(variablen[j])
+
+# Wird ausgefuehrt, wenn der Zurueckbutton gedrueckt wird.
+func _on_Zurueck_button_up():
+	OS.set_window_size(Vector2(448,640))
+	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+
+# Wird aufgerufen wenn der Text eine Codeeditors veraendert wird.
+func _text_wurde_veraendert():
+	code_veraendert = true
+
+# Wenn im Popupdialog Ja gedrueckt wird.
+func _on_Speicherdialog_speichern():
+	speicher_skript(vorheriger_tab)
+	$Speicherdialog.hide()
+	code_veraendert = false
+
+# Wenn im Popupdialog Nein gedrueckt wird.
+func _on_nicht_speichern():
+	$Speicherdialog.hide()
+	code_veraendert = false
