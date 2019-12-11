@@ -8,7 +8,6 @@ Erbt die Methoden und Variablen von der Super Klasse muenze
 """
 
 
-
 """
 Methode zum verändern der Flugbahn der Münze, 
 sodass sie in Richtung des Spielers fliegt
@@ -18,8 +17,6 @@ um eine passende Geschwindigkeit in Blob Richtung zu errechnen
 
 @param xPosSpieler die XPosition des Spielers
 """
-
-
 func muenzMagnet(var xPosSpieler):
 	
 	#Bestimmten der X Entfernung zum Spieler
