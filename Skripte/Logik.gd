@@ -15,7 +15,7 @@ func _ready():
 	raktetenTimer.start()
 	muenzTimer.set_wait_time(1)
 	muenzTimer.start()
-	randomCoinZeit.set_wait_time(30)
+	randomCoinZeit.set_wait_time(5)
 	randomCoinZeit.start()
 	
 	erstelleMuenze()
@@ -109,7 +109,7 @@ func _on_randomMuenze_randomAktion():
 	
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var zufall = rng.randi_range(2,2)
+	var zufall = rng.randi_range(0,2)
 
 	match zufall:
 		0: randomAktion_erstelleMuenzen()
