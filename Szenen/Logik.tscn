@@ -9,5 +9,8 @@ script = ExtResource( 1 )
 autostart = true
 
 [node name="MuenzTimer" type="Timer" parent="."]
+
+[node name="RandomCoinZeit" type="Timer" parent="."]
 [connection signal="timeout" from="RaketenTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="MuenzTimer" to="." method="_on_MuenzTimer_timeout"]
+[connection signal="timeout" from="RandomCoinZeit" to="." method="_on_RandomCoinZeit_timeout"]

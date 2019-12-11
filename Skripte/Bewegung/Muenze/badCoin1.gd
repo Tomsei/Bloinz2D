@@ -12,5 +12,8 @@ func _ready():
 	Geschwindigkeit = 200
 
 
+"""
+Methode um Badcoin vom Regenschirm verschwinden zu lassen
+"""
 func blockiereMuenze():
 	queue_free()

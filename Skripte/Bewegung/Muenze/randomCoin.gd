@@ -12,6 +12,12 @@ func _ready():
 	coinWert = 5
 	Geschwindigkeit = 100
 	
+
+
+"""
+Methode fallen aus der Superklasse überschrieben
+Zusätzlich zu dem Normalen Fallen soll noch die Kurven Bewegung mit einberechnet werden
+"""
 func fallen():
 	Bewegung.y = Geschwindigkeit
 	berechneKurve()
@@ -22,10 +28,16 @@ func fallen():
 		queue_free()
 		
 
+
+
 #Variablen für die Kurven Berechnung
 var kurvenbreite = 200
 var inRechtsBewegung = false
 
+
+"""
+Methode zum Berechnen der besonderen Flugkurve eines Random Coins
+"""
 func berechneKurve():
 	if(Bewegung.x > kurvenbreite):
 		inRechtsBewegung = false
@@ -37,6 +49,14 @@ func berechneKurve():
 	else:
 		Bewegung.x -= 5
 
+
+
+"""
+Methode zum reagieren auf eine Kollision mit der Spielerfigur 
+--> wird aufgerufen, sobald die Spielfigur eine Kollision mit dem RandomCoin registriert
+
+Senden des Signals das eine Random Aktion folgen soll
+"""
 func blobKollision():
 	
 	emit_signal("randomAktion")

@@ -34,6 +34,7 @@ var UP_Vektor = Vector2(0, -1) #Wo ist Oben
 var screen_size
 var bodenhoehe = 473
 
+
 """
 Beim Initialisieren der Szene / Klasse (Konstruktor) der Münze werden
 -Bildgröße des Spiels ermittelt
@@ -84,9 +85,6 @@ func ZufallsPosition():
 	position.y = 0
 	
 
-
-#Bei Kollision mit Blob wird die Methode aufgerufen 
-#--> Die Münze schmeißt die Signale, dass sie weg ist und wird dann entfernt
 
 """
 Methode zum reagieren auf eine Kollision mit der Spielerfigur 

@@ -35,6 +35,8 @@ func _physics_process(delta):
 	else:
 		bewegunglinks()
 
+
+
 func kanoneRechts():
 	position.x = -50 #negativ damit die Kanone in das Bild rein fliegt
 

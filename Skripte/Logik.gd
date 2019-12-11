@@ -4,17 +4,33 @@ extends Node2D
 #ready startet erst wenn onready Variablen geladen sind
 onready var raktetenTimer = get_node("RaketenTimer")
 onready var muenzTimer = get_node("MuenzTimer")
+onready var randomCoinZeit = get_node("RandomCoinZeit")
 
 onready var spieler = get_tree().get_root().get_child(0).get_child(2)
 
+var muenzmagnetAktiv = false
 
 func _ready():
 	raktetenTimer.set_wait_time(20)
 	raktetenTimer.start()
 	muenzTimer.set_wait_time(1)
 	muenzTimer.start()
+	randomCoinZeit.set_wait_time(30)
+	randomCoinZeit.start()
+	
 	erstelleMuenze()
 
+
+func _process(delta):
+	uebermittelCoinMagnet()
+
+
+func uebermittelCoinMagnet():
+	if muenzmagnetAktiv:
+		var kinder = get_children()
+		for i in kinder.size():
+			if kinder[i].has_method("muenzMagnet"):
+				kinder[i].muenzMagnet(spieler.position.x)
 
 
 var test1 = 0
@@ -30,7 +46,7 @@ func erstelleMuenze():
 	
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var zufall = rng.randi_range(0,9)
+	var zufall = rng.randi_range(0,10)
 	#Zufalls auswahl von einer Münze
 
 	
@@ -39,7 +55,7 @@ func erstelleMuenze():
 	#Switch über zufällige Zahl, damit eine zufallsmünze erstellt wird
 	match zufall:
 		0,1,2: 
-			muenze = load("res://Szenen/Muenzen/randomCoin.tscn")
+			muenze = load("res://Szenen/Muenzen/goodCoin1.tscn")
 			test1 = test1+1
 			istrandom = true
 		2,3,4: 
@@ -51,7 +67,7 @@ func erstelleMuenze():
 		7,8: 
 			muenze = load("res://Szenen/Muenzen/badCoin2.tscn")
 			test4 = test4+1
-		9: 
+		9,10: 
 			muenze = load("res://Szenen/Muenzen/randomCoin.tscn")
 			test5 = test5+1
 			istrandom = true
@@ -85,11 +101,38 @@ func erstelleKanone():
 	add_child(neu)
 
 
+"""
+Methode die eine Random Aktion auswählt,
+sobald ein Random Coin berührt wurde
+"""
 func _on_randomMuenze_randomAktion():
-	for i in  5:
+	
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var zufall = rng.randi_range(2,2)
+
+	match zufall:
+		0: randomAktion_erstelleMuenzen()
+		1: randomAktion_erstelleSchutz()
+		2: randomAktion_muenzMagnet()
+
+
+
+func randomAktion_erstelleMuenzen():
+	for i in 5:
 		erstelleMuenze()
 
 
+func randomAktion_erstelleSchutz():
+	
+	spieler.get_node("Schutz").show()
+
+
+func randomAktion_muenzMagnet():
+	muenzmagnetAktiv = true
+	randomCoinZeit.start()
+	
+	
 
 
 #Gerade wird alle 10 Sekunden die Kanone erzeugt
@@ -100,3 +143,7 @@ func _on_Timer_timeout():
 
 func _on_MuenzTimer_timeout():
 	erstelleMuenze()
+
+
+func _on_RandomCoinZeit_timeout():
+	muenzmagnetAktiv = false
