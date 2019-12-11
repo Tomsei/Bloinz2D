@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 #Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
-export var speed = 300
+export var speed = 700
 export var Schwerkraft = 400
 export var Sprungkraft = 500
 
@@ -18,7 +18,7 @@ var UP_Vector = Vector2(0,-1)
 #Blob Eigenschaften
 var doppelterSprung = false # wurde doppelSprung bereits ausgeführt oder nicht?
 
-var blobHoehe = 409 #maximaleBLobhöhe in Sprung
+var hoechsteBlobHoehe = 409 #maximaleBLobhöhe in Sprung
 var bounceAnzahl = 0
 var bounceEffekt = 1000 - position.y # Wie start soll er wieder springen
 var sprungRestBewegung = 0
@@ -59,7 +59,7 @@ func _physics_process(delta):
 	
 	#die BauneKraft berechnen, sofern der Blob vorher noch nicht gebounce ist
 	if bounceAnzahl == 0:
-		bounceEffekt = 1000-blobHoehe 
+		bounceEffekt = 1000-hoechsteBlobHoehe 
 	
 	#nach einem Sprung soll die Bounce Fähigkeit gegeben sein
 	sprungUpdate()
@@ -111,12 +111,27 @@ func checkTastenEingabe():
 
 
 #Sprung Funktion
+"""
+Methode zum springen
+Der Sprung wird in 4 unterschiedliche Verhaltensweisen aufgeteilt
+1. Der Blob befindet sind auf dem Boden
+--> Der Blob soll normal Springen, 
+
+2. Der Blob befindet sich auf dem Boden ist aber nocht im Bounce Durchgang
+--> Kein Springen ist möglich
+
+3. Der Blob befindet sich in der Luft und hat noch keinen Doppelsprung ausgeführt
+--> Der Blob soll ebenfalls springen können
+
+4. Der Blob befindet sich in der Luft und hat bereits einen Doppelsprung ausgeführt
+--> es ist kein Sprung für den Blob erlaubt
+"""
 func sprung():
 	
 	#Die Blob Höhe auf Bodenhöhe setzen, damit für den Sprung neue höchste Höhe ermittelt werden kann
-	blobHoehe = bodenhoehe
+	hoechsteBlobHoehe = bodenhoehe
 	
-	
+	#Der Blob befindet sich auf dem Boden
 	if is_on_floor():
 		doppelterSprung = false
 		Bewegung.y = - Sprungkraft
@@ -132,30 +147,40 @@ func sprung():
 		doppelterSprung = true
 
 
-#Prozedur welche die Höchste Position in einem Flug abspeichert
+"""
+Methode zum ermitteln der höchsten Position des Spielers nach seinem Flug
+Es wird geprüft ob aktuelle höhe des Spielers höher ist als die gespeicherte.
+Wenn sie Höher ist wird neue blobHoehe gespeichert
+"""
 func ermittelMaximalHoehe():
 	
 	if !is_on_floor():
-		if position.y < blobHoehe:
-			blobHoehe = position.y
+		if position.y < hoechsteBlobHoehe:
+			hoechsteBlobHoehe = position.y
 
 
 
-#beinhaltet Funktionen, das beispielsweise ein Bounce des Blobs statfindet
-#Auch das die Sprungrichtung noch leicht "nachzieht" ist hier mit enthalten
+"""
+Methode um die fortlaufenden Bewegungen des Blobs zu berechnen
+1. es wird das Bouncen Des Blobs berechnent und ausgeführt
+2. Das die Sprungrichtung noch leicht 'nachzieht' beim springen
+
+Es soll ein zusätzliches Bouncen (Impuls nach oben) stattfinden,
+wenn zuvor nicht zu oft gesprungen wurde + Blob auf dem Boden ist
+"""
 func sprungUpdate():
 	
-	#Ein weiterer Impuls soll gebeben werden, sofern Blob auf dem Boden und nicht zu oft gesprungen ist. 
-	#Sicherstellen, dass on Floor nur für den Boden getriggert
+	#Bounce nur wenn BLob auf boden + Bounceanzahl nicht überschritten 
 	if is_on_floor() and bounceAnzahl < 3 and position.y > bodenhoehe and not Input.is_action_just_pressed("jump"):
-		bounceEffekt = bounceEffekt/2
-		Bewegung.y = -bounceEffekt
-		bounceAnzahl = bounceAnzahl+1
-		sprungRestBewegung = 0
-		
+		bounceEffekt = bounceEffekt/2        #nächste Bounce halb so hoch
+		Bewegung.y = -bounceEffekt           #Bounce Impuls setzen
+		bounceAnzahl = bounceAnzahl+1        
+		sprungRestBewegung = 0               #Kein nachziehen, au auf dem boden liegt
+	
+	#In der Luft ohne weitere Richtungseingabe
 	elif !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_right") and !is_on_floor():
-		sprungRestBewegung = sprungRestBewegung / 1.05
-		Bewegung.x = sprungRestBewegung
+		sprungRestBewegung = sprungRestBewegung / 1.05        #Bewegungsgeschwindigkeit des Nachziehens verringern
+		Bewegung.x = sprungRestBewegung                       #weiter in Richtung nachziehen
 
 
 
@@ -276,10 +301,6 @@ Ebenfalls werden im Anschluss die Texturen verändert, sofern das nötig ist
 func _on_Muenze_muenze_beruehrt(wert):
 		blobGroesse = blobGroesse + wert
 		blobVeranederung(false)
-
-
-func verbinde_meunze(muenze):
-	muenze.connect("muenze_beruehrt", self, "_on_Muenze_muenze_beruehrt")
 
 
 """

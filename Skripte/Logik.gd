@@ -9,7 +9,7 @@ onready var spieler = get_tree().get_root().get_child(0).get_child(2)
 
 
 func _ready():
-	raktetenTimer.set_wait_time(2)
+	raktetenTimer.set_wait_time(20)
 	raktetenTimer.start()
 	muenzTimer.set_wait_time(1)
 	muenzTimer.start()

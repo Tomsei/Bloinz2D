@@ -10,3 +10,7 @@ Erbt die Methoden und Variablen von der Super Klasse Muenze
 func _ready():
 	coinWert = -1
 	Geschwindigkeit = 200
+
+
+func blockiereMuenze():
+	queue_free()
