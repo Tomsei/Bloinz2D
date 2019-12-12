@@ -33,7 +33,7 @@ var bodenhoehe = 470
 func _ready():
 	#Die Bildschirmgröße abspeichern
 	screen_size = get_viewport_rect().size
-	position.x = screen_size.x/2
+	position.x = 224
 	
 	skalieren(0.8) #Kollisionshapes auf Startgröße skalieren
 	
