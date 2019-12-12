@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Originale/Skripte/Editoren/textedit.gd" type="Script" id=1]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 553.729
+margin_top = 346.394
+margin_right = 694.729
+margin_bottom = 426.394
+text = "Speichern"
+
+[node name="TabContainer" type="TabContainer" parent="."]
+margin_right = 467.0
+margin_bottom = 506.0
+
+[node name="Label" type="Label" parent="."]
+margin_left = 478.0
+margin_top = 25.0
+margin_right = 560.0
+margin_bottom = 39.0
+text = "Funktionen:"
+
+[node name="Funktionsauswahl" type="OptionButton" parent="."]
+margin_left = 475.0
+margin_top = 46.0
+margin_right = 646.0
+margin_bottom = 66.0
+text = "Funktion auswählen!"
+
+[node name="Zurueck" type="Button" parent="."]
+margin_left = 557.651
+margin_top = 442.701
+margin_right = 569.651
+margin_bottom = 462.701
+text = "Zurück"
+
+[node name="Speicherdialog" type="WindowDialog" parent="."]
+visible = true
+margin_left = 69.0
+margin_top = 124.0
+margin_right = 278.0
+margin_bottom = 219.0
+window_title = "Änderungen speichern?"
+
+[node name="Speicherdialogtext2" type="Label" parent="Speicherdialog"]
+margin_left = 30.4998
+margin_top = 19.95
+margin_right = 180.5
+margin_bottom = 33.95
+text = "Änderungen speichern?"
+
+[node name="Knopfcontainer" type="HBoxContainer" parent="Speicherdialog"]
+margin_left = 31.4498
+margin_top = 51.2501
+margin_right = 181.45
+margin_bottom = 71.2501
+
+[node name="Nein" type="Button" parent="Speicherdialog/Knopfcontainer"]
+margin_right = 73.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Nein"
+
+[node name="Ja" type="Button" parent="Speicherdialog/Knopfcontainer"]
+margin_left = 77.0
+margin_right = 150.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Ja"
+[connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]
+[connection signal="tab_changed" from="TabContainer" to="." method="_on_TabContainer_tab_changed"]
+[connection signal="item_selected" from="Funktionsauswahl" to="." method="_on_Funktionsauswahl_getroffen"]
+[connection signal="button_up" from="Zurueck" to="." method="_on_Zurueck_button_up"]
+[connection signal="button_up" from="Speicherdialog/Knopfcontainer/Nein" to="." method="_on_nicht_speichern"]
+[connection signal="button_up" from="Speicherdialog/Knopfcontainer/Ja" to="." method="_on_Speicherdialog_speichern"]
