@@ -23,7 +23,7 @@ var bounceAnzahl = 0
 var bounceEffekt = 1000 - position.y # Wie start soll er wieder springen
 var sprungRestBewegung = 0
 
-var blobGroesse = 2 #die aktuelle Größe und das Blob Aussehen wird hierraus bestimmt
+var blobGroesse = 12 #die aktuelle Größe und das Blob Aussehen wird hierraus bestimmt
 # --> Unterschiedliche Blobphasen aufgeteilt in 10 Schritte --> -10 | -5 | 0 | 5 | 10
 var bilderSeitlich = false
 
@@ -39,6 +39,9 @@ func _ready():
 	
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
+	
+	var sprungskraft_signal = load("res://Skripte/Slider.gd")
+	sprungskraft_signal.connect("aendereSprungkraft",self,"sprungkraft_geaendert")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind
@@ -217,9 +220,9 @@ func blobVeranederung(var seitlich):
 	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
 	
 	match blobGroesse:
-		-11:
+		-1:
 			print ("verloren")
-		-10, -9, -8, -7, -6:
+		0, 1, 2, 3, 4:
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
 				skalieren(0.5)
@@ -227,7 +230,7 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("negativ_2_gerade")
 				skalieren(0.5)
 		
-		-5, -4, -3, -2, -1:
+		5, 6, 7, 8, 9:
 			if seitlich:
 				$AnimatedSprite.play("negativ_1_seitlich")
 				skalieren(0.7)
@@ -235,28 +238,28 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("negativ_1_gerade")
 				skalieren(0.7)
 		
-		0, 1, 2, 3, 4:
+		10, 11, 12, 13, 14:
 			if seitlich:
 				$AnimatedSprite.play("neutral_seitlich")
 				skalieren(0.8)
 			else:
 				$AnimatedSprite.play("neutral_gerade")
 				skalieren(0.8)
-		5, 6, 7, 8,  9:
+		15, 16, 17, 18, 19:
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
 				skalieren(0.9)
 			else:
 				$AnimatedSprite.play("positiv_1_gerade")
 				skalieren(0.9)
-		10, 11, 12, 13, 14:
+		20, 21, 22, 23, 24:
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")
 				skalieren(1.0)
 			else:
 				$AnimatedSprite.play("positiv_2_gerade")
 				skalieren(1.0)
-		15:
+		25:
 			print ("gewonnen")
 
 """

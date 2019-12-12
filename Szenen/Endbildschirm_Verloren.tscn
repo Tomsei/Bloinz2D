@@ -38,7 +38,7 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 6 )
 
 [node name="Blob_verloren" type="Sprite" parent="."]
-position = Vector2( 356.393, 423.965 )
+position = Vector2( 356.393, 424.965 )
 texture = ExtResource( 7 )
 [connection signal="button_up" from="NochmalSpielen" to="NochmalSpielen" method="_on_NochmalSpielen_button_up"]
 [connection signal="button_up" from="Optionen" to="Optionen" method="_on_Optionen_button_up"]

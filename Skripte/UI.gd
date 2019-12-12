@@ -8,9 +8,9 @@ func _ready():
 func _process(delta):
 	$Punkte.text = str(spieler.blobGroesse)
 	$PunkteAnzeige.value = spieler.blobGroesse
-	if spieler.blobGroesse <= -11:
+	if spieler.blobGroesse < 0:
 		get_tree().change_scene("res://Szenen/Endbildschirm_Verloren.tscn")
-	if spieler.blobGroesse >= 15:
+	if spieler.blobGroesse >= 25:
 		get_tree().change_scene("res://Szenen/Endbildschirm_Gewonnen.tscn")
 
 func _on_Optionen_button_up():
