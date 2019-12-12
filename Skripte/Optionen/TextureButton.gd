@@ -14,55 +14,55 @@ func _ready():
 
 func _on_Start_button_up():
 	print("Spiel starten")
-	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
 	
 func _on_Nochmal_button_up():
 	print("Erneut spielen")
-	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
 	
 func _on_Optionen_button_up():
 	print("Einstellungen")
-	get_tree().change_scene("res://Szenen/Optionen.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Optionen.tscn")
 
 func _on_CodeEditor_button_up():
 	print("gehe zum Editor")
-	get_tree().change_scene("res://Szenen/textedit.tscn")
+	get_tree().change_scene("res://Szenen/Editoren/textedit.tscn")
 
 func _on_MalenEditor_button_up():
 	print("Wechsle zum malen")
-	get_tree().change_scene("res://Szenen/Malen.tscn")
+	get_tree().change_scene("res://Szenen/Editoren/Malen.tscn")
 
 
 func _on_SpielStarten_button_up():
 	print("Spiel starten")
-	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
 
 
 func _on_NochmalSpielen_button_up():
 	print("Erneut spielen")
-	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
 
 
 func _on_mehr_pressed():
 	print("Weitere Einstellungen")
-	get_tree().change_scene("res://Szenen/WeitereOptionen.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/WeitereOptionen.tscn")
 
 
 func _on_zurueck_button_up():
 	print("Zurück zu Einstellungen")
-	get_tree().change_scene("res://Szenen/Optionen.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Optionen.tscn")
 
 
 func _on_zumSpiel_button_up():
 	print("Spielen")
-	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
 
 
 func _on_CodeAnpassen_button_up():
 	print("gehe zum Editor")
-	get_tree().change_scene("res://Szenen/textedit.tscn")
+	get_tree().change_scene("res://Szenen/Editoren/textedit.tscn")
 
 
 func _on_DemoEinstellen_button_up():
 	print("Demo Einstellungen")
-	get_tree().change_scene("res://Szenen/DemoEinstellungen.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/DemoEinstellungen.tscn")

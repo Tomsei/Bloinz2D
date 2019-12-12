@@ -5,9 +5,6 @@
 [ext_resource path="res://Szenen/Spielfiguren/Spieler.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Bilder/TileMaps/Spieloberflaeche.tres" type="TileSet" id=4]
 
-
-
-
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
 

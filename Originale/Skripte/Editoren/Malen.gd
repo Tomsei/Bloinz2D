@@ -344,7 +344,7 @@ func _on_gro_pressed():
 
 
 func _on_Zurueck_button_up():
-	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
 	OS.set_window_size(Vector2(448,640))
 
 

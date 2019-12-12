@@ -40,7 +40,7 @@ func _ready():
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
 	
-	var sprungskraft_signal = load("res://Skripte/Slider.gd")
+	var sprungskraft_signal = load("res://Skripte/Optionen/Slider.gd")
 	sprungskraft_signal.connect("aendereSprungkraft",self,"sprungkraft_geaendert")
 
 

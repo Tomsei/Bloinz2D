@@ -10,7 +10,7 @@ onready var spieler = get_tree().get_root().get_child(0).get_child(2)
 var muenzmagnetAktiv = false
 
 func _ready():
-	raktetenTimer.set_wait_time(20)
+	raktetenTimer.set_wait_time(2)
 	raktetenTimer.start()
 	muenzTimer.set_wait_time(1)
 	muenzTimer.start()
@@ -91,7 +91,7 @@ func _on_Muenze_neueMuenze():
 	
 #Methode zum erstellen einer neuen Instanz der Szene / Klasse Kanone
 func erstelleKanone():
-	var kanone = load("res://Szenen/Kanone.tscn")
+	var kanone = load("res://Szenen/Spielfiguren/Kanone.tscn")
 	
 	var neu = kanone.instance()
 	
@@ -142,7 +142,7 @@ func _on_Timer_timeout():
 
 func _on_MuenzTimer_timeout():
 	erstelleMuenze()
-
+	print("TEST")
 
 func _on_RandomCoinZeit_timeout():
 	muenzmagnetAktiv = false

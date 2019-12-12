@@ -22,6 +22,7 @@ func _on_SprungkraftSlider_value_changed(value):
 	#get_node("res://Szenen/Spieler.tscn".).Sprungkraft
 	print("Hier ")
 	print(value)
+	emit_signal("aendereSprungkraft",value)
 
 
 func _on_BlobSlider_value_changed(value):

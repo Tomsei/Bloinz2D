@@ -1,4 +1,4 @@
-extends "res://Skripte/Bewegung/Muenze/Muenze.gd"
+extends "res://Skripte/Aktionen/Muenze/Muenze.gd"
 
 """
 Szene / Klasse für die schlechten Coins Typ 1
