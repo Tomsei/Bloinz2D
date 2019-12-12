@@ -185,6 +185,7 @@ margin_bottom = 36.6539
 text = "weitere Farben:"
 
 [node name="Line2D" type="Line2D" parent="."]
+position = Vector2( 2, 3 )
 points = PoolVector2Array( 251, 0, 251, 512, 768, 512 )
 width = 4.0
 default_color = Color( 0, 0, 0, 1 )
@@ -510,6 +511,7 @@ texture = ExtResource( 19 )
 [node name="Blob" type="Sprite" parent="."]
 position = Vector2( 64.434, 535 )
 z_index = 2
+z_as_relative = false
 texture = ExtResource( 26 )
 
 [node name="Hintergrund0" type="Sprite" parent="."]
@@ -607,6 +609,16 @@ window_title = "Bitte bestätigen"
 dialog_text = "Das aktuelle Zeichnung als momentane Spielfigur übernehmen?
 Das alte wird gelöscht, sofern es nicht in den Vorlagen gespeichert ist"
 
+[node name="CoinWechsel" type="ConfirmationDialog" parent="."]
+margin_left = 296.036
+margin_top = 194.575
+margin_right = 738.036
+margin_bottom = 316.575
+window_title = "Bitte bestätigen"
+dialog_text = "Möchtest du wirklich die akutell zu bearbeitende Figur ändern? 
+Falls du dein Design noch nicht gespeichert hats, geht es verloren."
+dialog_hide_on_ok = false
+
 [node name="Wiederholen" type="Button" parent="."]
 margin_left = 130.275
 margin_top = 315.182
@@ -678,4 +690,6 @@ text = "Rueckgaengig"
 [connection signal="pressed" from="speichernVorlage4" to="Sprite2" method="_on_Design4_pressed"]
 [connection signal="pressed" from="speichernVorlage5" to="Sprite2" method="_on_Design5_pressed"]
 [connection signal="confirmed" from="UebernehmenBestaetigen" to="Sprite2" method="_on_UebernehmenBestaetigen_confirmed"]
+[connection signal="confirmed" from="CoinWechsel" to="Sprite2" method="_on_CoinWechsel_confirmed"]
+[connection signal="popup_hide" from="CoinWechsel" to="Sprite2" method="_on_CoinWechsel_popup_hide"]
 [connection signal="pressed" from="Rueckgaengig" to="Sprite2" method="_on_Rueckgaengig_pressed"]

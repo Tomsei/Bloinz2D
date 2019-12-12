@@ -66,7 +66,11 @@ func _ready():
 	Colorpickerb = false;
 	
 	rueckgaengigstapel= [];
-	rueckgaengigstapel.append(bild);
+	var bildkopie = Image.new();
+	bildkopie.copy_from(bild);
+	rueckgaengigstapel.push_back(bildkopie);
+	print("Startstapel");
+	print(rueckgaengigstapel);
 
 	
 	
@@ -99,8 +103,6 @@ Eingabe y: y-Wert vom Pixel unten links
 func punkt_malen_pixel(x,y):
 	var xneu = floor(x/8);
 	var yneu = floor(y/8);
-	print(xneu);
-	print(yneu);
 	bild.lock();
 	for i in range(0, stiftgroesse):
 		for j in range(0, stiftgroesse):
@@ -127,8 +129,8 @@ func punkt_loeschen(x, y):
 
 func befuellen():
 	bild.lock();
-	for x in range(511):
-		for y in range(511):
+	for x in range(64):
+		for y in range(64):
 			array[x][y] = bild.get_pixel(x,y);
 	bild.unlock();
 
@@ -143,17 +145,15 @@ func _process(delta):
 				if modus == "Linie":
 					linienStart= mouseposition;
 				elif modus =="Fuellen":
-						array = create_2d_array(512,512,Color(0,0,0,0));
+						array = create_2d_array(64,64,Color(0,0,0,0));
 						befuellen();
-						fuellen(aktuelleFarbe,mouseposition.x-256,mouseposition.y, array[mouseposition.x-256][mouseposition.y]);
+						fuellen(aktuelleFarbe,(mouseposition.x-256/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
 						bild.lock();
-						for zeile in range(511):
-							for spalte in range(511):
+						for zeile in range(64):
+							for spalte in range(64):
 								bild.set_pixel(zeile, spalte,array[zeile][spalte]);
 						bild.unlock();
-						textur = ImageTexture.new();
-						textur.create_from_image(bild);
-						texture= textur;
+						setze_Zeichenflaeche();
 						print("durch");
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
@@ -169,17 +169,23 @@ func _process(delta):
 					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
 		elif Input.is_action_just_released("draw"):
+			print("losgelassen");
+			
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
+				print("bin drin");
 				if rueckgaengigstapel.size()< 10:
 					var bildkopie = Image.new();
 					bildkopie.copy_from(bild);
-					rueckgaengigstapel.append(bildkopie);
+					rueckgaengigstapel.push_back(bildkopie);
 				else:
 					rueckgaengigstapel.pop_front();
-					rueckgaengigstapel.append(bild);
+					var bildkopie = Image.new();
+					bildkopie.copy_from(bild);
+					rueckgaengigstapel.push_back(bildkopie);
 				if modus=="Linie":
 					linienEnde = get_global_mouse_position();
+			print(rueckgaengigstapel);
 
 """
 speichert die Zeichenfläche als png
@@ -362,11 +368,11 @@ func fuellen(neueFarbe,x,y, alteFarbe):
 		besuchtePunkte.append(koordinaten);
 		if(array[koordinaten.x][koordinaten.y] == alteFarbe):
 			array[koordinaten.x][koordinaten.y]= neueFarbe;
-			if( koordinaten.x+1 <511 and besuchtePunkte.find(Vector2(koordinaten.x+1,koordinaten.y))== -1):
+			if( koordinaten.x+1 <63 and besuchtePunkte.find(Vector2(koordinaten.x+1,koordinaten.y))== -1):
 				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
 			if(koordinaten.x-1>0 and besuchtePunkte.find(Vector2(koordinaten.x-1,koordinaten.y))== -1):
 				Punktstapel.push_front(Vector2(koordinaten.x-1,koordinaten.y));
-			if(koordinaten.y+1 < 511 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y+1))== -1):
+			if(koordinaten.y+1 < 63 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y+1))== -1):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y+1));
 			if(koordinaten.y-1 >0 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y-1))== -1):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y-1));
@@ -487,7 +493,7 @@ welche Spielfigur oder der Hintergrund gerade bearbeitet wird
 """
 func aktualisiere_Vorschau():
 	var texturklein = ImageTexture.new();
-	texturklein.create_from_image(bild);
+	texturklein.create_from_image(bild,0);
 	if Vorschau == "Blob" or Vorschau == "Coin":
 		get_node("../"+Vorschau).texture = texturklein;
 	else:
@@ -655,7 +661,16 @@ func _on_UebernehmenBestaetigen_confirmed():
 
 func _on_Rueckgaengig_pressed():
 	print(rueckgaengigstapel);
-	if rueckgaengigstapel.size() > 1:
+	if rueckgaengigstapel.size() > 0:
 		rueckgaengigstapel.pop_back();
-		bild = rueckgaengigstapel.back();
+		bild.copy_from(rueckgaengigstapel.back());
 		setze_Zeichenflaeche();
+		aktualisiere_Vorschau();
+
+
+func _on_CoinWechsel_confirmed():
+	pass # Replace with function body.
+
+
+func _on_CoinWechsel_popup_hide():
+	pass # Replace with function body.
