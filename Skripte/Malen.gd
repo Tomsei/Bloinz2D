@@ -3,22 +3,23 @@ extends Sprite
 
 var bildgroesse;
 var aktuelleFarbe;
-var modus = "Stift";
+var modus;
 var linienStart;
 var linienEnde;
-var bresenham;
 var stiftgroesse;
+#sich auf der Zeichenfläche befindende Bild
 var bild;
 var textur;
 var array;
 var aktiverKnopf;
 var alterModus;
 var Vorschau;
-var bildkopie;
 var aktuellerFarbbutton;
 var aktuellerStiftbutton;
 var aktuellerModusbutton;
 var Colorpickerb;
+var rueckgaengigstapel;
+var wiederholenstapel;
 
 
 
@@ -34,20 +35,20 @@ func _ready():
 	get_node("../ColorPickerButton").color = Color(1,1,1,1);
 	
 	#Stiftgroesse voreinstellen
+	modus = "Stift";
 	stiftgroesse = 1;
 	aktuellerStiftbutton = get_node("../klein");
 	aktuellerStiftbutton.pressed= true;
 	aktuellerModusbutton = get_node("../Stift");
 	aktuellerModusbutton.pressed= true;
 	
-	
-	bildgroesse = 512;
+	#64*64 groesses Bild was gespeichert wird
+	bildgroesse = 64;
 	bild = Image.new();
 	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA4444);
 	textur = ImageTexture.new();
 	aktiverKnopf=" ";
-	#Kopie der Zeichenfläche in 64*64
-	bildkopie = Image.new();
+
 	
 	#Anfangsknopf auf ersten Blob setzen
 	aktiverKnopf= "Blob_1_gerade";
@@ -64,13 +65,18 @@ func _ready():
 	#Colorpickerbutton ist zu
 	Colorpickerb = false;
 	
-
-
-func bildkopie_erstellen():
+	rueckgaengigstapel= [];
+	var bildkopie = Image.new();
 	bildkopie.copy_from(bild);
-	bildkopie.lock();
-	bildkopie.resize(64,64,1);
-	bildkopie.unlock();
+	rueckgaengigstapel.push_back(bildkopie);
+	print("Startstapel");
+	print(rueckgaengigstapel);
+
+	
+	
+
+
+
 
 func create_2d_array(width, height, value):
     var a = []
@@ -88,37 +94,19 @@ func create_2d_array(width, height, value):
 func Knoepfe_zuruecksetzen():
 	pass
 
-func linie_malen():
-	draw_primitive( PoolVector2Array([Vector2(303,303)]), PoolColorArray( [Color(1,1,1)]), PoolVector2Array());
-
 """ 
-malt einen 8*8 großen Punkt auf die Zeichenfläche
+malt einen Punkt auf das 64 * 64 große Bild
+dabei wird darauf geachtet, dass ...
 Eingabe x: x-Wert vom Pixel unten links
 Eingabe y: y-Wert vom Pixel unten links 
-"""
-	
-func punkt_malen(x, y):
-	var xgross = x*8;
-	var ygross = y*8;
-	bild.lock();
-	for zeile in range (9):
-		for spalte in range(9):
-			bild.set_pixel(xgross+zeile,ygross+spalte, aktuelleFarbe)
-	bild.unlock();
-	textur = ImageTexture.new();
-	textur.create_from_image(bild);
-	texture= textur;
-	
-	
+"""	
 func punkt_malen_pixel(x,y):
-	var xneu = floor(x/8)*8;
-	var yneu = floor(y/8)*8;
-	print(xneu);
-	print(yneu);
+	var xneu = floor(x/8);
+	var yneu = floor(y/8);
 	bild.lock();
-	for zeile in range (8*stiftgroesse):
-		for spalte in range(8*stiftgroesse):
-			bild.set_pixel(xneu+zeile-1, yneu+spalte-1, aktuelleFarbe)
+	for i in range(0, stiftgroesse):
+		for j in range(0, stiftgroesse):
+			bild.set_pixel(xneu+i, yneu+j, aktuelleFarbe);
 	bild.unlock();
 	textur = ImageTexture.new();
 	textur.create_from_image(bild);
@@ -126,14 +114,14 @@ func punkt_malen_pixel(x,y):
 
 
 func punkt_loeschen(x, y):
-	var xneu = floor(x/8)*8;
-	var yneu = floor(y/8)*8;
+	var xneu = floor(x/8);
+	var yneu = floor(y/8);
 	print(xneu);
 	print(yneu);
 	bild.lock();
-	for zeile in range (8*stiftgroesse):
-		for spalte in range(8*stiftgroesse):
-			bild.set_pixel(xneu+zeile-1, yneu+spalte-1, Color(0,0,0,0));
+	for i in range(0, stiftgroesse):
+		for j in range(0, stiftgroesse):
+			bild.set_pixel(xneu+i, yneu+j, Color(0,0,0,0));
 	bild.unlock();
 	textur = ImageTexture.new();
 	textur.create_from_image(bild);
@@ -141,11 +129,14 @@ func punkt_loeschen(x, y):
 
 func befuellen():
 	bild.lock();
-	for x in range(511):
-		for y in range(511):
+	for x in range(64):
+		for y in range(64):
 			array[x][y] = bild.get_pixel(x,y);
 	bild.unlock();
 
+"""
+Methode, die bei jedem neuen Time_Frame aufgerufen wird
+"""
 func _process(delta):
 	if Colorpickerb == false:
 		if Input.is_action_just_pressed("draw"):
@@ -154,62 +145,74 @@ func _process(delta):
 				if modus == "Linie":
 					linienStart= mouseposition;
 				elif modus =="Fuellen":
-						array = create_2d_array(512,512,Color(0,0,0,0));
+						array = create_2d_array(64,64,Color(0,0,0,0));
 						befuellen();
-						fuellen(aktuelleFarbe,mouseposition.x-256,mouseposition.y, array[mouseposition.x-256][mouseposition.y]);
+						fuellen(aktuelleFarbe,(mouseposition.x-256/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
 						bild.lock();
-						for zeile in range(511):
-							for spalte in range(511):
+						for zeile in range(64):
+							for spalte in range(64):
 								bild.set_pixel(zeile, spalte,array[zeile][spalte]);
 						bild.unlock();
-						textur = ImageTexture.new();
-						textur.create_from_image(bild);
-						texture= textur;
+						setze_Zeichenflaeche();
 						print("durch");
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
 				if modus=="Linie":
 					linienEnde = get_global_mouse_position();
-					bresenham = false;
-					update();
 				elif modus=="Stift":
 					punkt_malen_pixel((mouseposition.x-256),mouseposition.y);
 					aktualisiere_Vorschau();
+					setze_Zeichenflaeche();
 				elif modus == "Radierer":
 					punkt_loeschen((mouseposition.x-256),mouseposition.y);
 					aktualisiere_Vorschau();
+					setze_Zeichenflaeche();
 		elif Input.is_action_just_released("draw"):
+			print("losgelassen");
+			
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
+				print("bin drin");
+				if rueckgaengigstapel.size()< 10:
+					var bildkopie = Image.new();
+					bildkopie.copy_from(bild);
+					rueckgaengigstapel.push_back(bildkopie);
+				else:
+					rueckgaengigstapel.pop_front();
+					var bildkopie = Image.new();
+					bildkopie.copy_from(bild);
+					rueckgaengigstapel.push_back(bildkopie);
 				if modus=="Linie":
 					linienEnde = get_global_mouse_position();
-					bresenham = true;
-					update();
+			print(rueckgaengigstapel);
 
-
-
-
+"""
+speichert die Zeichenfläche als png
+"""
 func speichern(bildname, Knopf):
-	
-	bildkopie_erstellen();
 
 	#Bild in den Dateien speichern
-	bildkopie.save_png("Bilder/Standardspielfiguren/"+bildname+".png");
+	bild.save_png("Bilder/Standardspielfiguren/"+bildname+".png");
 	
 	#Knopf aktualisieren
 	knopf_aktualisieren(Knopf);
 
+"""
+aktualisiert die Vorschau eines Knopfes
+@param Name - Name des Knopfes der aktualisiert werden soll
+"""
 func knopf_aktualisieren(Name):
 	
 	
 	var buttontextur = ImageTexture.new()
-	buttontextur.create_from_image(bildkopie);
+	buttontextur.create_from_image(bild);
 	#Knopf mit aktualisiertem Bild
 	var Pfad = "../"+ Name;
 	get_node(Pfad).icon= buttontextur;
 
-
+"""
+"""
 
 func _on_ColorPickerButton_popup_closed():
 	aktuellerFarbbutton.pressed= false;
@@ -237,7 +240,9 @@ func _on_Radierer_pressed():
 	aktuellerModusbutton = get_node("../Radierer");
 	modus = "Radierer";
 
-
+"""
+TODO
+"""
 func _on_Spiegeln_pressed():
 	var hilfe;
 	bild.lock();
@@ -338,18 +343,6 @@ func _on_gro_pressed():
 	stiftgroesse= 3;
 
 
-func _on_Button2_button_up():
-	bild = Image.new();
-	bild.load("Bilder/figur.png");
-	bild.lock();
-	bild.resize(512,512,1);
-	bild.unlock();
-	textur = ImageTexture.new();
-	textur.create_from_image(bild);
-	texture = textur;
-
-
-
 func _on_Zurueck_button_up():
 	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
 	OS.set_window_size(Vector2(448,640))
@@ -375,11 +368,11 @@ func fuellen(neueFarbe,x,y, alteFarbe):
 		besuchtePunkte.append(koordinaten);
 		if(array[koordinaten.x][koordinaten.y] == alteFarbe):
 			array[koordinaten.x][koordinaten.y]= neueFarbe;
-			if( koordinaten.x+1 <511 and besuchtePunkte.find(Vector2(koordinaten.x+1,koordinaten.y))== -1):
+			if( koordinaten.x+1 <63 and besuchtePunkte.find(Vector2(koordinaten.x+1,koordinaten.y))== -1):
 				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
 			if(koordinaten.x-1>0 and besuchtePunkte.find(Vector2(koordinaten.x-1,koordinaten.y))== -1):
 				Punktstapel.push_front(Vector2(koordinaten.x-1,koordinaten.y));
-			if(koordinaten.y+1 < 511 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y+1))== -1):
+			if(koordinaten.y+1 < 63 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y+1))== -1):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y+1));
 			if(koordinaten.y-1 >0 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y-1))== -1):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y-1));
@@ -421,8 +414,11 @@ func _on_GoodCoin1_button_down():
 	Vorschau = "Coin";
 	CoinWechsel("GoodCoin1");
 
-	
-	
+"""
+Prozedur, die aufgerufen wird, falls ein Knopf der unteren Leiste gedrückt wird
+Damit wechselt sich die Spielfigur, deren Design gerade bearbeitet wird
+@param name - Name der neu zu bearbeitenden Spielfigur
+"""
 func CoinWechsel(name):
 	
 	
@@ -434,6 +430,7 @@ func CoinWechsel(name):
 	
 	#Einladen auf die Zeichenfläche
 	einladen(name);
+
 	
 	#Standardbutton setzen
 	setze_Standardbutton(name);
@@ -443,25 +440,45 @@ func CoinWechsel(name):
 	
 	#Vorschau setzen
 	aktualisiere_Vorschau();
-	
+
+"""
+lädt ein Bild aus den Dateien in die Variable bild ein
+"""	
 func einladen(pfad):
 	bild = Image.new();
 	bild.load("Bilder/Standardspielfiguren/"+pfad+".png");
-	bild.lock();
-	bild.resize(512,512,1);
-	bild.unlock();
-	textur = ImageTexture.new();
-	textur.create_from_image(bild);
-	texture = textur;
+	setze_Zeichenflaeche();
+
+
+"""
+setzt die Textur der Zeichenfläche als Vergrößerung von der Variable bild
+"""
+func setze_Zeichenflaeche():
+	# Kopie und Vergrößerung
+	var bildkopie = Image.new();
+	bildkopie.copy_from(bild);
+	bildkopie.lock();
+	bildkopie.resize(512,512,1);
+	bildkopie.unlock();
 	
-func setze_Standardbutton(pfad):
+	#Zuweisen der Textur
+	textur.create_from_image(bildkopie);
+	texture = textur;
+
+"""
+lädt das Standardbild als Textur in den Button ein  #setze Button
+"""
+func setze_Standardbutton(name):
 	var icon = Image.new();
-	icon.load("Bilder/Standardspielfiguren/"+pfad+"Standard.png");
+	icon.load("Bilder/Standardspielfiguren/"+name+"Standard.png");
 	var buttontextur = ImageTexture.new();
 	buttontextur.create_from_image(icon);
 	get_node("../Standard").icon= buttontextur;
 
-
+"""
+lädt die eigenen Designs und Vorlagen für die zu bearbeitende Spielfigur
+als Vorschau in die jeweiligen Buttons
+"""
 func setze_Vorlagen():
 	for i in range(1,6):
 		var icon = Image.new();
@@ -470,19 +487,21 @@ func setze_Vorlagen():
 		buttontextur.create_from_image(icon);
 		get_node("../Vorlage"+str(i)).icon= buttontextur;
 
-
-
+"""
+aktualisiert das Vorschaubild an der linken Seite je nachdem, 
+welche Spielfigur oder der Hintergrund gerade bearbeitet wird
+"""
 func aktualisiere_Vorschau():
-	bildkopie_erstellen();
 	var texturklein = ImageTexture.new();
-	texturklein.create_from_image(bildkopie);
+	texturklein.create_from_image(bild,0);
 	if Vorschau == "Blob" or Vorschau == "Coin":
 		get_node("../"+Vorschau).texture = texturklein;
 	else:
 		for i in range(0,9):
 			get_node("../"+Vorschau+str(i)).texture = texturklein;	
 	
-	
+"""
+"""
 func _on_Speichern_pressed():
 	get_node("../UebernehmenBestaetigen").show();
 	alterModus= modus;
@@ -496,11 +515,13 @@ func _on_Vorlage_pressed():
 	
 	get_node("../VorlageBestaetigen").show();
 
-
+"""
+setzt die Zeichenfläche mit durchsichtigen Pixeln
+"""
 func _on_Leeren_pressed():
 	bild.fill(Color(0,0,0,0));
-	textur.create_from_image(bild);
-	texture = textur;
+	setze_Zeichenflaeche();
+
 
 
 
@@ -636,3 +657,20 @@ func _on_Kanonenkugel_pressed():
 
 func _on_UebernehmenBestaetigen_confirmed():
 	speichern(aktiverKnopf, aktiverKnopf);
+
+
+func _on_Rueckgaengig_pressed():
+	print(rueckgaengigstapel);
+	if rueckgaengigstapel.size() > 0:
+		rueckgaengigstapel.pop_back();
+		bild.copy_from(rueckgaengigstapel.back());
+		setze_Zeichenflaeche();
+		aktualisiere_Vorschau();
+
+
+func _on_CoinWechsel_confirmed():
+	pass # Replace with function body.
+
+
+func _on_CoinWechsel_popup_hide():
+	pass # Replace with function body.
