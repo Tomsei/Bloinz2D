@@ -56,3 +56,13 @@ func _on_zurueck_button_up():
 func _on_zumSpiel_button_up():
 	print("Spielen")
 	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+
+
+func _on_CodeAnpassen_button_up():
+	print("gehe zum Editor")
+	get_tree().change_scene("res://Szenen/textedit.tscn")
+
+
+func _on_DemoEinstellen_button_up():
+	print("Demo Einstellungen")
+	get_tree().change_scene("res://Szenen/DemoEinstellungen.tscn")

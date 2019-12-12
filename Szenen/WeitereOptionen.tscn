@@ -7,11 +7,11 @@
 [ext_resource path="res://Skripte/Slider.gd" type="Script" id=5]
 [ext_resource path="res://Bilder/Buttons/Optionen/tempoBlob.png" type="Texture" id=6]
 [ext_resource path="res://Bilder/Buttons/Optionen/tempoCoins.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Buttons/codeAnpassen_normal.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Buttons/codeAnpassen_pressed.png" type="Texture" id=9]
-[ext_resource path="res://Bilder/Buttons/Optionen/zurueck_normal.png" type="Texture" id=10]
-[ext_resource path="res://Bilder/Buttons/Optionen/zurueck_pressed.png" type="Texture" id=11]
-[ext_resource path="res://Skripte/TextureButton.gd" type="Script" id=12]
+[ext_resource path="res://Bilder/Buttons/Optionen/code_normal.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Buttons/Optionen/code_pressed.png" type="Texture" id=9]
+[ext_resource path="res://Skripte/TextureButton.gd" type="Script" id=10]
+[ext_resource path="res://Bilder/Buttons/Optionen/zurueck_normal.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Buttons/Optionen/zurueck_pressed.png" type="Texture" id=12]
 [ext_resource path="res://Bilder/Buttons/Optionen/spielen_normal.png" type="Texture" id=13]
 [ext_resource path="res://Bilder/Buttons/Optionen/spielen_pressed.png" type="Texture" id=14]
 
@@ -93,6 +93,7 @@ custom_icons/grabber_highlight = ExtResource( 4 )
 custom_icons/grabber = ExtResource( 4 )
 min_value = 1.0
 value = 50.0
+ticks_on_borders = true
 script = ExtResource( 5 )
 
 [node name="CoinAktuell" type="Label" parent="tempoCoins/CoinSlider"]
@@ -104,12 +105,13 @@ custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "100"
 
 [node name="CodeAnpassen" type="TextureButton" parent="."]
-margin_left = 65.7565
-margin_top = 447.589
-margin_right = 381.757
-margin_bottom = 503.589
+margin_left = 66.0
+margin_top = 448.0
+margin_right = 316.0
+margin_bottom = 504.0
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 9 )
+script = ExtResource( 10 )
 
 [node name="zurueck" type="TextureButton" parent="."]
 anchor_right = 1.0
@@ -118,9 +120,9 @@ margin_left = 65.9248
 margin_top = 530.0
 margin_right = 215.925
 margin_bottom = 586.0
-texture_normal = ExtResource( 10 )
-texture_pressed = ExtResource( 11 )
-script = ExtResource( 12 )
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
+script = ExtResource( 10 )
 
 [node name="zumSpiel" type="TextureButton" parent="."]
 margin_left = 231.856
@@ -129,9 +131,10 @@ margin_right = 381.856
 margin_bottom = 581.291
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
-script = ExtResource( 12 )
+script = ExtResource( 10 )
 [connection signal="value_changed" from="Sprungkraft/SprungkraftSlider" to="Sprungkraft/SprungkraftSlider" method="_on_SprungkraftSlider_value_changed"]
 [connection signal="value_changed" from="tempoBlob/BlobSlider" to="tempoBlob/BlobSlider" method="_on_BlobSlider_value_changed"]
 [connection signal="value_changed" from="tempoCoins/CoinSlider" to="tempoCoins/CoinSlider" method="_on_CoinSlider_value_changed"]
+[connection signal="button_up" from="CodeAnpassen" to="CodeAnpassen" method="_on_CodeAnpassen_button_up"]
 [connection signal="button_up" from="zurueck" to="zurueck" method="_on_zurueck_button_up"]
 [connection signal="button_up" from="zumSpiel" to="zumSpiel" method="_on_zumSpiel_button_up"]
