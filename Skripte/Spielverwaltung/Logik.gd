@@ -1,7 +1,7 @@
 extends Node2D
 
 #ready startet erst wenn onready Variablen geladen sind
-onready var raktetenTimer = get_node("RaketenTimer")
+onready var raketenTimer = get_node("RaketenTimer")
 onready var muenzTimer = get_node("MuenzTimer")
 onready var randomCoinZeit = get_node("RandomCoinZeit")
 
@@ -10,8 +10,8 @@ onready var spieler = get_tree().get_root().get_child(0).get_child(2)
 var muenzmagnetAktiv = false
 
 func _ready():
-	raktetenTimer.set_wait_time(2)
-	raktetenTimer.start()
+	raketenTimer.set_wait_time(2)
+	raketenTimer.start()
 	muenzTimer.set_wait_time(1)
 	muenzTimer.start()
 	randomCoinZeit.set_wait_time(5)
@@ -57,7 +57,7 @@ func erstelleMuenze():
 			muenze = load("res://Szenen/Muenzen/goodCoin1.tscn")
 			test1 = test1+1
 			istrandom = true
-		2,3,4: 
+		3,4: 
 			muenze = load("res://Szenen/Muenzen/goodCoin2.tscn")
 			test2 = test2+1
 		5,6: 
@@ -142,7 +142,6 @@ func _on_Timer_timeout():
 
 func _on_MuenzTimer_timeout():
 	erstelleMuenze()
-	print("TEST")
 
 func _on_RandomCoinZeit_timeout():
 	muenzmagnetAktiv = false

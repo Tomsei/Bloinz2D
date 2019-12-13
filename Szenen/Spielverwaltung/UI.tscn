@@ -15,13 +15,6 @@ margin_right = 426.408
 margin_bottom = 64.8318
 texture_normal = ExtResource( 2 )
 
-[node name="Punkte" type="RichTextLabel" parent="."]
-margin_left = 31.7986
-margin_top = 33.3945
-margin_right = 71.7986
-margin_bottom = 73.3945
-text = "1"
-
 [node name="PunkteAnzeige" type="TextureProgress" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0

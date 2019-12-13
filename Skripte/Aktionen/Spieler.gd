@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 #Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
-export var speed = 700
+export var speed = 300
 export var Schwerkraft = 400
 export var Sprungkraft = 500
 
@@ -315,3 +315,6 @@ Textur des Blobs wird ebenfalls angepasst
 func _on_Kanone_kanoneberuehrte():
 	blobGroesse = blobGroesse - 5
 	blobVeranederung(false)
+	
+func test():
+	print("HALLO")

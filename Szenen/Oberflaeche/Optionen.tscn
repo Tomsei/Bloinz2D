@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Bilder/TileMaps/Optionen.tres" type="TileSet" id=1]
 [ext_resource path="res://Bilder/Buttons/Optionen/Einstellungen.png" type="Texture" id=2]
@@ -8,17 +8,20 @@
 [ext_resource path="res://Bilder/Buttons/Optionen/randomCoinAn.png" type="Texture" id=6]
 [ext_resource path="res://Bilder/Buttons/Optionen/Schwierigkeit.png" type="Texture" id=7]
 [ext_resource path="res://Bilder/Buttons/Optionen/slider.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Buttons/Optionen/designAnpassen_normal.png" type="Texture" id=9]
-[ext_resource path="res://Bilder/Buttons/Optionen/designAnpassen_pressed.png" type="Texture" id=10]
-[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=11]
-[ext_resource path="res://Bilder/Buttons/Optionen/mehr_normal.png" type="Texture" id=12]
-[ext_resource path="res://Bilder/Buttons/Optionen/mehr_pressed.png" type="Texture" id=13]
-[ext_resource path="res://Bilder/Buttons/Optionen/spielen_normal.png" type="Texture" id=14]
-[ext_resource path="res://Bilder/Buttons/Optionen/spielen_pressed.png" type="Texture" id=15]
-[ext_resource path="res://Bilder/Buttons/Optionen/demoversion_Aus.png" type="Texture" id=16]
-[ext_resource path="res://Bilder/Buttons/Optionen/demoversion_An.png" type="Texture" id=17]
-[ext_resource path="res://Bilder/Buttons/Optionen/einstellen_normal.png" type="Texture" id=18]
-[ext_resource path="res://Bilder/Buttons/Optionen/einstellen_pressed.png" type="Texture" id=19]
+[ext_resource path="res://Skripte/Optionen/Slider.gd" type="Script" id=9]
+[ext_resource path="res://Bilder/Buttons/Optionen/designAnpassen_normal.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Buttons/Optionen/designAnpassen_pressed.png" type="Texture" id=11]
+[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=12]
+[ext_resource path="res://Bilder/Buttons/Optionen/mehr_normal.png" type="Texture" id=13]
+[ext_resource path="res://Bilder/Buttons/Optionen/mehr_pressed.png" type="Texture" id=14]
+[ext_resource path="res://Bilder/Buttons/Optionen/spielen_normal.png" type="Texture" id=15]
+[ext_resource path="res://Bilder/Buttons/Optionen/spielen_pressed.png" type="Texture" id=16]
+[ext_resource path="res://Bilder/Buttons/Optionen/demoversion_Aus.png" type="Texture" id=17]
+[ext_resource path="res://Bilder/Buttons/Optionen/demoversion_An.png" type="Texture" id=18]
+[ext_resource path="res://Bilder/Buttons/Optionen/einstellen_normal.png" type="Texture" id=19]
+[ext_resource path="res://Bilder/Buttons/Optionen/einstellen_pressed.png" type="Texture" id=20]
+[ext_resource path="res://Szenen/Oberflaeche/WeitereOptionen.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Szenen/Oberflaeche/DemoEinstellungen.tscn" type="PackedScene" id=22]
 
 [node name="Optionen" type="Node2D"]
 __meta__ = {
@@ -58,7 +61,7 @@ position = Vector2( 112, 250 )
 texture = ExtResource( 7 )
 centered = false
 
-[node name="HSlider" type="HSlider" parent="Schwierigkeit"]
+[node name="SchwierigkeitSlider" type="HSlider" parent="Schwierigkeit"]
 margin_top = 68.0
 margin_right = 224.0
 margin_bottom = 84.0
@@ -69,41 +72,42 @@ max_value = 5.0
 value = 3.0
 tick_count = 5
 ticks_on_borders = true
+script = ExtResource( 9 )
 
 [node name="MalenEditor" type="TextureButton" parent="."]
 margin_left = 67.2793
 margin_top = 442.217
 margin_right = 383.279
 margin_bottom = 498.217
-texture_normal = ExtResource( 9 )
-texture_pressed = ExtResource( 10 )
-script = ExtResource( 11 )
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 11 )
+script = ExtResource( 12 )
 
 [node name="mehr" type="TextureButton" parent="."]
 margin_left = 67.2168
 margin_top = 530.0
 margin_right = 217.217
 margin_bottom = 590.335
-texture_normal = ExtResource( 12 )
-texture_pressed = ExtResource( 13 )
-script = ExtResource( 11 )
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
+script = ExtResource( 12 )
 
 [node name="zumSpiel" type="TextureButton" parent="."]
 margin_left = 233.164
 margin_top = 530.0
 margin_right = 383.164
 margin_bottom = 590.448
-texture_normal = ExtResource( 14 )
-texture_pressed = ExtResource( 15 )
-script = ExtResource( 11 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 16 )
+script = ExtResource( 12 )
 
 [node name="Demoversion" type="CheckButton" parent="."]
 margin_left = 60.8808
 margin_top = 362.55
 margin_right = 322.881
 margin_bottom = 426.55
-custom_icons/off = ExtResource( 16 )
-custom_icons/on = ExtResource( 17 )
+custom_icons/off = ExtResource( 17 )
+custom_icons/on = ExtResource( 18 )
 pressed = true
 
 [node name="DemoEinstellen" type="TextureButton" parent="."]
@@ -111,9 +115,16 @@ margin_left = 326.425
 margin_top = 366.719
 margin_right = 382.425
 margin_bottom = 422.719
-texture_normal = ExtResource( 18 )
-texture_pressed = ExtResource( 19 )
-script = ExtResource( 11 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 20 )
+script = ExtResource( 12 )
+
+[node name="WeitereOptionen" parent="." instance=ExtResource( 21 )]
+visible = false
+
+[node name="DemoEinstellungen" parent="." instance=ExtResource( 22 )]
+visible = false
+[connection signal="value_changed" from="Schwierigkeit/SchwierigkeitSlider" to="Schwierigkeit/SchwierigkeitSlider" method="_on_SchwierigkeitSlider_value_changed"]
 [connection signal="button_up" from="MalenEditor" to="MalenEditor" method="_on_MalenEditor_button_up"]
 [connection signal="pressed" from="mehr" to="mehr" method="_on_mehr_pressed"]
 [connection signal="button_up" from="zumSpiel" to="zumSpiel" method="_on_zumSpiel_button_up"]

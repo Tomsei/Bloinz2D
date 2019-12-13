@@ -1,10 +1,7 @@
 extends HSlider
 
-signal aendereSprungkraft(x)
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-#onready var spieler = get_tree().get_root().get_child(0).get_node("Player")
+onready var spieler = get_tree().get_root().get_child(0).get_node("Player")
+onready var rakete = get_tree().get_root().get_child(0).get_node("Logik").get_node("RaketenTimer")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,15 +15,19 @@ func _ready():
 
 func _on_SprungkraftSlider_value_changed(value):
 	$SprungkraftAktuell.text = str(value)
-	#emit_signal("aendereSprungkraft",value)
-	#get_node("res://Szenen/Spieler.tscn".).Sprungkraft
-	print("Hier ")
-	print(value)
-	emit_signal("aendereSprungkraft",value)
+	spieler.Sprungkraft = value
 
 
 func _on_BlobSlider_value_changed(value):
 	$BlobAktuell.text = str(value)
+	spieler.speed = value
 
-func _on_CoinSlider_value_changed(value):
-	$CoinAktuell.text = str(value)
+func _on_SchwierigkeitSlider_value_changed(value):
+	#spieler.connect("aendereSprungkraft",self,"test")
+	#emit_signal("aendereSprungkraft",value)
+	print(spieler.blobGroesse)
+
+
+func _on_RaketenSlider_value_changed(value):
+	$RaketeAktuell.text = str(value)
+	rakete.set_wait_time(value)
