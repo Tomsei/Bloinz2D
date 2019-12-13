@@ -180,18 +180,15 @@ func _process(delta):
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
 				print("bin drin");
 				wiederholenstapel = [];
-				if rueckgaengigstapel.size()< 10:
-					var bildkopie = Image.new();
-					bildkopie.copy_from(bild);
-					rueckgaengigstapel.push_back(bildkopie);
-				else:
-					rueckgaengigstapel.pop_front();
-					var bildkopie = Image.new();
-					bildkopie.copy_from(bild);
-					rueckgaengigstapel.push_back(bildkopie);
+				Abbild_auf_Rueckgaengigstapel();
 				if modus=="Linie":
 					linienEnde = get_global_mouse_position();
 			print(rueckgaengigstapel);
+			#Timer 
+		elif Input.is_action_pressed("undo"):
+			mache_rueckgaengig();
+		elif Input.is_action_pressed("redo"):
+			wiederhole();
 
 """
 speichert die Zeichenfläche als png
@@ -681,7 +678,9 @@ func _on_UebernehmenBestaetigen_confirmed():
 
 
 func _on_Rueckgaengig_pressed():
-	
+	mache_rueckgaengig();
+
+func mache_rueckgaengig():
 	if rueckgaengigstapel.size() > 1:
 		wiederholenstapel.push_back(rueckgaengigstapel.pop_back());
 		print(rueckgaengigstapel.back());
@@ -691,14 +690,15 @@ func _on_Rueckgaengig_pressed():
 		aktualisiere_Vorschau();
 
 func _on_Wiederholen_pressed():
+	wiederhole();
+
+func wiederhole():
 	if wiederholenstapel.size() > 0:
 		bild.copy_from(wiederholenstapel.back());
 		rueckgaengigstapel.push_back(wiederholenstapel.pop_back());
 		print(wiederholenstapel);
 		setze_Zeichenflaeche();
 		aktualisiere_Vorschau();
-
-
 
 func _on_CoinWechsel_confirmed():
 	pass # Replace with function body.
@@ -747,7 +747,23 @@ func setze_an_unteren_Bildrand():
 	bildkopie.unlock();
 	setze_Zeichenflaeche();
 	aktualisiere_Vorschau();
+	Abbild_auf_Rueckgaengigstapel();
 
 
 func _on_Bildrand_pressed():
 	setze_an_unteren_Bildrand();
+	
+"""
+Methode, die augerufen wird, sobald sich etwas auf der Zeichenfläche ändert
+macht ein aktuelles Abbild der Zeichenfläche auf den Rückgängigstapel
+"""
+func Abbild_auf_Rueckgaengigstapel():
+	if rueckgaengigstapel.size()< 10:
+		var bildkopie = Image.new();
+		bildkopie.copy_from(bild);
+		rueckgaengigstapel.push_back(bildkopie);
+	else:
+		rueckgaengigstapel.pop_front();
+		var bildkopie = Image.new();
+		bildkopie.copy_from(bild);
+		rueckgaengigstapel.push_back(bildkopie);
