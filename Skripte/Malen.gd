@@ -20,6 +20,10 @@ var aktuellerModusbutton;
 var Colorpickerb;
 var rueckgaengigstapel;
 var wiederholenstapel;
+var minx;
+var maxx;
+var miny;
+var maxy;
 
 
 
@@ -172,7 +176,6 @@ func _process(delta):
 					setze_Zeichenflaeche();
 		elif Input.is_action_just_released("draw"):
 			print("losgelassen");
-			
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
 				print("bin drin");
@@ -377,7 +380,23 @@ func fuellen(neueFarbe,x,y, alteFarbe):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y+1));
 			if(koordinaten.y-1 >0 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y-1))== -1):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y-1));
-	
+
+func fuellen2(neueFarbe,x,y, alteFarbe):
+	var Punktstapel;
+	Punktstapel=[];
+	Punktstapel.push_front(Vector2(x,y));
+	while(!Punktstapel.empty()):
+		var koordinaten = Punktstapel.pop_front();
+		if(array[koordinaten.x][koordinaten.y] == alteFarbe):
+			array[koordinaten.x][koordinaten.y]= neueFarbe;
+			if( koordinaten.x+1 <63):
+				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
+			if(koordinaten.x-1>0):
+				Punktstapel.push_front(Vector2(koordinaten.x-1,koordinaten.y));
+			if(koordinaten.y+1 < 63 ):
+				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y+1));
+			if(koordinaten.y-1 >0):
+				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y-1));
 	
 func fuellenrekursiv(neueFarbe,x,y,alteFarbe):
 	
@@ -657,7 +676,8 @@ func _on_Kanonenkugel_pressed():
 
 
 func _on_UebernehmenBestaetigen_confirmed():
-	speichern(aktiverKnopf, aktiverKnopf);
+	#speichern(aktiverKnopf, aktiverKnopf);
+	groesse_Zeichnung();
 
 
 func _on_Rueckgaengig_pressed():
@@ -687,4 +707,47 @@ func _on_CoinWechsel_confirmed():
 func _on_CoinWechsel_popup_hide():
 	pass # Replace with function body.
 
+func groesse_Zeichnung():
+	bild.lock();
+	maxy= 0;
+	for x in range (64):
+		for y in range (64):
+			if(bild.get_pixel(x,y) != Color(0,0,0,0)):
+				if minx == null:
+					minx = x;
+				maxx= x;
+				if miny == null:
+					miny = y;
+				if y < miny:
+					miny = y;
+				if y > maxy:
+					maxy = y;
+	bild.unlock();
+	#rückgangig
+	"""
+	verschiebt die Zeichnung in Y Richtung nach unten zum Bildrand,
+	damit die Spielfigur nicht mehr schwebt im Spiel
+	"""
+func setze_an_unteren_Bildrand():
+	groesse_Zeichnung();
+	var bildkopie = Image.new();
+	bildkopie.copy_from(bild);
+	bild.lock();
+	bildkopie.lock();
+	var verschiebung = 63-maxy;
+	print(verschiebung);
+	print(maxy);
+	for x in range(63):
+		for y in range(verschiebung):
+			bild.set_pixel(x,y, Color(0,0,0,0));
+	for x in range(63):
+		for y in range(maxy+1):
+			bild.set_pixel(x,y+verschiebung,bildkopie.get_pixel(x, y));
+	bild.unlock();
+	bildkopie.unlock();
+	setze_Zeichenflaeche();
+	aktualisiere_Vorschau();
 
+
+func _on_Bildrand_pressed():
+	setze_an_unteren_Bildrand();

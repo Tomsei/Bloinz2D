@@ -39,7 +39,7 @@ func erstelleMuenze():
 	#Switch über zufällige Zahl, damit eine zufallsmünze erstellt wird
 	match zufall:
 		0,1,2: 
-			muenze = load("res://Szenen/Muenzen/randomCoin.tscn")
+			muenze = load("res://Szenen/Muenzen/goodCoin1.tscn")
 			test1 = test1+1
 			istrandom = true
 		2,3,4: 

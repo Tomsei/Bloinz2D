@@ -335,10 +335,10 @@ margin_bottom = 110.078
 icon = SubResource( 1 )
 
 [node name="klein" type="Button" parent="."]
-margin_left = 124.298
-margin_top = 93.2233
-margin_right = 167.298
-margin_bottom = 113.223
+margin_left = 128.036
+margin_top = 100.698
+margin_right = 171.036
+margin_bottom = 120.698
 toggle_mode = true
 text = "klein"
 
@@ -632,6 +632,13 @@ margin_top = 342.231
 margin_right = 223.0
 margin_bottom = 366.231
 text = "Rueckgaengig"
+
+[node name="Bildrand" type="Button" parent="."]
+margin_left = 72.2593
+margin_top = 67.276
+margin_right = 238.259
+margin_bottom = 87.276
+text = "an Bildrand verschieben"
 [connection signal="pressed" from="Speichern" to="Sprite2" method="_on_Speichern_pressed"]
 [connection signal="pressed" from="Vorlage" to="Sprite2" method="_on_Vorlage_pressed"]
 [connection signal="popup_closed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_popup_closed"]
@@ -694,3 +701,4 @@ text = "Rueckgaengig"
 [connection signal="popup_hide" from="CoinWechsel" to="Sprite2" method="_on_CoinWechsel_popup_hide"]
 [connection signal="pressed" from="Wiederholen" to="Sprite2" method="_on_Wiederholen_pressed"]
 [connection signal="pressed" from="Rueckgaengig" to="Sprite2" method="_on_Rueckgaengig_pressed"]
+[connection signal="pressed" from="Bildrand" to="Sprite2" method="_on_Bildrand_pressed"]
