@@ -692,4 +692,5 @@ text = "Rueckgaengig"
 [connection signal="confirmed" from="UebernehmenBestaetigen" to="Sprite2" method="_on_UebernehmenBestaetigen_confirmed"]
 [connection signal="confirmed" from="CoinWechsel" to="Sprite2" method="_on_CoinWechsel_confirmed"]
 [connection signal="popup_hide" from="CoinWechsel" to="Sprite2" method="_on_CoinWechsel_popup_hide"]
+[connection signal="pressed" from="Wiederholen" to="Sprite2" method="_on_Wiederholen_pressed"]
 [connection signal="pressed" from="Rueckgaengig" to="Sprite2" method="_on_Rueckgaengig_pressed"]

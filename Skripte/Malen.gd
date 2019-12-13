@@ -71,6 +71,8 @@ func _ready():
 	rueckgaengigstapel.push_back(bildkopie);
 	print("Startstapel");
 	print(rueckgaengigstapel);
+	
+	wiederholenstapel=[];
 
 	
 	
@@ -174,6 +176,7 @@ func _process(delta):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
 				print("bin drin");
+				wiederholenstapel = [];
 				if rueckgaengigstapel.size()< 10:
 					var bildkopie = Image.new();
 					bildkopie.copy_from(bild);
@@ -248,9 +251,7 @@ func _on_Spiegeln_pressed():
 	bild.lock();
 	bild.flip_x();
 	bild.unlock();
-	textur = ImageTexture.new();
-	textur.create_from_image(bild);
-	texture = textur;
+	setze_Zeichenflaeche();
 
 
 func _on_Farbe1_pressed():
@@ -462,7 +463,7 @@ func setze_Zeichenflaeche():
 	bildkopie.unlock();
 	
 	#Zuweisen der Textur
-	textur.create_from_image(bildkopie);
+	textur.create_from_image(bildkopie,0);
 	texture = textur;
 
 """
@@ -660,12 +661,23 @@ func _on_UebernehmenBestaetigen_confirmed():
 
 
 func _on_Rueckgaengig_pressed():
-	print(rueckgaengigstapel);
-	if rueckgaengigstapel.size() > 0:
-		rueckgaengigstapel.pop_back();
+	
+	if rueckgaengigstapel.size() > 1:
+		wiederholenstapel.push_back(rueckgaengigstapel.pop_back());
+		print(rueckgaengigstapel.back());
 		bild.copy_from(rueckgaengigstapel.back());
+		print(bild);
 		setze_Zeichenflaeche();
 		aktualisiere_Vorschau();
+
+func _on_Wiederholen_pressed():
+	if wiederholenstapel.size() > 0:
+		bild.copy_from(wiederholenstapel.back());
+		rueckgaengigstapel.push_back(wiederholenstapel.pop_back());
+		print(wiederholenstapel);
+		setze_Zeichenflaeche();
+		aktualisiere_Vorschau();
+
 
 
 func _on_CoinWechsel_confirmed():
@@ -674,3 +686,5 @@ func _on_CoinWechsel_confirmed():
 
 func _on_CoinWechsel_popup_hide():
 	pass # Replace with function body.
+
+
