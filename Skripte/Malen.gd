@@ -65,6 +65,9 @@ func _ready():
 	#Vorschau setzen
 	Vorschau= "Blob";
 	aktualisiere_Vorschau();
+	#Bei neuladen es Maleneditors:
+	#setze alle Figurauswahlbuttons auf das neue aktuelle Design
+	setze_Figurauswahlbuttons();
 	
 	#Colorpickerbutton ist zu
 	Colorpickerb = false;
@@ -77,7 +80,8 @@ func _ready():
 	print(rueckgaengigstapel);
 	
 	wiederholenstapel=[];
-
+	
+	
 	
 	
 
@@ -151,16 +155,18 @@ func _process(delta):
 				if modus == "Linie":
 					linienStart= mouseposition;
 				elif modus =="Fuellen":
-						array = create_2d_array(64,64,Color(0,0,0,0));
-						befuellen();
-						fuellen(aktuelleFarbe,(mouseposition.x-256/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
-						bild.lock();
-						for zeile in range(64):
-							for spalte in range(64):
-								bild.set_pixel(zeile, spalte,array[zeile][spalte]);
-						bild.unlock();
-						setze_Zeichenflaeche();
-						print("durch");
+					print("drin");
+					array = create_2d_array(64,64,Color(0,0,0,0));
+					befuellen();
+					fuellen2(aktuelleFarbe,((mouseposition.x-256)/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
+					bild.lock();
+					for zeile in range(64):
+						for spalte in range(64):
+							bild.set_pixel(zeile, spalte,array[zeile][spalte]);
+					bild.unlock();
+					setze_Zeichenflaeche();
+					aktualisiere_Vorschau();
+					print("durch");
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
@@ -175,15 +181,12 @@ func _process(delta):
 					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
 		elif Input.is_action_just_released("draw"):
-			print("losgelassen");
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
-				print("bin drin");
 				wiederholenstapel = [];
 				Abbild_auf_Rueckgaengigstapel();
 				if modus=="Linie":
 					linienEnde = get_global_mouse_position();
-			print(rueckgaengigstapel);
 			#Timer 
 		elif Input.is_action_pressed("undo"):
 			mache_rueckgaengig();
@@ -355,28 +358,7 @@ func _on_Fuellen_pressed():
 	aktuellerModusbutton = get_node("../Fuellen");
 
 
-#Dictonary mit besuchten Punkten
-#Floodfill
-func fuellen(neueFarbe,x,y, alteFarbe):
-	var Punktstapel;
-	Punktstapel=[];
-	Punktstapel.push_front(Vector2(x,y));
-	var besuchtePunkte;
-	besuchtePunkte=[];
-	besuchtePunkte.append(Vector2(x,y));
-	while(!Punktstapel.empty()):
-		var koordinaten = Punktstapel.pop_front();
-		besuchtePunkte.append(koordinaten);
-		if(array[koordinaten.x][koordinaten.y] == alteFarbe):
-			array[koordinaten.x][koordinaten.y]= neueFarbe;
-			if( koordinaten.x+1 <63 and besuchtePunkte.find(Vector2(koordinaten.x+1,koordinaten.y))== -1):
-				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
-			if(koordinaten.x-1>0 and besuchtePunkte.find(Vector2(koordinaten.x-1,koordinaten.y))== -1):
-				Punktstapel.push_front(Vector2(koordinaten.x-1,koordinaten.y));
-			if(koordinaten.y+1 < 63 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y+1))== -1):
-				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y+1));
-			if(koordinaten.y-1 >0 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y-1))== -1):
-				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y-1));
+
 
 func fuellen2(neueFarbe,x,y, alteFarbe):
 	var Punktstapel;
@@ -386,41 +368,16 @@ func fuellen2(neueFarbe,x,y, alteFarbe):
 		var koordinaten = Punktstapel.pop_front();
 		if(array[koordinaten.x][koordinaten.y] == alteFarbe):
 			array[koordinaten.x][koordinaten.y]= neueFarbe;
-			if( koordinaten.x+1 <63):
+			if( koordinaten.x+1 <64):
 				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
-			if(koordinaten.x-1>0):
+			if(koordinaten.x-1>=0):
 				Punktstapel.push_front(Vector2(koordinaten.x-1,koordinaten.y));
-			if(koordinaten.y+1 < 63 ):
+			if(koordinaten.y+1 < 64 ):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y+1));
-			if(koordinaten.y-1 >0):
+			if(koordinaten.y-1 >=0):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y-1));
 	
-func fuellenrekursiv(neueFarbe,x,y,alteFarbe):
-	
-	if( array[x][y] == alteFarbe):
-		array[x][y] = neueFarbe;
-		fuellenrekursiv(neueFarbe,x+1,y,alteFarbe);
-		fuellenrekursiv(neueFarbe,x-1,y,alteFarbe);
-		fuellenrekursiv(neueFarbe,x,y+1,alteFarbe);
-		#fuellenrekursiv(neueFarbe,x,y-1,alteFarbe);
 
-	"""bild.set_pixel(x,y,farbe);
-	var i = 1;
-	while(bild.get_pixel(x+i,y) == alteFarbe):
-		bild.set_pixel(x+i,y,farbe);
-		i= i+1;
-	i=1;
-	while(bild.get_pixel(x,y+i) == alteFarbe):
-		bild.set_pixel(x,y+i,farbe);
-		i= i+1;
-	i=1;
-	while(bild.get_pixel(x,y-i) == alteFarbe):
-		bild.set_pixel(x,y-i,farbe);
-		i= i+1;
-	i=1;
-	while(bild.get_pixel(x-i,y) == alteFarbe):
-		bild.set_pixel(x-i,y,farbe);
-		i= i+1;"""
 
 
 func _on_BadCoin1_button_down():
@@ -673,8 +630,8 @@ func _on_Kanonenkugel_pressed():
 
 
 func _on_UebernehmenBestaetigen_confirmed():
-	#speichern(aktiverKnopf, aktiverKnopf);
-	groesse_Zeichnung();
+	speichern(aktiverKnopf, aktiverKnopf);
+
 
 
 func _on_Rueckgaengig_pressed():
@@ -767,3 +724,14 @@ func Abbild_auf_Rueckgaengigstapel():
 		var bildkopie = Image.new();
 		bildkopie.copy_from(bild);
 		rueckgaengigstapel.push_back(bildkopie);
+		
+func setze_Figurauswahlbuttons():
+	pass;
+	
+func alles_rueckgaengig():
+	#für jede Spielfigur:
+	
+	#setze Vorlagenbuttons auf alte Vorlage
+	pass;
+	#setze aktuelle Figur auf Standard
+	
