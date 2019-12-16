@@ -118,9 +118,7 @@ func punkt_malen_pixel(x,y):
 		for j in range(0, stiftgroesse):
 			bild.set_pixel(xneu+i, yneu+j, aktuelleFarbe);
 	bild.unlock();
-	textur = ImageTexture.new();
-	textur.create_from_image(bild);
-	texture= textur;
+
 
 
 func punkt_loeschen(x, y):
@@ -152,9 +150,7 @@ func _process(delta):
 		if Input.is_action_just_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
-				if modus == "Linie":
-					linienStart= mouseposition;
-				elif modus =="Fuellen":
+				if modus =="Fuellen":
 					print("drin");
 					array = create_2d_array(64,64,Color(0,0,0,0));
 					befuellen();
@@ -167,12 +163,23 @@ func _process(delta):
 					setze_Zeichenflaeche();
 					aktualisiere_Vorschau();
 					print("durch");
+				elif modus == "Linie":
+					if linienStart == null:
+						linienStart = get_global_mouse_position();
+						linienStart.x = linienStart.x-256;
+						punkt_malen_pixel(linienStart.x, linienStart.y);
+						setze_Zeichenflaeche();
+					else:
+						linienEnde = get_global_mouse_position();
+						linienEnde.x = linienEnde.x-256;
+						print("Male Linie");
+						male_Linie(linienStart,linienEnde);
+						linienStart = null;
+						linienEnde = null;
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
-				if modus=="Linie":
-					linienEnde = get_global_mouse_position();
-				elif modus=="Stift":
+				if modus=="Stift":
 					punkt_malen_pixel((mouseposition.x-256),mouseposition.y);
 					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
@@ -185,8 +192,7 @@ func _process(delta):
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
 				wiederholenstapel = [];
 				Abbild_auf_Rueckgaengigstapel();
-				if modus=="Linie":
-					linienEnde = get_global_mouse_position();
+
 			#Timer 
 		elif Input.is_action_pressed("undo"):
 			mache_rueckgaengig();
@@ -734,4 +740,63 @@ func alles_rueckgaengig():
 	#setze Vorlagenbuttons auf alte Vorlage
 	pass;
 	#setze aktuelle Figur auf Standard
+
+func male_Linie(start,ende):
+	# Setzen der Koordinaten-Variablen, die jeweils den aktuellen Punkt angeben
+	start = floor(start/8);
+	ende = floor(ende/8);
+	var y = start.y;
+	var x = start.x;
 	
+	var y1 = ende.y;
+	var x1 = ende.x;
+	var y0 = start.y;
+	var x0 = start.x;
+	#Setzen der Variablen, die angeben, ob x & y hoch- oder runtergezählt werden 
+	var stepy = 1;
+	var stepx = 1;
+	
+	#Setzen der Variablen, die Delta x und Delta y angeben
+	var a = y1-y0;
+	var b = -(x1-x0);
+
+	
+	#Wenn die Linie nach unten geht, muss y herunterzählen 
+	#Ist für den 5. & 8. Oktanten notwendig
+	if a < 0:
+		a = -1 * a;
+		stepy = -1 * stepy;
+
+	
+	#Wenn die Linie nach links geht, muss x herunterzählen
+	#Ist für den 4. & 5. Oktanten notwendig
+	if b > 0:
+		b = -1 * b;
+		stepx = -1 * stepx;
+	
+	# Berechnung von Q, Q_step & Q_equal 
+	var Q = 2*a+b;
+	var Q_step = 2*(a+b);
+	var Q_equal = 2*a;
+	
+	
+	#Durchlaufe die x bis es seinen Endpunkt erreicht
+	#while[x <50 and x > 0 ]:
+	for i in range(0,20):
+		print(x);
+		print(y);
+		#Male den aktuellen Pixel
+		bild.set_pixel(x,y, aktuelleFarbe);
+			
+			#Wenn Q negativ ist, erhöhe Q um Q_equal
+		if Q<0:
+			Q = Q + Q_equal;
+				
+			#Sonst erhöhe Q um Q_step und erhöhe die y um seine Schrittweite
+		else:
+			Q = Q + Q_step;
+			y= y+ stepy;
+			
+		x= x+stepx;
+	setze_Zeichenflaeche();
+

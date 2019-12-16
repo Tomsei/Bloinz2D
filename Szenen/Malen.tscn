@@ -138,9 +138,9 @@ toggle_mode = true
 icon = ExtResource( 7 )
 
 [node name="Farbe6" type="Button" parent="."]
-margin_left = 77.5704
+margin_left = 76.463
 margin_top = 209.578
-margin_right = 105.57
+margin_right = 104.463
 margin_bottom = 231.578
 toggle_mode = true
 icon = ExtResource( 8 )
@@ -174,6 +174,46 @@ margin_left = 79.9249
 margin_top = 321.807
 margin_right = 107.925
 margin_bottom = 343.807
+toggle_mode = true
+icon = ExtResource( 12 )
+
+[node name="EigeneFarbe1" type="Button" parent="."]
+margin_left = 137.511
+margin_top = 208.85
+margin_right = 165.511
+margin_bottom = 230.85
+toggle_mode = true
+icon = ExtResource( 12 )
+
+[node name="EigeneFarbe2" type="Button" parent="."]
+margin_left = 138.065
+margin_top = 235.982
+margin_right = 166.065
+margin_bottom = 257.982
+toggle_mode = true
+icon = ExtResource( 12 )
+
+[node name="EigeneFarbe3" type="Button" parent="."]
+margin_left = 139.172
+margin_top = 259.238
+margin_right = 167.172
+margin_bottom = 281.238
+toggle_mode = true
+icon = ExtResource( 12 )
+
+[node name="EigeneFarbe4" type="Button" parent="."]
+margin_left = 139.726
+margin_top = 285.816
+margin_right = 167.726
+margin_bottom = 307.816
+toggle_mode = true
+icon = ExtResource( 12 )
+
+[node name="EigeneFarbe5" type="Button" parent="."]
+margin_left = 176.824
+margin_top = 209.404
+margin_right = 204.825
+margin_bottom = 231.404
 toggle_mode = true
 icon = ExtResource( 12 )
 
@@ -351,10 +391,10 @@ toggle_mode = true
 text = "mittel"
 
 [node name="gross" type="Button" parent="."]
-margin_left = 128.307
-margin_top = 167.401
-margin_right = 171.307
-margin_bottom = 187.401
+margin_left = 129.968
+margin_top = 160.756
+margin_right = 172.968
+margin_bottom = 180.756
 toggle_mode = true
 text = "groß"
 
@@ -374,10 +414,10 @@ toggle_mode = true
 text = "Füllen"
 
 [node name="Leeren" type="Button" parent="."]
-margin_left = 120.063
-margin_top = 218.381
-margin_right = 218.063
-margin_bottom = 238.381
+margin_left = 113.972
+margin_top = 186.819
+margin_right = 211.972
+margin_bottom = 206.819
 text = "Fläche leeren"
 
 [node name="Label2" type="Label" parent="."]
@@ -657,6 +697,11 @@ text = "an Bildrand verschieben"
 [connection signal="pressed" from="Farbe8" to="Sprite2" method="_on_Farbe8_pressed"]
 [connection signal="pressed" from="Farbe9" to="Sprite2" method="_on_Farbe9_pressed"]
 [connection signal="pressed" from="Farbe10" to="Sprite2" method="_on_Farbe10_pressed"]
+[connection signal="pressed" from="EigeneFarbe1" to="Sprite2" method="_on_Farbe10_pressed"]
+[connection signal="pressed" from="EigeneFarbe2" to="Sprite2" method="_on_Farbe10_pressed"]
+[connection signal="pressed" from="EigeneFarbe3" to="Sprite2" method="_on_Farbe10_pressed"]
+[connection signal="pressed" from="EigeneFarbe4" to="Sprite2" method="_on_Farbe10_pressed"]
+[connection signal="pressed" from="EigeneFarbe5" to="Sprite2" method="_on_Farbe10_pressed"]
 [connection signal="pressed" from="Blob_1_gerade" to="Sprite2" method="_on_Blob_1_gerade_pressed"]
 [connection signal="pressed" from="Blob_3_gerade" to="Sprite2" method="_on_Blob_3_gerade_pressed"]
 [connection signal="pressed" from="Blob_2_gerade" to="Sprite2" method="_on_Blob_2_gerade_pressed"]
