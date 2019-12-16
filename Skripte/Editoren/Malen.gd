@@ -20,6 +20,10 @@ var aktuellerModusbutton;
 var Colorpickerb;
 var rueckgaengigstapel;
 var wiederholenstapel;
+var minx;
+var maxx;
+var miny;
+var maxy;
 
 
 
@@ -61,6 +65,9 @@ func _ready():
 	#Vorschau setzen
 	Vorschau= "Blob";
 	aktualisiere_Vorschau();
+	#Bei neuladen es Maleneditors:
+	#setze alle Figurauswahlbuttons auf das neue aktuelle Design
+	setze_Figurauswahlbuttons();
 	
 	#Colorpickerbutton ist zu
 	Colorpickerb = false;
@@ -71,7 +78,10 @@ func _ready():
 	rueckgaengigstapel.push_back(bildkopie);
 	print("Startstapel");
 	print(rueckgaengigstapel);
-
+	
+	wiederholenstapel=[];
+	
+	
 	
 	
 
@@ -108,9 +118,7 @@ func punkt_malen_pixel(x,y):
 		for j in range(0, stiftgroesse):
 			bild.set_pixel(xneu+i, yneu+j, aktuelleFarbe);
 	bild.unlock();
-	textur = ImageTexture.new();
-	textur.create_from_image(bild);
-	texture= textur;
+
 
 
 func punkt_loeschen(x, y):
@@ -142,25 +150,36 @@ func _process(delta):
 		if Input.is_action_just_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
-				if modus == "Linie":
-					linienStart= mouseposition;
-				elif modus =="Fuellen":
-						array = create_2d_array(64,64,Color(0,0,0,0));
-						befuellen();
-						fuellen(aktuelleFarbe,(mouseposition.x-256/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
-						bild.lock();
-						for zeile in range(64):
-							for spalte in range(64):
-								bild.set_pixel(zeile, spalte,array[zeile][spalte]);
-						bild.unlock();
+				if modus =="Fuellen":
+					print("drin");
+					array = create_2d_array(64,64,Color(0,0,0,0));
+					befuellen();
+					fuellen2(aktuelleFarbe,((mouseposition.x-256)/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
+					bild.lock();
+					for zeile in range(64):
+						for spalte in range(64):
+							bild.set_pixel(zeile, spalte,array[zeile][spalte]);
+					bild.unlock();
+					setze_Zeichenflaeche();
+					aktualisiere_Vorschau();
+					print("durch");
+				elif modus == "Linie":
+					if linienStart == null:
+						linienStart = get_global_mouse_position();
+						linienStart.x = linienStart.x-256;
+						punkt_malen_pixel(linienStart.x, linienStart.y);
 						setze_Zeichenflaeche();
-						print("durch");
+					else:
+						linienEnde = get_global_mouse_position();
+						linienEnde.x = linienEnde.x-256;
+						print("Male Linie");
+						male_Linie(linienStart,linienEnde);
+						linienStart = null;
+						linienEnde = null;
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
-				if modus=="Linie":
-					linienEnde = get_global_mouse_position();
-				elif modus=="Stift":
+				if modus=="Stift":
 					punkt_malen_pixel((mouseposition.x-256),mouseposition.y);
 					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
@@ -169,23 +188,16 @@ func _process(delta):
 					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
 		elif Input.is_action_just_released("draw"):
-			print("losgelassen");
-			
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
-				print("bin drin");
-				if rueckgaengigstapel.size()< 10:
-					var bildkopie = Image.new();
-					bildkopie.copy_from(bild);
-					rueckgaengigstapel.push_back(bildkopie);
-				else:
-					rueckgaengigstapel.pop_front();
-					var bildkopie = Image.new();
-					bildkopie.copy_from(bild);
-					rueckgaengigstapel.push_back(bildkopie);
-				if modus=="Linie":
-					linienEnde = get_global_mouse_position();
-			print(rueckgaengigstapel);
+				wiederholenstapel = [];
+				Abbild_auf_Rueckgaengigstapel();
+
+			#Timer 
+		elif Input.is_action_pressed("undo"):
+			mache_rueckgaengig();
+		elif Input.is_action_pressed("redo"):
+			wiederhole();
 
 """
 speichert die Zeichenfläche als png
@@ -248,9 +260,7 @@ func _on_Spiegeln_pressed():
 	bild.lock();
 	bild.flip_x();
 	bild.unlock();
-	textur = ImageTexture.new();
-	textur.create_from_image(bild);
-	texture = textur;
+	setze_Zeichenflaeche();
 
 
 func _on_Farbe1_pressed():
@@ -354,56 +364,26 @@ func _on_Fuellen_pressed():
 	aktuellerModusbutton = get_node("../Fuellen");
 
 
-#Dictonary mit besuchten Punkten
-#Floodfill
-func fuellen(neueFarbe,x,y, alteFarbe):
+
+
+func fuellen2(neueFarbe,x,y, alteFarbe):
 	var Punktstapel;
 	Punktstapel=[];
 	Punktstapel.push_front(Vector2(x,y));
-	var besuchtePunkte;
-	besuchtePunkte=[];
-	besuchtePunkte.append(Vector2(x,y));
 	while(!Punktstapel.empty()):
 		var koordinaten = Punktstapel.pop_front();
-		besuchtePunkte.append(koordinaten);
 		if(array[koordinaten.x][koordinaten.y] == alteFarbe):
 			array[koordinaten.x][koordinaten.y]= neueFarbe;
-			if( koordinaten.x+1 <63 and besuchtePunkte.find(Vector2(koordinaten.x+1,koordinaten.y))== -1):
+			if( koordinaten.x+1 <64):
 				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
-			if(koordinaten.x-1>0 and besuchtePunkte.find(Vector2(koordinaten.x-1,koordinaten.y))== -1):
+			if(koordinaten.x-1>=0):
 				Punktstapel.push_front(Vector2(koordinaten.x-1,koordinaten.y));
-			if(koordinaten.y+1 < 63 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y+1))== -1):
+			if(koordinaten.y+1 < 64 ):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y+1));
-			if(koordinaten.y-1 >0 and besuchtePunkte.find(Vector2(koordinaten.x,koordinaten.y-1))== -1):
+			if(koordinaten.y-1 >=0):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y-1));
 	
-	
-func fuellenrekursiv(neueFarbe,x,y,alteFarbe):
-	
-	if( array[x][y] == alteFarbe):
-		array[x][y] = neueFarbe;
-		fuellenrekursiv(neueFarbe,x+1,y,alteFarbe);
-		fuellenrekursiv(neueFarbe,x-1,y,alteFarbe);
-		fuellenrekursiv(neueFarbe,x,y+1,alteFarbe);
-		#fuellenrekursiv(neueFarbe,x,y-1,alteFarbe);
 
-	"""bild.set_pixel(x,y,farbe);
-	var i = 1;
-	while(bild.get_pixel(x+i,y) == alteFarbe):
-		bild.set_pixel(x+i,y,farbe);
-		i= i+1;
-	i=1;
-	while(bild.get_pixel(x,y+i) == alteFarbe):
-		bild.set_pixel(x,y+i,farbe);
-		i= i+1;
-	i=1;
-	while(bild.get_pixel(x,y-i) == alteFarbe):
-		bild.set_pixel(x,y-i,farbe);
-		i= i+1;
-	i=1;
-	while(bild.get_pixel(x-i,y) == alteFarbe):
-		bild.set_pixel(x-i,y,farbe);
-		i= i+1;"""
 
 
 func _on_BadCoin1_button_down():
@@ -462,7 +442,7 @@ func setze_Zeichenflaeche():
 	bildkopie.unlock();
 	
 	#Zuweisen der Textur
-	textur.create_from_image(bildkopie);
+	textur.create_from_image(bildkopie,0);
 	texture = textur;
 
 """
@@ -659,14 +639,29 @@ func _on_UebernehmenBestaetigen_confirmed():
 	speichern(aktiverKnopf, aktiverKnopf);
 
 
+
 func _on_Rueckgaengig_pressed():
-	print(rueckgaengigstapel);
-	if rueckgaengigstapel.size() > 0:
-		rueckgaengigstapel.pop_back();
+	mache_rueckgaengig();
+
+func mache_rueckgaengig():
+	if rueckgaengigstapel.size() > 1:
+		wiederholenstapel.push_back(rueckgaengigstapel.pop_back());
+		print(rueckgaengigstapel.back());
 		bild.copy_from(rueckgaengigstapel.back());
+		print(bild);
 		setze_Zeichenflaeche();
 		aktualisiere_Vorschau();
 
+func _on_Wiederholen_pressed():
+	wiederhole();
+
+func wiederhole():
+	if wiederholenstapel.size() > 0:
+		bild.copy_from(wiederholenstapel.back());
+		rueckgaengigstapel.push_back(wiederholenstapel.pop_back());
+		print(wiederholenstapel);
+		setze_Zeichenflaeche();
+		aktualisiere_Vorschau();
 
 func _on_CoinWechsel_confirmed():
 	pass # Replace with function body.
@@ -674,3 +669,134 @@ func _on_CoinWechsel_confirmed():
 
 func _on_CoinWechsel_popup_hide():
 	pass # Replace with function body.
+
+func groesse_Zeichnung():
+	bild.lock();
+	maxy= 0;
+	for x in range (64):
+		for y in range (64):
+			if(bild.get_pixel(x,y) != Color(0,0,0,0)):
+				if minx == null:
+					minx = x;
+				maxx= x;
+				if miny == null:
+					miny = y;
+				if y < miny:
+					miny = y;
+				if y > maxy:
+					maxy = y;
+	bild.unlock();
+	#rückgangig
+	"""
+	verschiebt die Zeichnung in Y Richtung nach unten zum Bildrand,
+	damit die Spielfigur nicht mehr schwebt im Spiel
+	"""
+func setze_an_unteren_Bildrand():
+	groesse_Zeichnung();
+	var bildkopie = Image.new();
+	bildkopie.copy_from(bild);
+	bild.lock();
+	bildkopie.lock();
+	var verschiebung = 63-maxy;
+	print(verschiebung);
+	print(maxy);
+	for x in range(63):
+		for y in range(verschiebung):
+			bild.set_pixel(x,y, Color(0,0,0,0));
+	for x in range(63):
+		for y in range(maxy+1):
+			bild.set_pixel(x,y+verschiebung,bildkopie.get_pixel(x, y));
+	bild.unlock();
+	bildkopie.unlock();
+	setze_Zeichenflaeche();
+	aktualisiere_Vorschau();
+	Abbild_auf_Rueckgaengigstapel();
+
+
+func _on_Bildrand_pressed():
+	setze_an_unteren_Bildrand();
+	
+"""
+Methode, die augerufen wird, sobald sich etwas auf der Zeichenfläche ändert
+macht ein aktuelles Abbild der Zeichenfläche auf den Rückgängigstapel
+"""
+func Abbild_auf_Rueckgaengigstapel():
+	if rueckgaengigstapel.size()< 10:
+		var bildkopie = Image.new();
+		bildkopie.copy_from(bild);
+		rueckgaengigstapel.push_back(bildkopie);
+	else:
+		rueckgaengigstapel.pop_front();
+		var bildkopie = Image.new();
+		bildkopie.copy_from(bild);
+		rueckgaengigstapel.push_back(bildkopie);
+		
+func setze_Figurauswahlbuttons():
+	pass;
+	
+func alles_rueckgaengig():
+	#für jede Spielfigur:
+	
+	#setze Vorlagenbuttons auf alte Vorlage
+	pass;
+	#setze aktuelle Figur auf Standard
+
+func male_Linie(start,ende):
+	# Setzen der Koordinaten-Variablen, die jeweils den aktuellen Punkt angeben
+	start = floor(start/8);
+	ende = floor(ende/8);
+	var y = start.y;
+	var x = start.x;
+	
+	var y1 = ende.y;
+	var x1 = ende.x;
+	var y0 = start.y;
+	var x0 = start.x;
+	#Setzen der Variablen, die angeben, ob x & y hoch- oder runtergezählt werden 
+	var stepy = 1;
+	var stepx = 1;
+	
+	#Setzen der Variablen, die Delta x und Delta y angeben
+	var a = y1-y0;
+	var b = -(x1-x0);
+
+	
+	#Wenn die Linie nach unten geht, muss y herunterzählen 
+	#Ist für den 5. & 8. Oktanten notwendig
+	if a < 0:
+		a = -1 * a;
+		stepy = -1 * stepy;
+
+	
+	#Wenn die Linie nach links geht, muss x herunterzählen
+	#Ist für den 4. & 5. Oktanten notwendig
+	if b > 0:
+		b = -1 * b;
+		stepx = -1 * stepx;
+	
+	# Berechnung von Q, Q_step & Q_equal 
+	var Q = 2*a+b;
+	var Q_step = 2*(a+b);
+	var Q_equal = 2*a;
+	
+	
+	#Durchlaufe die x bis es seinen Endpunkt erreicht
+	#while[x <50 and x > 0 ]:
+	for i in range(0,20):
+		print(x);
+		print(y);
+		#Male den aktuellen Pixel
+		bild.set_pixel(x,y, aktuelleFarbe);
+			
+			#Wenn Q negativ ist, erhöhe Q um Q_equal
+		if Q<0:
+			Q = Q + Q_equal;
+				
+			#Sonst erhöhe Q um Q_step und erhöhe die y um seine Schrittweite
+		else:
+			Q = Q + Q_step;
+			y= y+ stepy;
+			
+		x= x+stepx;
+	setze_Zeichenflaeche();
+
