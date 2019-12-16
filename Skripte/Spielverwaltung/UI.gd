@@ -19,3 +19,10 @@ func _on_Optionen_button_up():
 	print("gehe zu Einstellungen")
 	optionen.visible = true
 	get_tree().paused = true
+
+
+func _on_Pause_button_up():
+	if get_tree().paused == true:
+		get_tree().paused = false
+	else:
+		get_tree().paused = true

@@ -5,16 +5,16 @@ onready var raketenTimer = get_node("RaketenTimer")
 onready var muenzTimer = get_node("MuenzTimer")
 onready var randomCoinZeit = get_node("RandomCoinZeit")
 
-onready var spieler = get_tree().get_root().get_child(0).get_child(2)
+onready var spieler = get_tree().get_root().get_child(0).get_node("Player")
 
 var muenzmagnetAktiv = false
 
 func _ready():
-	raketenTimer.set_wait_time(2)
+	raketenTimer.set_wait_time(10)
 	raketenTimer.start()
 	muenzTimer.set_wait_time(1)
 	muenzTimer.start()
-	randomCoinZeit.set_wait_time(5)
+	randomCoinZeit.set_wait_time(10)
 	randomCoinZeit.start()
 	
 	erstelleMuenze()

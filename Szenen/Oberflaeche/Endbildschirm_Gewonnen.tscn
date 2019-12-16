@@ -37,7 +37,7 @@ position = Vector2( 278.722, 313.721 )
 texture = ExtResource( 6 )
 
 [node name="Endbildschirm_gewonnen" type="Sprite" parent="."]
-position = Vector2( 228.992, 428.134 )
+position = Vector2( 228.992, 429.134 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 7 )
 [connection signal="button_up" from="NochmalSpielen" to="NochmalSpielen" method="_on_NochmalSpielen_button_up"]
