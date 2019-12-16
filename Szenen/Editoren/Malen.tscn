@@ -1,6 +1,6 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=35 format=2]
 
-[ext_resource path="res://Originale/Skripte/Editoren/Malen.gd" type="Script" id=1]
+[ext_resource path="res://Skripte/Editoren/Malen.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
 [ext_resource path="res://Bilder/Farben/Farbe_0.png" type="Texture" id=3]
 [ext_resource path="res://Bilder/Farben/Farbe_1.png" type="Texture" id=4]
@@ -12,23 +12,28 @@
 [ext_resource path="res://Bilder/Farben/Farbe_7.png" type="Texture" id=10]
 [ext_resource path="res://Bilder/Farben/Farbe_8.png" type="Texture" id=11]
 [ext_resource path="res://Bilder/Farben/Farbe_9.png" type="Texture" id=12]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_gerade.png" type="Texture" id=13]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_gerade.png" type="Texture" id=14]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_gerade.png" type="Texture" id=15]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_gerade.png" type="Texture" id=16]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_gerade.png" type="Texture" id=17]
-[ext_resource path="res://Bilder/Standardspielfiguren/Hintergrund/Hintergrund.png" type="Texture" id=18]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin1.png" type="Texture" id=19]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin2.png" type="Texture" id=20]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin1.png" type="Texture" id=21]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin2.png" type="Texture" id=22]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/RandomCoin.png" type="Texture" id=23]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png" type="Texture" id=24]
-[ext_resource path="res://icon.png" type="Texture" id=25]
-[ext_resource path="res://Bilder/Standardspielfiguren/BlobGerade.png" type="Texture" id=26]
-[ext_resource path="res://Bilder/Hintergruende/Boden.png" type="Texture" id=27]
-
-[sub_resource type="ImageTexture" id=1]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe1.png" type="Texture" id=13]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe2.png" type="Texture" id=14]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe3.png" type="Texture" id=15]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe4.png" type="Texture" id=16]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe5.png" type="Texture" id=17]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_gerade.png" type="Texture" id=18]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_gerade.png" type="Texture" id=19]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_gerade.png" type="Texture" id=20]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_gerade.png" type="Texture" id=21]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_gerade.png" type="Texture" id=22]
+[ext_resource path="res://Bilder/Standardspielfiguren/Hintergrund/Hintergrund.png" type="Texture" id=23]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin1.png" type="Texture" id=24]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin2.png" type="Texture" id=25]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin1.png" type="Texture" id=26]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin2.png" type="Texture" id=27]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/RandomCoin.png" type="Texture" id=28]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png" type="Texture" id=29]
+[ext_resource path="res://icon.png" type="Texture" id=30]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_geradeDesign1.png" type="Texture" id=31]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_geradeStandard.png" type="Texture" id=32]
+[ext_resource path="res://Bilder/Standardspielfiguren/BlobGerade.png" type="Texture" id=33]
+[ext_resource path="res://Bilder/Hintergruende/Boden.png" type="Texture" id=34]
 
 [node name="Node2D" type="Node2D"]
 
@@ -58,10 +63,10 @@ margin_bottom = 566.795
 text = "als Vorlage Speichern"
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="."]
-margin_left = 131.507
-margin_top = 44.3654
-margin_right = 154.507
-margin_bottom = 64.3654
+margin_left = 138.875
+margin_top = 169.629
+margin_right = 161.875
+margin_bottom = 189.629
 toggle_mode = true
 color = Color( 1, 1, 1, 1 )
 edit_alpha = false
@@ -183,7 +188,7 @@ margin_top = 208.85
 margin_right = 165.511
 margin_bottom = 230.85
 toggle_mode = true
-icon = ExtResource( 12 )
+icon = ExtResource( 13 )
 
 [node name="EigeneFarbe2" type="Button" parent="."]
 margin_left = 138.065
@@ -191,31 +196,31 @@ margin_top = 235.982
 margin_right = 166.065
 margin_bottom = 257.982
 toggle_mode = true
-icon = ExtResource( 12 )
+icon = ExtResource( 14 )
 
 [node name="EigeneFarbe3" type="Button" parent="."]
 margin_left = 139.172
-margin_top = 259.238
+margin_top = 263.449
 margin_right = 167.172
-margin_bottom = 281.238
+margin_bottom = 285.449
 toggle_mode = true
-icon = ExtResource( 12 )
+icon = ExtResource( 15 )
 
 [node name="EigeneFarbe4" type="Button" parent="."]
 margin_left = 139.726
-margin_top = 285.816
+margin_top = 295.29
 margin_right = 167.726
-margin_bottom = 307.816
+margin_bottom = 317.29
 toggle_mode = true
-icon = ExtResource( 12 )
+icon = ExtResource( 16 )
 
 [node name="EigeneFarbe5" type="Button" parent="."]
-margin_left = 176.824
-margin_top = 209.404
-margin_right = 204.825
-margin_bottom = 231.404
+margin_left = 138.929
+margin_top = 328.351
+margin_right = 166.93
+margin_bottom = 350.351
 toggle_mode = true
-icon = ExtResource( 12 )
+icon = ExtResource( 17 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = 97.8234
@@ -241,7 +246,7 @@ margin_right = 325.861
 margin_bottom = 583.739
 rect_pivot_offset = Vector2( 50.139, 26.261 )
 toggle_mode = true
-icon = ExtResource( 13 )
+icon = ExtResource( 18 )
 
 [node name="Blob_3_gerade" type="Button" parent="."]
 margin_left = 403.375
@@ -249,7 +254,7 @@ margin_top = 514.282
 margin_right = 479.375
 margin_bottom = 584.282
 toggle_mode = true
-icon = ExtResource( 14 )
+icon = ExtResource( 19 )
 
 [node name="Blob_2_gerade" type="Button" parent="."]
 margin_left = 325.504
@@ -257,7 +262,7 @@ margin_top = 513.739
 margin_right = 401.504
 margin_bottom = 583.739
 toggle_mode = true
-icon = ExtResource( 15 )
+icon = ExtResource( 20 )
 
 [node name="Blob_4_gerade" type="Button" parent="."]
 margin_left = 480.648
@@ -265,7 +270,7 @@ margin_top = 514.51
 margin_right = 556.648
 margin_bottom = 584.51
 toggle_mode = true
-icon = ExtResource( 16 )
+icon = ExtResource( 21 )
 
 [node name="Blob_5_gerade" type="Button" parent="."]
 margin_left = 557.835
@@ -273,7 +278,7 @@ margin_top = 513.739
 margin_right = 633.835
 margin_bottom = 583.739
 toggle_mode = true
-icon = ExtResource( 17 )
+icon = ExtResource( 22 )
 
 [node name="Hintergrund" type="Button" parent="."]
 margin_left = 635.707
@@ -281,7 +286,7 @@ margin_top = 580.978
 margin_right = 711.707
 margin_bottom = 650.978
 toggle_mode = true
-icon = ExtResource( 18 )
+icon = ExtResource( 23 )
 
 [node name="BadCoin1" type="Button" parent="."]
 margin_left = 250.024
@@ -290,7 +295,7 @@ margin_right = 331.024
 margin_bottom = 653.692
 toggle_mode = true
 shortcut_in_tooltip = false
-icon = ExtResource( 19 )
+icon = ExtResource( 24 )
 
 [node name="BadCoin2" type="Button" parent="."]
 margin_left = 327.363
@@ -298,7 +303,7 @@ margin_top = 583.978
 margin_right = 403.363
 margin_bottom = 653.978
 toggle_mode = true
-icon = ExtResource( 20 )
+icon = ExtResource( 25 )
 
 [node name="GoodCoin1" type="Button" parent="."]
 margin_left = 404.939
@@ -306,7 +311,7 @@ margin_top = 583.978
 margin_right = 480.939
 margin_bottom = 653.978
 toggle_mode = true
-icon = ExtResource( 21 )
+icon = ExtResource( 26 )
 
 [node name="GoodCoin2" type="Button" parent="."]
 margin_left = 480.192
@@ -314,7 +319,7 @@ margin_top = 585.206
 margin_right = 556.192
 margin_bottom = 655.206
 toggle_mode = true
-icon = ExtResource( 22 )
+icon = ExtResource( 27 )
 
 [node name="RandomCoin" type="Button" parent="."]
 margin_left = 557.378
@@ -322,7 +327,7 @@ margin_top = 585.206
 margin_right = 633.378
 margin_bottom = 655.206
 toggle_mode = true
-icon = ExtResource( 23 )
+icon = ExtResource( 28 )
 
 [node name="Kanonenkugel" type="Button" parent="."]
 margin_left = 636.108
@@ -330,49 +335,49 @@ margin_top = 513.622
 margin_right = 712.108
 margin_bottom = 583.622
 toggle_mode = true
-icon = ExtResource( 24 )
+icon = ExtResource( 29 )
 
 [node name="Vorlage4" type="Button" parent="."]
 margin_left = 885.003
 margin_top = 364.227
 margin_right = 961.003
 margin_bottom = 434.227
-icon = ExtResource( 25 )
+icon = ExtResource( 30 )
 
 [node name="Vorlage3" type="Button" parent="."]
 margin_left = 883.324
 margin_top = 293.748
 margin_right = 959.324
 margin_bottom = 363.748
-icon = ExtResource( 25 )
+icon = ExtResource( 30 )
 
 [node name="Vorlage2" type="Button" parent="."]
 margin_left = 882.162
 margin_top = 223.304
 margin_right = 958.162
 margin_bottom = 293.304
-icon = ExtResource( 25 )
+icon = ExtResource( 30 )
 
 [node name="Vorlage5" type="Button" parent="."]
 margin_left = 883.004
 margin_top = 432.318
 margin_right = 959.004
 margin_bottom = 502.318
-icon = ExtResource( 25 )
+icon = ExtResource( 30 )
 
 [node name="Vorlage1" type="Button" parent="."]
 margin_left = 879.648
 margin_top = 151.181
 margin_right = 955.648
 margin_bottom = 221.181
-icon = ExtResource( 25 )
+icon = ExtResource( 31 )
 
 [node name="Standard" type="Button" parent="."]
 margin_left = 838.356
 margin_top = 40.0781
 margin_right = 914.356
 margin_bottom = 110.078
-icon = SubResource( 1 )
+icon = ExtResource( 32 )
 
 [node name="klein" type="Button" parent="."]
 margin_left = 128.036
@@ -391,10 +396,10 @@ toggle_mode = true
 text = "mittel"
 
 [node name="gross" type="Button" parent="."]
-margin_left = 129.968
-margin_top = 160.756
-margin_right = 172.968
-margin_bottom = 180.756
+margin_left = 173.126
+margin_top = 100.756
+margin_right = 216.126
+margin_bottom = 120.756
 toggle_mode = true
 text = "groß"
 
@@ -414,10 +419,10 @@ toggle_mode = true
 text = "Füllen"
 
 [node name="Leeren" type="Button" parent="."]
-margin_left = 113.972
-margin_top = 186.819
-margin_right = 211.972
-margin_bottom = 206.819
+margin_left = 7.65623
+margin_top = 84.7137
+margin_right = 105.656
+margin_bottom = 104.714
 text = "Fläche leeren"
 
 [node name="Label2" type="Label" parent="."]
@@ -546,64 +551,64 @@ text = "Vorschau
 [node name="Coin" type="Sprite" parent="."]
 position = Vector2( 129.561, 431.212 )
 z_index = 2
-texture = ExtResource( 19 )
+texture = ExtResource( 24 )
 
 [node name="Blob" type="Sprite" parent="."]
 position = Vector2( 64.434, 535 )
 z_index = 2
 z_as_relative = false
-texture = ExtResource( 26 )
+texture = ExtResource( 33 )
 
 [node name="Hintergrund0" type="Sprite" parent="."]
 position = Vector2( 33.6589, 412.74 )
-texture = ExtResource( 18 )
+texture = ExtResource( 23 )
 
 [node name="Hintergrund1" type="Sprite" parent="."]
 position = Vector2( 97.2986, 411.661 )
-texture = ExtResource( 18 )
+texture = ExtResource( 23 )
 
 [node name="Hintergrund2" type="Sprite" parent="."]
 position = Vector2( 160.938, 411.661 )
-texture = ExtResource( 18 )
+texture = ExtResource( 23 )
 
 [node name="Hintergrund3" type="Sprite" parent="."]
 position = Vector2( 34.7375, 476.38 )
-texture = ExtResource( 18 )
+texture = ExtResource( 23 )
 
 [node name="Hintergrund4" type="Sprite" parent="."]
 position = Vector2( 97.2986, 474.223 )
-texture = ExtResource( 18 )
+texture = ExtResource( 23 )
 
 [node name="Hintergrund5" type="Sprite" parent="."]
 position = Vector2( 158.781, 474.223 )
-texture = ExtResource( 18 )
+texture = ExtResource( 23 )
 
 [node name="Hintergrund6" type="Sprite" parent="."]
 position = Vector2( 33.6589, 532.469 )
-texture = ExtResource( 18 )
+texture = ExtResource( 23 )
 
 [node name="Hintergrund7" type="Sprite" parent="."]
 position = Vector2( 91.9054, 525.997 )
-texture = ExtResource( 18 )
+texture = ExtResource( 23 )
 
 [node name="Hintergrund8" type="Sprite" parent="."]
 position = Vector2( 154.467, 531.39 )
-texture = ExtResource( 18 )
+texture = ExtResource( 23 )
 
 [node name="Boden" type="Sprite" parent="."]
 position = Vector2( 34.2326, 580.262 )
 z_index = 1
-texture = ExtResource( 27 )
+texture = ExtResource( 34 )
 
 [node name="Boden2" type="Sprite" parent="."]
 position = Vector2( 94.6364, 581.34 )
 z_index = 1
-texture = ExtResource( 27 )
+texture = ExtResource( 34 )
 
 [node name="Boden3" type="Sprite" parent="."]
 position = Vector2( 159.355, 581.34 )
 z_index = 1
-texture = ExtResource( 27 )
+texture = ExtResource( 34 )
 
 [node name="speichernVorlage1" type="Button" parent="."]
 margin_left = 769.94
@@ -660,17 +665,17 @@ Falls du dein Design noch nicht gespeichert hats, geht es verloren."
 dialog_hide_on_ok = false
 
 [node name="Wiederholen" type="Button" parent="."]
-margin_left = 130.275
-margin_top = 315.182
-margin_right = 224.275
-margin_bottom = 335.182
+margin_left = 121.854
+margin_top = 377.287
+margin_right = 215.854
+margin_bottom = 397.287
 text = "Wiederholen"
 
 [node name="Rueckgaengig" type="Button" parent="."]
-margin_left = 129.0
-margin_top = 342.231
-margin_right = 223.0
-margin_bottom = 366.231
+margin_left = 125.842
+margin_top = 398.02
+margin_right = 223.842
+margin_bottom = 422.02
 text = "Rueckgaengig"
 
 [node name="Bildrand" type="Button" parent="."]
@@ -679,6 +684,41 @@ margin_top = 67.276
 margin_right = 238.259
 margin_bottom = 87.276
 text = "an Bildrand verschieben"
+
+[node name="EigeneFarbeSpeichern1" type="Button" parent="."]
+margin_left = 183.158
+margin_top = 210.526
+margin_right = 208.158
+margin_bottom = 230.526
+text = "<-"
+
+[node name="EigeneFarbeSpeichern2" type="Button" parent="."]
+margin_left = 182.105
+margin_top = 241.053
+margin_right = 207.105
+margin_bottom = 261.053
+text = "<-"
+
+[node name="EigeneFarbeSpeichern3" type="Button" parent="."]
+margin_left = 181.053
+margin_top = 268.421
+margin_right = 206.053
+margin_bottom = 288.421
+text = "<-"
+
+[node name="EigeneFarbeSpeichern4" type="Button" parent="."]
+margin_left = 182.105
+margin_top = 294.737
+margin_right = 207.105
+margin_bottom = 314.737
+text = "<-"
+
+[node name="EigeneFarbeSpeichern5" type="Button" parent="."]
+margin_left = 180.0
+margin_top = 327.368
+margin_right = 205.0
+margin_bottom = 347.368
+text = "<-"
 [connection signal="pressed" from="Speichern" to="Sprite2" method="_on_Speichern_pressed"]
 [connection signal="pressed" from="Vorlage" to="Sprite2" method="_on_Vorlage_pressed"]
 [connection signal="popup_closed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_popup_closed"]
@@ -697,7 +737,7 @@ text = "an Bildrand verschieben"
 [connection signal="pressed" from="Farbe8" to="Sprite2" method="_on_Farbe8_pressed"]
 [connection signal="pressed" from="Farbe9" to="Sprite2" method="_on_Farbe9_pressed"]
 [connection signal="pressed" from="Farbe10" to="Sprite2" method="_on_Farbe10_pressed"]
-[connection signal="pressed" from="EigeneFarbe1" to="Sprite2" method="_on_Farbe10_pressed"]
+[connection signal="pressed" from="EigeneFarbe1" to="Sprite2" method="_on_EigeneFarbe1_pressed"]
 [connection signal="pressed" from="EigeneFarbe2" to="Sprite2" method="_on_Farbe10_pressed"]
 [connection signal="pressed" from="EigeneFarbe3" to="Sprite2" method="_on_Farbe10_pressed"]
 [connection signal="pressed" from="EigeneFarbe4" to="Sprite2" method="_on_Farbe10_pressed"]
@@ -747,3 +787,8 @@ text = "an Bildrand verschieben"
 [connection signal="pressed" from="Wiederholen" to="Sprite2" method="_on_Wiederholen_pressed"]
 [connection signal="pressed" from="Rueckgaengig" to="Sprite2" method="_on_Rueckgaengig_pressed"]
 [connection signal="pressed" from="Bildrand" to="Sprite2" method="_on_Bildrand_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern1" to="Sprite2" method="_on_EigeneFarbeSpeichern1_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern2" to="Sprite2" method="_on_EigeneFarbeSpeichern2_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern3" to="Sprite2" method="_on_EigeneFarbeSpeichern3_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern4" to="Sprite2" method="_on_EigeneFarbeSpeichern4_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern5" to="Sprite2" method="_on_EigeneFarbeSpeichern5_pressed"]

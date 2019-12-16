@@ -24,6 +24,8 @@ var minx;
 var maxx;
 var miny;
 var maxy;
+var eigeneFarbe;
+
 
 
 
@@ -57,14 +59,16 @@ func _ready():
 	#Anfangsknopf auf ersten Blob setzen
 	aktiverKnopf= "Blob_1_gerade";
 	get_node("../Blob_1_gerade").pressed = true;
+	Vorschau="Blob"
+	
 	einladen(aktiverKnopf);
 	#Standardbutton setzen
-	setze_Standardbutton(aktiverKnopf);
+	setze_Standardbutton();
 	#Vorlagebuttonssetzen
 	setze_Vorlagen();
-	#Vorschau setzen
-	Vorschau= "Blob";
+	#Vorschau aktualisieren
 	aktualisiere_Vorschau();
+
 	#Bei neuladen es Maleneditors:
 	#setze alle Figurauswahlbuttons auf das neue aktuelle Design
 	setze_Figurauswahlbuttons();
@@ -81,8 +85,10 @@ func _ready():
 	
 	wiederholenstapel=[];
 	
-	
-	
+	#eigene Farben einladen
+	eigeneFarbe=[];
+	eigeneFarbe.resize(5);
+	eigene_Farben_einladen();
 	
 
 
@@ -205,24 +211,24 @@ speichert die Zeichenfläche als png
 func speichern(bildname, Knopf):
 
 	#Bild in den Dateien speichern
-	bild.save_png("Bilder/Standardspielfiguren/"+bildname+".png");
+	bild.save_png("Bilder/Standardspielfiguren/Spielfiguren"+bildname+".png");
 	
 	#Knopf aktualisieren
-	knopf_aktualisieren(Knopf);
+	knopf_aktualisieren(Knopf, bild);
 
 """
-aktualisiert die Vorschau eines Knopfes
+aktualisiert das Icon eines Knopfes mit der Zeichenfläche
 @param Name - Name des Knopfes der aktualisiert werden soll
 """
-func knopf_aktualisieren(Name):
-	
-	
-	var buttontextur = ImageTexture.new()
-	buttontextur.create_from_image(bild);
+func knopf_aktualisieren(Name, _bild):
 	#Knopf mit aktualisiertem Bild
 	var Pfad = "../"+ Name;
-	get_node(Pfad).icon= buttontextur;
+	get_node(Pfad).icon= mache_Buttontextur(_bild);
 
+func mache_Buttontextur(_bild):
+	var buttontextur = ImageTexture.new()
+	buttontextur.create_from_image(_bild);
+	return buttontextur;
 """
 """
 
@@ -413,7 +419,7 @@ func CoinWechsel(name):
 
 	
 	#Standardbutton setzen
-	setze_Standardbutton(name);
+	setze_Standardbutton();
 	
 	#Vorlagebuttonssetzen
 	setze_Vorlagen();
@@ -422,11 +428,16 @@ func CoinWechsel(name):
 	aktualisiere_Vorschau();
 
 """
-lädt ein Bild aus den Dateien in die Variable bild ein
+lädt ein Bild aus den Dateien in die Variable bild ein und aktualisiert die Zeichenfläche
 """	
 func einladen(pfad):
 	bild = Image.new();
-	bild.load("Bilder/Standardspielfiguren/"+pfad+".png");
+	if Vorschau=="Blob":
+		bild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
+	elif Vorschau =="Coin":
+		bild.load("Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
+	else:
+		bild.load("Bilder/Standardspielfiguren/Hintergrund/"+pfad+".png");
 	setze_Zeichenflaeche();
 
 
@@ -448,9 +459,16 @@ func setze_Zeichenflaeche():
 """
 lädt das Standardbild als Textur in den Button ein  #setze Button
 """
-func setze_Standardbutton(name):
+func setze_Standardbutton():
+	print("bin in Funktion");
 	var icon = Image.new();
-	icon.load("Bilder/Standardspielfiguren/"+name+"Standard.png");
+	if Vorschau =="Blob":
+		print("bin im standard");
+		icon.load("Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Standard.png");
+	elif Vorschau =="Coin":
+		icon.load("Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Standard.png");
+	else:
+		icon.load("Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Standard.png");
 	var buttontextur = ImageTexture.new();
 	buttontextur.create_from_image(icon);
 	get_node("../Standard").icon= buttontextur;
@@ -462,7 +480,12 @@ als Vorschau in die jeweiligen Buttons
 func setze_Vorlagen():
 	for i in range(1,6):
 		var icon = Image.new();
-		icon.load("Bilder/Standardspielfiguren/"+aktiverKnopf+"Design"+str(i)+".png");
+		if Vorschau == "Blob":
+			icon.load("Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Design"+str(i)+".png");
+		elif Vorschau =="Coin":
+			icon.load("Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Design"+str(i)+".png");
+		else:
+			icon.load("Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Design"+str(i)+".png");	
 		var buttontextur = ImageTexture.new();
 		buttontextur.create_from_image(icon);
 		get_node("../Vorlage"+str(i)).icon= buttontextur;
@@ -799,4 +822,79 @@ func male_Linie(start,ende):
 			
 		x= x+stepx;
 	setze_Zeichenflaeche();
+	
+func eigene_Farbe_speichern(name):
+	var icon = Image.new();
+	icon.create(16, 16, false, Image.FORMAT_RGBA4444);
+	icon.fill(aktuelleFarbe);
+	knopf_aktualisieren(name, icon);
+	#persistent Speichern
+	icon.save_png("Bilder/Farben/"+name+".png");
+	
+	
+	
 
+func _on_EigeneFarbeSpeichern1_pressed():
+	eigeneFarbe[0]= aktuelleFarbe;
+	eigene_Farbe_speichern("EigeneFarbe1");
+
+
+func _on_EigeneFarbeSpeichern2_pressed():
+	eigeneFarbe[1]= aktuelleFarbe;
+	eigene_Farbe_speichern("EigeneFarbe2");
+
+
+func _on_EigeneFarbeSpeichern3_pressed():
+	eigeneFarbe[2]= aktuelleFarbe;
+	eigene_Farbe_speichern("EigeneFarbe3");
+	
+
+func _on_EigeneFarbeSpeichern4_pressed():
+	eigeneFarbe[3]= aktuelleFarbe;
+	eigene_Farbe_speichern("EigeneFarbe4");
+
+
+func _on_EigeneFarbeSpeichern5_pressed():
+	eigeneFarbe[4]= aktuelleFarbe;
+	eigene_Farbe_speichern("EigeneFarbe5");
+
+
+func _on_EigeneFarbe1_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../EigeneFarbe1");
+	aktuelleFarbe = eigeneFarbe[0];
+	print(aktuelleFarbe);
+	modus = "Stift";
+
+func _on_EigeneFarbe2_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../EigeneFarbe2");
+	aktuelleFarbe = eigeneFarbe[1];
+	modus = "Stift";
+
+func _on_EigeneFarbe3_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../EigeneFarbe3");
+	aktuelleFarbe = eigeneFarbe[2];
+	modus = "Stift";
+
+func _on_EigeneFarbe4_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../EigeneFarbe4");
+	aktuelleFarbe = eigeneFarbe[3];
+	modus = "Stift";
+
+func _on_EigeneFarbe5_pressed():
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../EigeneFarbe5");
+	aktuelleFarbe = eigeneFarbe[4];
+	modus = "Stift";
+	
+func eigene_Farben_einladen():
+	for i in range(1,5):
+		var icon = Image.new();
+		icon.load("Bilder/Farben/EigeneFarbe"+str(i)+".png");
+		icon.lock();
+		eigeneFarbe[i-1]= icon.get_pixel(0,0);
+		icon.unlock();
+ 
