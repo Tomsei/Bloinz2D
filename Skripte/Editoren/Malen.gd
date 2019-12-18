@@ -192,7 +192,7 @@ func _process(delta):
 					else:
 						linienEnde = get_global_mouse_position();
 						linienEnde.x = linienEnde.x-256;
-						print("Male Linie");
+						print("Male Quadrat");
 						print(linienStart);
 						print(linienEnde);
 						male_Quadrat(linienStart,linienEnde);
@@ -376,7 +376,7 @@ func _on_gro_pressed():
 
 
 func _on_Zurueck_button_up():
-	get_tree().change_scene("res://Szenen/Spieloberflaeche.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
 	OS.set_window_size(Vector2(448,640))
 
 
@@ -982,10 +982,13 @@ func male_Quadrat(start, ende):
 	ende.x = floor(ende.x/8);
 	ende.y = floor(ende.y/8);
 	bild.lock();
-	for i in range (0, abs(start.x-ende.x)):
+	for i in range (0, abs(start.x-ende.x)+1):
+		print("in Schleife");
 		bild.set_pixel(start.x+i, start.y, aktuelleFarbe);
-	bild.unlock();
 	
+	bild.unlock();
+	setze_Zeichenflaeche();
+	aktualisiere_Vorschau();
 
 func _on_Quadrat_pressed():
 	modus="Quadrat";
