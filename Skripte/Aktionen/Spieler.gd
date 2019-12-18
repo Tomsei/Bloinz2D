@@ -315,6 +315,16 @@ Textur des Blobs wird ebenfalls angepasst
 func _on_Kanone_kanoneberuehrte():
 	blobGroesse = blobGroesse - 5
 	blobVeranederung(false)
-	
+
+"""
+Methode um die Geschwindigkeit des Spielers zu verändern
+@geschwindigkeitsDifferenz ist der Wert der auf die Geschwindigkeit hinzugerechnet wird
+--> negativer Wert verringert die Geschwindigkeit | positiver Wert erhöht die Geschwindigkeit
+"""
+func veraendereSpielerGeschwindigkeit(var geschwindigkeitsDifferenz):
+	speed = speed + geschwindigkeitsDifferenz
+
+
+
 func test():
 	print("HALLO")

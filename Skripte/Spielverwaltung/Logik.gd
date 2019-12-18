@@ -14,7 +14,7 @@ func _ready():
 	raketenTimer.start()
 	muenzTimer.set_wait_time(1)
 	muenzTimer.start()
-	randomCoinZeit.set_wait_time(10)
+	randomCoinZeit.set_wait_time(7)
 	randomCoinZeit.start()
 	
 	erstelleMuenze()
@@ -108,12 +108,13 @@ func _on_randomMuenze_randomAktion():
 	
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var zufall = rng.randi_range(0,2)
+	var zufall = rng.randi_range(3,3)
 
 	match zufall:
 		0: randomAktion_erstelleMuenzen()
 		1: randomAktion_erstelleSchutz()
 		2: randomAktion_muenzMagnet()
+		3: randomAktion_spielerGeschwindigkeit()
 
 
 
@@ -130,8 +131,15 @@ func randomAktion_erstelleSchutz():
 func randomAktion_muenzMagnet():
 	muenzmagnetAktiv = true
 	randomCoinZeit.start()
-	
-	
+
+
+var erhoehteGeschwindigkeit = false
+
+func randomAktion_spielerGeschwindigkeit():
+	if erhoehteGeschwindigkeit:
+		spieler.veraendereSpielerGeschwindigkeit(300)
+	erhoehteGeschwindigkeit = true
+	randomCoinZeit.start()
 
 
 #Gerade wird alle 10 Sekunden die Kanone erzeugt
@@ -145,3 +153,6 @@ func _on_MuenzTimer_timeout():
 
 func _on_RandomCoinZeit_timeout():
 	muenzmagnetAktiv = false
+	if erhoehteGeschwindigkeit:
+		spieler.veraendereSpielerGeschwindigkeit(-300)
+		erhoehteGeschwindigkeit = false
