@@ -1,0 +1,38 @@
+
+#galerie
+{
+    margin: 0;
+    padding: 0;
+    background-color: #2b2d30;
+    width: 80%;
+    min-height: 50px;
+    margin: 50px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+	align-items: center;
+	justify-content: center; 
+}
+#galerie .bild
+{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background: #2b2d30;
+    margin: 10px;
+    overflow: hidden;
+	border-style: solid;
+	
+}
+
+#galerie .bild img {
+    max-width: 100%;
+    min-height: 100%;
+    transition: transform 2s;
+    
+}
+
+#galerie .bild:hover img {
+    transform: scale(1.2);
+}
+
+

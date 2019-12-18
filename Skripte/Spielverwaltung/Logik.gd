@@ -110,7 +110,7 @@ func _on_randomMuenze_randomAktion():
 	
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var zufall = rng.randi_range(3,3)
+	var zufall = rng.randi_range(0,3)
 
 	match zufall:
 		0: randomAktion_erstelleMuenzen()

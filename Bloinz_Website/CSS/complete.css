@@ -1,0 +1,57 @@
+body {
+    background-color: #121e2b;
+    
+    border-style: solid;
+    border-width: 20px;
+    border-color: #1a1919;
+	
+	color: #bab5b5;
+
+	font-size: 100%;
+	
+}
+
+
+
+
+/* Link Einstellungen für die Links */
+nav {
+	text-align: center;
+    text-decoration: none;
+    background: #48574c;
+    padding: 0.3em;
+}
+
+nav li {
+    display: inline;
+}
+
+nav a{
+    font-size: 2em;
+    text-decoration: none;
+    background: #738578;
+    padding: 0.5em;
+	color: black;
+	
+}
+
+nav a:hover {
+	color: #b5c7ba;
+}
+
+
+
+
+/* CSS für die Spielanwendung*/
+.spiel{
+    text-align: center;
+}
+
+iframe{
+    width: 448px;
+    height: 640px;
+    margin: auto;
+    border-style: solid;
+    border-width: 20px;
+    border-color: white;
+}
