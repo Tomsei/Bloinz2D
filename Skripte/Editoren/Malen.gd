@@ -152,7 +152,6 @@ func befuellen():
 Methode, die bei jedem neuen Time_Frame aufgerufen wird
 """
 func _process(delta):
-	if Colorpickerb == false:
 		if Input.is_action_just_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
@@ -179,7 +178,24 @@ func _process(delta):
 						linienEnde = get_global_mouse_position();
 						linienEnde.x = linienEnde.x-256;
 						print("Male Linie");
+						print(linienStart);
+						print(linienEnde);
 						male_Linie(linienStart,linienEnde);
+						linienStart = null;
+						linienEnde = null;
+				elif modus == "Quadrat":
+					if linienStart == null:
+						linienStart = get_global_mouse_position();
+						linienStart.x = linienStart.x-256;
+						punkt_malen_pixel(linienStart.x, linienStart.y);
+						setze_Zeichenflaeche();
+					else:
+						linienEnde = get_global_mouse_position();
+						linienEnde.x = linienEnde.x-256;
+						print("Male Linie");
+						print(linienStart);
+						print(linienEnde);
+						male_Quadrat(linienStart,linienEnde);
 						linienStart = null;
 						linienEnde = null;
 		elif Input.is_action_pressed("draw"):
@@ -237,7 +253,7 @@ func _on_ColorPickerButton_popup_closed():
 	aktuellerFarbbutton= get_node("../ColorPickerButton");
 	aktuelleFarbe = get_node("../ColorPickerButton").color;
 	modus="";
-	Colorpickerb= false;
+
 
 
 func _on_Stift_pressed():
@@ -765,16 +781,34 @@ func alles_rueckgaengig():
 	#setze aktuelle Figur auf Standard
 
 func male_Linie(start,ende):
-	# Setzen der Koordinaten-Variablen, die jeweils den aktuellen Punkt angeben
-	start = floor(start/8);
-	ende = floor(ende/8);
+	
+	start.x = floor(start.x/8);
+	start.y = floor(start.y/8);
+	ende.x = floor(ende.x/8);
+	ende.y = floor(ende.y/8);
+	
+	var y1 = ende.y;
+	var y0 = start.y
+	
+	var x1= ende.x;
+	var x0 = start.x;
+	
+	var schnell;
+	var langsam;
+	var ziel;
+	var xschnell;
+	var Q;
+	var Q_step;
+	var Q_equal;
+	var stepSchnell;
+	var stepLangsam;
+	
+	
+	
+	#Setzen der Koordinaten-Variablen, die jeweils den aktuellen Punkt angeben
 	var y = start.y;
 	var x = start.x;
 	
-	var y1 = ende.y;
-	var x1 = ende.x;
-	var y0 = start.y;
-	var x0 = start.x;
 	#Setzen der Variablen, die angeben, ob x & y hoch- oder runtergezählt werden 
 	var stepy = 1;
 	var stepx = 1;
@@ -785,42 +819,77 @@ func male_Linie(start,ende):
 
 	
 	#Wenn die Linie nach unten geht, muss y herunterzählen 
-	#Ist für den 5. & 8. Oktanten notwendig
+	#Ist für den 5. - 8. Oktanten notwendig
 	if a < 0:
 		a = -1 * a;
-		stepy = -1 * stepy;
-
+		stepy = -1 * stepy;	
 	
-	#Wenn die Linie nach links geht, muss x herunterzählen
-	#Ist für den 4. & 5. Oktanten notwendig
+	# Wenn die Linie nach links geht, muss x herunterzählen
+	# Ist für den 3. - 6. Oktanten notwendig
 	if b > 0:
 		b = -1 * b;
 		stepx = -1 * stepx;
+
+	# Wenn die Linie weiter nach oben/unten als nach links/rechts geht(y schnelle Richtung), müssen x & y vertauscht werden
+	#Ist für den 2., 3., 6. & 7. Oktanten notwendig
+	if a > -b:
+		#Berechnung von Q, Q_step & Q_equal mit vertauschten Werten für a & b und Negierung dieser
+		Q = -(2*b+a);
+		Q_step = -(2*(a+b));
+		Q_equal = -(2*b);
+		
+		#Setzen der Variablen, die angeben, welche Koordinate konsant hochgeht und welche langsamer steigt
+		schnell = y;
+		langsam = x;
+		
+		#Angabe der Variablen, bis zu der hochgezählt werden muss
+		ziel = y1;
+		
+		#Setzen der schnelleren und langsameren Schrittweite
+		stepSchnell = stepy;
+		stepLangsam = stepx;
+		
+		#Setzen der Variable, die angibt, ob x die schneller ansteigende Koordinate ist
+		xschnell = false;
 	
-	# Berechnung von Q, Q_step & Q_equal 
-	var Q = 2*a+b;
-	var Q_step = 2*(a+b);
-	var Q_equal = 2*a;
-	
-	
-	#Durchlaufe die x bis es seinen Endpunkt erreicht
-	#while[x <50 and x > 0 ]:
-	for i in range(0,20):
-		print(x);
-		print(y);
-		#Male den aktuellen Pixel
-		bild.set_pixel(x,y, aktuelleFarbe);
-			
-			#Wenn Q negativ ist, erhöhe Q um Q_equal
-		if Q<0:
-			Q = Q + Q_equal;
-				
-			#Sonst erhöhe Q um Q_step und erhöhe die y um seine Schrittweite
+	else:
+		#Berechnung von Q, Q_step & Q_equal 
+		Q = 2*a+b;
+		Q_step = 2*(a+b);
+		Q_equal = 2*a;
+		
+		#Setzen der Variablen, die angeben, welche Koordinate konsant hochgeht und welche langsamer steigt
+		schnell = x;
+		langsam = y;
+		
+		#Angabe der Variablen, bis zu der hochgezählt werden muss
+		ziel = x1;
+		
+		#Setzen der schnelleren und langsameren Schrittweite		
+		stepSchnell = stepx;
+		stepLangsam = stepy;
+		
+		#Setzen der Variable, die angibt, ob x die schneller ansteigende Koordinate ist
+		xschnell = true;	
+		
+	bild.lock();	
+	#Durchlaufe die schnelle Variable bis sie ihren Endpunkt erreicht
+	while schnell!=ziel: 
+		#Male den aktuellen Pixel mit Überprüfung, welcher Wert schneller ansteigt. 
+		if xschnell:
+			bild.set_pixel(schnell,langsam, aktuelleFarbe);
 		else:
+			bild.set_pixel(langsam,schnell, aktuelleFarbe);
+		#Wenn Q negativ ist, erhöhe Q um Q_equal
+		if (Q<0):
+			Q = Q + Q_equal;
+		#Sonst erhöhe Q um Q_step und erhöhe die langsame Variable um seine Schrittweite
+		else :
 			Q = Q + Q_step;
-			y= y+ stepy;
-			
-		x= x+stepx;
+			langsam+= stepLangsam;
+		schnell+=stepSchnell
+	bild.set_pixel(x1,y1, aktuelleFarbe);
+	bild.unlock();
 	setze_Zeichenflaeche();
 	
 func eigene_Farbe_speichern(name):
@@ -870,31 +939,53 @@ func _on_EigeneFarbe2_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe2");
 	aktuelleFarbe = eigeneFarbe[1];
+	print(eigeneFarbe[1]);
 	modus = "Stift";
 
 func _on_EigeneFarbe3_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe3");
 	aktuelleFarbe = eigeneFarbe[2];
+	print(eigeneFarbe[2]);
 	modus = "Stift";
 
 func _on_EigeneFarbe4_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe4");
 	aktuelleFarbe = eigeneFarbe[3];
+	print(eigeneFarbe[3]);
 	modus = "Stift";
 
 func _on_EigeneFarbe5_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe5");
 	aktuelleFarbe = eigeneFarbe[4];
+	print(eigeneFarbe[4]);
 	modus = "Stift";
 	
 func eigene_Farben_einladen():
-	for i in range(1,5):
+	for i in range(1,6):
 		var icon = Image.new();
 		icon.load("Bilder/Farben/EigeneFarbe"+str(i)+".png");
 		icon.lock();
 		eigeneFarbe[i-1]= icon.get_pixel(0,0);
 		icon.unlock();
- 
+	print(eigeneFarbe[0]);
+	print(eigeneFarbe[1]);
+	print(eigeneFarbe[2]);
+	print(eigeneFarbe[3]);
+	print(eigeneFarbe[4]);
+
+func male_Quadrat(start, ende):
+	start.x = floor(start.x/8);
+	start.y = floor(start.y/8);
+	ende.x = floor(ende.x/8);
+	ende.y = floor(ende.y/8);
+	bild.lock();
+	for i in range (0, abs(start.x-ende.x)):
+		bild.set_pixel(start.x+i, start.y, aktuelleFarbe);
+	bild.unlock();
+	
+
+func _on_Quadrat_pressed():
+	modus="Quadrat";

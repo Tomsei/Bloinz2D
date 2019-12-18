@@ -87,6 +87,14 @@ margin_bottom = 35.4458
 toggle_mode = true
 text = "Linie"
 
+[node name="Quadrat" type="Button" parent="."]
+margin_left = 7.20804
+margin_top = 15.4458
+margin_right = 50.208
+margin_bottom = 35.4458
+toggle_mode = true
+text = "Quadrat"
+
 [node name="Radierer" type="Button" parent="."]
 margin_left = 6.59277
 margin_top = 114.939
@@ -223,11 +231,11 @@ toggle_mode = true
 icon = ExtResource( 17 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = 97.8234
-margin_top = 22.6539
-margin_right = 196.823
-margin_bottom = 36.6539
-text = "weitere Farben:"
+margin_left = 123.21
+margin_top = 190.841
+margin_right = 222.21
+margin_bottom = 204.841
+text = "eigene Farben:"
 
 [node name="Line2D" type="Line2D" parent="."]
 position = Vector2( 2, 3 )
@@ -380,26 +388,26 @@ margin_bottom = 110.078
 icon = ExtResource( 32 )
 
 [node name="klein" type="Button" parent="."]
-margin_left = 128.036
-margin_top = 100.698
-margin_right = 171.036
-margin_bottom = 120.698
+margin_left = 137.556
+margin_top = 45.1644
+margin_right = 180.556
+margin_bottom = 65.1644
 toggle_mode = true
 text = "klein"
 
 [node name="mittel" type="Button" parent="."]
-margin_left = 123.295
-margin_top = 131.314
-margin_right = 166.295
-margin_bottom = 151.314
+margin_left = 126.468
+margin_top = 99.5805
+margin_right = 177.468
+margin_bottom = 119.581
 toggle_mode = true
 text = "mittel"
 
 [node name="gross" type="Button" parent="."]
-margin_left = 173.126
-margin_top = 100.756
-margin_right = 216.126
-margin_bottom = 120.756
+margin_left = 141.393
+margin_top = 73.7825
+margin_right = 184.393
+margin_bottom = 93.7825
 toggle_mode = true
 text = "groß"
 
@@ -680,9 +688,9 @@ text = "Rueckgaengig"
 
 [node name="Bildrand" type="Button" parent="."]
 margin_left = 72.2593
-margin_top = 67.276
+margin_top = 14.9158
 margin_right = 238.259
-margin_bottom = 87.276
+margin_bottom = 34.9158
 text = "an Bildrand verschieben"
 
 [node name="EigeneFarbeSpeichern1" type="Button" parent="."]
@@ -725,6 +733,7 @@ text = "<-"
 [connection signal="pressed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_pressed"]
 [connection signal="pressed" from="Stift" to="Sprite2" method="_on_Stift_pressed"]
 [connection signal="pressed" from="Linie" to="Sprite2" method="_on_Linie_pressed"]
+[connection signal="pressed" from="Quadrat" to="Sprite2" method="_on_Quadrat_pressed"]
 [connection signal="pressed" from="Radierer" to="Sprite2" method="_on_Radierer_pressed"]
 [connection signal="pressed" from="Spiegeln" to="Sprite2" method="_on_Spiegeln_pressed"]
 [connection signal="pressed" from="Farbe1" to="Sprite2" method="_on_Farbe1_pressed"]
@@ -738,10 +747,10 @@ text = "<-"
 [connection signal="pressed" from="Farbe9" to="Sprite2" method="_on_Farbe9_pressed"]
 [connection signal="pressed" from="Farbe10" to="Sprite2" method="_on_Farbe10_pressed"]
 [connection signal="pressed" from="EigeneFarbe1" to="Sprite2" method="_on_EigeneFarbe1_pressed"]
-[connection signal="pressed" from="EigeneFarbe2" to="Sprite2" method="_on_Farbe10_pressed"]
-[connection signal="pressed" from="EigeneFarbe3" to="Sprite2" method="_on_Farbe10_pressed"]
-[connection signal="pressed" from="EigeneFarbe4" to="Sprite2" method="_on_Farbe10_pressed"]
-[connection signal="pressed" from="EigeneFarbe5" to="Sprite2" method="_on_Farbe10_pressed"]
+[connection signal="pressed" from="EigeneFarbe2" to="Sprite2" method="_on_EigeneFarbe2_pressed"]
+[connection signal="pressed" from="EigeneFarbe3" to="Sprite2" method="_on_EigeneFarbe3_pressed"]
+[connection signal="pressed" from="EigeneFarbe4" to="Sprite2" method="_on_EigeneFarbe4_pressed"]
+[connection signal="pressed" from="EigeneFarbe5" to="Sprite2" method="_on_EigeneFarbe5_pressed"]
 [connection signal="pressed" from="Blob_1_gerade" to="Sprite2" method="_on_Blob_1_gerade_pressed"]
 [connection signal="pressed" from="Blob_3_gerade" to="Sprite2" method="_on_Blob_3_gerade_pressed"]
 [connection signal="pressed" from="Blob_2_gerade" to="Sprite2" method="_on_Blob_2_gerade_pressed"]

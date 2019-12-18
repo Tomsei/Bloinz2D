@@ -10,7 +10,7 @@ onready var spieler = get_tree().get_root().get_child(0).get_child(2)
 var muenzmagnetAktiv = false
 
 func _ready():
-	raktetenTimer.set_wait_time(2)
+	raktetenTimer.set_wait_time(10)
 	raktetenTimer.start()
 	muenzTimer.set_wait_time(1)
 	muenzTimer.start()
