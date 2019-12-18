@@ -4,6 +4,7 @@ extends Node2D
 onready var raketenTimer = get_node("RaketenTimer")
 onready var muenzTimer = get_node("MuenzTimer")
 onready var randomCoinZeit = get_node("RandomCoinZeit")
+onready var geschwindigkeitZeit = get_node("RC-Geschwindigkeit")
 
 onready var spieler = get_tree().get_root().get_child(0).get_node("Player")
 
@@ -16,6 +17,7 @@ func _ready():
 	muenzTimer.start()
 	randomCoinZeit.set_wait_time(7)
 	randomCoinZeit.start()
+	geschwindigkeitZeit.set_wait_time(7)
 	
 	erstelleMuenze()
 
@@ -136,10 +138,10 @@ func randomAktion_muenzMagnet():
 var erhoehteGeschwindigkeit = false
 
 func randomAktion_spielerGeschwindigkeit():
-	if erhoehteGeschwindigkeit:
+	if !erhoehteGeschwindigkeit:
 		spieler.veraendereSpielerGeschwindigkeit(300)
-	erhoehteGeschwindigkeit = true
-	randomCoinZeit.start()
+		erhoehteGeschwindigkeit = true
+		geschwindigkeitZeit.start()
 
 
 #Gerade wird alle 10 Sekunden die Kanone erzeugt
@@ -153,6 +155,10 @@ func _on_MuenzTimer_timeout():
 
 func _on_RandomCoinZeit_timeout():
 	muenzmagnetAktiv = false
+
+
+
+func _on_RCGeschwindigkeit_timeout():
 	if erhoehteGeschwindigkeit:
 		spieler.veraendereSpielerGeschwindigkeit(-300)
 		erhoehteGeschwindigkeit = false
