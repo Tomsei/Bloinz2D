@@ -2,13 +2,13 @@ extends Area2D
 
 onready var schutzTimer = get_node("Schutz_Dauer")
 
-# Called when the node enters the scene tree for the first time.
+
 """
 Konstruktor | Wird aufgerufen beim ersten Frame nach der instanzierung
 Setzt die existenzzeit des Schutzes auf 5 Sekunden
 """
 func _ready():
-	schutzTimer.set_wait_time(5)
+	schutzTimer.set_wait_time(7)
 	
 	
 	
@@ -16,7 +16,8 @@ func _ready():
 Methode wird jeden Frame aufgerufen
 """
 func _process(delta):
-	blockiere_negative_muenzen() #Hier möglicherweise noch Performance Problem, dass immer auch wenn Schutzt versteckt ist alle Body geprüft werden
+	blockiere_negative_muenzen() 
+	#Hier möglicherweise noch Performance Problem, dass immer auch wenn Schutzt versteckt ist alle Body geprüft werden
 
 
 
