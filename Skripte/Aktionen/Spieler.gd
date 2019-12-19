@@ -1,9 +1,9 @@
 extends KinematicBody2D
 
 #Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
-export var speed = 300
+export var speed = 500
 export var Schwerkraft = 400
-export var Sprungkraft = 500
+export var Sprungkraft = 700
 
 # Szenengroesse
 var screen_size
@@ -324,7 +324,9 @@ Methode um die Geschwindigkeit des Spielers zu verändern
 func veraendereSpielerGeschwindigkeit(var geschwindigkeitsDifferenz):
 	speed = speed + geschwindigkeitsDifferenz
 
+func uebertrageEinstellungen():
+	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
 
-
-func test():
-	print("HALLO")
+func _on_Optionen_hide():
+	speed = einstellungen.uebernehmeGeschwindigkeit()
+	Sprungkraft = einstellungen.uebernehmeSprungkraft()

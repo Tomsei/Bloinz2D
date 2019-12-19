@@ -1,7 +1,7 @@
 extends TextureButton
 
-onready var optionen = get_tree().get_root().get_child(0).get_node("Optionen")
-onready var mehrOptionen = get_tree().get_root().get_child(0).get_node("Optionen").get_node("WeitereOptionen")
+onready var optionen = get_tree().get_root().get_child(1).get_node("Optionen")
+onready var mehrOptionen = get_tree().get_root().get_child(1).get_node("Optionen").get_node("WeitereOptionen")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -59,8 +59,8 @@ func _on_zurueck_button_up():
 # Geht von den (weiteren) Optionen zurück zum Spiel
 func _on_zumSpiel_button_up():
 	print("Spielen")
-	optionen.visible = false
 	mehrOptionen.visible = false
+	optionen.visible = false
 	get_tree().paused = false
 
 func _on_CodeAnpassen_button_up():

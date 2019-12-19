@@ -133,6 +133,10 @@ margin_bottom = 581.291
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
 script = ExtResource( 10 )
+[connection signal="draw" from="." to="Sprungkraft/SprungkraftSlider" method="_on_WeitereOptionen_draw"]
+[connection signal="draw" from="." to="tempoBlob/BlobSlider" method="_on_WeitereOptionen_draw"]
+[connection signal="draw" from="." to="raketenAbstand/RaketenSlider" method="_on_WeitereOptionen_draw"]
+[connection signal="hide" from="." to="Sprungkraft/SprungkraftSlider" method="_on_WeitereOptionen_hide"]
 [connection signal="value_changed" from="Sprungkraft/SprungkraftSlider" to="Sprungkraft/SprungkraftSlider" method="_on_SprungkraftSlider_value_changed"]
 [connection signal="value_changed" from="tempoBlob/BlobSlider" to="tempoBlob/BlobSlider" method="_on_BlobSlider_value_changed"]
 [connection signal="value_changed" from="raketenAbstand/RaketenSlider" to="raketenAbstand/RaketenSlider" method="_on_RaketenSlider_value_changed"]

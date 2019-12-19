@@ -6,14 +6,14 @@ onready var muenzTimer = get_node("MuenzTimer")
 onready var randomCoinZeit = get_node("RandomCoinZeit")
 onready var geschwindigkeitZeit = get_node("RC-Geschwindigkeit")
 
-onready var spieler = get_tree().get_root().get_child(0).get_node("Player")
+onready var spieler = get_tree().get_root().get_child(1).get_node("Player")
 
 var muenzmagnetAktiv = false
 
 func _ready():
-	raketenTimer.set_wait_time(60)
+	raketenTimer.set_wait_time(10)
 	raketenTimer.start()
-	muenzTimer.set_wait_time(3)
+	muenzTimer.set_wait_time(1)
 	muenzTimer.start()
 	randomCoinZeit.set_wait_time(7)
 	randomCoinZeit.start()

@@ -19,6 +19,10 @@ config/name="Bloinz 2D"
 run/main_scene="res://Szenen/Oberflaeche/Startbildschirm.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+einstellungen="*res://Skripte/Spielverwaltung/Informationsübertragung.gd"
+
 [display]
 
 window/size/width=448
