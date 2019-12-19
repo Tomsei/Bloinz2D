@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Skripte/Aktionen/Spieler.gd" type="Script" id=1]
+[ext_resource path="user://Skripte/Aktionen/Spieler.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_seitlich.png" type="Texture" id=2]
 [ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_gerade.png" type="Texture" id=3]
 [ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_gerade.png" type="Texture" id=4]

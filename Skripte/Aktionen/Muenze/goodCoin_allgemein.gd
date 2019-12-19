@@ -1,4 +1,4 @@
-extends "res://Skripte/Aktionen/Muenze/Muenze.gd"
+extends "user://Skripte/Aktionen/Muenze/Muenze.gd"
 """
 Szene / Klasse für alle guten Coins
 Beinhaltet alle Methoden (ausgelöst durch Random) die für

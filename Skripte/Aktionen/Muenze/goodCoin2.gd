@@ -1,4 +1,4 @@
-extends "res://Skripte/Bewegung/Muenze/goodCoin_allgemein.gd"
+extends "user://Skripte/Aktionen/Muenze/goodCoin_allgemein.gd"
 
 """
 Szene / Klasse für die guten Coins Typ 2

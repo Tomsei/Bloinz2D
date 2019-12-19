@@ -227,7 +227,7 @@ speichert die Zeichenfläche als png
 func speichern(bildname, Knopf):
 
 	#Bild in den Dateien speichern
-	bild.save_png("Bilder/Standardspielfiguren/Spielfiguren"+bildname+".png");
+	bild.save_png("user://Bilder/Standardspielfiguren/Spielfiguren/"+bildname+".png");
 	
 	#Knopf aktualisieren
 	knopf_aktualisieren(Knopf, bild);
@@ -449,11 +449,11 @@ lädt ein Bild aus den Dateien in die Variable bild ein und aktualisiert die Zei
 func einladen(pfad):
 	bild = Image.new();
 	if Vorschau=="Blob":
-		bild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
+		bild.load("user://Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
 	elif Vorschau =="Coin":
-		bild.load("Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
+		bild.load("user://Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
 	else:
-		bild.load("Bilder/Standardspielfiguren/Hintergrund/"+pfad+".png");
+		bild.load("user://Bilder/Standardspielfiguren/Hintergrund/"+pfad+".png");
 	setze_Zeichenflaeche();
 
 
@@ -480,11 +480,11 @@ func setze_Standardbutton():
 	var icon = Image.new();
 	if Vorschau =="Blob":
 		print("bin im standard");
-		icon.load("Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Standard.png");
+		icon.load("user://Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Standard.png");
 	elif Vorschau =="Coin":
-		icon.load("Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Standard.png");
+		icon.load("user://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Standard.png");
 	else:
-		icon.load("Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Standard.png");
+		icon.load("user://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Standard.png");
 	var buttontextur = ImageTexture.new();
 	buttontextur.create_from_image(icon);
 	get_node("../Standard").icon= buttontextur;
@@ -497,11 +497,11 @@ func setze_Vorlagen():
 	for i in range(1,6):
 		var icon = Image.new();
 		if Vorschau == "Blob":
-			icon.load("Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Design"+str(i)+".png");
+			icon.load("user://Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Design"+str(i)+".png");
 		elif Vorschau =="Coin":
-			icon.load("Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Design"+str(i)+".png");
+			icon.load("user://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Design"+str(i)+".png");
 		else:
-			icon.load("Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Design"+str(i)+".png");	
+			icon.load("user://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Design"+str(i)+".png");	
 		var buttontextur = ImageTexture.new();
 		buttontextur.create_from_image(icon);
 		get_node("../Vorlage"+str(i)).icon= buttontextur;
@@ -898,7 +898,7 @@ func eigene_Farbe_speichern(name):
 	icon.fill(aktuelleFarbe);
 	knopf_aktualisieren(name, icon);
 	#persistent Speichern
-	icon.save_png("Bilder/Farben/"+name+".png");
+	icon.save_png("user://Bilder/Farben/"+name+".png");
 	
 	
 	
@@ -966,7 +966,7 @@ func _on_EigeneFarbe5_pressed():
 func eigene_Farben_einladen():
 	for i in range(1,6):
 		var icon = Image.new();
-		icon.load("Bilder/Farben/EigeneFarbe"+str(i)+".png");
+		icon.load("user://Bilder/Farben/EigeneFarbe"+str(i)+".png");
 		icon.lock();
 		eigeneFarbe[i-1]= icon.get_pixel(0,0);
 		icon.unlock();
