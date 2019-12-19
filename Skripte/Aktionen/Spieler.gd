@@ -27,6 +27,11 @@ var blobGroesse = 12 #die aktuelle Größe und das Blob Aussehen wird hierraus b
 # --> Unterschiedliche Blobphasen aufgeteilt in 10 Schritte --> -10 | -5 | 0 | 5 | 10
 var bilderSeitlich = false
 
+var blobstatus = blobStati.NEUTRAL
+
+# Repraesentation der Blobstati.
+enum blobStati {NEGATIV2, NEGATIV1, NEUTRAL, POSITIV1, POSITIV2}
+
 var bodenhoehe = 470
 
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
@@ -218,11 +223,16 @@ func blobVeranederung(var seitlich):
 	
 	#switch Casse über alle Größen des Blobs es wird jeweils das passende Bild gesetzt
 	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
-	
 	match blobGroesse:
-		-1:
+		-11:
 			print ("verloren")
-		0, 1, 2, 3, 4:
+		-10, -9, -8, -7, -6:
+			# Prueft ob der Blobstatus sich veraendet hat.
+			if blobstatus > blobStati.NEGATIV2:
+				# Wenn der Blob vorher groesser war wird der aktuelle Status angepasst.
+				blobstatus = blobStati.NEGATIV2
+				# Spiele den Sound fuer das Schrumpfen.
+				$AudioStreamPlayer2D.abspielen("Schrumpfen")
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
 				skalieren(0.5)
@@ -230,7 +240,15 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("negativ_2_gerade")
 				skalieren(0.5)
 		
-		5, 6, 7, 8, 9:
+		-5, -4, -3, -2, -1:
+			# Prueft ob der Blobstatus sich veraendet hat.
+			if blobstatus > blobStati.NEGATIV1:
+				blobstatus = blobStati.NEGATIV1
+				$AudioStreamPlayer2D.abspielen("Schrumpfen")
+			elif blobstatus < blobStati.NEGATIV1:
+				blobstatus = blobStati.NEGATIV1
+				$AudioStreamPlayer2D.abspielen("Wachsen")
+			
 			if seitlich:
 				$AnimatedSprite.play("negativ_1_seitlich")
 				skalieren(0.7)
@@ -238,29 +256,53 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("negativ_1_gerade")
 				skalieren(0.7)
 		
-		10, 11, 12, 13, 14:
+		0, 1, 2, 3, 4:
+			# Prueft ob der Blobstatus sich veraendet hat.
+			if blobstatus > blobStati.NEUTRAL:
+				blobstatus = blobStati.NEUTRAL
+				$AudioStreamPlayer2D.abspielen("Schrumpfen")
+			elif blobstatus < blobStati.NEUTRAL:
+				blobstatus = blobStati.NEUTRAL
+				$AudioStreamPlayer2D.abspielen("Wachsen")
+			
 			if seitlich:
 				$AnimatedSprite.play("neutral_seitlich")
 				skalieren(0.8)
 			else:
 				$AnimatedSprite.play("neutral_gerade")
 				skalieren(0.8)
-		15, 16, 17, 18, 19:
+		5, 6, 7, 8,  9:
+			# Prueft ob der Blobstatus sich veraendet hat.
+			if blobstatus > blobStati.POSITIV1:
+				blobstatus = blobStati.POSITIV1
+				$AudioStreamPlayer2D.abspielen("Schrumpfen")
+			elif blobstatus < blobStati.POSITIV1:
+				blobstatus = blobStati.POSITIV1
+				$AudioStreamPlayer2D.abspielen("Wachsen")
+			
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
 				skalieren(0.9)
 			else:
 				$AnimatedSprite.play("positiv_1_gerade")
 				skalieren(0.9)
-		20, 21, 22, 23, 24:
+		
+		10, 11, 12, 13, 14:
+			# Prueft ob der Blobstatus sich veraendet hat.
+			if blobstatus < blobStati.POSITIV2:
+				blobstatus = blobStati.POSITIV2
+				$AudioStreamPlayer2D.abspielen("Wachsen")
+			
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")
 				skalieren(1.0)
 			else:
 				$AnimatedSprite.play("positiv_2_gerade")
 				skalieren(1.0)
-		25:
+		15:
 			print ("gewonnen")
+
+
 
 """
 Methode um die Hitboxen des Spielers der Größe anzupassen
