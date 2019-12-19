@@ -47,7 +47,6 @@ func erstelleMuenze():
 	rng.randomize()
 	var zufall = rng.randi_range(0,10)
 	#Zufalls auswahl von einer Münze
-
 	
 	var muenze
 	var istrandom = false
@@ -93,11 +92,11 @@ func _on_Muenze_neueMuenze():
 func erstelleKanone():
 	var kanone = load("res://Szenen/Spielfiguren/Kanone.tscn")
 	
-	#var neu = kanone.instance()
+	var neu = kanone.instance()
 	
 	#Das Signal der Kanone verbinden
-	#neu.connect("kanoneberuehrt", spieler, "_on_Kanone_kanoneberuehrte")
-	#add_child(neu)
+	neu.connect("kanoneberuehrt", spieler, "_on_Kanone_kanoneberuehrte")
+	add_child(neu)
 
 
 """

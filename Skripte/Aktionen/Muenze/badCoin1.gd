@@ -10,6 +10,8 @@ Erbt die Methoden und Variablen von der Super Klasse Muenze
 func _ready():
 	coinWert = -1
 	Geschwindigkeit = 200
+	$Sprite.texture = load("user://Bilder/Standardspielfiguren/Coins/BadCoin1.png")
+	
 
 
 """
