@@ -41,10 +41,12 @@ func _process(delta):
 # Lädt eine Datei und gibt den Text der Datei zurück.
 func lade_datei(pfad):
 	var datei = File.new()
-	var err = datei.open(pfad, File.READ)
+	var err = datei.open("user://" + pfad.lstrip("res:/"), File.READ)
 	if err != OK:
-		printerr("Datei konnte nicht geladen werden, error code ", err)
-		return ""
+		err = datei.open(pfad, File.READ)
+		if err != OK:
+			printerr("Datei konnte nicht geladen werden, error code ", err)
+			return ""
 	var text = datei.get_as_text()
 	
 	datei.close()
@@ -53,7 +55,7 @@ func lade_datei(pfad):
 # Speichert Text in eine Datei mit angegebenem Pfad.
 func save_file(text, pfad):
 	var datei = File.new()
-	var err = datei.open(pfad, File.WRITE)
+	var err = datei.open("user://" + pfad.lstrip("res:/"), File.WRITE)
 	if err != OK:
 		printerr("Fehler beim Schreiben in Datei, error Code:", err)
 		return
