@@ -8,6 +8,7 @@ Erbt die Methoden und Variablen von der Super Klasse goodCoin_allgemein
 """
 
 func _ready():
+	$Sprite.texture = .lade_bild_von_user("user://Bilder/Standardspielfiguren/Coins/GoodCoin1.png");
 	coinWert = 1
 	Geschwindigkeit = 100
 	

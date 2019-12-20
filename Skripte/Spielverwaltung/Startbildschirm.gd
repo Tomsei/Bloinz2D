@@ -2,7 +2,7 @@ extends Node2D
 
 var hauptpfad_originale = "res://"
 var hauptpfad_user = "user://"
-var nicht_kopieren = [".git", ".gitignore", ".import", "project.godot"]
+var nicht_kopieren = [".git", ".gitignore", "project.godot"]
 
 # Wird beim Start aufgerufen.
 func _ready():

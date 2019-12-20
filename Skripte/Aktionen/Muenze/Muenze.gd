@@ -26,7 +26,7 @@ signal randomAktion
 var coinWert
 
 #Variablen zur Bewegung der Coins
-var Geschwindigkeit
+var Geschwindigkeit = 0
 var Bewegung = Vector2(0,0)
 var UP_Vektor = Vector2(0, -1) #Wo ist Oben
 
@@ -98,3 +98,11 @@ func blobKollision():
 	emit_signal("neueMuenze")
 	
 	queue_free()
+
+# Laedt ein Bild aus dem Userverzeichnis mit dem Pfad.
+func lade_bild_von_user(pfad):
+	var bild = Image.new()
+	bild.load(pfad)
+	var textur = ImageTexture.new()
+	textur.create_from_image(bild,0);
+	return textur

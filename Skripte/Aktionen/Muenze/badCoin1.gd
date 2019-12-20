@@ -8,11 +8,9 @@ Erbt die Methoden und Variablen von der Super Klasse Muenze
 """
 
 func _ready():
+	$Sprite.texture = .lade_bild_von_user("user://Bilder/Standardspielfiguren/Coins/BadCoin1.png");
 	coinWert = -1
 	Geschwindigkeit = 200
-	$Sprite.texture = load("user://Bilder/Standardspielfiguren/Coins/BadCoin1.png")
-	
-
 
 """
 Methode um Badcoin vom Regenschirm verschwinden zu lassen

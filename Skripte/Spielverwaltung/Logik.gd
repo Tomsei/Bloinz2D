@@ -47,7 +47,6 @@ func erstelleMuenze():
 	rng.randomize()
 	var zufall = rng.randi_range(0,10)
 	#Zufalls auswahl von einer Münze
-	
 	var muenze
 	var istrandom = false
 	#Switch über zufällige Zahl, damit eine zufallsmünze erstellt wird
@@ -70,18 +69,18 @@ func erstelleMuenze():
 			test5 = test5+1
 			istrandom = true
 	
-	#var neu = muenze.instance()
+	var neu = muenze.instance()
 	
 	#print (str(test1) + "  " + str(test2) + "  " + str(test3) + "  " + str(test4) + "  " + str(test5))
 	 
 	#die Signale müssen verknüpft werden
-	#neu.connect("muenze_beruehrt", spieler, "_on_Muenze_muenze_beruehrt")
-	#neu.connect("neueMuenze", self, "_on_Muenze_neueMuenze")
+	neu.connect("muenze_beruehrt", spieler, "_on_Muenze_muenze_beruehrt")
+	neu.connect("neueMuenze", self, "_on_Muenze_neueMuenze")
 	
 	#if (istrandom):
 		#neu.connect("randomAktion", self, "_on_randomMuenze_randomAktion")
 	
-	#add_child(neu)
+	add_child(neu)
 
 #Signal zum erstellen einer neuen Münze
 func _on_Muenze_neueMuenze():

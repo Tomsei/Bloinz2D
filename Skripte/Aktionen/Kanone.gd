@@ -25,7 +25,7 @@ Konstruktor der Klasse Kanone
 -es wird zufällig festgelegt ob die Kanone von recht / links kommt
 """
 func _ready():
-	$Sprite.texture = load("res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png")
+	lade_Sprite_Bild()
 	screen_size = get_viewport_rect().size
 	
 	if randomZahlZwischen(0,1) == 1:
@@ -116,3 +116,11 @@ func blobKollision():
 	emit_signal("kanoneberuehrt")
 	queue_free()
 
+# Laedt das Bild in den Sprite
+# Muss ueber umweg geschehen, da Bilder nicht direkt aus dem userverzeichnis geladen werden koennen.
+func lade_Sprite_Bild():
+	var bild = Image.new()
+	bild.load("user://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png")
+	var textur = ImageTexture.new()
+	textur.create_from_image(bild,0);
+	$Sprite.texture =  textur
