@@ -224,9 +224,9 @@ func blobVeranederung(var seitlich):
 	#switch Casse über alle Größen des Blobs es wird jeweils das passende Bild gesetzt
 	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
 	match blobGroesse:
-		-11:
+		-1:
 			print ("verloren")
-		-10, -9, -8, -7, -6:
+		0, 1, 2, 3, 4:
 			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.NEGATIV2:
 				# Wenn der Blob vorher groesser war wird der aktuelle Status angepasst.
@@ -240,7 +240,7 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("negativ_2_gerade")
 				skalieren(0.5)
 		
-		-5, -4, -3, -2, -1:
+		5, 6, 7, 8, 9:
 			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.NEGATIV1:
 				blobstatus = blobStati.NEGATIV1
@@ -256,7 +256,7 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("negativ_1_gerade")
 				skalieren(0.7)
 		
-		0, 1, 2, 3, 4:
+		10, 11, 12, 13, 14:
 			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.NEUTRAL:
 				blobstatus = blobStati.NEUTRAL
@@ -271,7 +271,7 @@ func blobVeranederung(var seitlich):
 			else:
 				$AnimatedSprite.play("neutral_gerade")
 				skalieren(0.8)
-		5, 6, 7, 8,  9:
+		15, 16, 17, 18, 19:
 			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.POSITIV1:
 				blobstatus = blobStati.POSITIV1
@@ -287,7 +287,7 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("positiv_1_gerade")
 				skalieren(0.9)
 		
-		10, 11, 12, 13, 14:
+		20, 21, 22, 23, 24:
 			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus < blobStati.POSITIV2:
 				blobstatus = blobStati.POSITIV2
@@ -299,7 +299,7 @@ func blobVeranederung(var seitlich):
 			else:
 				$AnimatedSprite.play("positiv_2_gerade")
 				skalieren(1.0)
-		15:
+		25:
 			print ("gewonnen")
 
 

@@ -3,6 +3,7 @@ extends Node2D
 var hauptpfad_originale = "res://"
 var hauptpfad_user = "user://"
 var nicht_kopieren = [".git", ".gitignore", "project.godot"]
+var dateien_ueberschreiben = false
 
 # Wird beim Start aufgerufen.
 func _ready():
@@ -53,7 +54,6 @@ func erstelle_dateien(dateienpfad):
 		bild.save_png("user://" + dateienpfad.lstrip("res:/"))
 	# Datei ist Sound
 	elif dateienpfad.find(".wav") != -1 && dateienpfad.find(".import") == -1:
-		print("res://" + dateienpfad.lstrip("res://"))
 		var audio = AudioStreamSample.new()
 		audio = load("res://" + dateienpfad.lstrip("res://"))
 		
@@ -62,8 +62,8 @@ func erstelle_dateien(dateienpfad):
 	else:
 		var text = datei.get_as_text()
 		datei.close()
-		
-		if datei.file_exists(hauptpfad_user + dateienpfad.lstrip("res:/")) == false:
+		var datei_existiert = datei.file_exists(hauptpfad_user + dateienpfad.lstrip("res:/"))
+		if datei_existiert == false || datei_existiert == dateien_ueberschreiben:
 			err = datei.open(hauptpfad_user + dateienpfad.lstrip("res:/"), File.WRITE)
 			if err != OK:
 				print("Datei konnte nicht erstellt werden.")
