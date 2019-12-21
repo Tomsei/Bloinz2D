@@ -22,7 +22,10 @@ func stuktur_erstellen(pfad):
 	var element = ober_ordner.get_next()
 	while element != "":
 		if ist_ordner(element):
-			erstelle_ordner(hauptpfad_user + pfad.lstrip("res:/") + "/" + element)
+			if pfad == "res://":
+				erstelle_ordner(hauptpfad_user + pfad.lstrip("res:/") + element)
+			else :
+				erstelle_ordner(hauptpfad_user + pfad.lstrip("res:/") + "/" + element)
 			if nicht_kopieren.has(element) == false:
 				stuktur_erstellen(pfad + "/" + element)
 		else:
@@ -37,6 +40,7 @@ func ist_ordner(dateiname):
 
 # Erstelle den Ordner.
 func erstelle_ordner(ordnerpfad):
+	print(ordnerpfad)
 	var ordner = Directory.new()
 	ordner.make_dir(ordnerpfad)
 
