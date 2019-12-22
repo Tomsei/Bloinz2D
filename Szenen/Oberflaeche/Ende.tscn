@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Bilder/Buttons/StartEnde/nochmalSpielen_normal.png" type="Texture" id=1]
+[ext_resource path="res://Bilder/Buttons/StartEnde/nochmalSpielen_pressed.png" type="Texture" id=2]
+[ext_resource path="res://Szenen/Oberflaeche/Endbildschirm_Gewonnen.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Szenen/Oberflaeche/Endbildschirm_Verloren.tscn" type="PackedScene" id=4]
+
+[node name="Ende" type="Node2D"]
+
+[node name="NochmalSpielen" type="TextureButton" parent="."]
+margin_left = 95.2266
+margin_top = 555.035
+margin_right = 351.227
+margin_bottom = 611.035
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 2 )
+
+[node name="EndeGewonnen" parent="." instance=ExtResource( 3 )]
+
+[node name="EndeVerloren" parent="." instance=ExtResource( 4 )]
+position = Vector2( 3.98056, -1.32684 )

@@ -1,52 +1,84 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Bilder/TileMaps/Optionen.tres" type="TileSet" id=1]
-[ext_resource path="res://Bilder/Buttons/Optionen/Anpassungen.png" type="Texture" id=2]
-[ext_resource path="res://Bilder/Buttons/Optionen/Sprungkraft.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Buttons/Optionen/slider.png" type="Texture" id=4]
-[ext_resource path="res://Skripte/Optionen/Slider.gd" type="Script" id=5]
-[ext_resource path="res://Bilder/Buttons/Optionen/tempoBlob.png" type="Texture" id=6]
-[ext_resource path="res://Bilder/Buttons/Optionen/raketenAbstand.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Buttons/Optionen/code_normal.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Buttons/Optionen/code_pressed.png" type="Texture" id=9]
-[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=10]
-[ext_resource path="res://Bilder/Buttons/Optionen/zurueck_normal.png" type="Texture" id=11]
-[ext_resource path="res://Bilder/Buttons/Optionen/zurueck_pressed.png" type="Texture" id=12]
-[ext_resource path="res://Bilder/Buttons/Optionen/spielen_normal.png" type="Texture" id=13]
-[ext_resource path="res://Bilder/Buttons/Optionen/spielen_pressed.png" type="Texture" id=14]
+[ext_resource path="res://Bilder/Buttons/Optionen/1von3.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilRechts_normal.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilRechts_pressed.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Buttons/Optionen/Schwierigkeit.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Buttons/Optionen/slider.png" type="Texture" id=6]
+[ext_resource path="res://Skripte/Optionen/Slider.gd" type="Script" id=7]
+[ext_resource path="res://Bilder/Buttons/Optionen/Sprungkraft.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Buttons/Optionen/tempoBlob.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Buttons/Optionen/raketenAbstand.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Buttons/Optionen/tonAn.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Buttons/Optionen/tonAus.png" type="Texture" id=12]
 
-[node name="SliderOptionen" type="Node2D"]
+[node name="Optionen - Slider" type="Node2D"]
 __meta__ = {
 "_edit_vertical_guides_": [ 78.0779, 301.827, 66.3546, 382.052 ]
 }
 
 [node name="TileMap" type="TileMap" parent="."]
+visible = false
 tile_set = ExtResource( 1 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 2, 65536, 0, 65536, 65537, 0, 65537, 65538, 0, 65537, 65539, 0, 65537, 65540, 0, 65537, 65541, 0, 65537, 65542, 0, 65538, 131072, 0, 65536, 131073, 0, 65537, 131074, 0, 65537, 131075, 0, 65537, 131076, 0, 65537, 131077, 0, 65537, 131078, 0, 65538, 196608, 0, 65536, 196609, 0, 65537, 196610, 0, 65537, 196611, 0, 65537, 196612, 0, 65537, 196613, 0, 65537, 196614, 0, 65538, 262144, 0, 65536, 262145, 0, 65537, 262146, 0, 65537, 262147, 0, 65537, 262148, 0, 65537, 262149, 0, 65537, 262150, 0, 65538, 327680, 0, 65536, 327681, 0, 65537, 327682, 0, 65537, 327683, 0, 65537, 327684, 0, 65537, 327685, 0, 65537, 327686, 0, 65538, 393216, 0, 65536, 393217, 0, 65537, 393218, 0, 65537, 393219, 0, 65537, 393220, 0, 65537, 393221, 0, 65537, 393222, 0, 65538, 458752, 0, 65536, 458753, 0, 65537, 458754, 0, 65537, 458755, 0, 65537, 458756, 0, 65537, 458757, 0, 65537, 458758, 0, 65538, 524288, 0, 65536, 524289, 0, 65537, 524290, 0, 65537, 524291, 0, 65537, 524292, 0, 65537, 524293, 0, 65537, 524294, 0, 65538, 589824, 0, 131072, 589825, 0, 131073, 589826, 0, 131073, 589827, 0, 131073, 589828, 0, 131073, 589829, 0, 131073, 589830, 0, 131074 )
 
-[node name="Anpassungen" type="Sprite" parent="."]
-position = Vector2( 759.672, 105.248 )
+[node name="1von3" type="Sprite" parent="."]
+position = Vector2( 224, 75 )
 texture = ExtResource( 2 )
-centered = false
+
+[node name="Seite2" type="TextureButton" parent="1von3"]
+margin_left = 70.0
+margin_top = -32.0
+margin_right = 140.0
+margin_bottom = 30.0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+
+[node name="Schwierigkeit" type="Sprite" parent="."]
+position = Vector2( 222.891, 175.903 )
+texture = ExtResource( 5 )
+
+[node name="SchwierigkeitSlider" type="HSlider" parent="Schwierigkeit"]
+margin_left = -112.818
+margin_top = 35.7879
+margin_right = 111.182
+margin_bottom = 51.7879
+custom_icons/grabber_highlight = ExtResource( 6 )
+custom_icons/grabber = ExtResource( 6 )
+min_value = 1.0
+max_value = 5.0
+value = 3.0
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource( 7 )
+
+[node name="SchwierigkeitAktuell" type="Label" parent="Schwierigkeit/SchwierigkeitSlider"]
+margin_left = 227.216
+margin_top = 1.45944
+margin_right = 267.216
+margin_bottom = 15.4594
+custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
+text = "3"
 
 [node name="Sprungkraft" type="Sprite" parent="."]
-position = Vector2( 224, 170 )
-texture = ExtResource( 3 )
+position = Vector2( 225.36, 281.551 )
+texture = ExtResource( 8 )
 
 [node name="SprungkraftSlider" type="HSlider" parent="Sprungkraft"]
 margin_left = -112.0
 margin_top = 35.0
 margin_right = 112.0
 margin_bottom = 51.0
-custom_icons/grabber_highlight = ExtResource( 4 )
-custom_icons/grabber = ExtResource( 4 )
+custom_icons/grabber_highlight = ExtResource( 6 )
+custom_icons/grabber = ExtResource( 6 )
 min_value = 1.0
 max_value = 1000.0
 value = 500.0
 rounded = true
 ticks_on_borders = true
-script = ExtResource( 5 )
+script = ExtResource( 7 )
 
 [node name="SprungkraftAktuell" type="Label" parent="Sprungkraft/SprungkraftSlider"]
 margin_left = 226.894
@@ -57,20 +89,20 @@ custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "500"
 
 [node name="tempoBlob" type="Sprite" parent="."]
-position = Vector2( 224, 271 )
-texture = ExtResource( 6 )
+position = Vector2( 229.442, 378.47 )
+texture = ExtResource( 9 )
 
 [node name="BlobSlider" type="HSlider" parent="tempoBlob"]
 margin_left = -112.0
 margin_top = 35.0
 margin_right = 112.0
-custom_icons/grabber_highlight = ExtResource( 4 )
-custom_icons/grabber = ExtResource( 4 )
+custom_icons/grabber_highlight = ExtResource( 6 )
+custom_icons/grabber = ExtResource( 6 )
 min_value = 1.0
 max_value = 600.0
 value = 300.0
 ticks_on_borders = true
-script = ExtResource( 5 )
+script = ExtResource( 7 )
 
 [node name="BlobAktuell" type="Label" parent="tempoBlob/BlobSlider"]
 margin_left = 226.894
@@ -81,21 +113,21 @@ custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "300"
 
 [node name="raketenAbstand" type="Sprite" parent="."]
-position = Vector2( 224, 371.815 )
-texture = ExtResource( 7 )
+position = Vector2( 229.442, 472.483 )
+texture = ExtResource( 10 )
 
 [node name="RaketenSlider" type="HSlider" parent="raketenAbstand"]
 margin_left = -112.0
 margin_top = 35.0
 margin_right = 112.0
 margin_bottom = 51.0
-custom_icons/grabber_highlight = ExtResource( 4 )
-custom_icons/grabber = ExtResource( 4 )
+custom_icons/grabber_highlight = ExtResource( 6 )
+custom_icons/grabber = ExtResource( 6 )
 min_value = 1.0
 max_value = 20.0
 value = 10.0
 ticks_on_borders = true
-script = ExtResource( 5 )
+script = ExtResource( 7 )
 
 [node name="RaketeAktuell" type="Label" parent="raketenAbstand/RaketenSlider"]
 margin_left = 227.216
@@ -105,41 +137,18 @@ margin_bottom = 15.4594
 custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "10"
 
-[node name="CodeAnpassen" type="TextureButton" parent="."]
-margin_left = 623.393
-margin_top = 422.217
-margin_right = 939.393
-margin_bottom = 478.217
-texture_normal = ExtResource( 8 )
-texture_pressed = ExtResource( 9 )
-script = ExtResource( 10 )
-
-[node name="zurueck" type="TextureButton" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 630.684
-margin_top = 568.06
-margin_right = 780.685
-margin_bottom = 624.06
+[node name="TextureButton" type="TextureButton" parent="."]
+margin_left = 500.919
+margin_top = 214.855
+margin_right = 638.919
+margin_bottom = 270.855
 texture_normal = ExtResource( 11 )
 texture_pressed = ExtResource( 12 )
-script = ExtResource( 10 )
-
-[node name="zumSpiel" type="TextureButton" parent="."]
-margin_left = 231.856
-margin_top = 530.0
-margin_right = 381.856
-margin_bottom = 581.291
-texture_normal = ExtResource( 13 )
-texture_pressed = ExtResource( 14 )
-script = ExtResource( 10 )
+[connection signal="draw" from="." to="raketenAbstand/RaketenSlider" method="_on_WeitereOptionen_draw"]
 [connection signal="draw" from="." to="tempoBlob/BlobSlider" method="_on_WeitereOptionen_draw"]
 [connection signal="draw" from="." to="Sprungkraft/SprungkraftSlider" method="_on_WeitereOptionen_draw"]
-[connection signal="draw" from="." to="raketenAbstand/RaketenSlider" method="_on_WeitereOptionen_draw"]
 [connection signal="hide" from="." to="Sprungkraft/SprungkraftSlider" method="_on_WeitereOptionen_hide"]
+[connection signal="value_changed" from="Schwierigkeit/SchwierigkeitSlider" to="Schwierigkeit/SchwierigkeitSlider" method="_on_RaketenSlider_value_changed"]
 [connection signal="value_changed" from="Sprungkraft/SprungkraftSlider" to="Sprungkraft/SprungkraftSlider" method="_on_SprungkraftSlider_value_changed"]
 [connection signal="value_changed" from="tempoBlob/BlobSlider" to="tempoBlob/BlobSlider" method="_on_BlobSlider_value_changed"]
 [connection signal="value_changed" from="raketenAbstand/RaketenSlider" to="raketenAbstand/RaketenSlider" method="_on_RaketenSlider_value_changed"]
-[connection signal="button_up" from="CodeAnpassen" to="CodeAnpassen" method="_on_CodeAnpassen_button_up"]
-[connection signal="button_up" from="zurueck" to="zurueck" method="_on_zurueck_button_up"]
-[connection signal="button_up" from="zumSpiel" to="zumSpiel" method="_on_zumSpiel_button_up"]

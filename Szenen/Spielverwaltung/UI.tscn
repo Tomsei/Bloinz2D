@@ -1,21 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Skripte/Spielverwaltung/UI.gd" type="Script" id=1]
-[ext_resource path="res://Bilder/Buttons/Spiel/Zahnrad.png" type="Texture" id=2]
-[ext_resource path="res://Bilder/Buttons/Spiel/Pause.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_leer.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_voll.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Buttons/Spiel/Pause.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_leer.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_voll.png" type="Texture" id=4]
 
 [node name="UI" type="Node2D"]
 script = ExtResource( 1 )
-
-[node name="Optionen" type="TextureButton" parent="."]
-pause_mode = 2
-margin_left = 378.408
-margin_top = 16.8318
-margin_right = 426.408
-margin_bottom = 64.8318
-texture_normal = ExtResource( 2 )
 
 [node name="Pause" type="TextureButton" parent="."]
 pause_mode = 2
@@ -23,7 +14,7 @@ margin_left = 14.6673
 margin_top = 19.1664
 margin_right = 50.6673
 margin_bottom = 63.1664
-texture_normal = ExtResource( 3 )
+texture_normal = ExtResource( 2 )
 
 [node name="PunkteAnzeige" type="TextureProgress" parent="."]
 anchor_top = 1.0
@@ -34,7 +25,6 @@ margin_right = 385.144
 margin_bottom = 618.166
 max_value = 25.0
 value = 12.0
-texture_under = ExtResource( 4 )
-texture_progress = ExtResource( 5 )
-[connection signal="button_up" from="Optionen" to="." method="_on_Optionen_button_up"]
+texture_under = ExtResource( 3 )
+texture_progress = ExtResource( 4 )
 [connection signal="button_up" from="Pause" to="." method="_on_Pause_button_up"]
