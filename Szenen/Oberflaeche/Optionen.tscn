@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Bilder/TileMaps/Optionen.tres" type="TileSet" id=1]
 [ext_resource path="res://Bilder/Buttons/Optionen/Einstellungen.png" type="Texture" id=2]
@@ -12,16 +12,19 @@
 [ext_resource path="res://Bilder/Buttons/Optionen/designAnpassen_normal.png" type="Texture" id=10]
 [ext_resource path="res://Bilder/Buttons/Optionen/designAnpassen_pressed.png" type="Texture" id=11]
 [ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=12]
-[ext_resource path="res://Bilder/Buttons/Optionen/mehr_normal.png" type="Texture" id=13]
-[ext_resource path="res://Bilder/Buttons/Optionen/mehr_pressed.png" type="Texture" id=14]
-[ext_resource path="res://Bilder/Buttons/Optionen/spielen_normal.png" type="Texture" id=15]
-[ext_resource path="res://Bilder/Buttons/Optionen/spielen_pressed.png" type="Texture" id=16]
+[ext_resource path="res://Bilder/Buttons/Optionen/code_normal.png" type="Texture" id=13]
+[ext_resource path="res://Bilder/Buttons/Optionen/code_pressed.png" type="Texture" id=14]
+[ext_resource path="res://Bilder/Buttons/Optionen/weiterspielen_normal.png" type="Texture" id=15]
+[ext_resource path="res://Bilder/Buttons/Optionen/weiterspielen_pressed.png" type="Texture" id=16]
 [ext_resource path="res://Bilder/Buttons/Optionen/demoversion_Aus.png" type="Texture" id=17]
 [ext_resource path="res://Bilder/Buttons/Optionen/demoversion_An.png" type="Texture" id=18]
 [ext_resource path="res://Bilder/Buttons/Optionen/einstellen_normal.png" type="Texture" id=19]
 [ext_resource path="res://Bilder/Buttons/Optionen/einstellen_pressed.png" type="Texture" id=20]
-[ext_resource path="res://Szenen/Oberflaeche/WeitereOptionen.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Szenen/Oberflaeche/DemoEinstellungen.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Szenen/Oberflaeche/SliderOptionen.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Szenen/Oberflaeche/RandomCoinOptionen.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilLinks_normal.png" type="Texture" id=23]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilRechts_normal.png" type="Texture" id=24]
+[ext_resource path="res://Bilder/Buttons/Optionen/1von3.png" type="Texture" id=25]
 
 [node name="Optionen" type="Node2D"]
 __meta__ = {
@@ -34,30 +37,30 @@ format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 2, 65536, 0, 65536, 65537, 0, 65537, 65538, 0, 65537, 65539, 0, 65537, 65540, 0, 65537, 65541, 0, 65537, 65542, 0, 65538, 131072, 0, 65536, 131073, 0, 65537, 131074, 0, 65537, 131075, 0, 65537, 131076, 0, 65537, 131077, 0, 65537, 131078, 0, 65538, 196608, 0, 65536, 196609, 0, 65537, 196610, 0, 65537, 196611, 0, 65537, 196612, 0, 65537, 196613, 0, 65537, 196614, 0, 65538, 262144, 0, 65536, 262145, 0, 65537, 262146, 0, 65537, 262147, 0, 65537, 262148, 0, 65537, 262149, 0, 65537, 262150, 0, 65538, 327680, 0, 65536, 327681, 0, 65537, 327682, 0, 65537, 327683, 0, 65537, 327684, 0, 65537, 327685, 0, 65537, 327686, 0, 65538, 393216, 0, 65536, 393217, 0, 65537, 393218, 0, 65537, 393219, 0, 65537, 393220, 0, 65537, 393221, 0, 65537, 393222, 0, 65538, 458752, 0, 65536, 458753, 0, 65537, 458754, 0, 65537, 458755, 0, 65537, 458756, 0, 65537, 458757, 0, 65537, 458758, 0, 65538, 524288, 0, 65536, 524289, 0, 65537, 524290, 0, 65537, 524291, 0, 65537, 524292, 0, 65537, 524293, 0, 65537, 524294, 0, 65538, 589824, 0, 131072, 589825, 0, 131073, 589826, 0, 131073, 589827, 0, 131073, 589828, 0, 131073, 589829, 0, 131073, 589830, 0, 131074 )
 
 [node name="Einstellungen" type="Sprite" parent="."]
-position = Vector2( 66, 50 )
+position = Vector2( 699.513, 148.219 )
 texture = ExtResource( 2 )
 centered = false
 
 [node name="Ton" type="CheckButton" parent="."]
-margin_left = 61.0
-margin_top = 150.0
-margin_right = 211.0
-margin_bottom = 214.0
+margin_left = 698.675
+margin_top = 486.047
+margin_right = 848.675
+margin_bottom = 550.047
 custom_icons/off = ExtResource( 3 )
 custom_icons/on = ExtResource( 4 )
 pressed = true
 
 [node name="RandomCoin" type="CheckButton" parent="."]
-margin_left = 215.0
-margin_top = 150.0
-margin_right = 389.0
-margin_bottom = 214.0
+margin_left = 605.421
+margin_top = 175.783
+margin_right = 779.421
+margin_bottom = 239.783
 custom_icons/off = ExtResource( 5 )
 custom_icons/on = ExtResource( 6 )
 pressed = true
 
 [node name="Schwierigkeit" type="Sprite" parent="."]
-position = Vector2( 112, 250 )
+position = Vector2( 788.484, 300.337 )
 texture = ExtResource( 7 )
 centered = false
 
@@ -75,46 +78,46 @@ ticks_on_borders = true
 script = ExtResource( 9 )
 
 [node name="MalenEditor" type="TextureButton" parent="."]
-margin_left = 67.2793
-margin_top = 442.217
-margin_right = 383.279
-margin_bottom = 498.217
+margin_left = 65.7317
+margin_top = 290.556
+margin_right = 381.732
+margin_bottom = 346.556
 texture_normal = ExtResource( 10 )
 texture_pressed = ExtResource( 11 )
 script = ExtResource( 12 )
 
 [node name="mehr" type="TextureButton" parent="."]
-margin_left = 67.2168
-margin_top = 530.0
-margin_right = 217.217
-margin_bottom = 590.335
+margin_left = 65.9891
+margin_top = 219.827
+margin_right = 381.989
+margin_bottom = 280.162
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
 script = ExtResource( 12 )
 
 [node name="zumSpiel" type="TextureButton" parent="."]
-margin_left = 233.164
-margin_top = 530.0
-margin_right = 383.164
-margin_bottom = 590.448
+margin_left = 97.8555
+margin_top = 526.339
+margin_right = 353.855
+margin_bottom = 586.787
 texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 16 )
 script = ExtResource( 12 )
 
 [node name="Demoversion" type="CheckButton" parent="."]
-margin_left = 60.8808
-margin_top = 362.55
-margin_right = 322.881
-margin_bottom = 426.55
+margin_left = 491.817
+margin_top = 295.024
+margin_right = 753.817
+margin_bottom = 359.024
 custom_icons/off = ExtResource( 17 )
 custom_icons/on = ExtResource( 18 )
 pressed = true
 
 [node name="DemoEinstellen" type="TextureButton" parent="."]
-margin_left = 326.425
-margin_top = 366.719
-margin_right = 382.425
-margin_bottom = 422.719
+margin_left = 629.676
+margin_top = 544.741
+margin_right = 685.676
+margin_bottom = 600.741
 texture_normal = ExtResource( 19 )
 texture_pressed = ExtResource( 20 )
 script = ExtResource( 12 )
@@ -124,6 +127,18 @@ visible = false
 
 [node name="DemoEinstellungen" parent="." instance=ExtResource( 22 )]
 visible = false
+
+[node name="PfeilLinks_normal" type="Sprite" parent="."]
+position = Vector2( 103.485, 70.8227 )
+texture = ExtResource( 23 )
+
+[node name="PfeilRechts_normal" type="Sprite" parent="."]
+position = Vector2( 348.36, 69.7147 )
+texture = ExtResource( 24 )
+
+[node name="1von3" type="Sprite" parent="."]
+position = Vector2( 228.313, 70.7954 )
+texture = ExtResource( 25 )
 [connection signal="value_changed" from="Schwierigkeit/SchwierigkeitSlider" to="Schwierigkeit/SchwierigkeitSlider" method="_on_SchwierigkeitSlider_value_changed"]
 [connection signal="button_up" from="MalenEditor" to="MalenEditor" method="_on_MalenEditor_button_up"]
 [connection signal="pressed" from="mehr" to="mehr" method="_on_mehr_pressed"]
