@@ -87,13 +87,13 @@ margin_bottom = 35.4458
 toggle_mode = true
 text = "Linie"
 
-[node name="Rechteck" type="Button" parent="."]
+[node name="Quadrat" type="Button" parent="."]
 margin_left = 7.20804
 margin_top = 15.4458
 margin_right = 50.208
 margin_bottom = 35.4458
 toggle_mode = true
-text = "Rechteck"
+text = "Quadrat"
 
 [node name="Radierer" type="Button" parent="."]
 margin_left = 6.59277
@@ -733,7 +733,7 @@ text = "<-"
 [connection signal="pressed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_pressed"]
 [connection signal="pressed" from="Stift" to="Sprite2" method="_on_Stift_pressed"]
 [connection signal="pressed" from="Linie" to="Sprite2" method="_on_Linie_pressed"]
-[connection signal="pressed" from="Rechteck" to="Sprite2" method="_on_Rechteck_pressed"]
+[connection signal="pressed" from="Quadrat" to="Sprite2" method="_on_Quadrat_pressed"]
 [connection signal="pressed" from="Radierer" to="Sprite2" method="_on_Radierer_pressed"]
 [connection signal="pressed" from="Spiegeln" to="Sprite2" method="_on_Spiegeln_pressed"]
 [connection signal="pressed" from="Farbe1" to="Sprite2" method="_on_Farbe1_pressed"]

@@ -183,7 +183,7 @@ func _process(delta):
 						male_Linie(linienStart,linienEnde);
 						linienStart = null;
 						linienEnde = null;
-				elif modus == "Rechteck":
+				elif modus == "Quadrat":
 					if linienStart == null:
 						linienStart = get_global_mouse_position();
 						linienStart.x = linienStart.x-256;
@@ -192,10 +192,10 @@ func _process(delta):
 					else:
 						linienEnde = get_global_mouse_position();
 						linienEnde.x = linienEnde.x-256;
-						print("Male Rechteck");
+						print("Male Quadrat");
 						print(linienStart);
 						print(linienEnde);
-						male_Rechteck(linienStart,linienEnde);
+						male_Quadrat(linienStart,linienEnde);
 						linienStart = null;
 						linienEnde = null;
 		elif Input.is_action_pressed("draw"):
@@ -976,34 +976,19 @@ func eigene_Farben_einladen():
 	print(eigeneFarbe[3]);
 	print(eigeneFarbe[4]);
 
-func male_Rechteck(start, ende):
+func male_Quadrat(start, ende):
 	start.x = floor(start.x/8);
 	start.y = floor(start.y/8);
 	ende.x = floor(ende.x/8);
 	ende.y = floor(ende.y/8);
-	if start.x> ende.x:
-		var zwischen;
-		zwischen = start.x;
-		start.x = ende.x;
-		ende.x = zwischen;
-	if start.y> ende.y:
-		var zwischen;
-		zwischen = start.y;
-		start.y = ende.y;
-		ende.y = zwischen;
-			
 	bild.lock();
 	for i in range (0, abs(start.x-ende.x)+1):
+		print("in Schleife");
 		bild.set_pixel(start.x+i, start.y, aktuelleFarbe);
-	for i in range (0, abs(start.x-ende.x)+1):
-		bild.set_pixel(start.x+i, ende.y, aktuelleFarbe);
-	for i in range (0, abs(start.y-ende.y)+1):
-		bild.set_pixel(start.x, start.y+i, aktuelleFarbe);
-	for i in range (0, abs(start.y-ende.y)+1):
-		bild.set_pixel(ende.x, start.y+i, aktuelleFarbe);
+	
 	bild.unlock();
 	setze_Zeichenflaeche();
 	aktualisiere_Vorschau();
 
-func _on_Rechteck_pressed():
-	modus="Rechteck";
+func _on_Quadrat_pressed():
+	modus="Quadrat";
