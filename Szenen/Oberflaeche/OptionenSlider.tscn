@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Bilder/TileMaps/Optionen.tres" type="TileSet" id=1]
 [ext_resource path="res://Bilder/Buttons/Optionen/1von3.png" type="Texture" id=2]
@@ -10,8 +10,6 @@
 [ext_resource path="res://Bilder/Buttons/Optionen/Sprungkraft.png" type="Texture" id=8]
 [ext_resource path="res://Bilder/Buttons/Optionen/tempoBlob.png" type="Texture" id=9]
 [ext_resource path="res://Bilder/Buttons/Optionen/raketenAbstand.png" type="Texture" id=10]
-[ext_resource path="res://Bilder/Buttons/Optionen/tonAn.png" type="Texture" id=11]
-[ext_resource path="res://Bilder/Buttons/Optionen/tonAus.png" type="Texture" id=12]
 
 [node name="Optionen - Slider" type="Node2D"]
 __meta__ = {
@@ -136,14 +134,6 @@ margin_right = 267.216
 margin_bottom = 15.4594
 custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "10"
-
-[node name="TextureButton" type="TextureButton" parent="."]
-margin_left = 500.919
-margin_top = 214.855
-margin_right = 638.919
-margin_bottom = 270.855
-texture_normal = ExtResource( 11 )
-texture_pressed = ExtResource( 12 )
 [connection signal="draw" from="." to="raketenAbstand/RaketenSlider" method="_on_WeitereOptionen_draw"]
 [connection signal="draw" from="." to="tempoBlob/BlobSlider" method="_on_WeitereOptionen_draw"]
 [connection signal="draw" from="." to="Sprungkraft/SprungkraftSlider" method="_on_WeitereOptionen_draw"]

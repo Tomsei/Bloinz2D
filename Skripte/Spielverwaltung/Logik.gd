@@ -6,7 +6,7 @@ onready var muenzTimer = get_node("MuenzTimer")
 onready var randomCoinZeit = get_node("RandomCoinZeit")
 onready var geschwindigkeitZeit = get_node("RC-Geschwindigkeit")
 
-onready var spieler = get_tree().get_root().get_child(1).get_node("Player")
+onready var spieler = get_tree().get_root().get_node("Main").get_node("Spiel").get_node("Player")
 
 var muenzmagnetAktiv = false
 

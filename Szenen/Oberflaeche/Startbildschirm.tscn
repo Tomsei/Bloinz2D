@@ -9,6 +9,7 @@
 [node name="Start" type="Node2D"]
 
 [node name="SpielStarten" type="TextureButton" parent="."]
+pause_mode = 2
 margin_left = 96.0
 margin_top = 555.859
 margin_right = 350.105
