@@ -87,15 +87,15 @@ func _on_TabContainer_tab_changed(tab):
 
 # Schreibe die verwendeten Skriptpfade in das Array Skriptpfade.
 func init_Skripte():
-	Skriptpfade["Spieler"] = "res://Skripte/Bewegung/Player.gd"
-	Skriptpfade["Münze"] = "res://Skripte/Bewegung/Muenze/Muenze.gd"
-	Skriptpfade["Gute Münze 1"] = "res://Skripte/Bewegung/Muenze/goodCoin1.gd"
-	Skriptpfade["Gute Münze 2"] = "res://Skripte/Bewegung/Muenze/goodCoin2.gd"
-	Skriptpfade["Böse Münze 1"] = "res://Skripte/Bewegung/Muenze/badCoin1.gd"
-	Skriptpfade["Böse Münze 2"] = "res://Skripte/Bewegung/Muenze/badCoin2.gd"
-	Skriptpfade["Zufalls Münze"] = "res://Skripte/Bewegung/Muenze/randomCoin.gd"
-	Skriptpfade["Kanone"] = "res://Skripte/Bewegung/Kanone.gd"
-	Skriptpfade["Spiellogik"] = "res://Skripte/Logik.gd"
+	Skriptpfade["Spieler"] = "res://Skripte/Aktionen/Spieler.gd"
+	Skriptpfade["Münze"] = "res://Skripte/Aktionen/Muenze/Muenze.gd"
+	Skriptpfade["Gute Münze 1"] = "res://Skripte/Aktionen/Muenze/goodCoin1.gd"
+	Skriptpfade["Gute Münze 2"] = "res://Skripte/Aktionen/Muenze/goodCoin2.gd"
+	Skriptpfade["Böse Münze 1"] = "res://Skripte/Aktionen/Muenze/badCoin1.gd"
+	Skriptpfade["Böse Münze 2"] = "res://Skripte/Aktionen/Muenze/badCoin2.gd"
+	Skriptpfade["Zufalls Münze"] = "res://Skripte/Aktionen/Muenze/randomCoin.gd"
+	Skriptpfade["Kanone"] = "res://Skripte/Aktionen/Kanone.gd"
+	Skriptpfade["Spiellogik"] = "res://Skripte/Spielverwaltung/Logik.gd"
 
 func init_Icons():
 	Icons["Spieler"] = load("res://Bilder/Tabicons/Player_Icon.png")
