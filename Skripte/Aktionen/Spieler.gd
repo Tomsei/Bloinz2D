@@ -3,7 +3,7 @@ extends KinematicBody2D
 #Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
 export var speed = 500
 export var Schwerkraft = 400
-export var Sprungkraft = 700
+export var Sprungkraft = 500
 
 # Szenengroesse
 var screen_size
@@ -39,9 +39,6 @@ func _ready():
 	
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
-	
-	var sprungskraft_signal = load("res://Skripte/Optionen/Slider.gd")
-	sprungskraft_signal.connect("aendereSprungkraft",self,"sprungkraft_geaendert")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind

@@ -47,7 +47,7 @@ func _on_Optionen_button_up():
 	start.visible = false
 	optionen.visible = true
 	ende.visible = false
-	spiel.visible = false
+	spiel.visible = true
 	seite1.visible = true
 	seite2.visible = false
 	seite3.visible = false

@@ -1,10 +1,8 @@
 extends Node
 
-var sprungkraft
-var schwierigkeit
-var raketenzeit
-var geschwindigkeit 
-var coinzeit
+var sprungkraft = 500
+var raketenzeit = 10
+var geschwindigkeit = 500
 var soundAn
 var randomCoinAn
 var spielfigurgroesse
@@ -23,15 +21,8 @@ func setzeSpielerEinstellungen(var _sprungkraft, var _geschwindigkeit):
 	sprungkraft = _sprungkraft
 	geschwindigkeit = _geschwindigkeit
 
-func setzeSchwierigkeit(var _schwierigkeit):
-	schwierigkeit = _schwierigkeit 
-	
-
 func setzeRaketenzeit(var _raketenzeit):
 	raketenzeit = _raketenzeit
-
-func setzeCoinzeit(var _coinzeit):
-	coinzeit = _coinzeit
 
 func setzeFigurGroesse(var _spielfigurgroesse):
 	spielfigurgroesse = _spielfigurgroesse
@@ -44,9 +35,6 @@ func uebernehmeGeschwindigkeit():
 
 func uebernehmeRaketenzeit():
 	return raketenzeit
-
-func uebernehmeCoinzeit():
-	return coinzeit
 
 func uebernehmeFigurGroesse():
 	return spielfigurgroesse

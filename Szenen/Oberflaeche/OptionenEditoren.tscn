@@ -67,7 +67,7 @@ texture_normal = ExtResource( 11 )
 texture_pressed = ExtResource( 12 )
 script = ExtResource( 10 )
 
-[node name="TextureButton" type="TextureButton" parent="."]
+[node name="AllesZuruecksetzen" type="TextureButton" parent="."]
 margin_left = 66.5847
 margin_top = 403.369
 margin_right = 382.585

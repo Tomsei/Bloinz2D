@@ -1,14 +1,16 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Skripte/Spielverwaltung/Informationsübertragung.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/TileMaps/Spieloberflaeche.tres" type="TileSet" id=2]
 [ext_resource path="res://Bilder/Buttons/Spiel/Zahnrad.png" type="Texture" id=3]
 [ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=4]
-[ext_resource path="res://Szenen/Oberflaeche/Startbildschirm.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Szenen/Oberflaeche/Anleitung.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Szenen/Oberflaeche/Spiel.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Szenen/Oberflaeche/Ende.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Bilder/Buttons/Spiel/TonAus.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=6]
+[ext_resource path="res://Szenen/Oberflaeche/Startbildschirm.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Szenen/Oberflaeche/Anleitung.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Szenen/Oberflaeche/Spiel.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Szenen/Oberflaeche/Ende.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=11]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -27,28 +29,34 @@ margin_bottom = 60.5286
 texture_normal = ExtResource( 3 )
 script = ExtResource( 4 )
 
-[node name="Start" parent="." instance=ExtResource( 5 )]
+[node name="CheckButton" type="CheckButton" parent="Hintergrund"]
+margin_left = 301.0
+margin_top = 17.0
+margin_right = 377.0
+margin_bottom = 57.0
+custom_icons/off = ExtResource( 5 )
+custom_icons/on = ExtResource( 6 )
+pressed = true
 
-[node name="Anleitung" parent="." instance=ExtResource( 6 )]
+[node name="Start" parent="." instance=ExtResource( 7 )]
 
-[node name="Spiel" parent="." instance=ExtResource( 7 )]
+[node name="Anleitung" parent="." instance=ExtResource( 8 )]
+
+[node name="Spiel" parent="." instance=ExtResource( 9 )]
 visible = false
 
 [node name="TileMap" parent="Spiel" index="4"]
 visible = false
 
-[node name="Ende" parent="." instance=ExtResource( 8 )]
+[node name="Ende" parent="." instance=ExtResource( 10 )]
 visible = false
 
 [node name="EndeVerloren" parent="Ende" index="2"]
 visible = false
 
-[node name="AlleOptionen" parent="." instance=ExtResource( 9 )]
+[node name="AlleOptionen" parent="." instance=ExtResource( 11 )]
 pause_mode = 2
 visible = false
-
-[node name="Seite1-Slider" parent="AlleOptionen" index="1"]
-editor/display_folded = true
 
 [node name="Seite3-RandomCoin" parent="AlleOptionen" index="3"]
 editor/display_folded = false
