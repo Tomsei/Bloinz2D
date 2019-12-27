@@ -9,6 +9,7 @@ var linienEnde;
 var stiftgroesse;
 #sich auf der Zeichenfläche befindende Bild
 var bild;
+var alterInhalt
 var textur;
 var array;
 var aktiverKnopf;
@@ -25,6 +26,8 @@ var maxx;
 var miny;
 var maxy;
 var eigeneFarbe;
+var temporaeresBild;
+var temporaereZeichenflaeche;
 
 
 
@@ -51,10 +54,13 @@ func _ready():
 	#64*64 groesses Bild was gespeichert wird
 	bildgroesse = 64;
 	bild = Image.new();
-	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA4444);
+	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA8);
 	textur = ImageTexture.new();
 	aktiverKnopf=" ";
 
+	temporaeresBild= Image.new();
+	temporaeresBild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA8);
+	temporaereZeichenflaeche=get_node("../temporaereZeichenflaeche");
 	
 	#Anfangsknopf auf ersten Blob setzen
 	aktiverKnopf= "Blob_1_gerade";
@@ -80,8 +86,7 @@ func _ready():
 	var bildkopie = Image.new();
 	bildkopie.copy_from(bild);
 	rueckgaengigstapel.push_back(bildkopie);
-	print("Startstapel");
-	print(rueckgaengigstapel);
+
 	
 	wiederholenstapel=[];
 	
@@ -89,6 +94,9 @@ func _ready():
 	eigeneFarbe=[];
 	eigeneFarbe.resize(5);
 	eigene_Farben_einladen();
+	
+	#
+
 	
 
 
@@ -130,8 +138,6 @@ func punkt_malen_pixel(x,y):
 func punkt_loeschen(x, y):
 	var xneu = floor(x/8);
 	var yneu = floor(y/8);
-	print(xneu);
-	print(yneu);
 	bild.lock();
 	for i in range(0, stiftgroesse):
 		for j in range(0, stiftgroesse):
@@ -156,7 +162,6 @@ func _process(delta):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
 				if modus =="Fuellen":
-					print("drin");
 					array = create_2d_array(64,64,Color(0,0,0,0));
 					befuellen();
 					fuellen2(aktuelleFarbe,((mouseposition.x-256)/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
@@ -167,37 +172,6 @@ func _process(delta):
 					bild.unlock();
 					setze_Zeichenflaeche();
 					aktualisiere_Vorschau();
-					print("durch");
-				elif modus == "Linie":
-					if linienStart == null:
-						linienStart = get_global_mouse_position();
-						linienStart.x = linienStart.x-256;
-						punkt_malen_pixel(linienStart.x, linienStart.y);
-						setze_Zeichenflaeche();
-					else:
-						linienEnde = get_global_mouse_position();
-						linienEnde.x = linienEnde.x-256;
-						print("Male Linie");
-						print(linienStart);
-						print(linienEnde);
-						male_Linie(linienStart,linienEnde);
-						linienStart = null;
-						linienEnde = null;
-				elif modus == "Rechteck":
-					if linienStart == null:
-						linienStart = get_global_mouse_position();
-						linienStart.x = linienStart.x-256;
-						punkt_malen_pixel(linienStart.x, linienStart.y);
-						setze_Zeichenflaeche();
-					else:
-						linienEnde = get_global_mouse_position();
-						linienEnde.x = linienEnde.x-256;
-						print("Male Rechteck");
-						print(linienStart);
-						print(linienEnde);
-						male_Rechteck(linienStart,linienEnde);
-						linienStart = null;
-						linienEnde = null;
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
@@ -209,16 +183,45 @@ func _process(delta):
 					punkt_loeschen((mouseposition.x-256),mouseposition.y);
 					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
+				elif modus == "Rechteck":
+					if linienStart == null:
+						linienStart = get_global_mouse_position();
+						linienStart.x = linienStart.x-256;
+					else:
+						linienEnde = get_global_mouse_position();
+						linienEnde.x = linienEnde.x-256;
+						leere_temporaere_Zeichenflaeche();
+						male_Rechteck(linienStart,linienEnde);
+				elif modus == "Linie":
+					if linienStart == null:
+						linienStart = get_global_mouse_position();
+						linienStart.x = linienStart.x-256;
+						#punkt_malen_pixel(linienStart.x, linienStart.y);
+						#setze_Zeichenflaeche();
+					else:
+						linienEnde = get_global_mouse_position();
+						linienEnde.x = linienEnde.x-256;
+						leere_temporaere_Zeichenflaeche();
+						male_Linie(linienStart,linienEnde);
+						#linienStart = null;
+						#linienEnde = null;
 		elif Input.is_action_just_released("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
 				wiederholenstapel = [];
 				Abbild_auf_Rueckgaengigstapel();
-
-			#Timer 
-		elif Input.is_action_pressed("undo"):
+				#noch Methode?
+				if modus=="Rechteck":
+					linienStart= null;
+					linienEnde = null;
+					uebernehme_temporaere_Zeichenflaeche();
+				elif modus=="Linie":
+					linienStart= null;
+					linienEnde = null;
+					uebernehme_temporaere_Zeichenflaeche();
+		elif Input.is_action_just_pressed("undo"):
 			mache_rueckgaengig();
-		elif Input.is_action_pressed("redo"):
+		elif Input.is_action_just_pressed("redo"):
 			wiederhole();
 
 """
@@ -227,7 +230,15 @@ speichert die Zeichenfläche als png
 func speichern(bildname, Knopf):
 
 	#Bild in den Dateien speichern
-	bild.save_png("Bilder/Standardspielfiguren/Spielfiguren"+bildname+".png");
+	if Vorschau=="Blob":
+		bild.save_png("Bilder/Standardspielfiguren/Spielfiguren/"+bildname+".png");
+		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
+	elif Vorschau =="Coin":
+		bild.save_png("Bilder/Standardspielfiguren/Coins/"+bildname+".png");	
+	else:
+		for i in range(0,8):
+			#malenordner
+			bild.save_png("Bilder/Hintergruende/HimmelVerlauf"+str(i)+".png");
 	
 	#Knopf aktualisieren
 	knopf_aktualisieren(Knopf, bild);
@@ -450,6 +461,7 @@ func einladen(pfad):
 	bild = Image.new();
 	if Vorschau=="Blob":
 		bild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
+		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
 	elif Vorschau =="Coin":
 		bild.load("Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
 	else:
@@ -472,14 +484,24 @@ func setze_Zeichenflaeche():
 	textur.create_from_image(bildkopie,0);
 	texture = textur;
 
+func setze_temporaere_Zeichenflaeche():
+	# Kopie und Vergrößerung
+	var bildkopie = Image.new();
+	bildkopie.copy_from(temporaeresBild);
+	bildkopie.lock();
+	bildkopie.resize(512,512,1);
+	bildkopie.unlock();
+	var textur1 = ImageTexture.new();
+	#Zuweisen der Textur
+	textur1.create_from_image(bildkopie,0);
+	#temporaereZeichenflaeche.
+	temporaereZeichenflaeche.texture= textur1;
 """
 lädt das Standardbild als Textur in den Button ein  #setze Button
 """
 func setze_Standardbutton():
-	print("bin in Funktion");
 	var icon = Image.new();
 	if Vorschau =="Blob":
-		print("bin im standard");
 		icon.load("Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Standard.png");
 	elif Vorschau =="Coin":
 		icon.load("Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Standard.png");
@@ -685,9 +707,7 @@ func _on_Rueckgaengig_pressed():
 func mache_rueckgaengig():
 	if rueckgaengigstapel.size() > 1:
 		wiederholenstapel.push_back(rueckgaengigstapel.pop_back());
-		print(rueckgaengigstapel.back());
 		bild.copy_from(rueckgaengigstapel.back());
-		print(bild);
 		setze_Zeichenflaeche();
 		aktualisiere_Vorschau();
 
@@ -698,7 +718,6 @@ func wiederhole():
 	if wiederholenstapel.size() > 0:
 		bild.copy_from(wiederholenstapel.back());
 		rueckgaengigstapel.push_back(wiederholenstapel.pop_back());
-		print(wiederholenstapel);
 		setze_Zeichenflaeche();
 		aktualisiere_Vorschau();
 
@@ -737,8 +756,6 @@ func setze_an_unteren_Bildrand():
 	bild.lock();
 	bildkopie.lock();
 	var verschiebung = 63-maxy;
-	print(verschiebung);
-	print(maxy);
 	for x in range(63):
 		for y in range(verschiebung):
 			bild.set_pixel(x,y, Color(0,0,0,0));
@@ -872,14 +889,14 @@ func male_Linie(start,ende):
 		#Setzen der Variable, die angibt, ob x die schneller ansteigende Koordinate ist
 		xschnell = true;	
 		
-	bild.lock();	
+	temporaeresBild.lock();	
 	#Durchlaufe die schnelle Variable bis sie ihren Endpunkt erreicht
 	while schnell!=ziel: 
 		#Male den aktuellen Pixel mit Überprüfung, welcher Wert schneller ansteigt. 
 		if xschnell:
-			bild.set_pixel(schnell,langsam, aktuelleFarbe);
+			temporaeresBild.set_pixel(schnell,langsam, aktuelleFarbe);
 		else:
-			bild.set_pixel(langsam,schnell, aktuelleFarbe);
+			temporaeresBild.set_pixel(langsam,schnell, aktuelleFarbe);
 		#Wenn Q negativ ist, erhöhe Q um Q_equal
 		if (Q<0):
 			Q = Q + Q_equal;
@@ -888,17 +905,19 @@ func male_Linie(start,ende):
 			Q = Q + Q_step;
 			langsam+= stepLangsam;
 		schnell+=stepSchnell
-	bild.set_pixel(x1,y1, aktuelleFarbe);
-	bild.unlock();
-	setze_Zeichenflaeche();
+	temporaeresBild.set_pixel(x1,y1, aktuelleFarbe);
+	temporaeresBild.unlock();
+	setze_temporaere_Zeichenflaeche();
 	
 func eigene_Farbe_speichern(name):
-	var icon = Image.new();
-	icon.create(16, 16, false, Image.FORMAT_RGBA4444);
-	icon.fill(aktuelleFarbe);
-	knopf_aktualisieren(name, icon);
+	var icon1 = Image.new();
+	icon1.create(16, 16, false, Image.FORMAT_RGBA8);
+	icon1.fill(aktuelleFarbe);
+	icon1.lock();
+	icon1.unlock();
+	knopf_aktualisieren(name, icon1);
 	#persistent Speichern
-	icon.save_png("Bilder/Farben/"+name+".png");
+	icon1.save_png("Bilder/Farben/"+name+".png");
 	
 	
 	
@@ -932,35 +951,30 @@ func _on_EigeneFarbe1_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe1");
 	aktuelleFarbe = eigeneFarbe[0];
-	print(aktuelleFarbe);
 	modus = "Stift";
 
 func _on_EigeneFarbe2_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe2");
 	aktuelleFarbe = eigeneFarbe[1];
-	print(eigeneFarbe[1]);
 	modus = "Stift";
 
 func _on_EigeneFarbe3_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe3");
 	aktuelleFarbe = eigeneFarbe[2];
-	print(eigeneFarbe[2]);
 	modus = "Stift";
 
 func _on_EigeneFarbe4_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe4");
 	aktuelleFarbe = eigeneFarbe[3];
-	print(eigeneFarbe[3]);
 	modus = "Stift";
 
 func _on_EigeneFarbe5_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe5");
 	aktuelleFarbe = eigeneFarbe[4];
-	print(eigeneFarbe[4]);
 	modus = "Stift";
 	
 func eigene_Farben_einladen():
@@ -970,11 +984,7 @@ func eigene_Farben_einladen():
 		icon.lock();
 		eigeneFarbe[i-1]= icon.get_pixel(0,0);
 		icon.unlock();
-	print(eigeneFarbe[0]);
-	print(eigeneFarbe[1]);
-	print(eigeneFarbe[2]);
-	print(eigeneFarbe[3]);
-	print(eigeneFarbe[4]);
+
 
 func male_Rechteck(start, ende):
 	start.x = floor(start.x/8);
@@ -991,19 +1001,44 @@ func male_Rechteck(start, ende):
 		zwischen = start.y;
 		start.y = ende.y;
 		ende.y = zwischen;
-			
-	bild.lock();
-	for i in range (0, abs(start.x-ende.x)+1):
-		bild.set_pixel(start.x+i, start.y, aktuelleFarbe);
-	for i in range (0, abs(start.x-ende.x)+1):
-		bild.set_pixel(start.x+i, ende.y, aktuelleFarbe);
+	temporaeresBild.lock();
+	for i in range (0, abs(start.x-ende.x)):
+		temporaeresBild.set_pixel(start.x+i, start.y, aktuelleFarbe);
+	for i in range (0, abs(start.x-ende.x)):
+		temporaeresBild.set_pixel(start.x+i, ende.y, aktuelleFarbe);
+	for i in range (0, abs(start.y-ende.y)):
+		temporaeresBild.set_pixel(start.x, start.y+i, aktuelleFarbe);
 	for i in range (0, abs(start.y-ende.y)+1):
-		bild.set_pixel(start.x, start.y+i, aktuelleFarbe);
-	for i in range (0, abs(start.y-ende.y)+1):
-		bild.set_pixel(ende.x, start.y+i, aktuelleFarbe);
-	bild.unlock();
-	setze_Zeichenflaeche();
-	aktualisiere_Vorschau();
+		temporaeresBild.set_pixel(ende.x, start.y+i, aktuelleFarbe);
+	temporaeresBild.unlock();
+	
+	setze_temporaere_Zeichenflaeche();
+
 
 func _on_Rechteck_pressed():
 	modus="Rechteck";
+	linienEnde = null;
+	linienStart= null;
+	
+func uebernehme_temporaere_Zeichenflaeche():
+	
+	#temporäre Zeichenfläche in richtiges Bild kopieren
+	bild.lock();
+	temporaeresBild.lock();
+	for x in range (64):
+		for y in range (64):
+			if(temporaeresBild.get_pixel(x,y) != Color(0,0,0,0)):
+				bild.set_pixel(x,y,temporaeresBild.get_pixel(x,y));
+	bild.unlock();
+	temporaeresBild.unlock();
+	#Bild neu auf Zeichenfläche laden
+	setze_Zeichenflaeche();
+	aktualisiere_Vorschau();
+	#temporäre Zeichenfläche löschen
+	leere_temporaere_Zeichenflaeche();
+	setze_temporaere_Zeichenflaeche();
+	
+
+func leere_temporaere_Zeichenflaeche():
+	temporaeresBild.fill(Color(0,0,0,0));
+

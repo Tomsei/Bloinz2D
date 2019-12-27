@@ -37,9 +37,13 @@
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Sprite2" type="Sprite" parent="."]
+[node name="Zeichenflaeche" type="Sprite" parent="."]
 position = Vector2( 512, 256 )
 script = ExtResource( 1 )
+
+[node name="temporaereZeichenflaeche" type="Sprite" parent="."]
+position = Vector2( 512, 256 )
+z_index = 1
 
 [node name="Malenhintergrund" type="Sprite" parent="."]
 position = Vector2( 512, 256 )
@@ -73,9 +77,9 @@ edit_alpha = false
 
 [node name="Stift" type="Button" parent="."]
 margin_left = 9.26749
-margin_top = 43.2482
+margin_top = 41.1429
 margin_right = 46.2675
-margin_bottom = 63.2482
+margin_bottom = 61.1429
 toggle_mode = true
 text = "Stift"
 
@@ -88,10 +92,10 @@ toggle_mode = true
 text = "Linie"
 
 [node name="Rechteck" type="Button" parent="."]
-margin_left = 7.20804
-margin_top = 15.4458
-margin_right = 50.208
-margin_bottom = 35.4458
+margin_left = 8.26068
+margin_top = 60.709
+margin_right = 78.2607
+margin_bottom = 80.709
 toggle_mode = true
 text = "Rechteck"
 
@@ -727,77 +731,77 @@ margin_top = 327.368
 margin_right = 205.0
 margin_bottom = 347.368
 text = "<-"
-[connection signal="pressed" from="Speichern" to="Sprite2" method="_on_Speichern_pressed"]
-[connection signal="pressed" from="Vorlage" to="Sprite2" method="_on_Vorlage_pressed"]
-[connection signal="popup_closed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_popup_closed"]
-[connection signal="pressed" from="ColorPickerButton" to="Sprite2" method="_on_ColorPickerButton_pressed"]
-[connection signal="pressed" from="Stift" to="Sprite2" method="_on_Stift_pressed"]
-[connection signal="pressed" from="Linie" to="Sprite2" method="_on_Linie_pressed"]
-[connection signal="pressed" from="Rechteck" to="Sprite2" method="_on_Rechteck_pressed"]
-[connection signal="pressed" from="Radierer" to="Sprite2" method="_on_Radierer_pressed"]
-[connection signal="pressed" from="Spiegeln" to="Sprite2" method="_on_Spiegeln_pressed"]
-[connection signal="pressed" from="Farbe1" to="Sprite2" method="_on_Farbe1_pressed"]
-[connection signal="pressed" from="Farbe2" to="Sprite2" method="_on_Farbe2_pressed"]
-[connection signal="pressed" from="Farbe3" to="Sprite2" method="_on_Farbe3_pressed"]
-[connection signal="pressed" from="Farbe4" to="Sprite2" method="_on_Farbe4_pressed"]
-[connection signal="pressed" from="Farbe5" to="Sprite2" method="_on_Farbe5_pressed"]
-[connection signal="pressed" from="Farbe6" to="Sprite2" method="_on_Farbe6_pressed"]
-[connection signal="pressed" from="Farbe7" to="Sprite2" method="_on_Farbe7_pressed"]
-[connection signal="pressed" from="Farbe8" to="Sprite2" method="_on_Farbe8_pressed"]
-[connection signal="pressed" from="Farbe9" to="Sprite2" method="_on_Farbe9_pressed"]
-[connection signal="pressed" from="Farbe10" to="Sprite2" method="_on_Farbe10_pressed"]
-[connection signal="pressed" from="EigeneFarbe1" to="Sprite2" method="_on_EigeneFarbe1_pressed"]
-[connection signal="pressed" from="EigeneFarbe2" to="Sprite2" method="_on_EigeneFarbe2_pressed"]
-[connection signal="pressed" from="EigeneFarbe3" to="Sprite2" method="_on_EigeneFarbe3_pressed"]
-[connection signal="pressed" from="EigeneFarbe4" to="Sprite2" method="_on_EigeneFarbe4_pressed"]
-[connection signal="pressed" from="EigeneFarbe5" to="Sprite2" method="_on_EigeneFarbe5_pressed"]
-[connection signal="pressed" from="Blob_1_gerade" to="Sprite2" method="_on_Blob_1_gerade_pressed"]
-[connection signal="pressed" from="Blob_3_gerade" to="Sprite2" method="_on_Blob_3_gerade_pressed"]
-[connection signal="pressed" from="Blob_2_gerade" to="Sprite2" method="_on_Blob_2_gerade_pressed"]
-[connection signal="pressed" from="Blob_4_gerade" to="Sprite2" method="_on_Blob_4_gerade_pressed"]
-[connection signal="pressed" from="Blob_5_gerade" to="Sprite2" method="_on_Blob_5_gerade_pressed"]
-[connection signal="pressed" from="Hintergrund" to="Sprite2" method="_on_Hintergrund_pressed"]
-[connection signal="button_down" from="BadCoin1" to="Sprite2" method="_on_BadCoin1_button_down"]
-[connection signal="pressed" from="BadCoin2" to="Sprite2" method="_on_BadCoin2_pressed"]
-[connection signal="button_down" from="GoodCoin1" to="Sprite2" method="_on_GoodCoin1_button_down"]
-[connection signal="pressed" from="GoodCoin2" to="Sprite2" method="_on_GoodCoin2_pressed"]
-[connection signal="pressed" from="RandomCoin" to="Sprite2" method="_on_RandomCoin_pressed"]
-[connection signal="pressed" from="Kanonenkugel" to="Sprite2" method="_on_Kanonenkugel_pressed"]
-[connection signal="pressed" from="Vorlage4" to="Sprite2" method="_on_Vorlage4_pressed"]
-[connection signal="pressed" from="Vorlage3" to="Sprite2" method="_on_Vorlage3_pressed"]
-[connection signal="pressed" from="Vorlage2" to="Sprite2" method="_on_Vorlage2_pressed"]
-[connection signal="pressed" from="Vorlage5" to="Sprite2" method="_on_Vorlage5_pressed"]
-[connection signal="pressed" from="Vorlage1" to="Sprite2" method="_on_Vorlage1_pressed"]
-[connection signal="pressed" from="Standard" to="Sprite2" method="_on_Standard_pressed"]
-[connection signal="pressed" from="klein" to="Sprite2" method="_on_klein_pressed"]
-[connection signal="pressed" from="mittel" to="Sprite2" method="_on_mittel_pressed"]
-[connection signal="pressed" from="gross" to="Sprite2" method="_on_gro_pressed"]
-[connection signal="button_up" from="Zurueck" to="Sprite2" method="_on_Zurueck_button_up"]
-[connection signal="pressed" from="Fuellen" to="Sprite2" method="_on_Fuellen_pressed"]
-[connection signal="pressed" from="Leeren" to="Sprite2" method="_on_Leeren_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design1" to="Sprite2" method="_on_Design1_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design2" to="Sprite2" method="_on_Design2_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design3" to="Sprite2" method="_on_Design3_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design4" to="Sprite2" method="_on_Design4_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design5" to="Sprite2" method="_on_Design5_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design1" to="Sprite2" method="_on_Design1_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design2" to="Sprite2" method="_on_Design2_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design3" to="Sprite2" method="_on_Design3_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design4" to="Sprite2" method="_on_Design4_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design5" to="Sprite2" method="_on_Design5_pressed"]
-[connection signal="pressed" from="speichernVorlage1" to="Sprite2" method="_on_Design1_pressed"]
-[connection signal="pressed" from="speichernVorlage2" to="Sprite2" method="_on_Design2_pressed"]
-[connection signal="pressed" from="speichernVorlage3" to="Sprite2" method="_on_Design3_pressed"]
-[connection signal="pressed" from="speichernVorlage4" to="Sprite2" method="_on_Design4_pressed"]
-[connection signal="pressed" from="speichernVorlage5" to="Sprite2" method="_on_Design5_pressed"]
-[connection signal="confirmed" from="UebernehmenBestaetigen" to="Sprite2" method="_on_UebernehmenBestaetigen_confirmed"]
-[connection signal="confirmed" from="CoinWechsel" to="Sprite2" method="_on_CoinWechsel_confirmed"]
-[connection signal="popup_hide" from="CoinWechsel" to="Sprite2" method="_on_CoinWechsel_popup_hide"]
-[connection signal="pressed" from="Wiederholen" to="Sprite2" method="_on_Wiederholen_pressed"]
-[connection signal="pressed" from="Rueckgaengig" to="Sprite2" method="_on_Rueckgaengig_pressed"]
-[connection signal="pressed" from="Bildrand" to="Sprite2" method="_on_Bildrand_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern1" to="Sprite2" method="_on_EigeneFarbeSpeichern1_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern2" to="Sprite2" method="_on_EigeneFarbeSpeichern2_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern3" to="Sprite2" method="_on_EigeneFarbeSpeichern3_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern4" to="Sprite2" method="_on_EigeneFarbeSpeichern4_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern5" to="Sprite2" method="_on_EigeneFarbeSpeichern5_pressed"]
+[connection signal="pressed" from="Speichern" to="Zeichenflaeche" method="_on_Speichern_pressed"]
+[connection signal="pressed" from="Vorlage" to="Zeichenflaeche" method="_on_Vorlage_pressed"]
+[connection signal="popup_closed" from="ColorPickerButton" to="Zeichenflaeche" method="_on_ColorPickerButton_popup_closed"]
+[connection signal="pressed" from="ColorPickerButton" to="Zeichenflaeche" method="_on_ColorPickerButton_pressed"]
+[connection signal="pressed" from="Stift" to="Zeichenflaeche" method="_on_Stift_pressed"]
+[connection signal="pressed" from="Linie" to="Zeichenflaeche" method="_on_Linie_pressed"]
+[connection signal="pressed" from="Rechteck" to="Zeichenflaeche" method="_on_Rechteck_pressed"]
+[connection signal="pressed" from="Radierer" to="Zeichenflaeche" method="_on_Radierer_pressed"]
+[connection signal="pressed" from="Spiegeln" to="Zeichenflaeche" method="_on_Spiegeln_pressed"]
+[connection signal="pressed" from="Farbe1" to="Zeichenflaeche" method="_on_Farbe1_pressed"]
+[connection signal="pressed" from="Farbe2" to="Zeichenflaeche" method="_on_Farbe2_pressed"]
+[connection signal="pressed" from="Farbe3" to="Zeichenflaeche" method="_on_Farbe3_pressed"]
+[connection signal="pressed" from="Farbe4" to="Zeichenflaeche" method="_on_Farbe4_pressed"]
+[connection signal="pressed" from="Farbe5" to="Zeichenflaeche" method="_on_Farbe5_pressed"]
+[connection signal="pressed" from="Farbe6" to="Zeichenflaeche" method="_on_Farbe6_pressed"]
+[connection signal="pressed" from="Farbe7" to="Zeichenflaeche" method="_on_Farbe7_pressed"]
+[connection signal="pressed" from="Farbe8" to="Zeichenflaeche" method="_on_Farbe8_pressed"]
+[connection signal="pressed" from="Farbe9" to="Zeichenflaeche" method="_on_Farbe9_pressed"]
+[connection signal="pressed" from="Farbe10" to="Zeichenflaeche" method="_on_Farbe10_pressed"]
+[connection signal="pressed" from="EigeneFarbe1" to="Zeichenflaeche" method="_on_EigeneFarbe1_pressed"]
+[connection signal="pressed" from="EigeneFarbe2" to="Zeichenflaeche" method="_on_EigeneFarbe2_pressed"]
+[connection signal="pressed" from="EigeneFarbe3" to="Zeichenflaeche" method="_on_EigeneFarbe3_pressed"]
+[connection signal="pressed" from="EigeneFarbe4" to="Zeichenflaeche" method="_on_EigeneFarbe4_pressed"]
+[connection signal="pressed" from="EigeneFarbe5" to="Zeichenflaeche" method="_on_EigeneFarbe5_pressed"]
+[connection signal="pressed" from="Blob_1_gerade" to="Zeichenflaeche" method="_on_Blob_1_gerade_pressed"]
+[connection signal="pressed" from="Blob_3_gerade" to="Zeichenflaeche" method="_on_Blob_3_gerade_pressed"]
+[connection signal="pressed" from="Blob_2_gerade" to="Zeichenflaeche" method="_on_Blob_2_gerade_pressed"]
+[connection signal="pressed" from="Blob_4_gerade" to="Zeichenflaeche" method="_on_Blob_4_gerade_pressed"]
+[connection signal="pressed" from="Blob_5_gerade" to="Zeichenflaeche" method="_on_Blob_5_gerade_pressed"]
+[connection signal="pressed" from="Hintergrund" to="Zeichenflaeche" method="_on_Hintergrund_pressed"]
+[connection signal="button_down" from="BadCoin1" to="Zeichenflaeche" method="_on_BadCoin1_button_down"]
+[connection signal="pressed" from="BadCoin2" to="Zeichenflaeche" method="_on_BadCoin2_pressed"]
+[connection signal="button_down" from="GoodCoin1" to="Zeichenflaeche" method="_on_GoodCoin1_button_down"]
+[connection signal="pressed" from="GoodCoin2" to="Zeichenflaeche" method="_on_GoodCoin2_pressed"]
+[connection signal="pressed" from="RandomCoin" to="Zeichenflaeche" method="_on_RandomCoin_pressed"]
+[connection signal="pressed" from="Kanonenkugel" to="Zeichenflaeche" method="_on_Kanonenkugel_pressed"]
+[connection signal="pressed" from="Vorlage4" to="Zeichenflaeche" method="_on_Vorlage4_pressed"]
+[connection signal="pressed" from="Vorlage3" to="Zeichenflaeche" method="_on_Vorlage3_pressed"]
+[connection signal="pressed" from="Vorlage2" to="Zeichenflaeche" method="_on_Vorlage2_pressed"]
+[connection signal="pressed" from="Vorlage5" to="Zeichenflaeche" method="_on_Vorlage5_pressed"]
+[connection signal="pressed" from="Vorlage1" to="Zeichenflaeche" method="_on_Vorlage1_pressed"]
+[connection signal="pressed" from="Standard" to="Zeichenflaeche" method="_on_Standard_pressed"]
+[connection signal="pressed" from="klein" to="Zeichenflaeche" method="_on_klein_pressed"]
+[connection signal="pressed" from="mittel" to="Zeichenflaeche" method="_on_mittel_pressed"]
+[connection signal="pressed" from="gross" to="Zeichenflaeche" method="_on_gro_pressed"]
+[connection signal="button_up" from="Zurueck" to="Zeichenflaeche" method="_on_Zurueck_button_up"]
+[connection signal="pressed" from="Fuellen" to="Zeichenflaeche" method="_on_Fuellen_pressed"]
+[connection signal="pressed" from="Leeren" to="Zeichenflaeche" method="_on_Leeren_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design1" to="Zeichenflaeche" method="_on_Design1_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design2" to="Zeichenflaeche" method="_on_Design2_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design3" to="Zeichenflaeche" method="_on_Design3_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design4" to="Zeichenflaeche" method="_on_Design4_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design5" to="Zeichenflaeche" method="_on_Design5_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design1" to="Zeichenflaeche" method="_on_Design1_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design2" to="Zeichenflaeche" method="_on_Design2_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design3" to="Zeichenflaeche" method="_on_Design3_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design4" to="Zeichenflaeche" method="_on_Design4_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design5" to="Zeichenflaeche" method="_on_Design5_pressed"]
+[connection signal="pressed" from="speichernVorlage1" to="Zeichenflaeche" method="_on_Design1_pressed"]
+[connection signal="pressed" from="speichernVorlage2" to="Zeichenflaeche" method="_on_Design2_pressed"]
+[connection signal="pressed" from="speichernVorlage3" to="Zeichenflaeche" method="_on_Design3_pressed"]
+[connection signal="pressed" from="speichernVorlage4" to="Zeichenflaeche" method="_on_Design4_pressed"]
+[connection signal="pressed" from="speichernVorlage5" to="Zeichenflaeche" method="_on_Design5_pressed"]
+[connection signal="confirmed" from="UebernehmenBestaetigen" to="Zeichenflaeche" method="_on_UebernehmenBestaetigen_confirmed"]
+[connection signal="confirmed" from="CoinWechsel" to="Zeichenflaeche" method="_on_CoinWechsel_confirmed"]
+[connection signal="popup_hide" from="CoinWechsel" to="Zeichenflaeche" method="_on_CoinWechsel_popup_hide"]
+[connection signal="pressed" from="Wiederholen" to="Zeichenflaeche" method="_on_Wiederholen_pressed"]
+[connection signal="pressed" from="Rueckgaengig" to="Zeichenflaeche" method="_on_Rueckgaengig_pressed"]
+[connection signal="pressed" from="Bildrand" to="Zeichenflaeche" method="_on_Bildrand_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern1" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern1_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern2" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern2_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern3" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern3_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern4" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern4_pressed"]
+[connection signal="pressed" from="EigeneFarbeSpeichern5" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern5_pressed"]
