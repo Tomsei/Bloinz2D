@@ -666,7 +666,7 @@ window_title = "Bitte bestätigen"
 dialog_text = "Das aktuelle Zeichnung als momentane Spielfigur übernehmen?
 Das alte wird gelöscht, sofern es nicht in den Vorlagen gespeichert ist"
 
-[node name="CoinWechsel" type="ConfirmationDialog" parent="."]
+[node name="CoinWechsel1" type="ConfirmationDialog" parent="."]
 margin_left = 296.036
 margin_top = 194.575
 margin_right = 738.036
@@ -731,6 +731,35 @@ margin_top = 327.368
 margin_right = 205.0
 margin_bottom = 347.368
 text = "<-"
+
+[node name="CoinWechsel" type="PopupDialog" parent="."]
+visible = true
+margin_left = 276.527
+margin_top = 256.79
+margin_right = 757.527
+margin_bottom = 400.79
+
+[node name="Beschriftung" type="Label" parent="CoinWechsel"]
+margin_left = 26.3158
+margin_top = 29.4737
+margin_right = 452.316
+margin_bottom = 60.4737
+text = "Möchtest du wirklich auf eine andere Figur umschalten?
+Falls du dein Design noch nicht gespeichert hast, geht es verloren."
+
+[node name="Ja" type="Button" parent="CoinWechsel"]
+margin_left = 55.7895
+margin_top = 91.5791
+margin_right = 77.7895
+margin_bottom = 111.579
+text = "Ja"
+
+[node name="Nein" type="Button" parent="CoinWechsel"]
+margin_left = 171.579
+margin_top = 96.8422
+margin_right = 213.579
+margin_bottom = 116.842
+text = "Nein"
 [connection signal="pressed" from="Speichern" to="Zeichenflaeche" method="_on_Speichern_pressed"]
 [connection signal="pressed" from="Vorlage" to="Zeichenflaeche" method="_on_Vorlage_pressed"]
 [connection signal="popup_closed" from="ColorPickerButton" to="Zeichenflaeche" method="_on_ColorPickerButton_popup_closed"]
@@ -795,8 +824,9 @@ text = "<-"
 [connection signal="pressed" from="speichernVorlage4" to="Zeichenflaeche" method="_on_Design4_pressed"]
 [connection signal="pressed" from="speichernVorlage5" to="Zeichenflaeche" method="_on_Design5_pressed"]
 [connection signal="confirmed" from="UebernehmenBestaetigen" to="Zeichenflaeche" method="_on_UebernehmenBestaetigen_confirmed"]
-[connection signal="confirmed" from="CoinWechsel" to="Zeichenflaeche" method="_on_CoinWechsel_confirmed"]
-[connection signal="popup_hide" from="CoinWechsel" to="Zeichenflaeche" method="_on_CoinWechsel_popup_hide"]
+[connection signal="confirmed" from="CoinWechsel1" to="Zeichenflaeche" method="_on_CoinWechsel_confirmed"]
+[connection signal="custom_action" from="CoinWechsel1" to="Zeichenflaeche" method="_on_CoinWechsel_custom_action"]
+[connection signal="popup_hide" from="CoinWechsel1" to="Zeichenflaeche" method="_on_CoinWechsel_popup_hide"]
 [connection signal="pressed" from="Wiederholen" to="Zeichenflaeche" method="_on_Wiederholen_pressed"]
 [connection signal="pressed" from="Rueckgaengig" to="Zeichenflaeche" method="_on_Rueckgaengig_pressed"]
 [connection signal="pressed" from="Bildrand" to="Zeichenflaeche" method="_on_Bildrand_pressed"]

@@ -32,6 +32,7 @@ var temporaereZeichenflaeche;
 
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Setze Bildschirmgroesse.
@@ -546,14 +547,13 @@ func aktualisiere_Vorschau():
 func _on_Speichern_pressed():
 	get_node("../UebernehmenBestaetigen").show();
 	alterModus= modus;
-	modus="";
+	modus="Dialog";
 	
 	
 
 func _on_Vorlage_pressed():
 	alterModus=modus;
 	modus="Dialog";
-	
 	get_node("../VorlageBestaetigen").show();
 
 """
@@ -642,8 +642,12 @@ func _on_Standard_pressed():
 
 
 func _on_BadCoin2_pressed():
-	Vorschau = "Coin";
-	CoinWechsel("BadCoin2");
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	print(alterModus);
+	modus="Dialog";
+	#Vorschau = "Coin";
+	#CoinWechsel("BadCoin2");
 
 
 func _on_GoodCoin2_pressed():
@@ -726,7 +730,12 @@ func _on_CoinWechsel_confirmed():
 
 
 func _on_CoinWechsel_popup_hide():
-	pass # Replace with function body.
+	print("angekommen");
+	modus=alterModus;
+	print(modus);
+	
+
+
 
 func groesse_Zeichnung():
 	bild.lock();
@@ -1041,4 +1050,5 @@ func uebernehme_temporaere_Zeichenflaeche():
 
 func leere_temporaere_Zeichenflaeche():
 	temporaeresBild.fill(Color(0,0,0,0));
+
 
