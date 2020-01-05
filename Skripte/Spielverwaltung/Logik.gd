@@ -5,13 +5,15 @@ onready var raketenTimer = get_node("RaketenTimer")
 onready var muenzTimer = get_node("MuenzTimer")
 onready var randomCoinZeit = get_node("RandomCoinZeit")
 onready var geschwindigkeitZeit = get_node("RC-Geschwindigkeit")
+onready var raketenZeit = 11
 
 onready var spieler = get_tree().get_root().get_node("Main").get_node("Spiel").get_node("Player")
 
 var muenzmagnetAktiv = false
 
 func _ready():
-	raketenTimer.set_wait_time(10)
+
+	raketenTimer.set_wait_time(raketenZeit)
 	raketenTimer.start()
 	muenzTimer.set_wait_time(1)
 	muenzTimer.start()
@@ -19,7 +21,8 @@ func _ready():
 	randomCoinZeit.start()
 	geschwindigkeitZeit.set_wait_time(7)
 	
-	erstelleMuenze()
+	einstellungen.setzeRaketenzeit(raketenZeit)
+	#erstelleMuenze()
 
 
 func _process(delta):
@@ -162,3 +165,11 @@ func _on_RCGeschwindigkeit_timeout():
 	if erhoehteGeschwindigkeit:
 		spieler.veraendereSpielerGeschwindigkeit(-300)
 		erhoehteGeschwindigkeit = false
+
+
+func _on_Spiel_draw():
+	raketenZeit = einstellungen.uebernehmeRaketenzeit()
+
+
+func _on_Spiel_hide():
+	einstellungen.setzeRaketenzeit(raketenZeit)

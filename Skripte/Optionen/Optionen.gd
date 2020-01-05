@@ -4,7 +4,7 @@ onready var optionen = get_tree().get_root().get_node("Main").get_node("AlleOpti
 onready var seite1 = optionen.get_node("Seite1-Slider")
 onready var seite2 = optionen.get_node("Seite2-Editoren")
 onready var seite3 = optionen.get_node("Seite3-RandomCoin")
-
+onready var spiel = get_tree().get_root().get_node("Main").get_node("Spiel")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,6 +19,7 @@ func _ready():
 func _on_Spielen_button_up():
 	get_tree().paused = false
 	optionen.visible = false
+	spiel.visible = true
 	print("Spielen")
 
 # Wechselt auf die erste Optionen-Seite

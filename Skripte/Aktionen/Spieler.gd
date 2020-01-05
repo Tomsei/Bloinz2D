@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 #Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
-export var speed = 500
+export var speed = 700
 export var Schwerkraft = 400
 export var Sprungkraft = 500
 
@@ -29,6 +29,7 @@ var bilderSeitlich = false
 
 var bodenhoehe = 470
 
+
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
 	#Die Bildschirmgröße abspeichern
@@ -39,6 +40,8 @@ func _ready():
 	
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
+	
+	einstellungen.setzeSpielerEinstellungen(Sprungkraft, speed)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind
@@ -321,9 +324,17 @@ Methode um die Geschwindigkeit des Spielers zu verändern
 func veraendereSpielerGeschwindigkeit(var geschwindigkeitsDifferenz):
 	speed = speed + geschwindigkeitsDifferenz
 
+"""
+Methoden um die aktuellen Einstellungen in die OptionsSlider zu übertragen 
+und daraus zu übernehmen
+"""
+
 func uebertrageEinstellungen():
 	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
 
-func _on_Optionen_hide():
+func _on_Spiel_hide():
+	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
+
+func _on_Spiel_draw():
 	speed = einstellungen.uebernehmeGeschwindigkeit()
 	Sprungkraft = einstellungen.uebernehmeSprungkraft()

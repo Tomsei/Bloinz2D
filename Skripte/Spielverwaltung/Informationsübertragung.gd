@@ -1,11 +1,13 @@
 extends Node
 
-var sprungkraft = 500
-var raketenzeit = 10
-var geschwindigkeit = 500
+var sprungkraft 
+var raketenzeit 
+var geschwindigkeit 
 var soundAn
 var randomCoinAn
 var spielfigurgroesse
+var erstesSpiel = true
+var vomEditor = false
 
 
 # Called when the node enters the scene tree for the first time.

@@ -10,7 +10,7 @@ func _ready():
 	pass
 
 func _process(delta):
-	#$Punkte.text = str(spieler.blobGroesse)
+	# Noch in die Logik verschieben!
 	if spieler != null:
 		$PunkteAnzeige.value = spieler.blobGroesse
 		if spieler.blobGroesse < 0:
@@ -18,15 +18,20 @@ func _process(delta):
 		if spieler.blobGroesse >= 25:
 			spielGewonnen()
 
-
+# Wechsel vom Spiel zum Gewonnen-Bildschirm
 func spielGewonnen():
+	# AnimatedSprite muss noch auf grün geändert werden
+	spieler.blobGroesse = 12
 	spiel.visible = false
 	ende.visible = true
 	gewonnen.visible= true
 	verloren.visible = false
 	get_tree().paused = true
 
+# Wechsel vom Spiel zum Verloren-Bildschirm
 func spielVerloren():
+	# AnimatedSprite muss noch auf grün geändert werden
+	spieler.blobGroesse = 12
 	spiel.visible = false
 	ende.visible = true
 	verloren.visible = true

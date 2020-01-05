@@ -20,12 +20,18 @@ func _ready():
 
 # Startet das Spiel
 func starteSpiel():
-	get_tree().paused = false
-	
 	start.visible = false
 	optionen.visible = false
 	ende.visible = false
 	spiel.visible = true
+	
+	#print(einstellungen.erstesSpiel)
+	if einstellungen.erstesSpiel:
+		anleitung.visible = true
+		einstellungen.erstesSpiel = false
+	else:
+		anleitung.visible = false
+		get_tree().paused = false
 
 
 # Startet das Spiel vom Startbildschirm
@@ -37,7 +43,7 @@ func _on_SpielStarten_button_up():
 func _on_NochmalSpielen_button_up():
 	print ("nochmal Spielen")
 	# Spiel soll eigentlich richtig von vorne gespielt werden, nicht das alte mit neuer Blobgröße weitergespielt
-	spiel.get_node("Player").blobGroesse = 12
+	#spiel.get_node("Player").blobGroesse = 12
 	starteSpiel()
 
 # ruft die Optionen auf
@@ -47,10 +53,11 @@ func _on_Optionen_button_up():
 	start.visible = false
 	optionen.visible = true
 	ende.visible = false
-	spiel.visible = true
+	spiel.visible = false
 	seite1.visible = true
 	seite2.visible = false
 	seite3.visible = false
+
 
 """
 # Ruft den Spielstart auf

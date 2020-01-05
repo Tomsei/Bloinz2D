@@ -2,14 +2,14 @@
 
 [ext_resource path="res://Skripte/Spielverwaltung/Informationsübertragung.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/TileMaps/Spieloberflaeche.tres" type="TileSet" id=2]
-[ext_resource path="res://Bilder/Buttons/Spiel/Zahnrad.png" type="Texture" id=3]
-[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=4]
-[ext_resource path="res://Bilder/Buttons/Spiel/TonAus.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=6]
-[ext_resource path="res://Szenen/Oberflaeche/Startbildschirm.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Szenen/Oberflaeche/Anleitung.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Szenen/Oberflaeche/Spiel.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Szenen/Oberflaeche/Ende.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Szenen/Oberflaeche/Startbildschirm.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Szenen/Oberflaeche/Anleitung.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Szenen/Oberflaeche/Spiel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Szenen/Oberflaeche/Ende.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Bilder/Buttons/Spiel/Zahnrad.png" type="Texture" id=7]
+[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=8]
+[ext_resource path="res://Bilder/Buttons/Spiel/TonAus.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=10]
 [ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=11]
 
 [node name="Main" type="Node2D"]
@@ -20,47 +20,45 @@ tile_set = ExtResource( 2 )
 format = 1
 tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 0, 0, 8, 0, 0, 10, 0, 0, 11, 0, 0, 65536, 3, 0, 65537, 3, 0, 65538, 3, 0, 65539, 3, 0, 65540, 3, 0, 65541, 3, 0, 65542, 3, 0, 131072, 4, 0, 131073, 4, 0, 131074, 4, 0, 131075, 4, 0, 131076, 4, 0, 131077, 4, 0, 131078, 4, 0, 196608, 5, 0, 196609, 5, 0, 196610, 5, 0, 196611, 5, 0, 196612, 5, 0, 196613, 5, 0, 196614, 5, 0, 262144, 6, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262150, 6, 0, 327680, 7, 0, 327681, 7, 0, 327682, 7, 0, 327683, 7, 0, 327684, 7, 0, 327685, 7, 0, 327686, 7, 0, 393216, 8, 0, 393217, 8, 0, 393218, 8, 0, 393219, 8, 0, 393220, 8, 0, 393221, 8, 0, 393222, 8, 0, 458752, 11, 0, 458753, 11, 0, 458754, 11, 0, 458755, 11, 0, 458756, 11, 0, 458757, 11, 0, 458758, 11, 0, 524288, 1, 0, 524289, 1, 0, 524290, 1, 0, 524291, 1, 0, 524292, 1, 0, 524293, 1, 0, 524294, 1, 0, 589824, 10, 0, 589825, 10, 0, 589826, 10, 0, 589827, 10, 0, 589828, 10, 0, 589829, 10, 0, 589830, 10, 0 )
 
-[node name="Optionen" type="TextureButton" parent="Hintergrund"]
-pause_mode = 2
-margin_left = 387.962
-margin_top = 12.5286
-margin_right = 435.962
-margin_bottom = 60.5286
-texture_normal = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Start" parent="." instance=ExtResource( 3 )]
 
-[node name="CheckButton" type="CheckButton" parent="Hintergrund"]
-margin_left = 301.0
-margin_top = 17.0
-margin_right = 377.0
-margin_bottom = 57.0
-custom_icons/off = ExtResource( 5 )
-custom_icons/on = ExtResource( 6 )
-pressed = true
+[node name="Anleitung" parent="." instance=ExtResource( 4 )]
+visible = false
 
-[node name="Start" parent="." instance=ExtResource( 7 )]
-
-[node name="Anleitung" parent="." instance=ExtResource( 8 )]
-
-[node name="Spiel" parent="." instance=ExtResource( 9 )]
+[node name="Spiel" parent="." instance=ExtResource( 5 )]
 visible = false
 
 [node name="TileMap" parent="Spiel" index="4"]
 visible = false
 
-[node name="Ende" parent="." instance=ExtResource( 10 )]
+[node name="Ende" parent="." instance=ExtResource( 6 )]
 visible = false
 
 [node name="EndeVerloren" parent="Ende" index="2"]
 visible = false
 
+[node name="Optionen" type="TextureButton" parent="."]
+pause_mode = 2
+margin_left = 387.962
+margin_top = 12.5286
+margin_right = 435.962
+margin_bottom = 60.5286
+texture_normal = ExtResource( 7 )
+script = ExtResource( 8 )
+
+[node name="CheckButton" type="CheckButton" parent="."]
+margin_left = 301.0
+margin_top = 17.0
+margin_right = 377.0
+margin_bottom = 65.0
+custom_icons/off = ExtResource( 9 )
+custom_icons/on = ExtResource( 10 )
+pressed = true
+
 [node name="AlleOptionen" parent="." instance=ExtResource( 11 )]
 pause_mode = 2
 visible = false
-
-[node name="Seite3-RandomCoin" parent="AlleOptionen" index="3"]
-editor/display_folded = false
-[connection signal="button_up" from="Hintergrund/Optionen" to="Hintergrund/Optionen" method="_on_Optionen_button_up"]
+[connection signal="button_up" from="Optionen" to="Optionen" method="_on_Optionen_button_up"]
 [connection signal="button_up" from="AlleOptionen/Seite2-Editoren/2von3/Seite1" to="AlleOptionen" method="_on_Seite1_button_up"]
 [connection signal="button_up" from="AlleOptionen/Seite2-Editoren/2von3/Seite3" to="AlleOptionen" method="_on_Seite3_button_up"]
 [connection signal="button_up" from="AlleOptionen/Seite3-RandomCoin/3von3/Seite2" to="AlleOptionen" method="_on_Seite2_button_up"]
