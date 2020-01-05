@@ -43,13 +43,11 @@ nav a:hover {
 
 
 /* CSS für die Spielanwendung*/
-.spiel{
+.spielsektion{
     text-align: center;
 }
 
 iframe{
-    width: 448px;
-    height: 640px;
     margin: auto;
     border-style: solid;
     border-width: 20px;
