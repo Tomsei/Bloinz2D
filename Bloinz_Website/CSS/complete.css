@@ -8,35 +8,78 @@ body {
 	color: #bab5b5;
 
 	font-size: 100%;
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    
+    margin: 0;
+    padding: 8%;
 	
 }
 
 
 
 
-/* Link Einstellungen für die Links */
+
+
+/* CSS des Navigations Menü*/
 nav {
-	text-align: center;
+}
+
+nav ul {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 20px 0;
+    background: #f9ffd4;
+    display: flex;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+ul li {
+    list-style: none;
+    text-align: center;
+    display: block;
+    border-right: 1px solid rgba(0,0,0,0.5)
+}
+
+ul li:last-child {
+    border-right: none;
+}
+
+
+ul li a {
     text-decoration: none;
-    background: #48574c;
-    padding: 0.3em;
+    padding: 0 50px;
+    display: block;
 }
 
-nav li {
-    display: inline;
+ul li a:hover {
+    color: red;
+    transition: 0.5s;
 }
 
-nav a{
-    font-size: 2em;
-    text-decoration: none;
-    background: #738578;
-    padding: 0.5em;
-	color: black;
-	
+ul li a .nav-icon {
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    overflow: hidden;
+    margin: 0 auto 10px;
+    transition: 0.5s;
 }
 
-nav a:hover {
-	color: #b5c7ba;
+ul li a:hover .nav-icon {
+    border-radius: 12px;
+    background-color: rgba(255,0,0,0.7);
+    transition: 0.5s;
+}
+
+ul li a img{
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
 }
 
 
