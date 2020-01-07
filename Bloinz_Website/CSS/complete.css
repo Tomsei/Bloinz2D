@@ -1,11 +1,11 @@
 body {
-    background-color: #121e2b;
-    
+    background-color: #15233b;
+    /*
     border-style: solid;
     border-width: 20px;
     border-color: #1a1919;
-	
-	color: #bab5b5;
+	*/
+	color: white;
 
 	font-size: 100%;
     font-family: 'Oswald', sans-serif;
@@ -16,14 +16,18 @@ body {
 	
 }
 
+main {
+	background: #5175af;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+	border-radius: 12px;
+	
+}
 
 
 
 
 
 /* CSS des Navigations Menü*/
-nav {
-}
 
 nav ul {
     position: absolute;
@@ -32,7 +36,7 @@ nav ul {
     transform: translate(-50%, -50%);
     margin: 0;
     padding: 20px 0;
-    background: #f9ffd4;
+    background: #abc1e5;
     display: flex;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -42,7 +46,8 @@ ul li {
     list-style: none;
     text-align: center;
     display: block;
-    border-right: 1px solid rgba(0,0,0,0.5)
+    border-right: 1px solid rgba(0,0,0,0.5);
+	border-color: black;
 }
 
 ul li:last-child {
@@ -54,6 +59,7 @@ ul li a {
     text-decoration: none;
     padding: 0 50px;
     display: block;
+	color: black;
 }
 
 ul li a:hover {
