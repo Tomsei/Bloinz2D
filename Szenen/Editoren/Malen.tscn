@@ -37,6 +37,35 @@
 
 [node name="Node2D" type="Node2D"]
 
+[node name="CoinWechsel" type="PopupDialog" parent="."]
+margin_left = 276.527
+margin_top = 256.79
+margin_right = 757.527
+margin_bottom = 400.79
+popup_exclusive = true
+
+[node name="Beschriftung" type="Label" parent="CoinWechsel"]
+margin_left = 26.3158
+margin_top = 29.4737
+margin_right = 452.316
+margin_bottom = 60.4737
+text = "Möchtest du wirklich auf eine andere Figur umschalten?
+Falls du dein Design noch nicht gespeichert hast, geht es verloren."
+
+[node name="Ja" type="Button" parent="CoinWechsel"]
+margin_left = 55.7895
+margin_top = 91.5791
+margin_right = 77.7895
+margin_bottom = 111.579
+text = "Ja"
+
+[node name="Nein" type="Button" parent="CoinWechsel"]
+margin_left = 171.579
+margin_top = 96.8422
+margin_right = 213.579
+margin_bottom = 116.842
+text = "Nein"
+
 [node name="Zeichenflaeche" type="Sprite" parent="."]
 position = Vector2( 512, 256 )
 script = ExtResource( 1 )
@@ -101,17 +130,17 @@ text = "Rechteck"
 
 [node name="Radierer" type="Button" parent="."]
 margin_left = 6.59277
-margin_top = 114.939
+margin_top = 90.3842
 margin_right = 71.5928
-margin_bottom = 134.939
+margin_bottom = 110.384
 toggle_mode = true
 text = "Radierer"
 
 [node name="Spiegeln" type="Button" parent="."]
-margin_left = 6.72663
-margin_top = 149.737
-margin_right = 72.7266
-margin_bottom = 169.737
+margin_left = 121.746
+margin_top = 120.013
+margin_right = 187.746
+margin_bottom = 140.013
 text = "Spiegeln"
 
 [node name="Farbe1" type="Button" parent="."]
@@ -423,18 +452,18 @@ margin_bottom = 649.947
 text = "Zurück"
 
 [node name="Fuellen" type="Button" parent="."]
-margin_left = 9.92374
-margin_top = 179.802
-margin_right = 60.9237
-margin_bottom = 199.802
+margin_left = 12.5084
+margin_top = 122.938
+margin_right = 63.5084
+margin_bottom = 142.938
 toggle_mode = true
 text = "Füllen"
 
 [node name="Leeren" type="Button" parent="."]
-margin_left = 7.65623
-margin_top = 84.7137
-margin_right = 105.656
-margin_bottom = 104.714
+margin_left = 116.214
+margin_top = 138.993
+margin_right = 214.214
+margin_bottom = 158.993
 text = "Fläche leeren"
 
 [node name="Label2" type="Label" parent="."]
@@ -731,35 +760,8 @@ margin_top = 327.368
 margin_right = 205.0
 margin_bottom = 347.368
 text = "<-"
-
-[node name="CoinWechsel" type="PopupDialog" parent="."]
-visible = true
-margin_left = 276.527
-margin_top = 256.79
-margin_right = 757.527
-margin_bottom = 400.79
-
-[node name="Beschriftung" type="Label" parent="CoinWechsel"]
-margin_left = 26.3158
-margin_top = 29.4737
-margin_right = 452.316
-margin_bottom = 60.4737
-text = "Möchtest du wirklich auf eine andere Figur umschalten?
-Falls du dein Design noch nicht gespeichert hast, geht es verloren."
-
-[node name="Ja" type="Button" parent="CoinWechsel"]
-margin_left = 55.7895
-margin_top = 91.5791
-margin_right = 77.7895
-margin_bottom = 111.579
-text = "Ja"
-
-[node name="Nein" type="Button" parent="CoinWechsel"]
-margin_left = 171.579
-margin_top = 96.8422
-margin_right = 213.579
-margin_bottom = 116.842
-text = "Nein"
+[connection signal="pressed" from="CoinWechsel/Ja" to="Zeichenflaeche" method="_on_Ja_pressed"]
+[connection signal="pressed" from="CoinWechsel/Nein" to="Zeichenflaeche" method="_on_Nein_pressed"]
 [connection signal="pressed" from="Speichern" to="Zeichenflaeche" method="_on_Speichern_pressed"]
 [connection signal="pressed" from="Vorlage" to="Zeichenflaeche" method="_on_Vorlage_pressed"]
 [connection signal="popup_closed" from="ColorPickerButton" to="Zeichenflaeche" method="_on_ColorPickerButton_popup_closed"]
@@ -790,9 +792,9 @@ text = "Nein"
 [connection signal="pressed" from="Blob_4_gerade" to="Zeichenflaeche" method="_on_Blob_4_gerade_pressed"]
 [connection signal="pressed" from="Blob_5_gerade" to="Zeichenflaeche" method="_on_Blob_5_gerade_pressed"]
 [connection signal="pressed" from="Hintergrund" to="Zeichenflaeche" method="_on_Hintergrund_pressed"]
-[connection signal="button_down" from="BadCoin1" to="Zeichenflaeche" method="_on_BadCoin1_button_down"]
+[connection signal="pressed" from="BadCoin1" to="Zeichenflaeche" method="_on_BadCoin1_pressed"]
 [connection signal="pressed" from="BadCoin2" to="Zeichenflaeche" method="_on_BadCoin2_pressed"]
-[connection signal="button_down" from="GoodCoin1" to="Zeichenflaeche" method="_on_GoodCoin1_button_down"]
+[connection signal="pressed" from="GoodCoin1" to="Zeichenflaeche" method="_on_GoodCoin1_pressed"]
 [connection signal="pressed" from="GoodCoin2" to="Zeichenflaeche" method="_on_GoodCoin2_pressed"]
 [connection signal="pressed" from="RandomCoin" to="Zeichenflaeche" method="_on_RandomCoin_pressed"]
 [connection signal="pressed" from="Kanonenkugel" to="Zeichenflaeche" method="_on_Kanonenkugel_pressed"]

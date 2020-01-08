@@ -28,6 +28,9 @@ var maxy;
 var eigeneFarbe;
 var temporaeresBild;
 var temporaereZeichenflaeche;
+var coinWechsel;
+var alteVorschau;
+
 
 
 
@@ -84,9 +87,8 @@ func _ready():
 	Colorpickerb = false;
 	
 	rueckgaengigstapel= [];
-	var bildkopie = Image.new();
-	bildkopie.copy_from(bild);
-	rueckgaengigstapel.push_back(bildkopie);
+	Abbild_auf_Rueckgaengigstapel();
+	print(rueckgaengigstapel);
 
 	
 	wiederholenstapel=[];
@@ -136,7 +138,7 @@ func punkt_malen_pixel(x,y):
 
 
 
-func punkt_loeschen(x, y):
+func punkt_loeschen_pixel(x, y):
 	var xneu = floor(x/8);
 	var yneu = floor(y/8);
 	bild.lock();
@@ -181,7 +183,7 @@ func _process(delta):
 					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
 				elif modus == "Radierer":
-					punkt_loeschen((mouseposition.x-256),mouseposition.y);
+					punkt_loeschen_pixel((mouseposition.x-256),mouseposition.y);
 					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
 				elif modus == "Rechteck":
@@ -204,6 +206,31 @@ func _process(delta):
 						linienEnde.x = linienEnde.x-256;
 						leere_temporaere_Zeichenflaeche();
 						male_Linie(linienStart,linienEnde);
+						#linienStart = null;
+						#linienEnde = null;
+				elif modus == "Ellipse":
+					if linienStart == null:
+						linienStart = get_global_mouse_position();
+						linienStart.x = linienStart.x-256;
+						#punkt_malen_pixel(linienStart.x, linienStart.y);
+						#setze_Zeichenflaeche();
+					else:
+						linienEnde = get_global_mouse_position();
+						linienEnde.x = linienEnde.x-256;
+						leere_temporaere_Zeichenflaeche();
+						var radiusx =abs(linienEnde.x-linienStart.x);
+						var radiusy= abs(linienEnde.y-linienStart.y);
+						var cx;
+						var cy;
+						if linienEnde.x > linienStart.x:
+							cx= linienStart.x+1/2*radiusx  ;
+						else:
+							cx= linienEnde.x+1/2*radiusx  ;
+						if linienEnde.y > linienStart.y:
+							cy= linienStart.y+1/2*radiusy  ;
+						else:
+							cy= linienEnde.y+1/2*radiusy;
+						male_Ellipse(cx,cy,radiusx,radiusy);
 						#linienStart = null;
 						#linienEnde = null;
 		elif Input.is_action_just_released("draw"):
@@ -286,85 +313,109 @@ func _on_Radierer_pressed():
 	aktuellerModusbutton = get_node("../Radierer");
 	modus = "Radierer";
 
+
 """
 TODO
 """
 func _on_Spiegeln_pressed():
+	
 	var hilfe;
 	bild.lock();
 	bild.flip_x();
 	bild.unlock();
 	setze_Zeichenflaeche();
+	Abbild_auf_Rueckgaengigstapel();
 
 
 func _on_Farbe1_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe1");
 	aktuelleFarbe = Color(0.9,0.23,0.1);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 func _on_Farbe2_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe2");
 	aktuelleFarbe = Color(0.9,0.72,0.1);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 func _on_Farbe3_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe3");
 	aktuelleFarbe = Color(0.46,0.9,0.1);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 func _on_Farbe4_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe4");
 	aktuelleFarbe = Color(0.1,0.9,0.81);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 func _on_Farbe5_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe5");
 	aktuelleFarbe = Color(0.1,0.36,0.9);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 func _on_Farbe6_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe6");
 	aktuelleFarbe = Color(0.63,0.1,0.9);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 func _on_Farbe7_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe7");
 	aktuelleFarbe = Color(0.9,0.1,0.78);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 func _on_Farbe8_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe8");
 	aktuelleFarbe = Color(0.95,0.78,0.59);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 func _on_Farbe9_pressed():
+	
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe9");
 	aktuelleFarbe = Color(1,1,1);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 func _on_Farbe10_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../Farbe10");
 	aktuelleFarbe = Color(0,0,0);
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 
 
@@ -420,13 +471,25 @@ func fuellen2(neueFarbe,x,y, alteFarbe):
 
 
 
-func _on_BadCoin1_button_down():
+func _on_BadCoin1_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Coin";
-	CoinWechsel("BadCoin1");
+	coinWechsel="BadCoin1";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
-func _on_GoodCoin1_button_down():
+func _on_GoodCoin1_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Coin";
-	CoinWechsel("GoodCoin1");
+	coinWechsel="GoodCoin1";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 """
 Prozedur, die aufgerufen wird, falls ein Knopf der unteren Leiste gedrückt wird
@@ -437,7 +500,7 @@ func CoinWechsel(name):
 	
 	
 	# aktiven Knopf auf nicht pressed setzen
-	get_node("../"+aktiverKnopf).pressed = false;
+	#get_node("../"+aktiverKnopf).pressed = false;
 	
 	#neuen Knopf aktiv setzen
 	aktiverKnopf= name;
@@ -562,6 +625,7 @@ setzt die Zeichenfläche mit durchsichtigen Pixeln
 func _on_Leeren_pressed():
 	bild.fill(Color(0,0,0,0));
 	setze_Zeichenflaeche();
+	Abbild_auf_Rueckgaengigstapel();
 
 
 
@@ -644,45 +708,88 @@ func _on_Standard_pressed():
 func _on_BadCoin2_pressed():
 	get_node("../CoinWechsel").show();
 	alterModus= modus;
-	print(alterModus);
 	modus="Dialog";
-	#Vorschau = "Coin";
-	#CoinWechsel("BadCoin2");
+	alteVorschau= Vorschau;
+	Vorschau = "Coin";
+	coinWechsel="BadCoin2";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_GoodCoin2_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Coin";
-	CoinWechsel("GoodCoin2");
+	coinWechsel="GoodCoin2";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_RandomCoin_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Coin";
-	CoinWechsel("RandomCoin");
-
+	coinWechsel="RandomCoin";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 func _on_Blob_1_gerade_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Blob";
-	CoinWechsel("Blob_1_gerade");
+	coinWechsel="Blob_1_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_Blob_3_gerade_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Blob";
-	CoinWechsel("Blob_3_gerade");
+	coinWechsel="Blob_3_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_Blob_2_gerade_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Blob";
-	CoinWechsel("Blob_2_gerade");
+	coinWechsel="Blob_2_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_Blob_4_gerade_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Blob";
-	CoinWechsel("Blob_4_gerade");
+	coinWechsel="Blob_4_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_Blob_5_gerade_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Blob";
-	CoinWechsel("Blob_5_gerade");
+	coinWechsel="Blob_5_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_ColorPickerButton_pressed():
@@ -690,14 +797,26 @@ func _on_ColorPickerButton_pressed():
 
 
 func _on_Hintergrund_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Hintergrund";
-	CoinWechsel("Hintergrund");
+	coinWechsel="Hintergrund";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 	
 
 
 func _on_Kanonenkugel_pressed():
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
 	Vorschau = "Blob";
-	CoinWechsel("Kanonenkugel");
+	coinWechsel="Kanonenkugel";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_UebernehmenBestaetigen_confirmed():
@@ -710,6 +829,7 @@ func _on_Rueckgaengig_pressed():
 
 func mache_rueckgaengig():
 	if rueckgaengigstapel.size() > 1:
+		print("bin in rückgängig");
 		wiederholenstapel.push_back(rueckgaengigstapel.pop_back());
 		bild.copy_from(rueckgaengigstapel.back());
 		setze_Zeichenflaeche();
@@ -955,36 +1075,53 @@ func _on_EigeneFarbeSpeichern5_pressed():
 	eigeneFarbe[4]= aktuelleFarbe;
 	eigene_Farbe_speichern("EigeneFarbe5");
 
+func Farbwechsel_bei_Radierer():
+	aktuellerModusbutton.pressed= false;
+	aktuellerModusbutton = get_node("../Stift");
+	aktuellerModusbutton.pressed= true;
+	modus = "Stift";
+	
 
 func _on_EigeneFarbe1_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe1");
 	aktuelleFarbe = eigeneFarbe[0];
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 func _on_EigeneFarbe2_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe2");
 	aktuelleFarbe = eigeneFarbe[1];
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+		
+
 
 func _on_EigeneFarbe3_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe3");
 	aktuelleFarbe = eigeneFarbe[2];
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 func _on_EigeneFarbe4_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe4");
 	aktuelleFarbe = eigeneFarbe[3];
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 
 func _on_EigeneFarbe5_pressed():
 	aktuellerFarbbutton.pressed= false;
 	aktuellerFarbbutton= get_node("../EigeneFarbe5");
 	aktuelleFarbe = eigeneFarbe[4];
-	modus = "Stift";
+	if modus =="Radierer":
+		Farbwechsel_bei_Radierer();
+
 	
 func eigene_Farben_einladen():
 	for i in range(1,6):
@@ -1028,6 +1165,8 @@ func _on_Rechteck_pressed():
 	modus="Rechteck";
 	linienEnde = null;
 	linienStart= null;
+	aktuellerModusbutton.pressed= false;
+	aktuellerModusbutton = get_node("../Rechteck");
 	
 func uebernehme_temporaere_Zeichenflaeche():
 	
@@ -1052,3 +1191,83 @@ func leere_temporaere_Zeichenflaeche():
 	temporaeresBild.fill(Color(0,0,0,0));
 
 
+
+
+func _on_Ja_pressed():
+	modus = alterModus;
+	CoinWechsel(coinWechsel);
+	get_node("../CoinWechsel").hide();
+	aktiviere_Buttons();
+	
+
+
+
+func _on_Nein_pressed():
+	modus = alterModus;
+	Vorschau = alteVorschau;
+	get_node("../CoinWechsel").hide();
+	get_node("../"+aktiverKnopf).pressed= true;
+	get_node("../"+coinWechsel).pressed= false;
+	aktiviere_Buttons();
+	
+func deaktiviere_Buttons():
+	var Kinder = get_parent().get_children();
+	for Kind in Kinder:
+		if Kind is Button:
+			Kind.disabled = true;
+
+func aktiviere_Buttons():
+	var Kinder = get_parent().get_children();
+	for Kind in Kinder:
+		if Kind is Button:
+			Kind.disabled = false;
+			
+			
+			
+func male_Ellipse(cx,cy, radiusx, radiusy):
+	var zweiAQuadrat = 2* radiusx*radiusx;
+	var zweiBQuadrat= 2* radiusy*radiusy;
+	var x = radiusx;
+	var y = 0;
+	var xwechsel = radiusy*radiusy*(1-2*radiusx);
+	var ywechsel = radiusx*radiusx;
+	var ellipsenfehler= 0;
+	var stopX = zweiBQuadrat*radiusx; 
+	var stopY := 0;
+	
+	while stopX >= stopY:
+		male_vier_Ellipsenpunkte(x,y, cx,cy);
+		y= y+1;
+		stopY = stopY +zweiAQuadrat;
+		ellipsenfehler = ellipsenfehler + ywechsel;
+		if 2* ellipsenfehler+ xwechsel > 0:
+			x= x-1;
+			stopX = stopX -zweiBQuadrat;
+			xwechsel = xwechsel + zweiBQuadrat;
+	x= 0;
+	y= radiusy;
+	xwechsel = radiusy*radiusy;
+	ywechsel= radiusx*radiusx*(1-2*radiusy);
+	ellipsenfehler= 0;
+	stopX= 0;
+	stopY= zweiAQuadrat* radiusy;
+	while stopX <= stopY:
+		male_vier_Ellipsenpunkte(x,y, cx,cy);
+		x= x+1;
+		stopX= stopX +zweiBQuadrat;
+		ellipsenfehler= ellipsenfehler+ xwechsel;
+		xwechsel= xwechsel+ zweiBQuadrat;
+		if 2* ellipsenfehler+ ywechsel >0:
+			y= y-1;
+			stopY= stopY -zweiAQuadrat;
+			ellipsenfehler= ellipsenfehler+ ywechsel;
+			ywechsel = ywechsel +zweiAQuadrat;
+	setze_temporaere_Zeichenflaeche();
+
+func male_vier_Ellipsenpunkte(x,y, cx,cy):
+	temporaeresBild.lock()
+	temporaeresBild.set_pixel(cx+x,cy+y);
+	temporaeresBild.set_pixel(cx-x,cy+y);
+	temporaeresBild.set_pixel(cx-x,cy-y);
+	temporaeresBild.set_pixel(cx+x,cy-y);
+	temporaeresBild.unlock();
