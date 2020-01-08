@@ -58,7 +58,7 @@ texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 9 )
 script = ExtResource( 10 )
 
-[node name="mehr" type="TextureButton" parent="."]
+[node name="CodeEditor" type="TextureButton" parent="."]
 margin_left = 67.2815
 margin_top = 190.103
 margin_right = 383.281
@@ -74,13 +74,14 @@ margin_right = 382.585
 margin_bottom = 459.369
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
+script = ExtResource( 10 )
 
 [node name="Popup" type="Popup" parent="."]
 visible = true
-margin_left = 600.743
-margin_top = 173.741
-margin_right = 923.743
-margin_bottom = 362.741
+margin_left = 67.8124
+margin_top = 247.446
+margin_right = 416.685
+margin_bottom = 456.049
 
 [node name="ColorRect" type="ColorRect" parent="Popup"]
 margin_left = -0.209045
@@ -89,24 +90,25 @@ margin_bottom = 178.296
 color = Color( 0.517647, 0.160784, 0.160784, 1 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Popup"]
-margin_left = 15.8612
-margin_top = 21.3168
-margin_right = 303.861
-margin_bottom = 91.3168
+margin_left = 17.0889
+margin_top = 17.6336
+margin_right = 305.089
+margin_bottom = 87.6336
 text = "Bist du dir sicher, dass du alle Änderungen am Code und deine selbstgemalten Bilder endgültig löschen möchtest? "
 
-[node name="Button" type="Button" parent="Popup"]
+[node name="Ja" type="Button" parent="Popup"]
 margin_left = 24.5548
 margin_top = 136.279
 margin_right = 123.555
 margin_bottom = 156.279
 text = "Ja"
 
-[node name="Button2" type="Button" parent="Popup"]
-margin_left = 192.756
+[node name="Abbrechen" type="Button" parent="Popup"]
+margin_left = 193.864
 margin_top = 136.279
-margin_right = 291.756
+margin_right = 292.864
 margin_bottom = 156.279
 text = "Abbrechen"
 [connection signal="button_up" from="MalenEditor" to="MalenEditor" method="_on_MalenEditor_button_up"]
-[connection signal="pressed" from="mehr" to="mehr" method="_on_mehr_pressed"]
+[connection signal="button_up" from="CodeEditor" to="CodeEditor" method="_on_CodeEditor_button_up"]
+[connection signal="button_up" from="AllesZuruecksetzen" to="AllesZuruecksetzen" method="_on_AllesZuruecksetzen_button_up"]

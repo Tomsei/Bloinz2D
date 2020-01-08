@@ -252,7 +252,7 @@ func suche_variable_in_funktion(funktions_name, funktions_anfang, funktions_ende
 # Wird ausgefuehrt, wenn der Zurueckbutton gedrueckt wird.
 func _on_Zurueck_button_up():
 	OS.set_window_size(Vector2(448,640))
-	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
+	get_tree().change_scene("res://Szenen/Oberflaeche/Main.tscn")
 
 # Wird aufgerufen wenn der Text eine Codeeditors veraendert wird.
 func _text_wurde_veraendert():

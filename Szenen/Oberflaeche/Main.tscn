@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Skripte/Spielverwaltung/Informationsübertragung.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/TileMaps/Spieloberflaeche.tres" type="TileSet" id=2]
@@ -10,7 +10,8 @@
 [ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=8]
 [ext_resource path="res://Bilder/Buttons/Spiel/TonAus.png" type="Texture" id=9]
 [ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=10]
-[ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Skripte/Optionen/CheckButton.gd" type="Script" id=11]
+[ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=12]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -46,7 +47,8 @@ margin_bottom = 60.5286
 texture_normal = ExtResource( 7 )
 script = ExtResource( 8 )
 
-[node name="CheckButton" type="CheckButton" parent="."]
+[node name="Sound" type="CheckButton" parent="."]
+pause_mode = 2
 margin_left = 301.0
 margin_top = 17.0
 margin_right = 377.0
@@ -54,11 +56,13 @@ margin_bottom = 65.0
 custom_icons/off = ExtResource( 9 )
 custom_icons/on = ExtResource( 10 )
 pressed = true
+script = ExtResource( 11 )
 
-[node name="AlleOptionen" parent="." instance=ExtResource( 11 )]
+[node name="AlleOptionen" parent="." instance=ExtResource( 12 )]
 pause_mode = 2
 visible = false
 [connection signal="button_up" from="Optionen" to="Optionen" method="_on_Optionen_button_up"]
+[connection signal="toggled" from="Sound" to="Sound" method="_on_Sound_toggled"]
 [connection signal="button_up" from="AlleOptionen/Seite2-Editoren/2von3/Seite1" to="AlleOptionen" method="_on_Seite1_button_up"]
 [connection signal="button_up" from="AlleOptionen/Seite2-Editoren/2von3/Seite3" to="AlleOptionen" method="_on_Seite3_button_up"]
 [connection signal="button_up" from="AlleOptionen/Seite3-RandomCoin/3von3/Seite2" to="AlleOptionen" method="_on_Seite2_button_up"]

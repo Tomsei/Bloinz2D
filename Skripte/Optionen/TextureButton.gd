@@ -127,4 +127,15 @@ func _on_Spielen_button_up():
 	pass # Replace with function body.
 """
 
+func _on_MalenEditor_button_up():
+	print("Wechsle zum malen")
+	get_tree().change_scene("res://Szenen/Editoren/Malen.tscn")
+
+func _on_CodeEditor_button_up():
+	print("gehe zum Editor")
+	get_tree().change_scene("res://Szenen/Editoren/textedit.tscn")
+
+
+func _on_AllesZuruecksetzen_button_up():
+	get_node("../Popup").show()
 

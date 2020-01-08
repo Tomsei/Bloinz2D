@@ -3,8 +3,8 @@ extends Node
 var sprungkraft 
 var raketenzeit 
 var geschwindigkeit 
-var soundAn
-var randomCoinAn
+var soundAn = true
+var randomCoinAn = true
 var spielfigurgroesse
 var erstesSpiel = true
 var vomEditor = false

@@ -19,11 +19,12 @@ texture_normal = ExtResource( 2 )
 [node name="PunkteAnzeige" type="TextureProgress" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 85.1436
-margin_top = 578.166
-margin_right = 385.144
-margin_bottom = 618.166
-max_value = 25.0
+margin_left = 85.0
+margin_top = 578.0
+margin_right = 383.0
+margin_bottom = 618.0
+min_value = -1.0
+max_value = 26.0
 value = 12.0
 texture_under = ExtResource( 3 )
 texture_progress = ExtResource( 4 )
