@@ -9,7 +9,18 @@ nav ul {
     text-align: center;
     justify-content: center;
     padding: 0.3em;
+    font-family: inherit;
+    font-weight: bold;
 }
+
+
+
+div {
+    font-family:arial, lucida console, sans-serif;
+    color:black;  
+    font-weight: normal;
+}
+
 
 ul li a:hover {
     color: black;
@@ -27,7 +38,7 @@ main {
 }
 
 .impressum {
-    background-color: #98b9ef;
+    background-color: #6aa7c0;
     margin-right: 7%;
     width: 60%;
     box-shadow: 0 10px 30px rgba(0,0,0,1);
@@ -36,7 +47,7 @@ main {
 }
 
 .datenschutz {
-    background-color: #98b9ef;
+    background-color: #6aa7c0;
     width: 40%;
     box-shadow: 0 10px 30px rgba(0,0,0,1);
     padding: 2em;

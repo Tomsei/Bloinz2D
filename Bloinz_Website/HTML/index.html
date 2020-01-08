@@ -5,58 +5,54 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="../CSS/complete.css">
         <link rel="stylesheet" href="../CSS/Bildergalerie.css">
-        <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
         <script src="../Skripte/spielupdate.js"></script>        
-
     </head>
     <body>
         <header>
-            <h1 id="test">Bloinz 2D</h1>
             <nav>
                 <ul>
                     <li>
                         <a href="../Spiel/gesamtesSpiel.html">
                             <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_Spielbild.png"></div>
                             <div class="nav-name">zum Spiel</div>
-                            </a>
+                        </a>
                     </li>
                      <li>
                         <a href="#projektInformationen">
                             <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_Infos.png"></div>
                             <div class="nav-name">Informationen</div>
-                            </a>
+                        </a>
                     </li>
                      <li>
                         <a href="#galerie">
                             <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_gallerie.png"></div>
                             <div class="nav-name">Galerie</div>
-                            </a>
+                        </a>
                     </li>
                      <li>
                         <a href="#godot">
                             <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_Godot.png"></div>
                             <div class="nav-name">Godot</div>
-                            </a>
+                        </a>
                     </li>
                     <li>
                         <a href="/HTML/Impressum.html">
                             <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_impressum.png"></div>
                             <div class="nav-name"> Impressum</div>
-
                         </a>
                     </li>
-
-
                 </ul>
             </nav>
         </header>
 
-        <main>
-            <button onclick="resizeSpielParent(640, 448)"> Reszie Testen</button>
+        <main id="hauptseite">
+            <head>
+                <h1 id="bloinz">Bloinz 2D</h1>
+            </head>
             <section class="spielsektion">
-                <iframe id="spiel" src="../Spiel/gesamtesSpiel.html" frameborder="1" height="640" width="448"></iframe>
-                
+                        <iframe id="spiel" src="../Spiel/gesamtesSpiel.html" frameborder="1" height="640" width="448"></iframe>
             </section>
+                        <button onclick="resizeSpielParent(640, 448)"> Reszie Testen</button>
             <section id="projektInformationen">
                 <header>
                     <h2> Projekt Informationen</h2>
@@ -74,30 +70,33 @@
                     </p>
                 </article>
             </section>
-            <section id="galerie">
-                <div class="bild">
-                    <img src="../Bilder/Blob_1_gerade.png">
-                </div>
-                <div class="bild">
-                    <img src="../Bilder/Blob_2_gerade.png">
-                </div>
-                <div class="bild">
-                    <img src="../Bilder/Blob_3_gerade.png">
-                </div>
-                <div class="bild">
-                    <img src="../Bilder/Blob_4_gerade.png">
-                </div>
-                <div class="bild">
-                    <img src="../Bilder/Blob_5_gerade.png">
-                </div>
-                <div class="bild">
-                    <img src="../Bilder/Blob_2_gerade.png">
-                </div>
-                <div class="bild">
-                    <img src="../Bilder/Blob_2_gerade.png">
-                </div>
-                <div class="bild">
-                    <img src="../Bilder/Blob_2_gerade.png">
+            <section id="galeriebereich" >
+                <h2>Galerie</h2>
+                <div id="galerie">
+                    <div class="bild">
+                        <img src="../Bilder/Blob_1_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_2_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_3_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_4_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_5_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_2_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_2_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_2_gerade.png">
+                    </div>
                 </div>
             </section>
             <section id="godot">
@@ -118,8 +117,8 @@
         </main>
         <footer>
             <p>
-                Bloinz 2D ist ein Informatikprojekt der Hochschule Düsseldorf unter der Leitung von Professor Dahm <br>
-                Mitwirkende: Charlotte, Katharina, Sebastian, Tom
+                Bloinz 2D ist ein Informatikprojekt der <a href="https://hs-duesseldorf.de/">Hochschule Düsseldorf</a> unter der Leitung von <a href="https://medien.hs-duesseldorf.de/personen/dahm/">Professor Dahm </a><br>
+                Mitwirkende: Charlotte Hasler, Katharina Mai, Sebastian Rindfleisch, Tom Seiffert
             </p>
         </footer>
     </body>
