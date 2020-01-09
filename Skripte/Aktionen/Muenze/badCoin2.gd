@@ -1,4 +1,4 @@
-extends "user://Skripte/Aktionen/Muenze/Muenze.gd"
+extends "res://Skripte/Aktionen/Muenze/Muenze.gd"
 
 """
 Szene / Klasse für die schlechten Coins Typ 2
@@ -8,7 +8,7 @@ Erbt die Methoden und Variablen von der Super Klasse Muenze
 """
 
 func _ready():
-	$Sprite.texture = .lade_bild_von_user("user://Bilder/Standardspielfiguren/Coins/BadCoin2.png");
+	$Sprite.texture = .lade_bild_von_user("res://Bilder/Standardspielfiguren/Coins/BadCoin2.png");
 	coinWert = -2
 	Geschwindigkeit = 150
 

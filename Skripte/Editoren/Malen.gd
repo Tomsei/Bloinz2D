@@ -541,9 +541,9 @@ func einladen(pfad):
 		bild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
 		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
 	elif Vorschau =="Coin":
-		bild.load("user://Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
+		bild.load("res://Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
 	else:
-		bild.load("user://Bilder/Standardspielfiguren/Hintergrund/"+pfad+".png");
+		bild.load("res://Bilder/Standardspielfiguren/Hintergrund/"+pfad+".png");
 	setze_Zeichenflaeche();
 
 
@@ -582,9 +582,9 @@ func setze_Standardbutton():
 	if Vorschau =="Blob":
 		icon.load("Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Standard.png");
 	elif Vorschau =="Coin":
-		icon.load("user://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Standard.png");
+		icon.load("res://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Standard.png");
 	else:
-		icon.load("user://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Standard.png");
+		icon.load("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Standard.png");
 	var buttontextur = ImageTexture.new();
 	buttontextur.create_from_image(icon);
 	get_node("../Standard").icon= buttontextur;
@@ -597,11 +597,11 @@ func setze_Vorlagen():
 	for i in range(1,6):
 		var icon = Image.new();
 		if Vorschau == "Blob":
-			icon.load("user://Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Design"+str(i)+".png");
+			icon.load("res://Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Design"+str(i)+".png");
 		elif Vorschau =="Coin":
-			icon.load("user://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Design"+str(i)+".png");
+			icon.load("res://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Design"+str(i)+".png");
 		else:
-			icon.load("user://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Design"+str(i)+".png");	
+			icon.load("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Design"+str(i)+".png");	
 		var buttontextur = ImageTexture.new();
 		buttontextur.create_from_image(icon);
 		get_node("../Vorlage"+str(i)).icon= buttontextur;
@@ -1128,7 +1128,7 @@ func _on_EigeneFarbe5_pressed():
 func eigene_Farben_einladen():
 	for i in range(1,6):
 		var icon = Image.new();
-		icon.load("user://Bilder/Farben/EigeneFarbe"+str(i)+".png");
+		icon.load("res://Bilder/Farben/EigeneFarbe"+str(i)+".png");
 		icon.lock();
 		eigeneFarbe[i-1]= icon.get_pixel(0,0);
 		icon.unlock();

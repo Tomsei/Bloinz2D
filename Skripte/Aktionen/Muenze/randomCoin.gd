@@ -1,4 +1,4 @@
-extends "user://Skripte/Aktionen/Muenze/Muenze.gd"
+extends "res://Skripte/Aktionen/Muenze/Muenze.gd"
 
 """
 Szene / Klasse für den Random Coin
@@ -9,7 +9,7 @@ Erbt die Methoden und Variablen von der Super Klasse Muenze
 
 
 func _ready():
-	$Sprite.texture = .lade_bild_von_user("user://Bilder/Standardspielfiguren/Coins/RandomCoin.png");
+	$Sprite.texture = .lade_bild_von_user("res://Bilder/Standardspielfiguren/Coins/RandomCoin.png");
 	coinWert = 5
 	Geschwindigkeit = 100
 	
