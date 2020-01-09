@@ -5,9 +5,13 @@ onready var raketenTimer = get_node("RaketenTimer")
 onready var muenzTimer = get_node("MuenzTimer")
 onready var randomCoinZeit = get_node("RandomCoinZeit")
 onready var geschwindigkeitZeit = get_node("RC-Geschwindigkeit")
-onready var raketenZeit = 6
+onready var raketenZeit = 10
 
 onready var spieler = get_tree().get_root().get_node("Main").get_node("Spiel").get_node("Player")
+onready var spiel = get_tree().get_root().get_node("Main").get_node("Spiel")
+onready var ende = get_tree().get_root().get_node("Main").get_node("Ende")
+onready var gewonnen = get_tree().get_root().get_node("Main").get_node("Ende").get_node("EndeGewonnen")
+onready var verloren = get_tree().get_root().get_node("Main").get_node("Ende").get_node("EndeVerloren")
 
 var muenzmagnetAktiv = false
 
@@ -190,3 +194,19 @@ func _on_Spiel_draw():
 
 func _on_Spiel_hide():
 	einstellungen.setzeRaketenzeit(raketenZeit)
+
+
+func _on_Player_spielGewonnen():
+	spiel.visible = false
+	ende.visible = true
+	gewonnen.visible= true
+	verloren.visible = false
+	get_tree().paused = true
+
+
+func _on_Player_spielVerloren():
+	spiel.visible = false
+	ende.visible = true
+	verloren.visible = true
+	gewonnen.visible = false
+	get_tree().paused = true

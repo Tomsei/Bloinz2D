@@ -56,8 +56,6 @@ margin_right = 300.0
 margin_bottom = 603.0
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
-[connection signal="draw" from="." to="Seite1-Slider" method="_on_AlleOptionen_draw"]
-[connection signal="hide" from="." to="Seite1-Slider" method="_on_AlleOptionen_hide"]
 [connection signal="button_up" from="Seite1-Slider/1von3/Seite2" to="." method="_on_Seite2_button_up"]
 [connection signal="button_up" from="Spielen" to="." method="_on_Spielen_button_up"]
 

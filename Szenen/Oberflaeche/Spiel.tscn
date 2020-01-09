@@ -31,3 +31,5 @@ shape = SubResource( 1 )
 [connection signal="draw" from="." to="Logik" method="_on_Spiel_draw"]
 [connection signal="hide" from="." to="Player" method="_on_Spiel_hide"]
 [connection signal="hide" from="." to="Logik" method="_on_Spiel_hide"]
+[connection signal="spielGewonnen" from="Player" to="Logik" method="_on_Player_spielGewonnen"]
+[connection signal="spielVerloren" from="Player" to="Logik" method="_on_Player_spielVerloren"]

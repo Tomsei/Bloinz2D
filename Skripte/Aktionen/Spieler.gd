@@ -29,6 +29,8 @@ var bilderSeitlich = false
 
 var bodenhoehe = 470
 
+signal spielVerloren
+signal spielGewonnen
 
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
@@ -220,8 +222,12 @@ func blobVeranederung(var seitlich):
 	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
 	
 	match blobGroesse:
-		-1:
-			print ("verloren")
+		-1,-2,-3,-4,-5:
+			print("verloren")
+			emit_signal("spielVerloren")
+			$AnimatedSprite.play("neutral_gerade")
+			blobGroesse = 12
+			#get_tree().reload_current_scene()
 		0, 1, 2, 3, 4:
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
@@ -260,7 +266,9 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("positiv_2_gerade")
 				skalieren(1.0)
 		25:
-			print ("gewonnen")
+			emit_signal("spielGewonnen")
+			$AnimatedSprite.play("neutral_gerade")
+			blobGroesse = 12
 
 """
 Methode um die Hitboxen des Spielers der Größe anzupassen

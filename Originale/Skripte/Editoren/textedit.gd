@@ -85,7 +85,7 @@ func _on_TabContainer_tab_changed(tab):
 
 # Schreibe die verwendeten Skriptpfade in das Array Skriptpfade.
 func init_Skripte():
-	Skriptpfade["Spieler"] = "res://Skripte/Aktionen/Player.gd"
+	Skriptpfade["Spieler"] = "res://Skripte/Aktionen/Spieler.gd"
 	Skriptpfade["Münze"] = "res://Skripte/Aktionen/Muenze/Muenze.gd"
 	Skriptpfade["Gute Münze 1"] = "res://Skripte/Aktionen/Muenze/goodCoin1.gd"
 	Skriptpfade["Gute Münze 2"] = "res://Skripte/Aktionen/Muenze/goodCoin2.gd"
@@ -251,9 +251,10 @@ func suche_variable_in_funktion(funktions_name, funktions_anfang, funktions_ende
 
 # Wird ausgefuehrt, wenn der Zurueckbutton gedrueckt wird.
 func _on_Zurueck_button_up():
+	print("TEST")
 	OS.set_window_size(Vector2(448,640))
 	get_tree().change_scene("res://Szenen/Oberflaeche/Main.tscn")
-
+	
 # Wird aufgerufen wenn der Text eine Codeeditors veraendert wird.
 func _text_wurde_veraendert():
 	code_veraendert = true
@@ -268,3 +269,5 @@ func _on_Speicherdialog_speichern():
 func _on_nicht_speichern():
 	$Speicherdialog.hide()
 	code_veraendert = false
+
+
