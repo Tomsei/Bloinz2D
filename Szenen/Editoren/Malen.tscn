@@ -36,6 +36,7 @@
 [ext_resource path="res://Bilder/Hintergruende/Boden.png" type="Texture" id=34]
 
 [node name="Node2D" type="Node2D"]
+pause_mode = 2
 
 [node name="CoinWechsel" type="PopupDialog" parent="."]
 margin_left = 276.527
