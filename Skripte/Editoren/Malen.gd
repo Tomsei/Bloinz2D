@@ -45,7 +45,7 @@ func _ready():
 	aktuellerFarbbutton= get_node("../Farbe9");
 	aktuellerFarbbutton.pressed= true;
 	aktuelleFarbe = Color(1,1,1,1);
-	get_node("../ColorPickerButton").color = Color(1,1,1,1);
+
 	
 	#Stiftgroesse voreinstellen
 	modus = "Stift";
@@ -1085,11 +1085,16 @@ func Farbwechsel_bei_Radierer():
 	
 
 func _on_EigeneFarbe1_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe1");
-	aktuelleFarbe = eigeneFarbe[0];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
+	#aktuellerFarbbutton.pressed= false;
+	#aktuellerFarbbutton= get_node("../EigeneFarbe1");
+	#aktuelleFarbe = eigeneFarbe[0];
+	#if modus =="Radierer":
+	#	Farbwechsel_bei_Radierer();
+	get_node("../ColorPicker").show();
+	get_tree().call_group("Steuerelemente", "hide");
+	modus="Farbauswahl";
+	deaktiviere_Buttons();
+	
 
 
 func _on_EigeneFarbe2_pressed():
@@ -1319,3 +1324,9 @@ func lade_Knopfbilder():
 	knopf_aktualisieren("Hintergrund",bildtemporaer);
 
 	
+
+
+func _on_Schliessen_pressed():
+	get_node("../ColorPicker").hide();
+	get_tree().call_group("Steuerelemente", "show");
+	aktiviere_Buttons();
