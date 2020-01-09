@@ -78,6 +78,9 @@ func _ready():
 	setze_Vorlagen();
 	#Vorschau aktualisieren
 	aktualisiere_Vorschau();
+	
+	#Spielfiguren auf Knöpfen laden
+	lade_Knopfbilder();
 
 	#Bei neuladen es Maleneditors:
 	#setze alle Figurauswahlbuttons auf das neue aktuelle Design
@@ -282,7 +285,7 @@ func speichern(bildname, Knopf):
 	knopf_aktualisieren(Knopf, bild);
 
 """
-aktualisiert das Icon eines Knopfes mit der Zeichenfläche
+aktualisiert das Icon eines Knopfes mit einem Bild
 @param Name - Name des Knopfes der aktualisiert werden soll
 """
 func knopf_aktualisieren(Name, _bild):
@@ -855,18 +858,6 @@ func wiederhole():
 		setze_Zeichenflaeche();
 		aktualisiere_Vorschau();
 
-func _on_CoinWechsel_confirmed():
-	pass # Replace with function body.
-
-
-func _on_CoinWechsel_popup_hide():
-	print("angekommen");
-	modus=alterModus;
-	print(modus);
-	
-
-
-
 func groesse_Zeichnung():
 	bild.lock();
 	maxy= 0;
@@ -1291,3 +1282,39 @@ func _on_Ellipse_pressed():
 	modus="Ellipse";
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Ellipse");
+	
+
+func lade_Knopfbilder():
+	var bildtemporaer = Image.new();
+	
+	#Blobs
+	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_1_gerade.png");
+	knopf_aktualisieren("Blob_1_gerade",bildtemporaer);	
+	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_2_gerade.png");
+	knopf_aktualisieren("Blob_2_gerade",bildtemporaer);	
+	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_3_gerade.png");
+	knopf_aktualisieren("Blob_3_gerade",bildtemporaer);	
+	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_4_gerade.png");
+	knopf_aktualisieren("Blob_4_gerade",bildtemporaer);	
+	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_5_gerade.png");
+	knopf_aktualisieren("Blob_5_gerade",bildtemporaer);	
+	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Kanonenkugel.png");
+	knopf_aktualisieren("Kanonenkugel",bildtemporaer);	
+	
+	#Coins
+	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"GoodCoin1.png");
+	knopf_aktualisieren("GoodCoin1",bildtemporaer);
+	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"GoodCoin2.png");
+	knopf_aktualisieren("GoodCoin2",bildtemporaer);	
+	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"BadCoin1.png");
+	knopf_aktualisieren("BadCoin1",bildtemporaer);	
+	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"BadCoin2.png");
+	knopf_aktualisieren("BadCoin2",bildtemporaer);	
+	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"RandomCoin.png");
+	knopf_aktualisieren("RandomCoin",bildtemporaer);
+	
+	#Hintergrund	
+	bildtemporaer.load("Bilder/Standardspielfiguren/Hintergrund/"+"Hintergrund.png");
+	knopf_aktualisieren("Hintergrund",bildtemporaer);
+
+	
