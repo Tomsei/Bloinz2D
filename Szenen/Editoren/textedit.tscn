@@ -38,7 +38,6 @@ margin_bottom = 462.701
 text = "Zurück"
 
 [node name="Speicherdialog" type="WindowDialog" parent="."]
-visible = true
 margin_left = 69.0
 margin_top = 124.0
 margin_right = 278.0
