@@ -212,24 +212,30 @@ func _process(delta):
 					if linienStart == null:
 						linienStart = get_global_mouse_position();
 						linienStart.x = linienStart.x-256;
-						#punkt_malen_pixel(linienStart.x, linienStart.y);
-						#setze_Zeichenflaeche();
+						linienStart.x = floor(linienStart.x/8);
+						linienStart.y = floor(linienStart.y/8);
+						print("im Modus");
 					else:
 						linienEnde = get_global_mouse_position();
 						linienEnde.x = linienEnde.x-256;
+						linienEnde.x = floor(linienEnde.x/8);
+						linienEnde.y = floor(linienEnde.y/8);
 						leere_temporaere_Zeichenflaeche();
+
 						var radiusx =abs(linienEnde.x-linienStart.x);
 						var radiusy= abs(linienEnde.y-linienStart.y);
+
 						var cx;
 						var cy;
 						if linienEnde.x > linienStart.x:
-							cx= linienStart.x+1/2*radiusx  ;
+							cx= linienStart.x+floor(0.5*radiusx);
 						else:
-							cx= linienEnde.x+1/2*radiusx  ;
+							cx= linienEnde.x+floor(0.5*radiusx);
 						if linienEnde.y > linienStart.y:
-							cy= linienStart.y+1/2*radiusy  ;
+							cy= linienStart.y+floor(0.5*radiusy);
 						else:
-							cy= linienEnde.y+1/2*radiusy;
+							cy= linienEnde.y+floor(0.5*radiusy);
+
 						male_Ellipse(cx,cy,radiusx,radiusy);
 						#linienStart = null;
 						#linienEnde = null;
@@ -244,6 +250,10 @@ func _process(delta):
 					linienEnde = null;
 					uebernehme_temporaere_Zeichenflaeche();
 				elif modus=="Linie":
+					linienStart= null;
+					linienEnde = null;
+					uebernehme_temporaere_Zeichenflaeche();
+				elif modus=="Ellipse":
 					linienStart= null;
 					linienEnde = null;
 					uebernehme_temporaere_Zeichenflaeche();
@@ -1233,16 +1243,20 @@ func male_Ellipse(cx,cy, radiusx, radiusy):
 	var ywechsel = radiusx*radiusx;
 	var ellipsenfehler= 0;
 	var stopX = zweiBQuadrat*radiusx; 
-	var stopY := 0;
+	var stopY = 0;
+	temporaeresBild.lock();
 	
-	while stopX >= stopY:
+	
+	while stopX> stopY or (stopX== stopY and stopX != 0):
 		male_vier_Ellipsenpunkte(x,y, cx,cy);
 		y= y+1;
 		stopY = stopY +zweiAQuadrat;
 		ellipsenfehler = ellipsenfehler + ywechsel;
+		ywechsel = ywechsel + zweiAQuadrat;
 		if 2* ellipsenfehler+ xwechsel > 0:
 			x= x-1;
 			stopX = stopX -zweiBQuadrat;
+			ellipsenfehler = ellipsenfehler + xwechsel;
 			xwechsel = xwechsel + zweiBQuadrat;
 	x= 0;
 	y= radiusy;
@@ -1251,7 +1265,7 @@ func male_Ellipse(cx,cy, radiusx, radiusy):
 	ellipsenfehler= 0;
 	stopX= 0;
 	stopY= zweiAQuadrat* radiusy;
-	while stopX <= stopY:
+	while stopX < stopY or (stopX== stopY and stopY != 0):
 		male_vier_Ellipsenpunkte(x,y, cx,cy);
 		x= x+1;
 		stopX= stopX +zweiBQuadrat;
@@ -1262,12 +1276,18 @@ func male_Ellipse(cx,cy, radiusx, radiusy):
 			stopY= stopY -zweiAQuadrat;
 			ellipsenfehler= ellipsenfehler+ ywechsel;
 			ywechsel = ywechsel +zweiAQuadrat;
+	temporaeresBild.unlock();
 	setze_temporaere_Zeichenflaeche();
 
 func male_vier_Ellipsenpunkte(x,y, cx,cy):
-	temporaeresBild.lock()
-	temporaeresBild.set_pixel(cx+x,cy+y);
-	temporaeresBild.set_pixel(cx-x,cy+y);
-	temporaeresBild.set_pixel(cx-x,cy-y);
-	temporaeresBild.set_pixel(cx+x,cy-y);
-	temporaeresBild.unlock();
+
+	temporaeresBild.set_pixel(cx+x,cy+y,aktuelleFarbe);
+	temporaeresBild.set_pixel(cx-x,cy+y,aktuelleFarbe);
+	temporaeresBild.set_pixel(cx-x,cy-y,aktuelleFarbe);
+	temporaeresBild.set_pixel(cx+x,cy-y,aktuelleFarbe);
+	
+
+func _on_Ellipse_pressed():
+	modus="Ellipse";
+	aktuellerModusbutton.pressed= false;
+	aktuellerModusbutton = get_node("../Ellipse");

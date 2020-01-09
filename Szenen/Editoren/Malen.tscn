@@ -760,6 +760,14 @@ margin_top = 327.368
 margin_right = 205.0
 margin_bottom = 347.368
 text = "<-"
+
+[node name="Ellipse" type="Button" parent="."]
+margin_left = 12.9236
+margin_top = 162.837
+margin_right = 66.9236
+margin_bottom = 182.837
+toggle_mode = true
+text = "Ellipse"
 [connection signal="pressed" from="CoinWechsel/Ja" to="Zeichenflaeche" method="_on_Ja_pressed"]
 [connection signal="pressed" from="CoinWechsel/Nein" to="Zeichenflaeche" method="_on_Nein_pressed"]
 [connection signal="pressed" from="Speichern" to="Zeichenflaeche" method="_on_Speichern_pressed"]
@@ -837,3 +845,4 @@ text = "<-"
 [connection signal="pressed" from="EigeneFarbeSpeichern3" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern3_pressed"]
 [connection signal="pressed" from="EigeneFarbeSpeichern4" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern4_pressed"]
 [connection signal="pressed" from="EigeneFarbeSpeichern5" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern5_pressed"]
+[connection signal="pressed" from="Ellipse" to="Zeichenflaeche" method="_on_Ellipse_pressed"]
