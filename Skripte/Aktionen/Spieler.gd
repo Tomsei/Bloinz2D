@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 #Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
-export var speed = 700
+export var speed = 500
 export var Schwerkraft = 400
 export var Sprungkraft = 500
 

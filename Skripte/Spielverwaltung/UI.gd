@@ -13,6 +13,7 @@ func _process(delta):
 	# Noch in die Logik verschieben!
 	if spieler != null:
 		$PunkteAnzeige.value = spieler.blobGroesse 
+		$PunkteAnzeige/PunkteAnzeigePunkt.value = spieler.blobGroesse
 		if spieler.blobGroesse < 0:
 			spielVerloren()
 		if spieler.blobGroesse >= 25:

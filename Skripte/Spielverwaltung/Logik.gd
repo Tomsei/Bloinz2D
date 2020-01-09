@@ -5,7 +5,7 @@ onready var raketenTimer = get_node("RaketenTimer")
 onready var muenzTimer = get_node("MuenzTimer")
 onready var randomCoinZeit = get_node("RandomCoinZeit")
 onready var geschwindigkeitZeit = get_node("RC-Geschwindigkeit")
-onready var raketenZeit = 11
+onready var raketenZeit = 10
 
 onready var spieler = get_tree().get_root().get_node("Main").get_node("Spiel").get_node("Player")
 
@@ -168,7 +168,11 @@ func _on_RCGeschwindigkeit_timeout():
 
 
 func _on_Spiel_draw():
+	pass
 	raketenZeit = einstellungen.uebernehmeRaketenzeit()
+	print(raketenZeit)
+	raketenTimer.set_wait_time(raketenZeit)
+	#raketenTimer.start()
 
 
 func _on_Spiel_hide():

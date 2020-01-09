@@ -28,7 +28,7 @@ texture_normal = ExtResource( 2 )
 texture_pressed = ExtResource( 3 )
 
 [node name="Schwierigkeit" type="Sprite" parent="."]
-position = Vector2( 222.891, 175.903 )
+position = Vector2( 224, 175.903 )
 texture = ExtResource( 4 )
 
 [node name="SchwierigkeitSlider" type="HSlider" parent="Schwierigkeit"]
@@ -54,7 +54,7 @@ custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "3"
 
 [node name="Sprungkraft" type="Sprite" parent="."]
-position = Vector2( 225.36, 281.551 )
+position = Vector2( 224, 281.551 )
 texture = ExtResource( 7 )
 
 [node name="SprungkraftSlider" type="HSlider" parent="Sprungkraft"]
@@ -80,7 +80,7 @@ custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "500"
 
 [node name="tempoBlob" type="Sprite" parent="."]
-position = Vector2( 229.442, 378.47 )
+position = Vector2( 224, 378.47 )
 texture = ExtResource( 8 )
 
 [node name="BlobSlider" type="HSlider" parent="tempoBlob"]
@@ -104,7 +104,7 @@ custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "500"
 
 [node name="raketenAbstand" type="Sprite" parent="."]
-position = Vector2( 229.442, 472.483 )
+position = Vector2( 224, 472.483 )
 texture = ExtResource( 9 )
 
 [node name="RaketenSlider" type="HSlider" parent="raketenAbstand"]
