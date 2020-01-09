@@ -2,8 +2,8 @@
 #galerie
 {
     margin: 0;
-    padding: 0;
-    background-color: #2b2d30;
+    padding: 20px;
+    background-color: #004560;
     width: 80%;
     min-height: 50px;
     margin: 50px auto 0;
@@ -11,16 +11,22 @@
     flex-wrap: wrap;
 	align-items: center;
 	justify-content: center; 
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
+
 #galerie .bild
 {
     position: relative;
     width: 200px;
     height: 200px;
-    background: #2b2d30;
+    background: #d5f4ff;
     margin: 10px;
     overflow: hidden;
 	border-style: solid;
+    border-color: black;
+    border-width: 4px;
+    border-radius: 10px;
 	
 }
 
@@ -36,3 +42,7 @@
 }
 
 
+#galeriebereich h2 {
+    text-align: center;
+    margin-bottom: -1em;
+}

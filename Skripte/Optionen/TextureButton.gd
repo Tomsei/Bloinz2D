@@ -24,6 +24,7 @@ func starteSpiel():
 	optionen.visible = false
 	ende.visible = false
 	spiel.visible = true
+	JavaScript.eval("resizeSpiel(640,448)")
 	
 	#print(einstellungen.erstesSpiel)
 	if einstellungen.erstesSpiel:
@@ -90,10 +91,13 @@ func _on_NochmalSpielen_button_up():
 	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
 
 # Geht von den normalen Einstellungen zu den weiteren Optionen
+"""
 func _on_mehr_pressed():
 	print("Weitere Einstellungen")
 	#mehrOptionen.visible = true;
+	JavaScript.eval("resizeSpiel(1000,1000)")
 
+"""
 # Geht von den Weiteren Optionen zurück zu den normalen Einstellungen
 func _on_zurueck_button_up():
 	print("Zurück zu Einstellungen")

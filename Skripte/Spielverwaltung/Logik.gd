@@ -5,14 +5,20 @@ onready var raketenTimer = get_node("RaketenTimer")
 onready var muenzTimer = get_node("MuenzTimer")
 onready var randomCoinZeit = get_node("RandomCoinZeit")
 onready var geschwindigkeitZeit = get_node("RC-Geschwindigkeit")
-onready var raketenZeit = 10
+onready var raketenZeit = 6
 
 onready var spieler = get_tree().get_root().get_node("Main").get_node("Spiel").get_node("Player")
 
 var muenzmagnetAktiv = false
 
-func _ready():
 
+"""
+Methode wird zum start der Szene aufgerufen
+Alle benötigten Timer werden jeweils gestartet
+	(alle ... Sekunden eine Rakte / Coin ...)
+	(die benötigten Zeiten zu den Random Aktionen)
+"""
+func _ready():
 	raketenTimer.set_wait_time(raketenZeit)
 	raketenTimer.start()
 	muenzTimer.set_wait_time(1)
@@ -22,13 +28,19 @@ func _ready():
 	geschwindigkeitZeit.set_wait_time(7)
 	
 	einstellungen.setzeRaketenzeit(raketenZeit)
-	#erstelleMuenze()
 
-
+"""
+Aufruf bei jedem Frame
+stellt sicher, dass CoinMagnet übermittelt werden kann
+"""
 func _process(delta):
 	uebermittelCoinMagnet()
 
-
+"""
+Methode zum übermitteln an den Spieler, dass ein Magnet aktiviert wurde
+Wenn Münzmagnet aktiv ist wird für den Spieler (einziges Kind mit Methode muenzMagnet)
+Magnet Methode ausgeführt
+"""
 func uebermittelCoinMagnet():
 	if muenzmagnetAktiv:
 		var kinder = get_children()
@@ -37,67 +49,59 @@ func uebermittelCoinMagnet():
 				kinder[i].muenzMagnet(spieler.position.x)
 
 
-var test1 = 0
-var test2 = 0
-var test3 = 0
-var test4 = 0
-var test5 = 0
+"""
+Methode zum erstellen einer Münz Instanz --> es wird eine Münze als neue Szene instanziert
+Zufällig wird eine Zahl ermittelt mit welcher dann eine zufällige Unterklasse der Münzen
+ausgewählt wird
+"""
 
-
-#Methode die eine neue Instanz einer Münze erstellt | Bisher wird Münze als neue Szene instanziert
 func erstelleMuenze():
 	
-	
+	#ermitteln einer Random Zahl Zufall
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var zufall = rng.randi_range(0,10)
-	#Zufalls auswahl von einer Münze
-
 	
+
+	#Variablen zum erzeugen einer neuen Münz Instanz
 	var muenze
 	var istrandom = false
-	#Switch über zufällige Zahl, damit eine zufallsmünze erstellt wird
+	
+	#Zufalls auswahl von einer Münze über die Zufallszahl und einem Switch-Case
 	match zufall:
 		0,1,2: 
 			muenze = load("res://Szenen/Muenzen/goodCoin1.tscn")
-			test1 = test1+1
-			istrandom = true
 		3,4: 
 			muenze = load("res://Szenen/Muenzen/goodCoin2.tscn")
-			test2 = test2+1
-		5,6: 
+		5,6, 7: 
 			muenze = load("res://Szenen/Muenzen/badCoin1.tscn")
-			test3 = test3+1
-		7,8: 
+		8,9: 
 			muenze = load("res://Szenen/Muenzen/badCoin2.tscn")
-			test4 = test4+1
-		9,10: 
+		10: 
 			muenze = load("res://Szenen/Muenzen/randomCoin.tscn")
-			test5 = test5+1
-			istrandom = true
+			istrandom = true #Die neue Münze ist ein Random Coin
 	
-	var neu = muenze.instance()
-	
-	#print (str(test1) + "  " + str(test2) + "  " + str(test3) + "  " + str(test4) + "  " + str(test5))
+	var neu = muenze.instance() #Instance mit der passenden Subklasse erzeugen
+
 	 
 	#die Signale müssen verknüpft werden
 	neu.connect("muenze_beruehrt", spieler, "_on_Muenze_muenze_beruehrt")
 	neu.connect("neueMuenze", self, "_on_Muenze_neueMuenze")
 	
+	#Für den Randomcoin muss ein weiteres Signal verknüpft werden
 	if (istrandom):
 		neu.connect("randomAktion", self, "_on_randomMuenze_randomAktion")
 	
-	add_child(neu)
+	add_child(neu) #Münze wird gesamt Spiel hinzugefügt
 
-#Signal zum erstellen einer neuen Münze
-func _on_Muenze_neueMuenze():
-	pass #erstelleMuenze() 
-	
-	
-#Methode zum erstellen einer neuen Instanz der Szene / Klasse Kanone
+
+
+"""
+Methode zum erstellen einer neuen Instanz der Szene / Klasse Kanone
+Kanonen Szene wird geladen, instanziert, die Signale verbunden und hinzugefügt
+"""
 func erstelleKanone():
 	var kanone = load("res://Szenen/Spielfiguren/Kanone.tscn")
-	
 	var neu = kanone.instance()
 	
 	#Das Signal der Kanone verbinden
@@ -106,11 +110,12 @@ func erstelleKanone():
 
 
 """
-Methode die eine Random Aktion auswählt,
-sobald ein Random Coin berührt wurde
+Methode die eine Random Aktion auswählt, sobald ein Random Coin berührt wurde
+Über eine Randomzahl wird mittels Switch-Case eine zufällige Methode ausgeführt
 """
 func _on_randomMuenze_randomAktion():
 	
+	#Zufallszahl ermitteln
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var zufall = rng.randi_range(0,3)
@@ -122,24 +127,32 @@ func _on_randomMuenze_randomAktion():
 		3: randomAktion_spielerGeschwindigkeit()
 
 
-
+"""
+Randomaktion zum erstellen von 5 weiteren Münzen
+"""
 func randomAktion_erstelleMuenzen():
 	for i in 5:
 		erstelleMuenze()
 
-
+"""
+Randomatkionen die den Schirm anschaltet
+"""
 func randomAktion_erstelleSchutz():
-	
 	spieler.get_node("Schutz").show()
 
-
+"""
+Randomaktion die den Münzmagnet anschaltet
+"""
 func randomAktion_muenzMagnet():
 	muenzmagnetAktiv = true
 	randomCoinZeit.start()
 
 
 var erhoehteGeschwindigkeit = false
-
+"""
+Randomaktion zum erhöhen der Geschwindigkeit des Spielers
+wird nur durchgeführt wenn Spieler nicht bereits schneller
+"""
 func randomAktion_spielerGeschwindigkeit():
 	if !erhoehteGeschwindigkeit:
 		spieler.veraendereSpielerGeschwindigkeit(300)

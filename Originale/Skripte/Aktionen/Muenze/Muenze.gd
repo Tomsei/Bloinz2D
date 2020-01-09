@@ -95,6 +95,4 @@ Senden des Signals der Münzberührung mit dem individuellen coinWert
 func blobKollision():
 	
 	emit_signal("muenze_beruehrt", coinWert)
-	emit_signal("neueMuenze")
-	
 	queue_free()
