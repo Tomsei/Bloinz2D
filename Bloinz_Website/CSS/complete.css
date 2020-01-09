@@ -20,7 +20,8 @@ main {
 	border-radius: 12px;
     padding: 8%;
     padding-top: 3%;
-    margin-top: 10%
+    margin-top: 10%;
+	font-size: 120%;
 	
 }
 
@@ -147,7 +148,7 @@ footer {
     border-bottom-style: solid;
     margin: 2%;
     
-    background-image: linear-gradient(to right, #397086, #6c6caa, #397086)
+    background-image: linear-gradient(to right, #397086, #6aa7c0, #397086)
 }
 
 
