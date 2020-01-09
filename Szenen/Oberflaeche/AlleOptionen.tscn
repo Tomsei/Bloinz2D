@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Skripte/Optionen/Optionen.gd" type="Script" id=1]
+[ext_resource path="res://Bilder/TileMaps/Optionen.tres" type="TileSet" id=2]
+[ext_resource path="res://Szenen/Oberflaeche/OptionenSlider.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Szenen/Oberflaeche/OptionenEditoren.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Szenen/Oberflaeche/OptionenRandomCoin.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Bilder/Buttons/Optionen/spielen_normal.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Buttons/Optionen/spielen_pressed.png" type="Texture" id=7]
+
+[node name="AlleOptionen" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Hintergrund" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 2, 65536, 0, 65536, 65537, 0, 65537, 65538, 0, 65537, 65539, 0, 65537, 65540, 0, 65537, 65541, 0, 65537, 65542, 0, 65538, 131072, 0, 65536, 131073, 0, 65537, 131074, 0, 65537, 131075, 0, 65537, 131076, 0, 65537, 131077, 0, 65537, 131078, 0, 65538, 196608, 0, 65536, 196609, 0, 65537, 196610, 0, 65537, 196611, 0, 65537, 196612, 0, 65537, 196613, 0, 65537, 196614, 0, 65538, 262144, 0, 65536, 262145, 0, 65537, 262146, 0, 65537, 262147, 0, 65537, 262148, 0, 65537, 262149, 0, 65537, 262150, 0, 65538, 327680, 0, 65536, 327681, 0, 65537, 327682, 0, 65537, 327683, 0, 65537, 327684, 0, 65537, 327685, 0, 65537, 327686, 0, 65538, 393216, 0, 65536, 393217, 0, 65537, 393218, 0, 65537, 393219, 0, 65537, 393220, 0, 65537, 393221, 0, 65537, 393222, 0, 65538, 458752, 0, 65536, 458753, 0, 65537, 458754, 0, 65537, 458755, 0, 65537, 458756, 0, 65537, 458757, 0, 65537, 458758, 0, 65538, 524288, 0, 65536, 524289, 0, 65537, 524290, 0, 65537, 524291, 0, 65537, 524292, 0, 65537, 524293, 0, 65537, 524294, 0, 65538, 589824, 0, 131072, 589825, 0, 131073, 589826, 0, 131073, 589827, 0, 131073, 589828, 0, 131073, 589829, 0, 131073, 589830, 0, 131074 )
+
+[node name="Seite1-Slider" parent="." instance=ExtResource( 3 )]
+
+[node name="Seite2" parent="Seite1-Slider/1von3" index="0"]
+margin_top = -31.0
+margin_bottom = 31.0
+
+[node name="Schwierigkeit" parent="Seite1-Slider" index="1"]
+position = Vector2( 222.891, 165.903 )
+
+[node name="Sprungkraft" parent="Seite1-Slider" index="2"]
+position = Vector2( 225.36, 269.85 )
+
+[node name="tempoBlob" parent="Seite1-Slider" index="3"]
+position = Vector2( 226.183, 374.47 )
+
+[node name="raketenAbstand" parent="Seite1-Slider" index="4"]
+position = Vector2( 227.813, 471.483 )
+
+[node name="Seite2-Editoren" parent="." instance=ExtResource( 4 )]
+editor/display_folded = true
+visible = false
+
+[node name="2von3" parent="Seite2-Editoren" index="0"]
+editor/display_folded = true
+
+[node name="Seite3" parent="Seite2-Editoren/2von3" index="1"]
+margin_top = -31.0
+margin_bottom = 31.0
+
+[node name="Seite3-RandomCoin" parent="." instance=ExtResource( 5 )]
+editor/display_folded = true
+visible = false
+
+[node name="Spielen" type="TextureButton" parent="."]
+margin_left = 150.0
+margin_top = 547.0
+margin_right = 300.0
+margin_bottom = 603.0
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 7 )
+[connection signal="button_up" from="Seite1-Slider/1von3/Seite2" to="." method="_on_Seite2_button_up"]
+[connection signal="button_up" from="Spielen" to="." method="_on_Spielen_button_up"]
+
+[editable path="Seite1-Slider"]
+
+[editable path="Seite2-Editoren"]
+
+[editable path="Seite3-RandomCoin"]

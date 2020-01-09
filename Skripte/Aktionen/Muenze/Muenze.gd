@@ -81,7 +81,7 @@ func sollMuenzeVerschwinden():
 Methode zum ermitteln einer Zufälligen Position an der oberen Kante des Bildfensters
 """
 func ZufallsPosition():
-	position.x = rand_range(0, screen_size.x)
+	position.x = rand_range(0, 448)
 	position.y = 0
 	
 

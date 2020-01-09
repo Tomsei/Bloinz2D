@@ -16,8 +16,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Bloinz 2D"
-run/main_scene="res://Szenen/Oberflaeche/Startbildschirm.tscn"
+run/main_scene="res://Szenen/Oberflaeche/Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+einstellungen="*res://Skripte/Spielverwaltung/Informationsübertragung.gd"
 
 [display]
 

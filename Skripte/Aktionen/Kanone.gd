@@ -7,14 +7,17 @@ Dies geschiet auf der gesetzten Höhe
 
 """
 
+#Variable um die Warnung auf das Spielfeld erzeugen zu können
+onready var spiel = get_tree().get_root().get_node("Main").get_node("Spiel")
+
 
 signal kanoneberuehrt #wird ausgesendet wenn Kanone berührt wurde
 
 #Kanonen Bewegung-Variablen
 var geschwindigkeit = randomZahlZwischen(130, 180)
 var Bewegung = Vector2(0,0)
-var hoehe = 474
-var richtungRechts = false
+var hoehe = 500
+var richtungLinks = false
 
 var screen_size
 
@@ -28,16 +31,32 @@ func _ready():
 	lade_Sprite_Bild()
 	screen_size = get_viewport_rect().size
 	
+	hoehe = randomZahlZwischen(400,490) #Zuffällige Flughöhe
+	
+	#kanonen Warnung laden
+	var Kanonenwarnung = load("res://Szenen/Spielfiguren/Kanonenwarnung.tscn");
+	var neue_Warnung
+	
 	if randomZahlZwischen(0,1) == 1:
-		kanoneRechts()
-		richtungRechts = true
-		print("rechts")
-	else:
 		KanoneLinks()
-		print("links")
+		richtungLinks = true
+		
+		#Warnung rechts erstellen
+		neue_Warnung = Kanonenwarnung.instance()
+		neue_Warnung.warnungLinks(hoehe)
+	else:
+		KanoneRechts()
+		
+		#Warnung links erstellen
+		neue_Warnung = Kanonenwarnung.instance()
+		neue_Warnung.warnungRechts(hoehe)
+		
+	
 	
 	
 	position.y = hoehe
+	
+	spiel.add_child(neue_Warnung)
 
 
 """
@@ -59,10 +78,10 @@ Mehtode welche für jeden Frame aufgerufen wird und Bewegung initialisiert
 --> Nach der Zufällig ermittelten Richtung wird dann Rakete bewegt
 """
 func _physics_process(delta):
-	if richtungRechts:
-		bewegungrechts()
-	else:
+	if richtungLinks:
 		bewegunglinks()
+	else:
+		bewegungrechts()
 
 
 
@@ -70,16 +89,16 @@ func _physics_process(delta):
 Methode um die Kanone Rechts zu initialisieren
 --> Position rechts neben Rand (Negativ, damit sie ins bild rein fliegt)
 """
-func kanoneRechts():
-	position.x = -50 
+func KanoneLinks():
+	position.x = -200 
 
 
 """
 Methode um die Kanone Links zu initialisieren
 --> Screen_size + 50 damit Kanone von Seite reinfliegt
 """
-func KanoneLinks():
-	position.x = screen_size.x + 50 
+func KanoneRechts():
+	position.x = screen_size.x + 200 
 
 
 """
@@ -87,7 +106,7 @@ Methode um Kanone kontinuirlich nach Rechts zu bewegen
 -die X Koordinate in Positiver X Richtung verändern
 -das Bild in passende Richtung drehen
 """
-func bewegungrechts():
+func bewegunglinks():
 	Bewegung.x = geschwindigkeit
 	move_and_slide(Bewegung)
 	$Sprite.flip_h = true
@@ -100,11 +119,11 @@ Methode um Kanone kontinuirlich nach Links zu bewegen
 -die X Koordinate in negatvier X Richtung verändern
 -das Bild in passende Richtung drehen
 """
-func bewegunglinks():
+func bewegungrechts():
 	Bewegung.x = -geschwindigkeit
 	move_and_slide(Bewegung)
 	$Sprite.flip_h = false
-	if is_on_wall() and position.x < 200:
+	if is_on_wall() and position.x < 10:
 		queue_free()
 		print("Kanone Weg")
 

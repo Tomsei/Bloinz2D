@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 #Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
-export var speed = 700
+export var speed = 500
 export var Schwerkraft = 400
 export var Sprungkraft = 500
 
@@ -34,6 +34,9 @@ enum blobStati {NEGATIV2, NEGATIV1, NEUTRAL, POSITIV1, POSITIV2}
 
 var bodenhoehe = 470
 
+signal spielVerloren
+signal spielGewonnen
+
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
 	#Die Bildschirmgröße abspeichern
@@ -45,8 +48,7 @@ func _ready():
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
 	
-	var sprungskraft_signal = load("res://Skripte/Optionen/Slider.gd")
-	sprungskraft_signal.connect("aendereSprungkraft",self,"sprungkraft_geaendert")
+	einstellungen.setzeSpielerEinstellungen(Sprungkraft, speed)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind
@@ -224,8 +226,12 @@ func blobVeranederung(var seitlich):
 	#switch Casse über alle Größen des Blobs es wird jeweils das passende Bild gesetzt
 	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
 	match blobGroesse:
-		-1:
-			print ("verloren")
+		-1,-2,-3,-4,-5:
+			print("verloren")
+			emit_signal("spielVerloren")
+			$AnimatedSprite.play("neutral_gerade")
+			blobGroesse = 12
+			#get_tree().reload_current_scene()
 		0, 1, 2, 3, 4:
 			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.NEGATIV2:
@@ -300,7 +306,9 @@ func blobVeranederung(var seitlich):
 				$AnimatedSprite.play("positiv_2_gerade")
 				skalieren(1.0)
 		25:
-			print ("gewonnen")
+			emit_signal("spielGewonnen")
+			$AnimatedSprite.play("neutral_gerade")
+			blobGroesse = 12
 
 
 
@@ -357,3 +365,26 @@ Textur des Blobs wird ebenfalls angepasst
 func _on_Kanone_kanoneberuehrte():
 	blobGroesse = blobGroesse - 5
 	blobVeranederung(false)
+
+"""
+Methode um die Geschwindigkeit des Spielers zu verändern
+@geschwindigkeitsDifferenz ist der Wert der auf die Geschwindigkeit hinzugerechnet wird
+--> negativer Wert verringert die Geschwindigkeit | positiver Wert erhöht die Geschwindigkeit
+"""
+func veraendereSpielerGeschwindigkeit(var geschwindigkeitsDifferenz):
+	speed = speed + geschwindigkeitsDifferenz
+
+"""
+Methoden um die aktuellen Einstellungen in die OptionsSlider zu übertragen 
+und daraus zu übernehmen
+"""
+
+func uebertrageEinstellungen():
+	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
+
+func _on_Spiel_hide():
+	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
+
+func _on_Spiel_draw():
+	speed = einstellungen.uebernehmeGeschwindigkeit()
+	Sprungkraft = einstellungen.uebernehmeSprungkraft()
