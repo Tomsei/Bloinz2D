@@ -48,7 +48,6 @@
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Ellipse.png" type="Texture" id=46]
 
 [node name="Maleneditor" type="Node2D"]
-pause_mode = 2
 
 [node name="CoinWechsel" type="PopupDialog" parent="."]
 margin_left = 276.527
@@ -827,51 +826,6 @@ margin_right = 52.0
 margin_bottom = 153.0
 icon = ExtResource( 45 )
 
-[node name="EigeneFarbeSpeichern1" type="Button" parent="." groups=[
-"Steuerelemente",
-]]
-margin_left = 8.0
-margin_top = 370.0
-margin_right = 33.0
-margin_bottom = 390.0
-text = "<-"
-
-[node name="EigeneFarbeSpeichern2" type="Button" parent="." groups=[
-"Steuerelemente",
-]]
-margin_left = 42.0
-margin_top = 370.0
-margin_right = 67.0
-margin_bottom = 390.0
-text = "<-"
-
-[node name="EigeneFarbeSpeichern3" type="Button" parent="." groups=[
-"Steuerelemente",
-]]
-margin_left = 76.0
-margin_top = 370.0
-margin_right = 101.0
-margin_bottom = 390.0
-text = "<-"
-
-[node name="EigeneFarbeSpeichern4" type="Button" parent="." groups=[
-"Steuerelemente",
-]]
-margin_left = 110.0
-margin_top = 370.0
-margin_right = 135.0
-margin_bottom = 390.0
-text = "<-"
-
-[node name="EigeneFarbeSpeichern5" type="Button" parent="." groups=[
-"Steuerelemente",
-]]
-margin_left = 142.985
-margin_top = 370.0
-margin_right = 167.985
-margin_bottom = 390.0
-text = "<-"
-
 [node name="Ellipse" type="Button" parent="." groups=[
 "Steuerelemente",
 ]]
@@ -883,11 +837,14 @@ hint_tooltip = "Ellipse"
 toggle_mode = true
 icon = ExtResource( 46 )
 
-[node name="Button" type="Button" parent="."]
-margin_left = -177.489
-margin_top = 371.77
-margin_right = -23.4886
-margin_bottom = 391.77
+[node name="Farbauswahl" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+visible = false
+margin_left = 6.0
+margin_top = 372.0
+margin_right = 177.0
+margin_bottom = 392.0
 text = "Farbauswahl"
 
 [node name="ColorPicker" type="ColorPicker" parent="."]
@@ -982,10 +939,7 @@ text = "Schließen"
 [connection signal="pressed" from="Wiederholen" to="Zeichenflaeche" method="_on_Wiederholen_pressed"]
 [connection signal="pressed" from="Rueckgaengig" to="Zeichenflaeche" method="_on_Rueckgaengig_pressed"]
 [connection signal="pressed" from="Bildrand" to="Zeichenflaeche" method="_on_Bildrand_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern1" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern1_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern2" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern2_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern3" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern3_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern4" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern4_pressed"]
-[connection signal="pressed" from="EigeneFarbeSpeichern5" to="Zeichenflaeche" method="_on_EigeneFarbeSpeichern5_pressed"]
 [connection signal="pressed" from="Ellipse" to="Zeichenflaeche" method="_on_Ellipse_pressed"]
+[connection signal="pressed" from="Farbauswahl" to="Zeichenflaeche" method="_on_Farbauswahl_pressed"]
+[connection signal="hide" from="ColorPicker" to="Zeichenflaeche" method="_on_ColorPicker_hide"]
 [connection signal="pressed" from="ColorPicker/Schliessen" to="Zeichenflaeche" method="_on_Schliessen_pressed"]

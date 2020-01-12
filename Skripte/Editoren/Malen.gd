@@ -26,6 +26,7 @@ var maxx;
 var miny;
 var maxy;
 var eigeneFarbe;
+var eigeneFarbeaktuell;
 var temporaeresBild;
 var temporaereZeichenflaeche;
 var coinWechsel;
@@ -346,6 +347,7 @@ func _on_Farbe1_pressed():
 	aktuelleFarbe = Color(0.9,0.23,0.1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -355,6 +357,7 @@ func _on_Farbe2_pressed():
 	aktuelleFarbe = Color(0.9,0.72,0.1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -364,6 +367,7 @@ func _on_Farbe3_pressed():
 	aktuelleFarbe = Color(0.46,0.9,0.1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -373,6 +377,7 @@ func _on_Farbe4_pressed():
 	aktuelleFarbe = Color(0.1,0.9,0.81);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -382,6 +387,7 @@ func _on_Farbe5_pressed():
 	aktuelleFarbe = Color(0.1,0.36,0.9);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -391,6 +397,7 @@ func _on_Farbe6_pressed():
 	aktuelleFarbe = Color(0.63,0.1,0.9);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -400,6 +407,7 @@ func _on_Farbe7_pressed():
 	aktuelleFarbe = Color(0.9,0.1,0.78);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -409,6 +417,7 @@ func _on_Farbe8_pressed():
 	aktuelleFarbe = Color(0.95,0.78,0.59);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -419,6 +428,7 @@ func _on_Farbe9_pressed():
 	aktuelleFarbe = Color(1,1,1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -428,6 +438,7 @@ func _on_Farbe10_pressed():
 	aktuelleFarbe = Color(0,0,0);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -1051,31 +1062,7 @@ func eigene_Farbe_speichern(name):
 	icon1.save_png("Bilder/Farben/"+name+".png");
 	
 	
-	
 
-func _on_EigeneFarbeSpeichern1_pressed():
-	eigeneFarbe[0]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe1");
-
-
-func _on_EigeneFarbeSpeichern2_pressed():
-	eigeneFarbe[1]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe2");
-
-
-func _on_EigeneFarbeSpeichern3_pressed():
-	eigeneFarbe[2]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe3");
-	
-
-func _on_EigeneFarbeSpeichern4_pressed():
-	eigeneFarbe[3]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe4");
-
-
-func _on_EigeneFarbeSpeichern5_pressed():
-	eigeneFarbe[4]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe5");
 
 func Farbwechsel_bei_Radierer():
 	aktuellerModusbutton.pressed= false;
@@ -1085,51 +1072,51 @@ func Farbwechsel_bei_Radierer():
 	
 
 func _on_EigeneFarbe1_pressed():
-	#aktuellerFarbbutton.pressed= false;
-	#aktuellerFarbbutton= get_node("../EigeneFarbe1");
-	#aktuelleFarbe = eigeneFarbe[0];
-	#if modus =="Radierer":
-	#	Farbwechsel_bei_Radierer();
-	get_node("../ColorPicker").show();
-	get_tree().call_group("Steuerelemente", "hide");
-	modus="Farbauswahl";
-	deaktiviere_Buttons();
+	eigeneFarbeaktuell = 1;
+	wechsel_zu_eigene_Farbe();
+
 	
 
+func wechsel_zu_eigene_Farbe():
+	if aktuellerFarbbutton != get_node("../EigeneFarbe"+str(eigeneFarbeaktuell)):
+		aktuellerFarbbutton.pressed= false;
+		aktuellerFarbbutton= get_node("../EigeneFarbe"+str(eigeneFarbeaktuell));
+	else:
+		aktuellerFarbbutton.pressed= true;
+	if eigeneFarbe[eigeneFarbeaktuell-1] == Color(1,1,1):
+		oeffne_Farbauswahl();
+	else:
+		get_node("../Farbauswahl").show();
+		aktuelleFarbe = eigeneFarbe[eigeneFarbeaktuell-1];
+		if modus =="Radierer":
+			Farbwechsel_bei_Radierer();
+
+func oeffne_Farbauswahl():
+	get_node("../ColorPicker").show();
+	get_tree().call_group("Steuerelemente", "hide");
+	alterModus = modus;
+	modus="Farbauswahl";
+	deaktiviere_Buttons();
 
 func _on_EigeneFarbe2_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe2");
-	aktuelleFarbe = eigeneFarbe[1];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
-		
+	eigeneFarbeaktuell = 2;
+	wechsel_zu_eigene_Farbe();
 
 
 func _on_EigeneFarbe3_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe3");
-	aktuelleFarbe = eigeneFarbe[2];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
+	eigeneFarbeaktuell = 3;
+	wechsel_zu_eigene_Farbe();
 
 
 func _on_EigeneFarbe4_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe4");
-	aktuelleFarbe = eigeneFarbe[3];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
+	eigeneFarbeaktuell = 4;
+	wechsel_zu_eigene_Farbe();
 
 
 func _on_EigeneFarbe5_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe5");
-	aktuelleFarbe = eigeneFarbe[4];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
+	eigeneFarbeaktuell = 5;
+	wechsel_zu_eigene_Farbe();
 
-	
 func eigene_Farben_einladen():
 	for i in range(1,6):
 		var icon = Image.new();
@@ -1328,5 +1315,20 @@ func lade_Knopfbilder():
 
 func _on_Schliessen_pressed():
 	get_node("../ColorPicker").hide();
+
+
+
+func _on_ColorPicker_hide():
 	get_tree().call_group("Steuerelemente", "show");
 	aktiviere_Buttons();
+	eigeneFarbe[eigeneFarbeaktuell-1]= get_node("../ColorPicker").get_pick_color();
+	aktuelleFarbe= eigeneFarbe[eigeneFarbeaktuell-1];
+	eigene_Farbe_speichern("EigeneFarbe"+str(eigeneFarbeaktuell));
+	if alterModus =="Radierer":
+		Farbwechsel_bei_Radierer();
+	else:
+		modus = alterModus;
+
+
+func _on_Farbauswahl_pressed():
+	oeffne_Farbauswahl();

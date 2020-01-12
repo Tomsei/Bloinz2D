@@ -32,7 +32,7 @@ func starteSpiel():
 		einstellungen.erstesSpiel = false
 	else:
 		anleitung.visible = false
-		get_tree().paused = false
+		#get_tree().paused = false
 
 
 # Startet das Spiel vom Startbildschirm
@@ -49,7 +49,7 @@ func _on_NochmalSpielen_button_up():
 
 # ruft die Optionen auf
 func _on_Optionen_button_up():
-	get_tree().paused = true
+	#get_tree().paused = true
 	
 	start.visible = false
 	optionen.visible = true
