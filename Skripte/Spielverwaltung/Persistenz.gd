@@ -10,11 +10,9 @@ func init():
 # Laedt eine Bildtextur aus uebergebenem Pfad.
 func lade_bildtextur(bildpfad):
 	var file = File.new()
-	print(file.file_exists(hauptverzeichnis_benutzer + bildpfad.lstrip("res:/")))
 	file.open(hauptverzeichnis_benutzer + bildpfad.lstrip("res:/"), File.READ)
 	var imgtext = file.get_var(true)
 	file.close()
-	print(imgtext)
 	return imgtext
 
 # Erstellt die Ordner und Dateistruktur des uebergebenem Pfads.
