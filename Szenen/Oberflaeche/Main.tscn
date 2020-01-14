@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Skripte/Spielverwaltung/Informationsübertragung.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/TileMaps/Spieloberflaeche.tres" type="TileSet" id=2]
@@ -14,7 +14,6 @@
 [ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=12]
 [ext_resource path="res://Skripte/Optionen/CheckButton.gd" type="Script" id=13]
 [ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Szenen/Spielverwaltung/Persistenz.tscn" type="PackedScene" id=15]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -29,7 +28,6 @@ position = Vector2( 223.326, 254.237 )
 texture = ExtResource( 3 )
 
 [node name="Start" parent="." instance=ExtResource( 4 )]
-editor/display_folded = true
 
 [node name="Anleitung" parent="." instance=ExtResource( 5 )]
 visible = false
@@ -73,8 +71,6 @@ visible = false
 
 [node name="Seite1-Slider" parent="AlleOptionen" index="1"]
 editor/display_folded = true
-
-[node name="Persistenz" parent="." instance=ExtResource( 15 )]
 [connection signal="button_up" from="Optionen" to="Optionen" method="_on_Optionen_button_up"]
 [connection signal="toggled" from="Sound" to="Sound" method="_on_Sound_toggled"]
 [connection signal="button_up" from="AlleOptionen/Seite2-Editoren/2von3/Seite1" to="AlleOptionen" method="_on_Seite1_button_up"]

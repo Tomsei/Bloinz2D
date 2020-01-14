@@ -3,14 +3,18 @@ extends Node2D
 var hauptverzeichnis_benutzer = OS.get_user_data_dir() + "/"
 var nicht_kopieren = [".git", ".gitignore", "project.godot", ".cfg"]
 func _ready():
-	erstelle_datei_und_ordnerstruktur("res://")
+	pass
 
+func init():
+	erstelle_datei_und_ordnerstruktur("res://")
 # Laedt eine Bildtextur aus uebergebenem Pfad.
 func lade_bildtextur(bildpfad):
 	var file = File.new()
+	print(file.file_exists(hauptverzeichnis_benutzer + bildpfad.lstrip("res:/")))
 	file.open(hauptverzeichnis_benutzer + bildpfad.lstrip("res:/"), File.READ)
 	var imgtext = file.get_var(true)
 	file.close()
+	print(imgtext)
 	return imgtext
 
 # Erstellt die Ordner und Dateistruktur des uebergebenem Pfads.
@@ -106,8 +110,8 @@ func erstelle_dateien(dateienpfad):
 			# Fuer den bildLadepfad muss das .import entfernt werden, damit das Bild richtig geladen wird.
 			# Fuer den bilSpeicherpfad muss das res entfernt und mit dem userverzeichnis ersetzt werden.
 			# Ebenfalls soll das Bild als png und nicht als import gespeichert werden.
-			speicher_bild_als_variant(dateienpfad, hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
+			speicher_bild_als_variant(dateienpfad.rstrip(".import"), hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
 		elif dateienpfad.find(".wav") != -1:
-			speicher_wav_als_variant(dateienpfad, hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
+			speicher_wav_als_variant(dateienpfad.rstrip(".import"), hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
 		else:
 			speicher_skript_oder_szene_als_var(dateienpfad, hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/"))
