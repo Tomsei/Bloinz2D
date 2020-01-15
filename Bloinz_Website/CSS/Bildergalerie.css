@@ -31,8 +31,11 @@
 }
 
 #galerie .bild img {
-    max-width: 100%;
-    min-height: 100%;
+    width: 100%;
+     image-rendering: pixelated;
+}
+
+#galerie .bild img {
     transition: transform 2s;
     
 }
@@ -46,3 +49,4 @@
     text-align: center;
     margin-bottom: -1em;
 }
+

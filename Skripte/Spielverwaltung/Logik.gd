@@ -188,6 +188,7 @@ Randomaktion die den Münzmagnet anschaltet
 func randomAktion_muenzMagnet():
 	muenzmagnetAktiv = true
 	randomCoinZeit.start()
+	spieler.get_node("Magnet").show()
 
 
 var erhoehteGeschwindigkeit = false
@@ -220,6 +221,7 @@ Nach der Münzmagnet Zeit soll dieser wieder inaktiv werden
 """
 func _on_RandomCoinZeit_timeout():
 	muenzmagnetAktiv = false
+	spieler.get_node("Magnet").hide()
 
 
 """
