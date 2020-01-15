@@ -114,7 +114,7 @@ margin_left = 9.31784
 margin_top = 25.0
 margin_right = 53.3178
 margin_bottom = 63.0
-hint_tooltip = "Stift"
+hint_tooltip = "Stift "
 toggle_mode = true
 icon = ExtResource( 3 )
 
@@ -158,6 +158,7 @@ margin_left = 168.084
 margin_top = 122.609
 margin_right = 234.084
 margin_bottom = 142.609
+hint_tooltip = "vertikal spiegeln "
 text = "Spiegeln"
 
 [node name="Farbe1" type="Button" parent="." groups=[
@@ -505,6 +506,7 @@ margin_left = 8.0
 margin_top = 224.0
 margin_right = 52.0
 margin_bottom = 262.0
+hint_tooltip = "Werkzeug klein"
 toggle_mode = true
 icon = ExtResource( 37 )
 
@@ -515,6 +517,7 @@ margin_left = 60.0
 margin_top = 224.0
 margin_right = 104.0
 margin_bottom = 262.0
+hint_tooltip = "Werkzeug mittel"
 toggle_mode = true
 icon = ExtResource( 38 )
 
@@ -525,6 +528,7 @@ margin_left = 111.522
 margin_top = 224.0
 margin_right = 155.522
 margin_bottom = 262.0
+hint_tooltip = "Werkzeug groß"
 toggle_mode = true
 icon = ExtResource( 39 )
 
@@ -553,6 +557,7 @@ margin_left = 58.4612
 margin_top = 123.402
 margin_right = 156.461
 margin_bottom = 143.402
+hint_tooltip = "Fläche leeren"
 text = "Fläche leeren"
 
 [node name="Label2" type="Label" parent="."]
@@ -824,6 +829,7 @@ margin_left = 8.0
 margin_top = 115.0
 margin_right = 52.0
 margin_bottom = 153.0
+hint_tooltip = "nach unten verschieben"
 icon = ExtResource( 45 )
 
 [node name="Ellipse" type="Button" parent="." groups=[

@@ -1083,7 +1083,7 @@ func wechsel_zu_eigene_Farbe():
 		aktuellerFarbbutton= get_node("../EigeneFarbe"+str(eigeneFarbeaktuell));
 	else:
 		aktuellerFarbbutton.pressed= true;
-	if eigeneFarbe[eigeneFarbeaktuell-1] == Color(1,1,1):
+	if eigeneFarbe[eigeneFarbeaktuell-1] == Color(0,0,0,0):
 		oeffne_Farbauswahl();
 	else:
 		get_node("../Farbauswahl").show();
@@ -1265,6 +1265,11 @@ func male_Ellipse(cx,cy, radiusx, radiusy):
 
 func male_vier_Ellipsenpunkte(x,y, cx,cy):
 
+	var  amRand1 = cx+x <64;
+	var  amRand2 = cx-x <0;
+	var  amRand3 = cy+y <64;
+	var  amRand4 = cy-y <0;
+	
 	temporaeresBild.set_pixel(cx+x,cy+y,aktuelleFarbe);
 	temporaeresBild.set_pixel(cx-x,cy+y,aktuelleFarbe);
 	temporaeresBild.set_pixel(cx-x,cy-y,aktuelleFarbe);
@@ -1328,6 +1333,7 @@ func _on_ColorPicker_hide():
 		Farbwechsel_bei_Radierer();
 	else:
 		modus = alterModus;
+
 
 
 func _on_Farbauswahl_pressed():
