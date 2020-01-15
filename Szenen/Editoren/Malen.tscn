@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Skripte/Editoren/Malen.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
@@ -6,46 +6,48 @@
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Linie.png" type="Texture" id=4]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Rechteck.png" type="Texture" id=5]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Radiergummi.png" type="Texture" id=6]
-[ext_resource path="res://Bilder/Farben/Farbe_0.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Farben/Farbe_1.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Farben/Farbe_2.png" type="Texture" id=9]
-[ext_resource path="res://Bilder/Farben/Farbe_3.png" type="Texture" id=10]
-[ext_resource path="res://Bilder/Farben/Farbe_4.png" type="Texture" id=11]
-[ext_resource path="res://Bilder/Farben/Farbe_5.png" type="Texture" id=12]
-[ext_resource path="res://Bilder/Farben/Farbe_6.png" type="Texture" id=13]
-[ext_resource path="res://Bilder/Farben/Farbe_7.png" type="Texture" id=14]
-[ext_resource path="res://Bilder/Farben/Farbe_8.png" type="Texture" id=15]
-[ext_resource path="res://Bilder/Farben/Farbe_9.png" type="Texture" id=16]
-[ext_resource path="res://Bilder/Farben/EigeneFarbe1.png" type="Texture" id=17]
-[ext_resource path="res://Bilder/Farben/EigeneFarbe2.png" type="Texture" id=18]
-[ext_resource path="res://Bilder/Farben/EigeneFarbe3.png" type="Texture" id=19]
-[ext_resource path="res://Bilder/Farben/EigeneFarbe4.png" type="Texture" id=20]
-[ext_resource path="res://Bilder/Farben/EigeneFarbe5.png" type="Texture" id=21]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_gerade.png" type="Texture" id=22]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_gerade.png" type="Texture" id=23]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_gerade.png" type="Texture" id=24]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_gerade.png" type="Texture" id=25]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_gerade.png" type="Texture" id=26]
-[ext_resource path="res://Bilder/Standardspielfiguren/Hintergrund/Hintergrund.png" type="Texture" id=27]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin1.png" type="Texture" id=28]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin2.png" type="Texture" id=29]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin1.png" type="Texture" id=30]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin2.png" type="Texture" id=31]
-[ext_resource path="res://Bilder/Standardspielfiguren/Coins/RandomCoin.png" type="Texture" id=32]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png" type="Texture" id=33]
-[ext_resource path="res://icon.png" type="Texture" id=34]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_geradeDesign1.png" type="Texture" id=35]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_geradeStandard.png" type="Texture" id=36]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Stiftklein.png" type="Texture" id=37]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Stiftmittel.png" type="Texture" id=38]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Stiftgross.png" type="Texture" id=39]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Fuelleimer.png" type="Texture" id=40]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_geradeStandard.png" type="Texture" id=41]
-[ext_resource path="res://Bilder/Hintergruende/Boden.png" type="Texture" id=42]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Wiederholen.png" type="Texture" id=43]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Rueckgaengig.png" type="Texture" id=44]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Verschieben.png" type="Texture" id=45]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Ellipse.png" type="Texture" id=46]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Spiegeln.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Farben/Farbe_0.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Farben/Farbe_1.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Farben/Farbe_2.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Farben/Farbe_3.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Farben/Farbe_4.png" type="Texture" id=12]
+[ext_resource path="res://Bilder/Farben/Farbe_5.png" type="Texture" id=13]
+[ext_resource path="res://Bilder/Farben/Farbe_6.png" type="Texture" id=14]
+[ext_resource path="res://Bilder/Farben/Farbe_7.png" type="Texture" id=15]
+[ext_resource path="res://Bilder/Farben/Farbe_8.png" type="Texture" id=16]
+[ext_resource path="res://Bilder/Farben/Farbe_9.png" type="Texture" id=17]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe1.png" type="Texture" id=18]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe2.png" type="Texture" id=19]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe3.png" type="Texture" id=20]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe4.png" type="Texture" id=21]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe5.png" type="Texture" id=22]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_gerade.png" type="Texture" id=23]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_gerade.png" type="Texture" id=24]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_gerade.png" type="Texture" id=25]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_gerade.png" type="Texture" id=26]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_gerade.png" type="Texture" id=27]
+[ext_resource path="res://Bilder/Standardspielfiguren/Hintergrund/Hintergrund.png" type="Texture" id=28]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin1.png" type="Texture" id=29]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin2.png" type="Texture" id=30]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin1.png" type="Texture" id=31]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin2.png" type="Texture" id=32]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/RandomCoin.png" type="Texture" id=33]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png" type="Texture" id=34]
+[ext_resource path="res://icon.png" type="Texture" id=35]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_geradeDesign1.png" type="Texture" id=36]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_geradeStandard.png" type="Texture" id=37]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Stiftklein.png" type="Texture" id=38]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Stiftmittel.png" type="Texture" id=39]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Stiftgross.png" type="Texture" id=40]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Fuelleimer.png" type="Texture" id=41]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Loeschen.png" type="Texture" id=42]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_geradeStandard.png" type="Texture" id=43]
+[ext_resource path="res://Bilder/Hintergruende/Boden.png" type="Texture" id=44]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Wiederholen.png" type="Texture" id=45]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Rueckgaengig.png" type="Texture" id=46]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Verschieben.png" type="Texture" id=47]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Ellipse.png" type="Texture" id=48]
 
 [node name="Maleneditor" type="Node2D"]
 
@@ -154,12 +156,12 @@ icon = ExtResource( 6 )
 [node name="Spiegeln" type="Button" parent="." groups=[
 "Steuerelemente",
 ]]
-margin_left = 168.084
-margin_top = 122.609
-margin_right = 234.084
-margin_bottom = 142.609
+margin_left = 110.0
+margin_top = 115.0
+margin_right = 154.0
+margin_bottom = 153.0
 hint_tooltip = "vertikal spiegeln "
-text = "Spiegeln"
+icon = ExtResource( 7 )
 
 [node name="Farbe1" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -169,7 +171,7 @@ margin_top = 270.0
 margin_right = 36.0
 margin_bottom = 292.0
 toggle_mode = true
-icon = ExtResource( 7 )
+icon = ExtResource( 8 )
 
 [node name="Farbe2" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -179,7 +181,7 @@ margin_top = 270.0
 margin_right = 70.0
 margin_bottom = 292.0
 toggle_mode = true
-icon = ExtResource( 8 )
+icon = ExtResource( 9 )
 
 [node name="Farbe3" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -189,7 +191,7 @@ margin_top = 270.0
 margin_right = 104.0
 margin_bottom = 292.0
 toggle_mode = true
-icon = ExtResource( 9 )
+icon = ExtResource( 10 )
 
 [node name="Farbe4" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -199,7 +201,7 @@ margin_top = 270.0
 margin_right = 138.0
 margin_bottom = 292.0
 toggle_mode = true
-icon = ExtResource( 10 )
+icon = ExtResource( 11 )
 
 [node name="Farbe5" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -209,7 +211,7 @@ margin_top = 270.0
 margin_right = 172.0
 margin_bottom = 292.0
 toggle_mode = true
-icon = ExtResource( 11 )
+icon = ExtResource( 12 )
 
 [node name="Farbe6" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -219,7 +221,7 @@ margin_top = 296.0
 margin_right = 36.0
 margin_bottom = 318.0
 toggle_mode = true
-icon = ExtResource( 12 )
+icon = ExtResource( 13 )
 
 [node name="Farbe7" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -229,7 +231,7 @@ margin_top = 296.0
 margin_right = 70.0
 margin_bottom = 318.0
 toggle_mode = true
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="Farbe8" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -239,7 +241,7 @@ margin_top = 296.0
 margin_right = 104.0
 margin_bottom = 318.0
 toggle_mode = true
-icon = ExtResource( 14 )
+icon = ExtResource( 15 )
 
 [node name="Farbe9" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -249,7 +251,7 @@ margin_top = 296.0
 margin_right = 138.0
 margin_bottom = 318.0
 toggle_mode = true
-icon = ExtResource( 15 )
+icon = ExtResource( 16 )
 
 [node name="Farbe10" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -259,7 +261,7 @@ margin_top = 296.0
 margin_right = 172.0
 margin_bottom = 318.0
 toggle_mode = true
-icon = ExtResource( 16 )
+icon = ExtResource( 17 )
 
 [node name="EigeneFarbe1" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -269,7 +271,7 @@ margin_top = 344.0
 margin_right = 36.0
 margin_bottom = 366.0
 toggle_mode = true
-icon = ExtResource( 17 )
+icon = ExtResource( 18 )
 
 [node name="EigeneFarbe2" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -279,7 +281,7 @@ margin_top = 344.0
 margin_right = 70.0
 margin_bottom = 366.0
 toggle_mode = true
-icon = ExtResource( 18 )
+icon = ExtResource( 19 )
 
 [node name="EigeneFarbe3" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -289,7 +291,7 @@ margin_top = 344.0
 margin_right = 104.0
 margin_bottom = 366.0
 toggle_mode = true
-icon = ExtResource( 19 )
+icon = ExtResource( 20 )
 
 [node name="EigeneFarbe4" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -299,7 +301,7 @@ margin_top = 344.0
 margin_right = 138.0
 margin_bottom = 366.0
 toggle_mode = true
-icon = ExtResource( 20 )
+icon = ExtResource( 21 )
 
 [node name="EigeneFarbe5" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -309,7 +311,7 @@ margin_top = 344.0
 margin_right = 172.001
 margin_bottom = 366.0
 toggle_mode = true
-icon = ExtResource( 21 )
+icon = ExtResource( 22 )
 
 [node name="Label" type="Label" parent="." groups=[
 "Steuerelemente",
@@ -355,7 +357,7 @@ margin_bottom = 589.0
 rect_pivot_offset = Vector2( 50.139, 26.261 )
 hint_tooltip = "mini Blob"
 toggle_mode = true
-icon = ExtResource( 22 )
+icon = ExtResource( 23 )
 
 [node name="Blob_3_gerade" type="Button" parent="."]
 margin_left = 424.0
@@ -364,7 +366,7 @@ margin_right = 500.0
 margin_bottom = 589.0
 hint_tooltip = "mittlerer Blob"
 toggle_mode = true
-icon = ExtResource( 23 )
+icon = ExtResource( 24 )
 
 [node name="Blob_2_gerade" type="Button" parent="."]
 margin_left = 344.0
@@ -373,7 +375,7 @@ margin_right = 420.0
 margin_bottom = 589.0
 hint_tooltip = "kleiner Blob"
 toggle_mode = true
-icon = ExtResource( 24 )
+icon = ExtResource( 25 )
 
 [node name="Blob_4_gerade" type="Button" parent="."]
 margin_left = 504.0
@@ -382,7 +384,7 @@ margin_right = 580.0
 margin_bottom = 589.0
 hint_tooltip = "großer Blob"
 toggle_mode = true
-icon = ExtResource( 25 )
+icon = ExtResource( 26 )
 
 [node name="Blob_5_gerade" type="Button" parent="."]
 margin_left = 584.0
@@ -391,7 +393,7 @@ margin_right = 660.0
 margin_bottom = 589.0
 hint_tooltip = "maxi Blob"
 toggle_mode = true
-icon = ExtResource( 26 )
+icon = ExtResource( 27 )
 
 [node name="Hintergrund" type="Button" parent="."]
 margin_left = 677.0
@@ -400,7 +402,7 @@ margin_right = 753.0
 margin_bottom = 662.0
 hint_tooltip = "Hintergrund"
 toggle_mode = true
-icon = ExtResource( 27 )
+icon = ExtResource( 28 )
 
 [node name="BadCoin1" type="Button" parent="."]
 margin_left = 264.0
@@ -410,7 +412,7 @@ margin_bottom = 662.0
 hint_tooltip = "schlechter Coin 1"
 toggle_mode = true
 shortcut_in_tooltip = false
-icon = ExtResource( 28 )
+icon = ExtResource( 29 )
 
 [node name="BadCoin2" type="Button" parent="."]
 margin_left = 344.0
@@ -419,7 +421,7 @@ margin_right = 420.0
 margin_bottom = 662.0
 hint_tooltip = "schlechter Coin 2"
 toggle_mode = true
-icon = ExtResource( 29 )
+icon = ExtResource( 30 )
 
 [node name="GoodCoin1" type="Button" parent="."]
 margin_left = 424.0
@@ -428,7 +430,7 @@ margin_right = 500.0
 margin_bottom = 662.0
 hint_tooltip = "guter Coin 1"
 toggle_mode = true
-icon = ExtResource( 30 )
+icon = ExtResource( 31 )
 
 [node name="GoodCoin2" type="Button" parent="."]
 margin_left = 504.0
@@ -437,7 +439,7 @@ margin_right = 580.0
 margin_bottom = 662.0
 hint_tooltip = "guter Coin 2"
 toggle_mode = true
-icon = ExtResource( 31 )
+icon = ExtResource( 32 )
 
 [node name="RandomCoin" type="Button" parent="."]
 margin_left = 584.0
@@ -446,7 +448,7 @@ margin_right = 660.0
 margin_bottom = 662.0
 hint_tooltip = "Zufallscoin"
 toggle_mode = true
-icon = ExtResource( 32 )
+icon = ExtResource( 33 )
 
 [node name="Kanonenkugel" type="Button" parent="."]
 margin_left = 677.0
@@ -455,49 +457,49 @@ margin_right = 753.0
 margin_bottom = 589.0
 hint_tooltip = "Kanonenkugel"
 toggle_mode = true
-icon = ExtResource( 33 )
+icon = ExtResource( 34 )
 
 [node name="Vorlage4" type="Button" parent="."]
 margin_left = 925.0
 margin_top = 362.0
 margin_right = 1001.0
 margin_bottom = 432.0
-icon = ExtResource( 34 )
+icon = ExtResource( 35 )
 
 [node name="Vorlage3" type="Button" parent="."]
 margin_left = 925.0
 margin_top = 288.0
 margin_right = 1001.0
 margin_bottom = 358.0
-icon = ExtResource( 34 )
+icon = ExtResource( 35 )
 
 [node name="Vorlage2" type="Button" parent="."]
 margin_left = 925.0
 margin_top = 214.0
 margin_right = 1001.0
 margin_bottom = 284.0
-icon = ExtResource( 34 )
+icon = ExtResource( 35 )
 
 [node name="Vorlage5" type="Button" parent="."]
 margin_left = 925.0
 margin_top = 436.0
 margin_right = 1001.0
 margin_bottom = 506.0
-icon = ExtResource( 34 )
+icon = ExtResource( 35 )
 
 [node name="Vorlage1" type="Button" parent="."]
 margin_left = 925.0
 margin_top = 140.0
 margin_right = 1001.0
 margin_bottom = 210.0
-icon = ExtResource( 35 )
+icon = ExtResource( 36 )
 
 [node name="Standard" type="Button" parent="."]
 margin_left = 925.0
 margin_top = 35.977
 margin_right = 1001.0
 margin_bottom = 105.977
-icon = ExtResource( 36 )
+icon = ExtResource( 37 )
 
 [node name="klein" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -508,7 +510,7 @@ margin_right = 52.0
 margin_bottom = 262.0
 hint_tooltip = "Werkzeug klein"
 toggle_mode = true
-icon = ExtResource( 37 )
+icon = ExtResource( 38 )
 
 [node name="mittel" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -519,7 +521,7 @@ margin_right = 104.0
 margin_bottom = 262.0
 hint_tooltip = "Werkzeug mittel"
 toggle_mode = true
-icon = ExtResource( 38 )
+icon = ExtResource( 39 )
 
 [node name="gross" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -530,7 +532,7 @@ margin_right = 155.522
 margin_bottom = 262.0
 hint_tooltip = "Werkzeug groß"
 toggle_mode = true
-icon = ExtResource( 39 )
+icon = ExtResource( 40 )
 
 [node name="Zurueck" type="Button" parent="."]
 margin_left = 800.0
@@ -548,17 +550,17 @@ margin_right = 154.0
 margin_bottom = 63.0
 hint_tooltip = "Füllen"
 toggle_mode = true
-icon = ExtResource( 40 )
+icon = ExtResource( 41 )
 
 [node name="Leeren" type="Button" parent="." groups=[
 "Steuerelemente",
 ]]
-margin_left = 58.4612
-margin_top = 123.402
-margin_right = 156.461
-margin_bottom = 143.402
+margin_left = 59.0
+margin_top = 115.0
+margin_right = 103.0
+margin_bottom = 153.0
 hint_tooltip = "Fläche leeren"
-text = "Fläche leeren"
+icon = ExtResource( 42 )
 
 [node name="Label2" type="Label" parent="."]
 margin_left = 930.225
@@ -680,73 +682,73 @@ text = "Vorschau:
 [node name="Coin" type="Sprite" parent="."]
 position = Vector2( 146.914, 461.718 )
 z_index = -2
-texture = ExtResource( 28 )
+texture = ExtResource( 29 )
 
 [node name="Blob" type="Sprite" parent="."]
 position = Vector2( 92.3878, 587.472 )
 z_index = -2
 z_as_relative = false
-texture = ExtResource( 41 )
+texture = ExtResource( 43 )
 
 [node name="Hintergrund0" type="Sprite" parent="."]
 position = Vector2( 40, 443 )
 z_index = -3
-texture = ExtResource( 27 )
+texture = ExtResource( 28 )
 
 [node name="Hintergrund1" type="Sprite" parent="."]
 position = Vector2( 104, 443 )
 z_index = -3
-texture = ExtResource( 27 )
+texture = ExtResource( 28 )
 
 [node name="Hintergrund2" type="Sprite" parent="."]
 position = Vector2( 168, 443 )
 z_index = -3
-texture = ExtResource( 27 )
+texture = ExtResource( 28 )
 
 [node name="Hintergrund3" type="Sprite" parent="."]
 position = Vector2( 40, 507 )
 z_index = -3
-texture = ExtResource( 27 )
+texture = ExtResource( 28 )
 
 [node name="Hintergrund4" type="Sprite" parent="."]
 position = Vector2( 104, 507 )
 z_index = -3
-texture = ExtResource( 27 )
+texture = ExtResource( 28 )
 
 [node name="Hintergrund5" type="Sprite" parent="."]
 position = Vector2( 168, 507 )
 z_index = -3
-texture = ExtResource( 27 )
+texture = ExtResource( 28 )
 
 [node name="Hintergrund6" type="Sprite" parent="."]
 position = Vector2( 40, 571 )
 z_index = -3
-texture = ExtResource( 27 )
+texture = ExtResource( 28 )
 
 [node name="Hintergrund7" type="Sprite" parent="."]
 position = Vector2( 104, 571 )
 z_index = -3
-texture = ExtResource( 27 )
+texture = ExtResource( 28 )
 
 [node name="Hintergrund8" type="Sprite" parent="."]
 position = Vector2( 168, 571 )
 z_index = -3
-texture = ExtResource( 27 )
+texture = ExtResource( 28 )
 
 [node name="Boden" type="Sprite" parent="."]
 position = Vector2( 40, 635 )
 z_index = -3
-texture = ExtResource( 42 )
+texture = ExtResource( 44 )
 
 [node name="Boden2" type="Sprite" parent="."]
 position = Vector2( 104, 635 )
 z_index = -3
-texture = ExtResource( 42 )
+texture = ExtResource( 44 )
 
 [node name="Boden3" type="Sprite" parent="."]
 position = Vector2( 168, 635 )
 z_index = -3
-texture = ExtResource( 42 )
+texture = ExtResource( 44 )
 
 [node name="speichernVorlage1" type="Button" parent="."]
 margin_left = 800.0
@@ -810,7 +812,7 @@ margin_top = 160.0
 margin_right = 103.0
 margin_bottom = 198.0
 hint_tooltip = "Wiederholen"
-icon = ExtResource( 43 )
+icon = ExtResource( 45 )
 
 [node name="Rueckgaengig" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -820,7 +822,7 @@ margin_top = 160.0
 margin_right = 52.0
 margin_bottom = 198.0
 hint_tooltip = "Rückgängig"
-icon = ExtResource( 44 )
+icon = ExtResource( 46 )
 
 [node name="Bildrand" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -830,7 +832,7 @@ margin_top = 115.0
 margin_right = 52.0
 margin_bottom = 153.0
 hint_tooltip = "nach unten verschieben"
-icon = ExtResource( 45 )
+icon = ExtResource( 47 )
 
 [node name="Ellipse" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -841,7 +843,7 @@ margin_right = 103.0
 margin_bottom = 108.0
 hint_tooltip = "Ellipse"
 toggle_mode = true
-icon = ExtResource( 46 )
+icon = ExtResource( 48 )
 
 [node name="Farbauswahl" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -867,7 +869,7 @@ deferred_mode = true
 position = Vector2( 151.201, 229.176 )
 scale = Vector2( 18.8662, 28.8233 )
 z_index = -1
-texture = ExtResource( 18 )
+texture = ExtResource( 19 )
 
 [node name="Schliessen" type="Button" parent="ColorPicker"]
 margin_top = 415.0
