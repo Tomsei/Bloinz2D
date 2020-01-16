@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Bilder/Buttons/Optionen/3von3.png" type="Texture" id=1]
 [ext_resource path="res://Bilder/Buttons/Optionen/PfeilLinks_normal.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Skripte/Optionen/CheckButton.gd" type="Script" id=6]
 [ext_resource path="res://Bilder/Buttons/Optionen/CheckButton_checked.png" type="Texture" id=7]
 [ext_resource path="res://Bilder/Buttons/Optionen/CheckButton_unchecked.png" type="Texture" id=8]
+[ext_resource path="res://Szenen/Oberflaeche/Checkbox.gd" type="Script" id=9]
 
 [node name="Optionen - RandomCoin" type="Node2D"]
 position = Vector2( -1, 0 )
@@ -34,15 +35,53 @@ custom_icons/on = ExtResource( 5 )
 pressed = true
 script = ExtResource( 6 )
 
-[node name="CheckBox" type="CheckBox" parent="."]
-margin_left = 96.5678
-margin_top = 249.993
-margin_right = 199.568
-margin_bottom = 273.993
+[node name="Speedboost" type="CheckBox" parent="."]
+margin_left = 123.447
+margin_top = 254.509
+margin_right = 261.447
+margin_bottom = 297.509
 custom_icons/checked = ExtResource( 7 )
 custom_icons/unchecked = ExtResource( 8 )
 custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 custom_colors/font_color_pressed = Color( 0.901961, 0.721569, 0.0980392, 1 )
 pressed = true
 text = "    Speedboost"
+script = ExtResource( 9 )
+
+[node name="CoinMagnet" type="CheckBox" parent="."]
+margin_left = 123.447
+margin_top = 300.409
+margin_right = 261.447
+margin_bottom = 343.409
+custom_icons/checked = ExtResource( 7 )
+custom_icons/unchecked = ExtResource( 8 )
+custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
+custom_colors/font_color_pressed = Color( 0.901961, 0.721569, 0.0980392, 1 )
+pressed = true
+text = "    CoinMagnet"
+
+[node name="Rgenschirm" type="CheckBox" parent="."]
+margin_left = 123.447
+margin_top = 343.539
+margin_right = 273.447
+margin_bottom = 386.539
+custom_icons/checked = ExtResource( 7 )
+custom_icons/unchecked = ExtResource( 8 )
+custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
+custom_colors/font_color_pressed = Color( 0.901961, 0.721569, 0.0980392, 1 )
+pressed = true
+text = "     Regenschirm"
+
+[node name="Coin-Regen" type="CheckBox" parent="."]
+margin_left = 123.349
+margin_top = 388.249
+margin_right = 262.349
+margin_bottom = 431.249
+custom_icons/checked = ExtResource( 7 )
+custom_icons/unchecked = ExtResource( 8 )
+custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
+custom_colors/font_color_pressed = Color( 0.901961, 0.721569, 0.0980392, 1 )
+pressed = true
+text = "     Coin-Regen"
 [connection signal="toggled" from="RandomCoin" to="RandomCoin" method="_on_RandomCoin_toggled"]
+[connection signal="toggled" from="Speedboost" to="Speedboost" method="_on_Speedboost_toggled"]

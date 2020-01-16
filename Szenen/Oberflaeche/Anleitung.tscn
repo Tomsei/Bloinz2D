@@ -1,9 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Bilder/TileMaps/Anleitung.tres" type="TileSet" id=1]
 [ext_resource path="res://Bilder/Buttons/Optionen/spielen_normal.png" type="Texture" id=2]
 [ext_resource path="res://Bilder/Buttons/Optionen/spielen_pressed.png" type="Texture" id=3]
 [ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin1.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin2.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin1.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin2.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/RandomCoin.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Buttons/Anleitung/PfeilOben.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Buttons/Anleitung/PfeilLinks.png" type="Texture" id=12]
+[ext_resource path="res://Bilder/Buttons/Anleitung/PfeilRechts.png" type="Texture" id=13]
 
 [node name="Anleitung" type="Node2D"]
 pause_mode = 2
@@ -13,22 +22,6 @@ tile_set = ExtResource( 1 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 589824, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0, 589829, 0, 0, 589830, 0, 0 )
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_left = 48.3802
-margin_top = 391.495
-margin_right = 421.38
-margin_bottom = 460.495
-custom_colors/default_color = Color( 0, 0, 0, 1 )
-bbcode_text = "Bewege dich mit den Pfeiltasten (links, rechts, oben)
-Sammle gute Münzen
-Vermeide Böse Münzen & Raketen
-LifeBar zeigt deine Gesundheit an"
-tab_size = 7
-text = "Bewege dich mit den Pfeiltasten (links, rechts, oben)
-Sammle gute Münzen
-Vermeide Böse Münzen & Raketen
-LifeBar zeigt deine Gesundheit an"
-
 [node name="Spielen" type="TextureButton" parent="."]
 margin_left = 151.002
 margin_top = 292.481
@@ -37,4 +30,68 @@ margin_bottom = 348.481
 texture_normal = ExtResource( 2 )
 texture_pressed = ExtResource( 3 )
 script = ExtResource( 4 )
+
+[node name="Vermeide" type="Label" parent="."]
+margin_left = 71.4799
+margin_top = 207.335
+margin_right = 133.48
+margin_bottom = 221.335
+text = "Vermeide"
+
+[node name="BadCoin1" type="Sprite" parent="Vermeide"]
+position = Vector2( 106.294, 6.80771 )
+texture = ExtResource( 5 )
+
+[node name="BadCoin2" type="Sprite" parent="Vermeide"]
+position = Vector2( 176.784, 8.13037 )
+texture = ExtResource( 6 )
+
+[node name="Kanonenkugel" type="Sprite" parent="Vermeide"]
+position = Vector2( 246.479, 9.42886 )
+texture = ExtResource( 7 )
+
+[node name="Sammle" type="Label" parent="."]
+margin_left = 77.4514
+margin_top = 131.876
+margin_right = 139.451
+margin_bottom = 145.876
+text = "Sammle"
+
+[node name="GoodCoin1" type="Sprite" parent="Sammle"]
+position = Vector2( 99.0225, 8.33032 )
+texture = ExtResource( 8 )
+
+[node name="GoodCoin2" type="Sprite" parent="Sammle"]
+position = Vector2( 168.919, 8.72354 )
+texture = ExtResource( 9 )
+
+[node name="RandomCoin" type="Sprite" parent="Sammle"]
+position = Vector2( 239.454, 8.26746 )
+texture = ExtResource( 10 )
+
+[node name="Bewegung" type="Label" parent="."]
+margin_left = 53.647
+margin_top = 362.775
+margin_right = 223.647
+margin_bottom = 376.775
+text = "Bewegung über Pfeiltasten"
+
+[node name="PfeilOben" type="Sprite" parent="Bewegung"]
+position = Vector2( 172.604, 47.4229 )
+texture = ExtResource( 11 )
+
+[node name="PfeilLinks" type="Sprite" parent="Bewegung"]
+position = Vector2( 113.762, 104.658 )
+texture = ExtResource( 12 )
+
+[node name="PfeilRechts" type="Sprite" parent="Bewegung"]
+position = Vector2( 229.516, 104.348 )
+texture = ExtResource( 13 )
+
+[node name="LifeBar" type="Label" parent="."]
+margin_left = 68.4948
+margin_top = 535.035
+margin_right = 263.495
+margin_bottom = 549.035
+text = "Hier siehst du, wie gut es läuft"
 [connection signal="button_up" from="Spielen" to="Spielen" method="_on_SpielStarten_button_up"]

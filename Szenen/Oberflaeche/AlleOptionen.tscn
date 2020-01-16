@@ -50,10 +50,10 @@ editor/display_folded = true
 visible = false
 
 [node name="Spielen" type="TextureButton" parent="."]
-margin_left = 150.0
-margin_top = 547.0
-margin_right = 300.0
-margin_bottom = 603.0
+margin_left = 739.043
+margin_top = 401.44
+margin_right = 889.043
+margin_bottom = 457.44
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 [connection signal="button_up" from="Seite1-Slider/1von3/Seite2" to="." method="_on_Seite2_button_up"]

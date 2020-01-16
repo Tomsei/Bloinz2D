@@ -8,6 +8,10 @@ var randomCoinAn = true
 var spielfigurgroesse
 var erstesSpiel = true
 var vomEditor = false
+var CoinRegenAn = true
+var CoinMagnetAn = true
+var RegenschirmAn = true
+var SpeedboostAn = true
 
 
 # Called when the node enters the scene tree for the first time.
