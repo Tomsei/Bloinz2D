@@ -70,19 +70,19 @@ func erstelleMuenze():
 	#Variablen zum erzeugen einer neuen Münz Instanz
 	var muenze
 	var istrandom = false
-	
+	var verzeichnis = OS.get_user_data_dir() + "/"
 	#Zufalls auswahl von einer Münze über die Zufallszahl und einem Switch-Case
 	match zufall:
 		0,1,2: 
-			muenze = load("res://Szenen/Muenzen/goodCoin1.tscn")
+			muenze = load(verzeichnis + "Szenen/Muenzen/goodCoin1.tscn")
 		3,4: 
-			muenze = load("res://Szenen/Muenzen/goodCoin2.tscn")
+			muenze = load(verzeichnis + "Szenen/Muenzen/goodCoin2.tscn")
 		5,6, 7: 
-			muenze = load("res://Szenen/Muenzen/badCoin1.tscn")
+			muenze = load(verzeichnis + "Szenen/Muenzen/badCoin1.tscn")
 		8,9: 
-			muenze = load("res://Szenen/Muenzen/badCoin2.tscn")
+			muenze = load(verzeichnis + "Szenen/Muenzen/badCoin2.tscn")
 		10: 
-			muenze = load("res://Szenen/Muenzen/randomCoin.tscn")
+			muenze = load(verzeichnis + "Szenen/Muenzen/randomCoin.tscn")
 			istrandom = true #Die neue Münze ist ein Random Coin
 	
 	var neu = muenze.instance() #Instance mit der passenden Subklasse erzeugen

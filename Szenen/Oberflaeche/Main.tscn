@@ -71,9 +71,6 @@ visible = false
 
 [node name="Seite1-Slider" parent="AlleOptionen" index="1"]
 editor/display_folded = true
-
-[node name="Seite2-Editoren" parent="AlleOptionen" index="2"]
-editor/display_folded = false
 [connection signal="button_up" from="Optionen" to="Optionen" method="_on_Optionen_button_up"]
 [connection signal="toggled" from="Sound" to="Sound" method="_on_Sound_toggled"]
 [connection signal="button_up" from="AlleOptionen/Seite2-Editoren/2von3/Seite1" to="AlleOptionen" method="_on_Seite1_button_up"]
