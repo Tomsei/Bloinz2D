@@ -2,10 +2,12 @@ extends Node2D
 
 var hauptverzeichnis_benutzer = OS.get_user_data_dir() + "/"
 var nicht_kopieren = [".git", ".gitignore", "project.godot", ".cfg"]
+var dateien_behalten = false
 func _ready():
 	pass
 
 func init():
+	dateien_behalten = true
 	erstelle_datei_und_ordnerstruktur("res://")
 # Laedt eine Bildtextur aus uebergebenem Pfad.
 func lade_bildtextur(bildpfad):
@@ -26,14 +28,15 @@ func erstelle_datei_und_ordnerstruktur(pfad):
 	var element = ober_ordner.get_next()
 	while element != "":
 		if ist_ordner(element):
-			if pfad == "res://":
-				erstelle_ordner(hauptverzeichnis_benutzer + pfad.lstrip("res:/") + element)
-			else :
-				erstelle_ordner(hauptverzeichnis_benutzer + pfad.lstrip("res:/") + "/" + element)
+			if ordner_existiert(pfad + "/" + element) == false:
+				if pfad == "res://":
+					erstelle_ordner(hauptverzeichnis_benutzer + pfad.lstrip("res:/") + element)
+				else :
+					erstelle_ordner(hauptverzeichnis_benutzer + pfad.lstrip("res:/") + "/" + element)
 			if hat_verbotene_namen(element) == false:
 				erstelle_datei_und_ordnerstruktur(pfad + "/" + element)
 		else:
-			if hat_verbotene_namen(element) == false:
+			if (datei_existiert(pfad + "/" + element) == false) && (hat_verbotene_namen(element) == false):
 				erstelle_dateien(pfad + "/" + element)
 		element = ober_ordner.get_next()
 	ober_ordner.list_dir_end()
@@ -113,3 +116,13 @@ func erstelle_dateien(dateienpfad):
 			speicher_wav_als_variant(dateienpfad.rstrip(".import"), hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
 		else:
 			speicher_skript_oder_szene_als_var(dateienpfad, hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/"))
+			
+
+# Prueft ob die Datei schon vorhanden ist.
+func datei_existiert(dateipfad):
+	var datei = File.new()
+	return dateien_behalten && datei.file_exists(hauptverzeichnis_benutzer + dateipfad.lstrip("res:/").rstrip(".import"))
+
+func ordner_existiert(ordnerpfad):
+	var ordner = Directory.new()
+	return dateien_behalten && ordner.dir_exists(hauptverzeichnis_benutzer + ordnerpfad.lstrip("res:/"))

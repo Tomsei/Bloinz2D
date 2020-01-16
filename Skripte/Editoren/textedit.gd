@@ -14,6 +14,7 @@ var variablen = [{}]
 var funktionen_mit_variablen = [{}]
 var aktuell_angezeigte_funktion
 var code_veraendert = false
+var hauptverzeichnis_nutzer = OS.get_user_data_dir() + "/"
 
 # Funktion welche beim start aufgerufen wird.
 func _ready():
@@ -41,7 +42,7 @@ func _process(delta):
 # Lädt eine Datei und gibt den Text der Datei zurück.
 func lade_datei(pfad):
 	var datei = File.new()
-	var err = datei.open("user://" + pfad.lstrip("res:/"), File.READ)
+	var err = datei.open(hauptverzeichnis_nutzer + pfad.lstrip("res:/"), File.READ)
 	if err != OK:
 		err = datei.open(pfad, File.READ)
 		if err != OK:
@@ -55,7 +56,7 @@ func lade_datei(pfad):
 # Speichert Text in eine Datei mit angegebenem Pfad.
 func save_file(text, pfad):
 	var datei = File.new()
-	var err = datei.open("user://" + pfad.lstrip("res:/"), File.WRITE)
+	var err = datei.open(hauptverzeichnis_nutzer + pfad.lstrip("res:/"), File.WRITE)
 	if err != OK:
 		printerr("Fehler beim Schreiben in Datei, error Code:", err)
 		return
