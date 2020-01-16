@@ -9,6 +9,11 @@ func _ready():
 func init():
 	dateien_behalten = true
 	erstelle_datei_und_ordnerstruktur("res://")
+
+func zuruecksetzen():
+	dateien_behalten = false
+	erstelle_datei_und_ordnerstruktur("res://")
+
 # Laedt eine Bildtextur aus uebergebenem Pfad.
 func lade_bildtextur(bildpfad):
 	var file = File.new()

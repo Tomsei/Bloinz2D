@@ -35,7 +35,6 @@ position = Vector2( 226.183, 374.47 )
 position = Vector2( 227.813, 471.483 )
 
 [node name="Seite2-Editoren" parent="." instance=ExtResource( 4 )]
-editor/display_folded = true
 visible = false
 
 [node name="2von3" parent="Seite2-Editoren" index="0"]
@@ -57,6 +56,8 @@ margin_bottom = 603.0
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 [connection signal="button_up" from="Seite1-Slider/1von3/Seite2" to="." method="_on_Seite2_button_up"]
+[connection signal="button_up" from="Seite2-Editoren/Popup/Ja" to="." method="_on_Ja_button_up"]
+[connection signal="button_up" from="Seite2-Editoren/Popup/Abbrechen" to="." method="_on_Abbrechen_button_up"]
 [connection signal="button_up" from="Spielen" to="." method="_on_Spielen_button_up"]
 
 [editable path="Seite1-Slider"]

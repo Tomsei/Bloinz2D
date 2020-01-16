@@ -47,3 +47,12 @@ func _on_Seite3_button_up():
 	seite1.visible = false
 	seite2.visible = false
 	seite3.visible = true
+
+
+func _on_Ja_button_up():
+	preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance().zuruecksetzen()
+	$"Seite2-Editoren/Popup".hide()
+
+
+func _on_Abbrechen_button_up():
+	$"Seite2-Editoren/Popup".hide()
