@@ -160,7 +160,7 @@ margin_left = 110.0
 margin_top = 115.0
 margin_right = 154.0
 margin_bottom = 153.0
-hint_tooltip = "vertikal spiegeln "
+hint_tooltip = "horizontal spiegeln "
 icon = ExtResource( 7 )
 
 [node name="Farbe1" type="Button" parent="." groups=[
@@ -460,10 +460,10 @@ toggle_mode = true
 icon = ExtResource( 34 )
 
 [node name="Vorlage4" type="Button" parent="."]
-margin_left = 925.0
-margin_top = 362.0
-margin_right = 1001.0
-margin_bottom = 432.0
+margin_left = 922.951
+margin_top = 365.074
+margin_right = 998.951
+margin_bottom = 435.074
 icon = ExtResource( 35 )
 
 [node name="Vorlage3" type="Button" parent="."]
