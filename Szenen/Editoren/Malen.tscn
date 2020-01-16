@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Skripte/Editoren/Malen.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/New Piskel.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Stift.png" type="Texture" id=3]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Linie.png" type="Texture" id=4]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Rechteck.png" type="Texture" id=5]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Radiergummi.png" type="Texture" id=6]

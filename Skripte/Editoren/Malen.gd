@@ -40,7 +40,7 @@ var alteVorschau;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Setze Bildschirmgroesse.
-	OS.set_window_size(Vector2(900,660));
+	OS.set_window_size(Vector2(1030,680));
 	
 	#Farbe voreinstellen
 	aktuellerFarbbutton= get_node("../Farbe9");
