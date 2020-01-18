@@ -20,5 +20,22 @@ func _on_Speedboost_toggled(button_pressed):
 		einstellungen.SpeedboostAn = true
 
 
+func _on_CoinRegen_toggled(button_pressed):
+	if einstellungen.CoinRegenAn == true: 
+		einstellungen.CoinRegenAn = false
+	else:
+		einstellungen.CoinRegenAn = true
+
+
+func _on_Regenschirm_toggled(button_pressed):
+	if einstellungen.RegenschirmAn == true: 
+		einstellungen.RegenschirmAn = false
+	else:
+		einstellungen.RegenschirmAn = true
+
+
 func _on_CoinMagnet_toggled(button_pressed):
-	pass # Replace with function body.
+	if einstellungen.CoinMagnetAn == true: 
+		einstellungen.CoinMagnetAn = false
+	else:
+		einstellungen.CoinMagnetAn = true

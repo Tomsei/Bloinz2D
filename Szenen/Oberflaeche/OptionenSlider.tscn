@@ -1,49 +1,51 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Bilder/Buttons/Optionen/1von3.png" type="Texture" id=1]
-[ext_resource path="res://Bilder/Buttons/Optionen/PfeilRechts_normal.png" type="Texture" id=2]
-[ext_resource path="res://Bilder/Buttons/Optionen/PfeilRechts_pressed.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Buttons/Optionen/Schwierigkeit.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Buttons/Optionen/slider.png" type="Texture" id=5]
-[ext_resource path="res://Skripte/Optionen/Slider.gd" type="Script" id=6]
-[ext_resource path="res://Bilder/Buttons/Optionen/Sprungkraft.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Buttons/Optionen/tempoBlob.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Buttons/Optionen/raketenAbstand.png" type="Texture" id=9]
+[ext_resource path="res://Skripte/Optionen/Optionen.gd" type="Script" id=1]
+[ext_resource path="res://Bilder/Buttons/Optionen/1von3.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilRechts_normal.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilRechts_pressed.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Buttons/Optionen/Schwierigkeit.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Buttons/Optionen/slider.png" type="Texture" id=6]
+[ext_resource path="res://Skripte/Optionen/Slider.gd" type="Script" id=7]
+[ext_resource path="res://Bilder/Buttons/Optionen/Sprungkraft.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Buttons/Optionen/tempoBlob.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Buttons/Optionen/raketenAbstand.png" type="Texture" id=10]
 
 [node name="Optionen - Slider" type="Node2D"]
+script = ExtResource( 1 )
 __meta__ = {
-"_edit_vertical_guides_": [ 78.0779, 301.827, 66.3546, 382.052 ]
+"_edit_vertical_guides_": [ 78.0779, 301.827, 66.3546, 382.052, -113.446 ]
 }
 
 [node name="1von3" type="Sprite" parent="."]
 position = Vector2( 224, 75 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="Seite2" type="TextureButton" parent="1von3"]
 margin_left = 70.0
 margin_top = -32.0
 margin_right = 140.0
 margin_bottom = 30.0
-texture_normal = ExtResource( 2 )
-texture_pressed = ExtResource( 3 )
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
 
 [node name="Schwierigkeit" type="Sprite" parent="."]
-position = Vector2( 224, 212.903 )
-texture = ExtResource( 4 )
+position = Vector2( 224, 200 )
+texture = ExtResource( 5 )
 
 [node name="SchwierigkeitSlider" type="HSlider" parent="Schwierigkeit"]
 margin_left = -112.818
 margin_top = 35.7879
 margin_right = 111.182
 margin_bottom = 51.7879
-custom_icons/grabber_highlight = ExtResource( 5 )
-custom_icons/grabber = ExtResource( 5 )
+custom_icons/grabber_highlight = ExtResource( 6 )
+custom_icons/grabber = ExtResource( 6 )
 min_value = 1.0
 max_value = 5.0
 value = 3.0
 tick_count = 5
 ticks_on_borders = true
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
 [node name="SchwierigkeitAktuell" type="Label" parent="Schwierigkeit/SchwierigkeitSlider"]
 margin_left = 227.216
@@ -54,22 +56,22 @@ custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "3"
 
 [node name="Sprungkraft" type="Sprite" parent="."]
-position = Vector2( 224, 318.551 )
-texture = ExtResource( 7 )
+position = Vector2( 224, 300 )
+texture = ExtResource( 8 )
 
 [node name="SprungkraftSlider" type="HSlider" parent="Sprungkraft"]
 margin_left = -112.0
 margin_top = 35.0
 margin_right = 112.0
 margin_bottom = 51.0
-custom_icons/grabber_highlight = ExtResource( 5 )
-custom_icons/grabber = ExtResource( 5 )
+custom_icons/grabber_highlight = ExtResource( 6 )
+custom_icons/grabber = ExtResource( 6 )
 min_value = 1.0
 max_value = 1000.0
 value = 500.0
 rounded = true
 ticks_on_borders = true
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
 [node name="SprungkraftAktuell" type="Label" parent="Sprungkraft/SprungkraftSlider"]
 margin_left = 226.894
@@ -80,20 +82,20 @@ custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "500"
 
 [node name="tempoBlob" type="Sprite" parent="."]
-position = Vector2( 224, 415.47 )
-texture = ExtResource( 8 )
+position = Vector2( 224, 400 )
+texture = ExtResource( 9 )
 
 [node name="BlobSlider" type="HSlider" parent="tempoBlob"]
 margin_left = -112.0
 margin_top = 35.0
 margin_right = 112.0
-custom_icons/grabber_highlight = ExtResource( 5 )
-custom_icons/grabber = ExtResource( 5 )
+custom_icons/grabber_highlight = ExtResource( 6 )
+custom_icons/grabber = ExtResource( 6 )
 min_value = 1.0
 max_value = 1000.0
 value = 500.0
 ticks_on_borders = true
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
 [node name="BlobAktuell" type="Label" parent="tempoBlob/BlobSlider"]
 margin_left = 226.894
@@ -104,21 +106,21 @@ custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "500"
 
 [node name="raketenAbstand" type="Sprite" parent="."]
-position = Vector2( 224, 509.483 )
-texture = ExtResource( 9 )
+position = Vector2( 224, 500 )
+texture = ExtResource( 10 )
 
 [node name="RaketenSlider" type="HSlider" parent="raketenAbstand"]
 margin_left = -112.0
 margin_top = 35.0
 margin_right = 112.0
 margin_bottom = 51.0
-custom_icons/grabber_highlight = ExtResource( 5 )
-custom_icons/grabber = ExtResource( 5 )
+custom_icons/grabber_highlight = ExtResource( 6 )
+custom_icons/grabber = ExtResource( 6 )
 min_value = 1.0
 max_value = 20.0
 value = 10.0
 ticks_on_borders = true
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
 [node name="RaketeAktuell" type="Label" parent="raketenAbstand/RaketenSlider"]
 margin_left = 227.216
@@ -131,6 +133,7 @@ text = "10"
 [connection signal="draw" from="." to="raketenAbstand/RaketenSlider" method="_on_Optionen_Slider_draw"]
 [connection signal="draw" from="." to="Schwierigkeit/SchwierigkeitSlider" method="_on_Optionen_Slider_draw"]
 [connection signal="hide" from="." to="Sprungkraft/SprungkraftSlider" method="_on_Optionen_Slider_hide"]
+[connection signal="button_up" from="1von3/Seite2" to="." method="_on_Seite2_button_up"]
 [connection signal="value_changed" from="Schwierigkeit/SchwierigkeitSlider" to="Schwierigkeit/SchwierigkeitSlider" method="_on_SchwierigkeitSlider_value_changed"]
 [connection signal="value_changed" from="Sprungkraft/SprungkraftSlider" to="Sprungkraft/SprungkraftSlider" method="_on_SprungkraftSlider_value_changed"]
 [connection signal="value_changed" from="tempoBlob/BlobSlider" to="tempoBlob/BlobSlider" method="_on_BlobSlider_value_changed"]

@@ -11,5 +11,5 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 
 [node name="Blob_verloren" type="Sprite" parent="."]
-position = Vector2( 356.393, 424.965 )
+position = Vector2( 355.534, 424.394 )
 texture = ExtResource( 2 )

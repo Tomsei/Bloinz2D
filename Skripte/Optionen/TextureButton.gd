@@ -4,10 +4,12 @@ onready var optionen = get_tree().get_root().get_node("Main").get_node("AlleOpti
 onready var start = get_tree().get_root().get_node("Main").get_node("Start")
 onready var ende = get_tree().get_root().get_node("Main").get_node("Ende")
 onready var spiel = get_tree().get_root().get_node("Main").get_node("Spiel")
+onready var pauseButton = spiel.get_node("UI").get_node("Pause")
 onready var anleitung = get_tree().get_root().get_node("Main").get_node("Anleitung")
 onready var seite1 = optionen.get_node("Seite1-Slider")
 onready var seite2 = optionen.get_node("Seite2-Editoren")
 onready var seite3 = optionen.get_node("Seite3-RandomCoin")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,7 +27,6 @@ func starteSpiel():
 	ende.visible = false
 	spiel.visible = true
 	JavaScript.eval("resizeSpiel(640,448)")
-	
 	#print(einstellungen.erstesSpiel)
 	if einstellungen.erstesSpiel:
 		anleitung.visible = true
@@ -55,6 +56,7 @@ func _on_Optionen_button_up():
 	optionen.visible = true
 	ende.visible = false
 	spiel.visible = false
+	pauseButton.pressed = false 
 	seite1.visible = true
 	seite2.visible = false
 	seite3.visible = false

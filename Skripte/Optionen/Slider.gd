@@ -25,12 +25,12 @@ func _on_SchwierigkeitSlider_value_changed(value):
 	var schwierigkeit = int(value)
 	match schwierigkeit:
 		1:
-			blobSlider.value = 400
-			sprungkraftSlider.value = 700
+			blobSlider.value = 350
+			sprungkraftSlider.value = 600
 			raketenSlider.value = 20
 		2:
-			blobSlider.value = 450
-			sprungkraftSlider.value = 600
+			blobSlider.value = 420
+			sprungkraftSlider.value = 800
 			raketenSlider.value = 15
 		3:
 			blobSlider.value = 500
@@ -38,11 +38,11 @@ func _on_SchwierigkeitSlider_value_changed(value):
 			raketenSlider.value = 10
 		4:
 			blobSlider.value = 800
-			sprungkraftSlider.value = 100
+			sprungkraftSlider.value = 420
 			raketenSlider.value = 5
 		5:
 			blobSlider.value = 200
-			sprungkraftSlider.value = 200
+			sprungkraftSlider.value = 350
 			raketenSlider.value = 3
 
 
