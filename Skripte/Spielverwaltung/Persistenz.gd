@@ -2,8 +2,23 @@ extends Node2D
 
 var hauptverzeichnis_benutzer = OS.get_user_data_dir() + "/"
 var nicht_kopieren = [".git", ".gitignore", "project.godot", ".cfg"]
+var dateien_behalten = false
 func _ready():
+	pass
+
+func init():
+	dateien_behalten = true
 	erstelle_datei_und_ordnerstruktur("res://")
+
+func zuruecksetzen():
+	dateien_behalten = false
+	erstelle_datei_und_ordnerstruktur("res://")
+
+# Laedt ein Image aus uebergebenem Pfad. Pfad muss mit res:// anfangen.
+func lade_bild(bildpfad):
+	var textur = lade_bildtextur(bildpfad)
+	var erzeugtesBild = textur.get_data()
+	return erzeugtesBild
 
 # Laedt eine Bildtextur aus uebergebenem Pfad.
 func lade_bildtextur(bildpfad):
@@ -24,14 +39,15 @@ func erstelle_datei_und_ordnerstruktur(pfad):
 	var element = ober_ordner.get_next()
 	while element != "":
 		if ist_ordner(element):
-			if pfad == "res://":
-				erstelle_ordner(hauptverzeichnis_benutzer + pfad.lstrip("res:/") + element)
-			else :
-				erstelle_ordner(hauptverzeichnis_benutzer + pfad.lstrip("res:/") + "/" + element)
+			if ordner_existiert(pfad + "/" + element) == false:
+				if pfad == "res://":
+					erstelle_ordner(hauptverzeichnis_benutzer + pfad.lstrip("res:/") + element)
+				else :
+					erstelle_ordner(hauptverzeichnis_benutzer + pfad.lstrip("res:/") + "/" + element)
 			if hat_verbotene_namen(element) == false:
 				erstelle_datei_und_ordnerstruktur(pfad + "/" + element)
 		else:
-			if hat_verbotene_namen(element) == false:
+			if (datei_existiert(pfad + "/" + element) == false) && (hat_verbotene_namen(element) == false):
 				erstelle_dateien(pfad + "/" + element)
 		element = ober_ordner.get_next()
 	ober_ordner.list_dir_end()
@@ -42,6 +58,15 @@ func ist_ordner(dateiname):
 	return dateiname.find(".") == -1
 	
 
+# Speichert ein Bild als Textur.
+func speicher_bild_als_textur(bild, bildSpeicherpfad):
+	var textur = ImageTexture.new()
+	textur.create_from_image(bild)
+	var datei = File.new()
+	datei.open(hauptverzeichnis_benutzer + bildSpeicherpfad.lstrip("res:/"), File.WRITE)
+	datei.store_var(textur, true)
+	datei.close()
+	
 # Speichert ein Bild als Varianttyp. Bild muss spaeter als Variant geladen werden.
 # Der Ladepfad muss ohne '.import' sein. Der speicherpfad sollte fuer den webexport
 # ohne .import und anstatt dem res:// das userverzeichnis haben.
@@ -106,8 +131,18 @@ func erstelle_dateien(dateienpfad):
 			# Fuer den bildLadepfad muss das .import entfernt werden, damit das Bild richtig geladen wird.
 			# Fuer den bilSpeicherpfad muss das res entfernt und mit dem userverzeichnis ersetzt werden.
 			# Ebenfalls soll das Bild als png und nicht als import gespeichert werden.
-			speicher_bild_als_variant(dateienpfad, hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
+			speicher_bild_als_variant(dateienpfad.rstrip(".import"), hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
 		elif dateienpfad.find(".wav") != -1:
-			speicher_wav_als_variant(dateienpfad, hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
+			speicher_wav_als_variant(dateienpfad.rstrip(".import"), hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
 		else:
 			speicher_skript_oder_szene_als_var(dateienpfad, hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/"))
+			
+
+# Prueft ob die Datei schon vorhanden ist.
+func datei_existiert(dateipfad):
+	var datei = File.new()
+	return dateien_behalten && datei.file_exists(hauptverzeichnis_benutzer + dateipfad.lstrip("res:/").rstrip(".import"))
+
+func ordner_existiert(ordnerpfad):
+	var ordner = Directory.new()
+	return dateien_behalten && ordner.dir_exists(hauptverzeichnis_benutzer + ordnerpfad.lstrip("res:/"))
