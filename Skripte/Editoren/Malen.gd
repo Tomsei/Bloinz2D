@@ -18,7 +18,6 @@ var Vorschau;
 var aktuellerFarbbutton;
 var aktuellerStiftbutton;
 var aktuellerModusbutton;
-var Colorpickerb;
 var rueckgaengigstapel;
 var wiederholenstapel;
 var minx;
@@ -87,8 +86,7 @@ func _ready():
 	#setze alle Figurauswahlbuttons auf das neue aktuelle Design
 	setze_Figurauswahlbuttons();
 	
-	#Colorpickerbutton ist zu
-	Colorpickerb = false;
+
 	
 	rueckgaengigstapel= [];
 	Abbild_auf_Rueckgaengigstapel();
@@ -102,9 +100,10 @@ func _ready():
 	eigeneFarbe.resize(5);
 	eigene_Farben_einladen();
 	
-	#
-
-	
+	#Colorpicker verändern
+	get_node("../Farbwahl").get_children()[6].get_children()[1].hide();
+	get_node("../Farbwahl").get_children()[5].hide();
+	get_node("../Farbwahl").get_children()[4].get_children()[4].hide();
 
 
 
@@ -298,15 +297,6 @@ func mache_Buttontextur(_bild):
 	var buttontextur = ImageTexture.new()
 	buttontextur.create_from_image(_bild);
 	return buttontextur;
-"""
-"""
-
-func _on_ColorPickerButton_popup_closed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../ColorPickerButton");
-	aktuelleFarbe = get_node("../ColorPickerButton").color;
-	modus="";
-
 
 
 func _on_Stift_pressed():
@@ -817,9 +807,6 @@ func _on_Blob_5_gerade_pressed():
 	deaktiviere_Buttons();
 
 
-func _on_ColorPickerButton_pressed():
-	Colorpickerb= true;
-
 
 func _on_Hintergrund_pressed():
 	get_node("../CoinWechsel").show();
@@ -1092,7 +1079,7 @@ func wechsel_zu_eigene_Farbe():
 			Farbwechsel_bei_Radierer();
 
 func oeffne_Farbauswahl():
-	get_node("../ColorPicker").show();
+	get_node("../Farbwahl").show();
 	get_tree().call_group("Steuerelemente", "hide");
 	alterModus = modus;
 	modus="Farbauswahl";
@@ -1265,15 +1252,20 @@ func male_Ellipse(cx,cy, radiusx, radiusy):
 
 func male_vier_Ellipsenpunkte(x,y, cx,cy):
 
-	var  amRand1 = cx+x <64;
+	var  amRand1 = cx+x >63;
 	var  amRand2 = cx-x <0;
-	var  amRand3 = cy+y <64;
+	var  amRand3 = cy+y >63;
 	var  amRand4 = cy-y <0;
 	
-	temporaeresBild.set_pixel(cx+x,cy+y,aktuelleFarbe);
-	temporaeresBild.set_pixel(cx-x,cy+y,aktuelleFarbe);
-	temporaeresBild.set_pixel(cx-x,cy-y,aktuelleFarbe);
-	temporaeresBild.set_pixel(cx+x,cy-y,aktuelleFarbe);
+	
+	if( amRand1 != true and amRand3 != true):
+		temporaeresBild.set_pixel(cx+x,cy+y,aktuelleFarbe);
+	if( amRand2 != true and amRand3 != true):
+		temporaeresBild.set_pixel(cx-x,cy+y,aktuelleFarbe);
+	if( amRand2 != true and amRand4 != true):
+		temporaeresBild.set_pixel(cx-x,cy-y,aktuelleFarbe);
+	if( amRand1 != true and amRand4 != true):
+		temporaeresBild.set_pixel(cx+x,cy-y,aktuelleFarbe);
 	
 
 func _on_Ellipse_pressed():
@@ -1319,14 +1311,14 @@ func lade_Knopfbilder():
 
 
 func _on_Schliessen_pressed():
-	get_node("../ColorPicker").hide();
+	get_node("../Farbwahl").hide();
 
 
 
 func _on_ColorPicker_hide():
 	get_tree().call_group("Steuerelemente", "show");
 	aktiviere_Buttons();
-	eigeneFarbe[eigeneFarbeaktuell-1]= get_node("../ColorPicker").get_pick_color();
+	eigeneFarbe[eigeneFarbeaktuell-1]= get_node("../Farbwahl").get_pick_color();
 	aktuelleFarbe= eigeneFarbe[eigeneFarbeaktuell-1];
 	eigene_Farbe_speichern("EigeneFarbe"+str(eigeneFarbeaktuell));
 	if alterModus =="Radierer":

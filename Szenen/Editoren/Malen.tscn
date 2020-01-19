@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Skripte/Editoren/Malen.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
@@ -48,6 +48,7 @@
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Rueckgaengig.png" type="Texture" id=46]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Verschieben.png" type="Texture" id=47]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Ellipse.png" type="Texture" id=48]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/HintergrundColorpicker.png" type="Texture" id=49]
 
 [node name="Maleneditor" type="Node2D"]
 
@@ -853,9 +854,9 @@ margin_left = 6.0
 margin_top = 372.0
 margin_right = 177.0
 margin_bottom = 392.0
-text = "Farbauswahl"
+text = "Farbe ändern"
 
-[node name="ColorPicker" type="ColorPicker" parent="."]
+[node name="Farbwahl" type="ColorPicker" parent="."]
 pause_mode = 2
 visible = false
 margin_left = 4.0
@@ -865,18 +866,18 @@ margin_bottom = 4.0
 edit_alpha = false
 deferred_mode = true
 
-[node name="Sprite" type="Sprite" parent="ColorPicker"]
-position = Vector2( 151.201, 229.176 )
-scale = Vector2( 18.8662, 28.8233 )
+[node name="Sprite" type="Sprite" parent="Farbwahl"]
+position = Vector2( 146.047, 214.507 )
+scale = Vector2( 9.3762, 13.7334 )
 z_index = -1
-texture = ExtResource( 19 )
+texture = ExtResource( 49 )
 
-[node name="Schliessen" type="Button" parent="ColorPicker"]
-margin_top = 415.0
+[node name="Schliessen" type="Button" parent="Farbwahl"]
+margin_top = 438.0
 margin_right = 290.0
-margin_bottom = 445.0
+margin_bottom = 468.0
 rect_min_size = Vector2( 0, 30 )
-text = "Schließen"
+text = "übernehmen"
 [connection signal="pressed" from="CoinWechsel/Ja" to="Zeichenflaeche" method="_on_Ja_pressed"]
 [connection signal="pressed" from="CoinWechsel/Nein" to="Zeichenflaeche" method="_on_Nein_pressed"]
 [connection signal="pressed" from="Speichern" to="Zeichenflaeche" method="_on_Speichern_pressed"]
@@ -949,5 +950,5 @@ text = "Schließen"
 [connection signal="pressed" from="Bildrand" to="Zeichenflaeche" method="_on_Bildrand_pressed"]
 [connection signal="pressed" from="Ellipse" to="Zeichenflaeche" method="_on_Ellipse_pressed"]
 [connection signal="pressed" from="Farbauswahl" to="Zeichenflaeche" method="_on_Farbauswahl_pressed"]
-[connection signal="hide" from="ColorPicker" to="Zeichenflaeche" method="_on_ColorPicker_hide"]
-[connection signal="pressed" from="ColorPicker/Schliessen" to="Zeichenflaeche" method="_on_Schliessen_pressed"]
+[connection signal="hide" from="Farbwahl" to="Zeichenflaeche" method="_on_ColorPicker_hide"]
+[connection signal="pressed" from="Farbwahl/Schliessen" to="Zeichenflaeche" method="_on_Schliessen_pressed"]
