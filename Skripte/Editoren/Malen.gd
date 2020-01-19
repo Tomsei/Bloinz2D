@@ -18,7 +18,6 @@ var Vorschau;
 var aktuellerFarbbutton;
 var aktuellerStiftbutton;
 var aktuellerModusbutton;
-var Colorpickerb;
 var rueckgaengigstapel;
 var wiederholenstapel;
 var minx;
@@ -26,6 +25,7 @@ var maxx;
 var miny;
 var maxy;
 var eigeneFarbe;
+var eigeneFarbeaktuell;
 var temporaeresBild;
 var temporaereZeichenflaeche;
 var coinWechsel;
@@ -39,13 +39,13 @@ var alteVorschau;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Setze Bildschirmgroesse.
-	OS.set_window_size(Vector2(900,660));
+	OS.set_window_size(Vector2(1030,680));
 	
 	#Farbe voreinstellen
 	aktuellerFarbbutton= get_node("../Farbe9");
 	aktuellerFarbbutton.pressed= true;
 	aktuelleFarbe = Color(1,1,1,1);
-	get_node("../ColorPickerButton").color = Color(1,1,1,1);
+
 	
 	#Stiftgroesse voreinstellen
 	modus = "Stift";
@@ -86,8 +86,7 @@ func _ready():
 	#setze alle Figurauswahlbuttons auf das neue aktuelle Design
 	setze_Figurauswahlbuttons();
 	
-	#Colorpickerbutton ist zu
-	Colorpickerb = false;
+
 	
 	rueckgaengigstapel= [];
 	Abbild_auf_Rueckgaengigstapel();
@@ -101,9 +100,10 @@ func _ready():
 	eigeneFarbe.resize(5);
 	eigene_Farben_einladen();
 	
-	#
-
-	
+	#Colorpicker verändern
+	get_node("../Farbwahl").get_children()[6].get_children()[1].hide();
+	get_node("../Farbwahl").get_children()[5].hide();
+	get_node("../Farbwahl").get_children()[4].get_children()[4].hide();
 
 
 
@@ -297,15 +297,6 @@ func mache_Buttontextur(_bild):
 	var buttontextur = ImageTexture.new()
 	buttontextur.create_from_image(_bild);
 	return buttontextur;
-"""
-"""
-
-func _on_ColorPickerButton_popup_closed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../ColorPickerButton");
-	aktuelleFarbe = get_node("../ColorPickerButton").color;
-	modus="";
-
 
 
 func _on_Stift_pressed():
@@ -346,6 +337,7 @@ func _on_Farbe1_pressed():
 	aktuelleFarbe = Color(0.9,0.23,0.1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -355,6 +347,7 @@ func _on_Farbe2_pressed():
 	aktuelleFarbe = Color(0.9,0.72,0.1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -364,6 +357,7 @@ func _on_Farbe3_pressed():
 	aktuelleFarbe = Color(0.46,0.9,0.1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -373,6 +367,7 @@ func _on_Farbe4_pressed():
 	aktuelleFarbe = Color(0.1,0.9,0.81);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -382,6 +377,7 @@ func _on_Farbe5_pressed():
 	aktuelleFarbe = Color(0.1,0.36,0.9);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -391,6 +387,7 @@ func _on_Farbe6_pressed():
 	aktuelleFarbe = Color(0.63,0.1,0.9);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -400,6 +397,7 @@ func _on_Farbe7_pressed():
 	aktuelleFarbe = Color(0.9,0.1,0.78);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -409,6 +407,7 @@ func _on_Farbe8_pressed():
 	aktuelleFarbe = Color(0.95,0.78,0.59);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -419,6 +418,7 @@ func _on_Farbe9_pressed():
 	aktuelleFarbe = Color(1,1,1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -428,6 +428,7 @@ func _on_Farbe10_pressed():
 	aktuelleFarbe = Color(0,0,0);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
+	get_node("../Farbauswahl").hide();
 
 
 
@@ -806,9 +807,6 @@ func _on_Blob_5_gerade_pressed():
 	deaktiviere_Buttons();
 
 
-func _on_ColorPickerButton_pressed():
-	Colorpickerb= true;
-
 
 func _on_Hintergrund_pressed():
 	get_node("../CoinWechsel").show();
@@ -1051,31 +1049,7 @@ func eigene_Farbe_speichern(name):
 	icon1.save_png("Bilder/Farben/"+name+".png");
 	
 	
-	
 
-func _on_EigeneFarbeSpeichern1_pressed():
-	eigeneFarbe[0]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe1");
-
-
-func _on_EigeneFarbeSpeichern2_pressed():
-	eigeneFarbe[1]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe2");
-
-
-func _on_EigeneFarbeSpeichern3_pressed():
-	eigeneFarbe[2]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe3");
-	
-
-func _on_EigeneFarbeSpeichern4_pressed():
-	eigeneFarbe[3]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe4");
-
-
-func _on_EigeneFarbeSpeichern5_pressed():
-	eigeneFarbe[4]= aktuelleFarbe;
-	eigene_Farbe_speichern("EigeneFarbe5");
 
 func Farbwechsel_bei_Radierer():
 	aktuellerModusbutton.pressed= false;
@@ -1085,46 +1059,51 @@ func Farbwechsel_bei_Radierer():
 	
 
 func _on_EigeneFarbe1_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe1");
-	aktuelleFarbe = eigeneFarbe[0];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
+	eigeneFarbeaktuell = 1;
+	wechsel_zu_eigene_Farbe();
 
+	
+
+func wechsel_zu_eigene_Farbe():
+	if aktuellerFarbbutton != get_node("../EigeneFarbe"+str(eigeneFarbeaktuell)):
+		aktuellerFarbbutton.pressed= false;
+		aktuellerFarbbutton= get_node("../EigeneFarbe"+str(eigeneFarbeaktuell));
+	else:
+		aktuellerFarbbutton.pressed= true;
+	if eigeneFarbe[eigeneFarbeaktuell-1] == Color(0,0,0,0):
+		oeffne_Farbauswahl();
+	else:
+		get_node("../Farbauswahl").show();
+		aktuelleFarbe = eigeneFarbe[eigeneFarbeaktuell-1];
+		if modus =="Radierer":
+			Farbwechsel_bei_Radierer();
+
+func oeffne_Farbauswahl():
+	get_node("../Farbwahl").show();
+	get_tree().call_group("Steuerelemente", "hide");
+	alterModus = modus;
+	modus="Farbauswahl";
+	deaktiviere_Buttons();
 
 func _on_EigeneFarbe2_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe2");
-	aktuelleFarbe = eigeneFarbe[1];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
-		
+	eigeneFarbeaktuell = 2;
+	wechsel_zu_eigene_Farbe();
 
 
 func _on_EigeneFarbe3_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe3");
-	aktuelleFarbe = eigeneFarbe[2];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
+	eigeneFarbeaktuell = 3;
+	wechsel_zu_eigene_Farbe();
 
 
 func _on_EigeneFarbe4_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe4");
-	aktuelleFarbe = eigeneFarbe[3];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
+	eigeneFarbeaktuell = 4;
+	wechsel_zu_eigene_Farbe();
 
 
 func _on_EigeneFarbe5_pressed():
-	aktuellerFarbbutton.pressed= false;
-	aktuellerFarbbutton= get_node("../EigeneFarbe5");
-	aktuelleFarbe = eigeneFarbe[4];
-	if modus =="Radierer":
-		Farbwechsel_bei_Radierer();
+	eigeneFarbeaktuell = 5;
+	wechsel_zu_eigene_Farbe();
 
-	
 func eigene_Farben_einladen():
 	for i in range(1,6):
 		var icon = Image.new();
@@ -1273,10 +1252,20 @@ func male_Ellipse(cx,cy, radiusx, radiusy):
 
 func male_vier_Ellipsenpunkte(x,y, cx,cy):
 
-	temporaeresBild.set_pixel(cx+x,cy+y,aktuelleFarbe);
-	temporaeresBild.set_pixel(cx-x,cy+y,aktuelleFarbe);
-	temporaeresBild.set_pixel(cx-x,cy-y,aktuelleFarbe);
-	temporaeresBild.set_pixel(cx+x,cy-y,aktuelleFarbe);
+	var  amRand1 = cx+x >63;
+	var  amRand2 = cx-x <0;
+	var  amRand3 = cy+y >63;
+	var  amRand4 = cy-y <0;
+	
+	
+	if( amRand1 != true and amRand3 != true):
+		temporaeresBild.set_pixel(cx+x,cy+y,aktuelleFarbe);
+	if( amRand2 != true and amRand3 != true):
+		temporaeresBild.set_pixel(cx-x,cy+y,aktuelleFarbe);
+	if( amRand2 != true and amRand4 != true):
+		temporaeresBild.set_pixel(cx-x,cy-y,aktuelleFarbe);
+	if( amRand1 != true and amRand4 != true):
+		temporaeresBild.set_pixel(cx+x,cy-y,aktuelleFarbe);
 	
 
 func _on_Ellipse_pressed():
@@ -1319,3 +1308,25 @@ func lade_Knopfbilder():
 	knopf_aktualisieren("Hintergrund",bildtemporaer);
 
 	
+
+
+func _on_Schliessen_pressed():
+	get_node("../Farbwahl").hide();
+
+
+
+func _on_ColorPicker_hide():
+	get_tree().call_group("Steuerelemente", "show");
+	aktiviere_Buttons();
+	eigeneFarbe[eigeneFarbeaktuell-1]= get_node("../Farbwahl").get_pick_color();
+	aktuelleFarbe= eigeneFarbe[eigeneFarbeaktuell-1];
+	eigene_Farbe_speichern("EigeneFarbe"+str(eigeneFarbeaktuell));
+	if alterModus =="Radierer":
+		Farbwechsel_bei_Radierer();
+	else:
+		modus = alterModus;
+
+
+
+func _on_Farbauswahl_pressed():
+	oeffne_Farbauswahl();
