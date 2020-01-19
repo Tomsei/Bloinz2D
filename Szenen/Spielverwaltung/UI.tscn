@@ -71,3 +71,4 @@ editable = false
 ticks_on_borders = true
 [connection signal="toggled" from="Pause" to="." method="_on_Pause_toggled"]
 [connection signal="button_up" from="AnleitungOeffnen" to="." method="_on_AnleitungOeffnen_button_up"]
+

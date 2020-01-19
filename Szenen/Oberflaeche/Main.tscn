@@ -14,7 +14,6 @@
 [ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=12]
 [ext_resource path="res://Skripte/Optionen/CheckButton.gd" type="Script" id=13]
 [ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Szenen/Spielverwaltung/Persistenz.tscn" type="PackedScene" id=15]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2

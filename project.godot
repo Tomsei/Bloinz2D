@@ -28,10 +28,6 @@ einstellungen="*res://Skripte/Spielverwaltung/Informationsübertragung.gd"
 window/size/width=448
 window/size/height=640
 
-[gui]
-
-timers/tooltip_delay_sec=0.0
-
 [importer_defaults]
 
 texture={
