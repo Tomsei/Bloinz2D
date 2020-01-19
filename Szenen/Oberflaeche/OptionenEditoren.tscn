@@ -104,3 +104,5 @@ text = "Abbrechen"
 [connection signal="button_up" from="MalenEditor" to="MalenEditor" method="_on_MalenEditor_button_up"]
 [connection signal="button_up" from="CodeEditor" to="CodeEditor" method="_on_CodeEditor_button_up"]
 [connection signal="button_up" from="AllesZuruecksetzen" to="AllesZuruecksetzen" method="_on_AllesZuruecksetzen_button_up"]
+[connection signal="button_up" from="Popup/Ja" to="." method="_on_Ja_button_up"]
+[connection signal="button_up" from="Popup/Abbrechen" to="." method="_on_Abbrechen_button_up"]
