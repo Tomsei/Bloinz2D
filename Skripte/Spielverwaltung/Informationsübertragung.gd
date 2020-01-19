@@ -13,7 +13,7 @@ var vomEditor = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().paused = true
-	
+	JavaScript.eval("resizeSpiel(640,448)")
 	# Erstellt die Orderstruktur mit allen Dateien im Benutzerverzeichnis.
 	preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance().init()
 

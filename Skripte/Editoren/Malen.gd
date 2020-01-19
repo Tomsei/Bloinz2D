@@ -30,7 +30,7 @@ var temporaeresBild;
 var temporaereZeichenflaeche;
 var coinWechsel;
 var alteVorschau;
-
+var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
 
 
 
@@ -40,7 +40,7 @@ var alteVorschau;
 func _ready():
 	# Setze Bildschirmgroesse.
 	OS.set_window_size(Vector2(900,660));
-	
+	JavaScript.eval("resizeSpiel(800,1100)")
 	#Farbe voreinstellen
 	aktuellerFarbbutton= get_node("../Farbe9");
 	aktuellerFarbbutton.pressed= true;
@@ -272,14 +272,14 @@ func speichern(bildname, Knopf):
 
 	#Bild in den Dateien speichern
 	if Vorschau=="Blob":
-		bild.save_png("Bilder/Standardspielfiguren/Spielfiguren/"+bildname+".png");
+		persistenz.speicher_bild_als_textur(bild, "res://Bilder/Standardspielfiguren/Spielfiguren/"+bildname+".png")
 		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
 	elif Vorschau =="Coin":
-		bild.save_png("Bilder/Standardspielfiguren/Coins/"+bildname+".png");	
+		persistenz.speicher_bild_als_textur(bild, "res://Bilder/Standardspielfiguren/Coins/"+bildname+".png")
 	else:
 		for i in range(0,8):
 			#malenordner
-			bild.save_png("Bilder/Hintergruende/HimmelVerlauf"+str(i)+".png");
+			persistenz.speicher_bild_als_textur(bild, "res://Bilder/Hintergruende/HimmelVerlauf"+str(i)+".png")
 	
 	#Knopf aktualisieren
 	knopf_aktualisieren(Knopf, bild);
@@ -538,12 +538,12 @@ lädt ein Bild aus den Dateien in die Variable bild ein und aktualisiert die Zei
 func einladen(pfad):
 	bild = Image.new();
 	if Vorschau=="Blob":
-		bild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
+		bild = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png")
 		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
 	elif Vorschau =="Coin":
-		bild.load("res://Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
+		bild = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+pfad+".png")
 	else:
-		bild.load("res://Bilder/Standardspielfiguren/Hintergrund/"+pfad+".png");
+		bild = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Hintergrund/"+pfad+".png")
 	setze_Zeichenflaeche();
 
 
@@ -580,11 +580,11 @@ lädt das Standardbild als Textur in den Button ein  #setze Button
 func setze_Standardbutton():
 	var icon = Image.new();
 	if Vorschau =="Blob":
-		icon.load("Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Standard.png");
+		icon = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Standard.png")
 	elif Vorschau =="Coin":
-		icon.load("res://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Standard.png");
+		icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Standard.png")
 	else:
-		icon.load("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Standard.png");
+		icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Standard.png")
 	var buttontextur = ImageTexture.new();
 	buttontextur.create_from_image(icon);
 	get_node("../Standard").icon= buttontextur;
@@ -597,11 +597,11 @@ func setze_Vorlagen():
 	for i in range(1,6):
 		var icon = Image.new();
 		if Vorschau == "Blob":
-			icon.load("res://Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Design"+str(i)+".png");
+			icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Design"+str(i)+".png")
 		elif Vorschau =="Coin":
-			icon.load("res://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Design"+str(i)+".png");
+			icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Design"+str(i)+".png")
 		else:
-			icon.load("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Design"+str(i)+".png");	
+			icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Design"+str(i)+".png")
 		var buttontextur = ImageTexture.new();
 		buttontextur.create_from_image(icon);
 		get_node("../Vorlage"+str(i)).icon= buttontextur;
@@ -1048,7 +1048,7 @@ func eigene_Farbe_speichern(name):
 	icon1.unlock();
 	knopf_aktualisieren(name, icon1);
 	#persistent Speichern
-	icon1.save_png("Bilder/Farben/"+name+".png");
+	persistenz.speicher_bild_als_textur(icon1, "res://Bilder/Farben/"+name+".png")
 	
 	
 	
@@ -1128,7 +1128,7 @@ func _on_EigeneFarbe5_pressed():
 func eigene_Farben_einladen():
 	for i in range(1,6):
 		var icon = Image.new();
-		icon.load("res://Bilder/Farben/EigeneFarbe"+str(i)+".png");
+		icon = persistenz.lade_bild("res://Bilder/Farben/EigeneFarbe"+str(i)+".png")
 		icon.lock();
 		eigeneFarbe[i-1]= icon.get_pixel(0,0);
 		icon.unlock();
@@ -1289,33 +1289,33 @@ func lade_Knopfbilder():
 	var bildtemporaer = Image.new();
 	
 	#Blobs
-	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_1_gerade.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_1_gerade.png")
 	knopf_aktualisieren("Blob_1_gerade",bildtemporaer);	
-	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_2_gerade.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_2_gerade.png")
 	knopf_aktualisieren("Blob_2_gerade",bildtemporaer);	
-	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_3_gerade.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_3_gerade.png")
 	knopf_aktualisieren("Blob_3_gerade",bildtemporaer);	
-	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_4_gerade.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_4_gerade.png")
 	knopf_aktualisieren("Blob_4_gerade",bildtemporaer);	
-	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_5_gerade.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_5_gerade.png")
 	knopf_aktualisieren("Blob_5_gerade",bildtemporaer);	
-	bildtemporaer.load("Bilder/Standardspielfiguren/Spielfiguren/"+"Kanonenkugel.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+"Kanonenkugel.png")
 	knopf_aktualisieren("Kanonenkugel",bildtemporaer);	
 	
 	#Coins
-	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"GoodCoin1.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+"GoodCoin1.png")
 	knopf_aktualisieren("GoodCoin1",bildtemporaer);
-	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"GoodCoin2.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+"GoodCoin2.png")
 	knopf_aktualisieren("GoodCoin2",bildtemporaer);	
-	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"BadCoin1.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+"BadCoin1.png")
 	knopf_aktualisieren("BadCoin1",bildtemporaer);	
-	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"BadCoin2.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+"BadCoin2.png")
 	knopf_aktualisieren("BadCoin2",bildtemporaer);	
-	bildtemporaer.load("Bilder/Standardspielfiguren/Coins/"+"RandomCoin.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+"RandomCoin.png")
 	knopf_aktualisieren("RandomCoin",bildtemporaer);
 	
 	#Hintergrund	
-	bildtemporaer.load("Bilder/Standardspielfiguren/Hintergrund/"+"Hintergrund.png");
+	bildtemporaer = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Hintergrund/"+"Hintergrund.png")
 	knopf_aktualisieren("Hintergrund",bildtemporaer);
 
 	

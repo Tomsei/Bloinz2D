@@ -14,6 +14,12 @@ func zuruecksetzen():
 	dateien_behalten = false
 	erstelle_datei_und_ordnerstruktur("res://")
 
+# Laedt ein Image aus uebergebenem Pfad. Pfad muss mit res:// anfangen.
+func lade_bild(bildpfad):
+	var textur = lade_bildtextur(bildpfad)
+	var erzeugtesBild = textur.get_data()
+	return erzeugtesBild
+
 # Laedt eine Bildtextur aus uebergebenem Pfad.
 func lade_bildtextur(bildpfad):
 	var file = File.new()
@@ -52,6 +58,15 @@ func ist_ordner(dateiname):
 	return dateiname.find(".") == -1
 	
 
+# Speichert ein Bild als Textur.
+func speicher_bild_als_textur(bild, bildSpeicherpfad):
+	var textur = ImageTexture.new()
+	textur.create_from_image(bild)
+	var datei = File.new()
+	datei.open(hauptverzeichnis_benutzer + bildSpeicherpfad.lstrip("res:/"), File.WRITE)
+	datei.store_var(textur, true)
+	datei.close()
+	
 # Speichert ein Bild als Varianttyp. Bild muss spaeter als Variant geladen werden.
 # Der Ladepfad muss ohne '.import' sein. Der speicherpfad sollte fuer den webexport
 # ohne .import und anstatt dem res:// das userverzeichnis haben.
