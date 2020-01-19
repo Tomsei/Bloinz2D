@@ -34,6 +34,8 @@ var UP_Vektor = Vector2(0, -1) #Wo ist Oben
 var screen_size
 var bodenhoehe = 473
 
+var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
+
 
 """
 Beim Initialisieren der Szene / Klasse (Konstruktor) der Münze werden
@@ -101,8 +103,4 @@ func blobKollision():
 
 # Laedt ein Bild aus dem Userverzeichnis mit dem Pfad.
 func lade_bild_von_user(pfad):
-	var bild = Image.new()
-	bild.load(pfad)
-	var textur = ImageTexture.new()
-	textur.create_from_image(bild,0);
-	return textur
+	return persistenz.lade_bildtextur(pfad)
