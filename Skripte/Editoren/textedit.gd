@@ -15,6 +15,8 @@ var funktionen_mit_variablen = [{}]
 var aktuell_angezeigte_funktion
 var code_veraendert = false
 
+var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
+
 # Funktion welche beim start aufgerufen wird.
 func _ready():
 	# Initiiere Parameter.
@@ -28,7 +30,6 @@ func init():
 	init_Codeeditoren()
 	# Fuellt die Funktionsauswahl mit den Werten des ersten Skripts.
 	fuelle_funktionsauswahl()
-	print($Speicherdialog.get_children())
 	#init_te()
 	# Zeige die ausgewaehlte Funktion an.
 	#setze_aktuell_angezeigte_funktion()
@@ -42,7 +43,7 @@ func _process(delta):
 # Lädt eine Datei und gibt den Text der Datei zurück.
 func lade_datei(pfad):
 	var datei = File.new()
-	var err = datei.open("user://" + pfad.lstrip("res:/"), File.READ)
+	var err = datei.open(OS.get_user_data_dir() + "/" + pfad.lstrip("res:/"), File.READ)
 	if err != OK:
 		err = datei.open(pfad, File.READ)
 		if err != OK:
@@ -56,7 +57,7 @@ func lade_datei(pfad):
 # Speichert Text in eine Datei mit angegebenem Pfad.
 func save_file(text, pfad):
 	var datei = File.new()
-	var err = datei.open("user://" + pfad.lstrip("res:/"), File.WRITE)
+	var err = datei.open(OS.get_user_data_dir() + "/" + pfad.lstrip("res:/"), File.WRITE)
 	if err != OK:
 		printerr("Fehler beim Schreiben in Datei, error Code:", err)
 		return
@@ -99,9 +100,9 @@ func init_Skripte():
 	Skriptpfade["Spiellogik"] = "res://Skripte/Spielverwaltung/Logik.gd"
 
 func init_Icons():
-	Icons["Spieler"] = load("res://Bilder/Tabicons/Player_Icon.png")
-	Icons["Böse Münze 1"] = load("res://Bilder/Tabicons/BadCoin1_Icon.png")
-	Icons["Standard"] = load("res://Bilder/Tabicons/Standard.png")
+	Icons["Spieler"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/Player_Icon.png")
+	Icons["Böse Münze 1"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/BadCoin1_Icon.png")
+	Icons["Standard"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/Standard.png")
 
 func init_Codeeditoren():
 	var tabcontainer = get_node("TabContainer")
