@@ -12,9 +12,17 @@ func _ready():
 func _on_RandomCoin_toggled(button_pressed):
 	if einstellungen.randomCoinAn:
 		einstellungen.randomCoinAn = false
+		get_node("Coin-Regen").disabled = true
+		get_node("Speedboost").disabled = true
+		get_node("CoinMagnet").disabled = true
+		get_node("Regenschirm").disabled = true
 		print("aus")
 	else:
 		einstellungen.randomCoinAn = true
+		get_node("Coin-Regen").disabled = false
+		get_node("Speedboost").disabled = false
+		get_node("CoinMagnet").disabled = false
+		get_node("Regenschirm").disabled = false
 		print("an")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

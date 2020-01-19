@@ -6,6 +6,7 @@ onready var seite2 = optionen.get_node("Seite2-Editoren")
 onready var seite3 = optionen.get_node("Seite3-RandomCoin")
 onready var spiel = get_tree().get_root().get_node("Main").get_node("Spiel")
 onready var anleitung = get_tree().get_root().get_node("Main").get_node("Anleitung")
+onready var pauseButton = spiel.get_node("UI").get_node("Pause")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,6 +24,7 @@ func _on_Spielen_button_up():
 	print("Spielen")
 	
 	if einstellungen.erstesSpiel:
+		pauseButton.pressed = true
 		anleitung.visible = true
 		einstellungen.erstesSpiel = false
 	else:
