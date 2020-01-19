@@ -21,6 +21,8 @@ var richtungLinks = false
 
 var screen_size
 
+var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
+
 
 """
 Konstruktor der Klasse Kanone
@@ -138,8 +140,4 @@ func blobKollision():
 # Laedt das Bild in den Sprite
 # Muss ueber umweg geschehen, da Bilder nicht direkt aus dem userverzeichnis geladen werden koennen.
 func lade_Sprite_Bild():
-	var bild = Image.new()
-	bild.load("res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png")
-	var textur = ImageTexture.new()
-	textur.create_from_image(bild,0);
-	$Sprite.texture =  textur
+	$Sprite.texture =  persistenz.lade_bildtextur("res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png")
