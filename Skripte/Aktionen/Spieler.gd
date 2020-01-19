@@ -397,11 +397,11 @@ func _on_Spiel_draw():
 # Laedt die einzelnen Blobbilder und weist diese dem Spieler zu.
 func lade_sprites():
 	
-	setze_animationeigenschaften("negativ_1_gerade","Blob_1_gerade")
-	setze_animationeigenschaften("negativ_1_seitlich","Blob_1_seitlich")
+	setze_animationeigenschaften("negativ_1_gerade","Blob_2_gerade")
+	setze_animationeigenschaften("negativ_1_seitlich","Blob_2_seitlich")
 	
-	setze_animationeigenschaften("negativ_2_gerade","Blob_2_gerade")
-	setze_animationeigenschaften("negativ_2_seitlich","Blob_2_seitlich")
+	setze_animationeigenschaften("negativ_2_gerade","Blob_1_gerade")
+	setze_animationeigenschaften("negativ_2_seitlich","Blob_1_seitlich")
 	
 	setze_animationeigenschaften("neutral_gerade","Blob_3_gerade")
 	setze_animationeigenschaften("neutral_seitlich","Blob_3_seitlich")
