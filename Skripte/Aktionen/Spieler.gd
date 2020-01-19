@@ -34,6 +34,9 @@ enum blobStati {NEGATIV2, NEGATIV1, NEUTRAL, POSITIV1, POSITIV2}
 
 var bodenhoehe = 470
 
+var bilder = SpriteFrames.new()
+var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
+
 signal spielVerloren
 signal spielGewonnen
 
@@ -44,6 +47,8 @@ func _ready():
 	position.x = 224
 	
 	skalieren(0.8) #Kollisionshapes auf Startgröße skalieren
+	
+	lade_sprites()
 	
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
@@ -388,3 +393,31 @@ func _on_Spiel_hide():
 func _on_Spiel_draw():
 	speed = einstellungen.uebernehmeGeschwindigkeit()
 	Sprungkraft = einstellungen.uebernehmeSprungkraft()
+
+# Laedt die einzelnen Blobbilder und weist diese dem Spieler zu.
+func lade_sprites():
+	
+	setze_animationeigenschaften("negativ_1_gerade","Blob_1_gerade")
+	setze_animationeigenschaften("negativ_1_seitlich","Blob_1_seitlich")
+	
+	setze_animationeigenschaften("negativ_2_gerade","Blob_2_gerade")
+	setze_animationeigenschaften("negativ_2_seitlich","Blob_2_seitlich")
+	
+	setze_animationeigenschaften("neutral_gerade","Blob_3_gerade")
+	setze_animationeigenschaften("neutral_seitlich","Blob_3_seitlich")
+	
+	setze_animationeigenschaften("positiv_1_gerade","Blob_4_gerade")
+	setze_animationeigenschaften("positiv_1_seitlich","Blob_4_seitlich")
+	
+	setze_animationeigenschaften("positiv_2_gerade","Blob_5_gerade")
+	setze_animationeigenschaften("positiv_2_seitlich","Blob_5_seitlich")
+	
+	$AnimatedSprite.frames = bilder
+
+
+func setze_animationeigenschaften(animationsname, bildname):
+	var texture = persistenz.lade_bildtextur("res://Bilder/Standardspielfiguren/Spielfiguren/" + bildname + ".png")
+	bilder.add_animation(animationsname)
+	bilder.add_frame(animationsname, texture)
+	bilder.set_animation_loop(animationsname,true)
+	bilder.set_animation_speed(animationsname, 5.0)
