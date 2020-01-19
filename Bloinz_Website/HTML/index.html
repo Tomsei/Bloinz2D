@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="../CSS/complete.css">
         <link rel="stylesheet" href="../CSS/Bildergalerie.css">
-        <script src="../Skripte/spielupdate.js"></script>        
+        <script src="../Skripte/spielupdate.js"></script>
     </head>
     <body>
         <header>
@@ -46,13 +46,12 @@
         </header>
 
         <main id="hauptseite">
-            <head>
-                <h1 id="bloinz">Bloinz 2D</h1>
-            </head>
             <section class="spielsektion">
-                        <iframe id="spiel" src="../Spiel/gesamtesSpiel.html" frameborder="1" height="640" width="448"></iframe>
+				<div class="randombilder" id="links">
+				</div>
+            	<iframe id="spiel" src="../Spiel/gesamtesSpiel.html" frameborder="1" height="640" width="448"></iframe>
             </section>
-                        <button onclick="resizeSpielParent(640, 448)"> Reszie Testen</button>
+                <button onclick="resizeSpielParent(640, 448)"> Reszie Testen</button>
             <section id="projektInformationen">
                 <header>
                     <h2> Projekt Informationen</h2>
@@ -65,14 +64,19 @@
                     </p>
                     <h3>Spielbeschreibung</h3>
                     <p>
-                        Es handelt sich um ein einfaches Spiel in dem es darum geht, dass eine Spielfigur unterschiedliche Münzen einsammeln kann, welche jeweils unterschiedliche Auswirkungen auf den Spieler haben. Es gibt poitive Münzen, welche die Spielergröße erhöhen und negative welche sie verringert. Sobald der Spieler zu klein geworden ist, ist das Spiel verloren. Das Gewinnen eines Spiels ist vergleichbar. Hierzu muss der Spieler eine bestimmte Spielergröße erreicht haben.<br>
-                        Zusätzlich zu den Normalen Münzen gibt es noch die Zufallsmünzen. Diese lösen zufällig ausgewählte Aktionen aus, welche das Spiel Beeinflussen. Als positive Aktion zählt beispielsweise der Münzagnet, welcher die positiven Münzen zum Spieler zieht. Eine Negative Aktion ist beispielsweise ein Coin Regen von negativen Münzen
+                        Es handelt sich um ein einfaches Spiel in dem es darum geht, dass eine Spielfigur unterschiedliche Münzen einsammeln kann, welche jeweils unterschiedliche Auswirkungen auf den Spieler haben. Es gibt poitive Münzen, welche die Spielergröße / Punktzahl erhöhen und negative welche sie verringert. <br>
+                        Zusätzlich zu den Normalen Münzen gibt es noch die Zufallsmünzen.Diese lösen zufällig ausgewählte Aktionen aus, welche das Spiel Beeinflussen. Beispielsweise gibt es die Aktion Münz-Magnet, welche alle guten Münzen zum Spieler zieht. <br>
+						Positive Münze: <img src="../Bilder/GoodCoin1.png">
+						Negative Münze: <img src="../Bilder/BadCoin1.png">
+						Zufalls Münze: <img src="../Bilder/RandomCoinStandard.png">
+						<br>
+						Das Spiel ist zuende sobald der Spieler eine bestimmte Größe erreicht hat. Sobald der Spieler ganz groß wird, also die Größe 25 erreicht hat ist das Spiel gewonnen. also die größe durch Negative Münzen verringert wurde hat der Spieler verloren. 
                     </p>
                 </article>
             </section>
             <section id="galeriebereich" >
-                <h2>Galerie</h2>
-                <div id="galerie">
+                <h2>Galerie der besten Spielfiguren</h2>
+                <div id="galerie">                
                     <div class="bild">
                         <img src="../Bilder/Blob_1_gerade.png">
                     </div>
@@ -98,6 +102,7 @@
                         <img src="../Bilder/Blob_2_gerade.png">
                     </div>
                 </div>
+                <button onclick="test()"> Reszie Testen</button>
             </section>
             <section id="godot">
                 <article id="godot">
@@ -113,7 +118,7 @@
                         zuätzlich empfehlen wir als Tutorial <a href="https://docs.godotengine.org/de/latest/getting_started/step_by_step/your_first_game.html" target="_blank">Dein erstes Spiel</a>
                     </p>
                 </article>
-            </section>
+            </section>            
         </main>
         <footer>
             <p>

@@ -10,4 +10,5 @@ function resizeSpielParent(hoehe, breite) {
     
     spiel.height = hoehe + 'px';
     spiel.width = breite + 'px';           
- }
+}
+

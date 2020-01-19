@@ -14,6 +14,13 @@ onready var gewonnen = get_tree().get_root().get_node("Main").get_node("Ende").g
 onready var verloren = get_tree().get_root().get_node("Main").get_node("Ende").get_node("EndeVerloren")
 
 var muenzmagnetAktiv = false
+var raondomCoinAn = true
+
+#Variablen zum Prüfen welche Randomaktionen aktiviert sind
+var randomCoinFunktionMuenzregen = true;
+var randomCoinFunktionMagnet = true;
+var randomCoinFunktionSchutz = true;
+var randomCoinFunktionGeschwindigkeit = true;
 
 
 """
@@ -58,15 +65,19 @@ Methode zum erstellen einer Münz Instanz --> es wird eine Münze als neue Szene
 Zufällig wird eine Zahl ermittelt mit welcher dann eine zufällige Unterklasse der Münzen
 ausgewählt wird
 """
-
 func erstelleMuenze():
 	
 	#ermitteln einer Random Zahl Zufall
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var zufall = rng.randi_range(0,10)
+	var zufall
 	
-
+	#Nur Wenn Random Coin Aktiv ist soll auch eine Münze erstellt werden können
+	if raondomCoinAn:
+		zufall = rng.randi_range(0,10)
+	else:
+		zufall = rng.randi_range(0,9)
+	
 	#Variablen zum erzeugen einer neuen Münz Instanz
 	var muenze
 	var istrandom = false
@@ -86,7 +97,6 @@ func erstelleMuenze():
 			istrandom = true #Die neue Münze ist ein Random Coin
 	
 	var neu = muenze.instance() #Instance mit der passenden Subklasse erzeugen
-
 	 
 	#die Signale müssen verknüpft werden
 	neu.connect("muenze_beruehrt", spieler, "_on_Muenze_muenze_beruehrt")
@@ -119,16 +129,44 @@ Methode die eine Random Aktion auswählt, sobald ein Random Coin berührt wurde
 """
 func _on_randomMuenze_randomAktion():
 	
-	#Zufallszahl ermitteln
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-	var zufall = rng.randi_range(0,3)
-
-	match zufall:
-		0: randomAktion_erstelleMuenzen()
-		1: randomAktion_erstelleSchutz()
-		2: randomAktion_muenzMagnet()
-		3: randomAktion_spielerGeschwindigkeit()
+	
+	
+	#am Anfang werden die Aktionen in die Liste Geschrieben, welche überhaubt aktiviert sind
+	var randomCoinAktionen = []
+	
+	if randomCoinFunktionMuenzregen:
+		randomCoinAktionen.append("Muenze")
+	
+	if randomCoinFunktionSchutz:
+		randomCoinAktionen.append("Schutz")
+	
+	if randomCoinFunktionMagnet:
+		randomCoinAktionen.append("Magnet")
+	
+	if randomCoinFunktionGeschwindigkeit:
+		randomCoinAktionen.append("Geschwindigkeit")
+	
+	print (randomCoinAktionen)
+	
+	#Nur wenn es eine RandomAktion gab wird der Auswahl Prozess gestartet
+	if randomCoinAktionen.size() != 0:
+		
+		#Zufällige es Element aus dem Array von Aktionen wählen
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+		var zufall = rng.randi_range(0,randomCoinAktionen.size()-1)
+		var aktion = randomCoinAktionen[zufall]
+		
+		print (aktion)
+		
+		match aktion:
+			"Muenze": randomAktion_erstelleMuenzen()
+			"Schutz": randomAktion_erstelleSchutz()
+			"Magnet": randomAktion_muenzMagnet()
+			"Geschwindigkeit": randomAktion_spielerGeschwindigkeit()
+	#ansonsten Wird der Randomcoin deaktiviert, da er keine Aktionen ausführt
+	else:
+		raondomCoinAn = false
 
 
 """
@@ -150,6 +188,7 @@ Randomaktion die den Münzmagnet anschaltet
 func randomAktion_muenzMagnet():
 	muenzmagnetAktiv = true
 	randomCoinZeit.start()
+	spieler.get_node("Magnet").show()
 
 
 var erhoehteGeschwindigkeit = false
@@ -164,20 +203,30 @@ func randomAktion_spielerGeschwindigkeit():
 		geschwindigkeitZeit.start()
 
 
-#Gerade wird alle 10 Sekunden die Kanone erzeugt
+"""
+Nach der Raketenzeit soll eine Kanone erstellt werden
+"""
 func _on_Timer_timeout():
 	erstelleKanone()
 
 	
-
+"""
+nach der Münzzeit soll eine Münze erstellt werden
+"""
 func _on_MuenzTimer_timeout():
 	erstelleMuenze()
 
+"""
+Nach der Münzmagnet Zeit soll dieser wieder inaktiv werden
+"""
 func _on_RandomCoinZeit_timeout():
 	muenzmagnetAktiv = false
+	spieler.get_node("Magnet").hide()
 
 
-
+"""
+Nach der Zeit der Geschwindigkeit, soll Spieler wieder langsamer werden
+"""
 func _on_RCGeschwindigkeit_timeout():
 	if erhoehteGeschwindigkeit:
 		spieler.veraendereSpielerGeschwindigkeit(-300)
@@ -185,11 +234,10 @@ func _on_RCGeschwindigkeit_timeout():
 
 
 func _on_Spiel_draw():
-	pass
 	raketenZeit = einstellungen.uebernehmeRaketenzeit()
 	print(raketenZeit)
 	raketenTimer.set_wait_time(raketenZeit)
-	#raketenTimer.start()
+	raondomCoinAn = einstellungen.randomCoinAn
 
 
 func _on_Spiel_hide():
