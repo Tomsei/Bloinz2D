@@ -51,6 +51,7 @@
 [ext_resource path="res://Bilder/Buttons/Maleneditor/HintergrundColorpicker.png" type="Texture" id=49]
 
 [node name="Maleneditor" type="Node2D"]
+pause_mode = 2
 
 [node name="CoinWechsel" type="PopupDialog" parent="."]
 margin_left = 276.527
