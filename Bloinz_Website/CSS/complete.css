@@ -39,7 +39,6 @@ nav ul {
     background: #d5f4ff;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    font-family: "Oswald"
 }
 
 nav ul li {
@@ -99,6 +98,7 @@ ul li a img{
 /* CSS für die Spielanwendung*/
 
 .spielsektion{
+	margin-top: 4%;
     text-align: center;
 }
 
@@ -108,7 +108,7 @@ iframe {
     border-color: rgb(0, 0, 0);
     border-width: 5px;
     border-radius: 10px;
-    box-shadow: 0px 10px 50px 40px rgba(204, 198, 237, 0.8)
+    box-shadow: 0px 10px 50px 40px #b0d0dd
 }
 
 h1#bloinz {
