@@ -18,6 +18,8 @@ var SpeedboostAn = true
 func _ready():
 	get_tree().paused = false
 	JavaScript.eval("resizeSpiel(640,448)")
+	
+	preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance().init()
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
