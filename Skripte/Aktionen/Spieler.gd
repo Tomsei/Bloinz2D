@@ -396,7 +396,7 @@ func _on_Spiel_draw():
 
 # Laedt die einzelnen Blobbilder und weist diese dem Spieler zu.
 func lade_sprites():
-	print("lade Sprites")
+	bilder = SpriteFrames.new()
 	setze_animationeigenschaften("negativ_1_gerade","Blob_2_gerade")
 	setze_animationeigenschaften("negativ_1_seitlich","Blob_2_seitlich")
 	
