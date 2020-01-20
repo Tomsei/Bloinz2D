@@ -26,10 +26,10 @@ func starteSpiel():
 	spiel.visible = true
 	JavaScript.eval("resizeSpiel(640,448)")
 	
-	#print(einstellungen.erstesSpiel)
 	if einstellungen.erstesSpiel:
 		anleitung.visible = true
 		einstellungen.erstesSpiel = false
+		get_tree().paused = true
 	else:
 		anleitung.visible = false
 		get_tree().paused = false
