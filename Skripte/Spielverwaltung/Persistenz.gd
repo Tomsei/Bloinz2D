@@ -4,6 +4,8 @@ var hauptverzeichnis_benutzer = OS.get_user_data_dir() + "/"
 var nicht_kopieren = [".git", ".gitignore", "project.godot", ".cfg"]
 var dateien_behalten = false
 func _ready():
+	if (OS.get_user_data_dir() != "/userfs"):
+		hauptverzeichnis_benutzer = OS.get_user_data_dir()
 	pass
 
 func init():
@@ -123,6 +125,7 @@ func erstelle_dateien(dateienpfad):
 	var datei = File.new()
 	# Entferne den Pfadanfang um mehrfache Slashes zu vermeiden.
 	dateienpfad = "res://" + dateienpfad.lstrip("res:/")
+	print(dateienpfad)
 	if datei.file_exists(dateienpfad) == true:
 		var dateiname = dateienpfad.split("/")
 		dateiname = dateiname[dateiname.size() -1]
@@ -134,7 +137,7 @@ func erstelle_dateien(dateienpfad):
 			speicher_bild_als_variant(dateienpfad.rstrip(".import"), hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
 		elif dateienpfad.find(".wav") != -1:
 			speicher_wav_als_variant(dateienpfad.rstrip(".import"), hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/").rstrip(".import"))
-		else:
+		elif dateienpfad.find(".gd") != -1 || dateienpfad.find(".tscn") != -1:
 			speicher_skript_oder_szene_als_var(dateienpfad, hauptverzeichnis_benutzer + dateienpfad.lstrip("res:/"))
 			
 

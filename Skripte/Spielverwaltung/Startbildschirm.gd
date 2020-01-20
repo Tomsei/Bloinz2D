@@ -7,7 +7,8 @@ var dateien_ueberschreiben = false
 
 # Wird beim Start aufgerufen.
 func _ready():
-	stuktur_erstellen(hauptpfad_originale)
+	#stuktur_erstellen(hauptpfad_originale)
+	pass
 
 
 # Wird mit Oberordner aufgerufen. Alle Dateien die hier sind, sollen erstellt werden.
