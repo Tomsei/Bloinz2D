@@ -14,11 +14,15 @@ var variablen = [{}]
 var funktionen_mit_variablen = [{}]
 var aktuell_angezeigte_funktion
 var code_veraendert = false
+var hauptverzeichnis_benutzer = OS.get_user_data_dir() + "/"
 
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
 
 # Funktion welche beim start aufgerufen wird.
 func _ready():
+	# Setze das Hauptverzeichnis passend mit Slashes.
+	if (OS.get_user_data_dir() != "/userfs"):
+		hauptverzeichnis_benutzer = OS.get_user_data_dir()
 	# Initiiere Parameter.
 	init()
 
