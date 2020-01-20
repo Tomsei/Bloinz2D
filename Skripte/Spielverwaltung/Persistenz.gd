@@ -6,7 +6,6 @@ var dateien_behalten = false
 func _ready():
 	if (OS.get_user_data_dir() != "/userfs"):
 		hauptverzeichnis_benutzer = OS.get_user_data_dir()
-	pass
 
 func init():
 	dateien_behalten = true
@@ -125,7 +124,6 @@ func erstelle_dateien(dateienpfad):
 	var datei = File.new()
 	# Entferne den Pfadanfang um mehrfache Slashes zu vermeiden.
 	dateienpfad = "res://" + dateienpfad.lstrip("res:/")
-	print(dateienpfad)
 	if datei.file_exists(dateienpfad) == true:
 		var dateiname = dateienpfad.split("/")
 		dateiname = dateiname[dateiname.size() -1]

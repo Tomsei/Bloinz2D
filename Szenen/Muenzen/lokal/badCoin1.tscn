@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Szenen/Muenzen/Muenze.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Skripte/Aktionen/Muenze/badCoin1.gd" type="Script" id=2]
+
+[node name="Muenze" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
