@@ -53,6 +53,5 @@ texture = ExtResource( 9 )
 position = Vector2( 352, 481 )
 texture = ExtResource( 10 )
 [connection signal="hide" from="." to="MuenzenTimer" method="_on_Start_hide"]
-[connection signal="hide" from="." to="." method="_on_Start_hide"]
 [connection signal="button_up" from="SpielStarten" to="SpielStarten" method="_on_SpielStarten_button_up"]
 [connection signal="timeout" from="MuenzenTimer" to="MuenzenTimer" method="_on_MuenzenTimer_timeout"]

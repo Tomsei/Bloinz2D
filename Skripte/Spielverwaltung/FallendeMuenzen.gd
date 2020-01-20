@@ -8,9 +8,8 @@ onready var start = get_tree().get_root().get_node("Main").get_node("Start")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	muenzenTimer.set_wait_time(2)
-	muenzenTimer.start()
-	erstelleMuenze()
-	pass
+	#muenzenTimer.start()
+	#erstelleMuenze()
 
 
 func erstelleMuenze():

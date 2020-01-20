@@ -310,7 +310,7 @@ func blobVeranederung(var seitlich):
 			else:
 				$AnimatedSprite.play("positiv_2_gerade")
 				skalieren(1.0)
-		25:
+		25, 26, 27, 28, 29:
 			emit_signal("spielGewonnen")
 			$AnimatedSprite.play("neutral_gerade")
 			blobGroesse = 12

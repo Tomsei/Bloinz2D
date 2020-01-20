@@ -11,10 +11,10 @@
 [ext_resource path="res://Bilder/Buttons/Anleitung/PfeilOben.png" type="Texture" id=9]
 [ext_resource path="res://Bilder/Buttons/Anleitung/PfeilLinks.png" type="Texture" id=10]
 [ext_resource path="res://Bilder/Buttons/Anleitung/PfeilRechts.png" type="Texture" id=11]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar1.png" type="Texture" id=12]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar0.png" type="Texture" id=13]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar2.png" type="Texture" id=14]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar3.png" type="Texture" id=15]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_leer.png" type="Texture" id=12]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_voll.png" type="Texture" id=13]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_anzeiger.png" type="Texture" id=14]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_rand.png" type="Texture" id=15]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 3
@@ -99,45 +99,23 @@ texture = ExtResource( 10 )
 position = Vector2( 55.3152, 15.3184 )
 texture = ExtResource( 11 )
 
-[node name="LifeBar" type="Label" parent="."]
-margin_left = 124.0
-margin_top = 546.614
-margin_right = 323.001
-margin_bottom = 560.614
-text = "Hier siehst du, wie gut es läuft:"
-
-[node name="LifeBar2" type="Label" parent="."]
-margin_left = 8.19313
-margin_top = 584.133
-margin_right = 70.1931
-margin_bottom = 598.133
-text = "Nicht gut"
-
-[node name="LifeBar3" type="Label" parent="."]
-margin_left = 381.427
-margin_top = 586.027
-margin_right = 433.427
-margin_bottom = 600.027
-text = "Sehr gut"
-
-[node name="TextureProgress" type="TextureProgress" parent="."]
-margin_left = 74.0
-margin_top = 571.0
-margin_right = 371.663
-margin_bottom = 610.542
+[node name="LifeBar" type="TextureProgress" parent="."]
+margin_left = 84.0
+margin_top = 580.617
+margin_right = 364.0
+margin_bottom = 602.617
 max_value = 25.0
 value = 12.0
 texture_under = ExtResource( 12 )
-texture_over = ExtResource( 13 )
-texture_progress = ExtResource( 14 )
+texture_progress = ExtResource( 13 )
 
-[node name="HSlider" type="HSlider" parent="TextureProgress"]
-margin_left = 10.0
-margin_top = 12.0
-margin_right = 290.0
-margin_bottom = 28.0
-custom_icons/grabber_disabled = ExtResource( 15 )
-custom_icons/grabber = ExtResource( 15 )
+[node name="LifeBarAnzeiger" type="HSlider" parent="LifeBar"]
+margin_left = 0.0104065
+margin_top = 3.04236
+margin_right = 280.01
+margin_bottom = 19.0424
+custom_icons/grabber_disabled = ExtResource( 14 )
+custom_icons/grabber = ExtResource( 14 )
 custom_styles/slider = SubResource( 2 )
 custom_styles/grabber_disabled = SubResource( 3 )
 custom_styles/grabber_highlight = SubResource( 4 )
@@ -147,4 +125,29 @@ max_value = 25.0
 value = 12.0
 editable = false
 scrollable = false
+ticks_on_borders = false
 
+[node name="LifeBar_rand" type="Sprite" parent="LifeBar"]
+position = Vector2( 140.011, 11.0284 )
+texture = ExtResource( 15 )
+
+[node name="LifeBarErklärung" type="Label" parent="LifeBar"]
+margin_left = 41.6376
+margin_top = -34.0028
+margin_right = 240.639
+margin_bottom = -20.0028
+text = "Hier siehst du, wie gut es läuft:"
+
+[node name="NichtGut" type="Label" parent="LifeBar/LifeBarErklärung"]
+margin_left = -115.807
+margin_top = 37.519
+margin_right = -53.8069
+margin_bottom = 51.519
+text = "Nicht gut"
+
+[node name="SehrGut" type="Label" parent="LifeBar/LifeBarErklärung"]
+margin_left = 257.427
+margin_top = 39.413
+margin_right = 309.427
+margin_bottom = 53.413
+text = "Sehr gut"

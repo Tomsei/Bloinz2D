@@ -4,10 +4,10 @@
 [ext_resource path="res://Bilder/Buttons/Spiel/Pause.png" type="Texture" id=2]
 [ext_resource path="res://Bilder/Buttons/Spiel/Play.png" type="Texture" id=3]
 [ext_resource path="res://Bilder/Buttons/Spiel/Fragezeichen.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar1.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar0.png" type="Texture" id=6]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar2.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar3.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_leer.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_voll.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_anzeiger.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_rand.png" type="Texture" id=8]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -46,29 +46,29 @@ texture_normal = ExtResource( 4 )
 [node name="PunkteAnzeige" type="TextureProgress" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 74.0
-margin_top = 571.383
-margin_right = 374.0
-margin_bottom = 611.383
-min_value = -1.0
-max_value = 26.0
+margin_left = 84.0
+margin_top = 580.509
+margin_right = 364.0
+margin_bottom = 602.509
+max_value = 25.0
 value = 12.0
 texture_under = ExtResource( 5 )
-texture_over = ExtResource( 6 )
-texture_progress = ExtResource( 7 )
+texture_progress = ExtResource( 6 )
 
 [node name="PunkteAnzeigePunkt" type="HSlider" parent="PunkteAnzeige"]
-margin_left = 9.83057
-margin_top = 8.6676
-margin_right = 289.831
-margin_bottom = 30.6676
-custom_icons/grabber_disabled = ExtResource( 8 )
+margin_left = -6.0
+margin_right = 286.0
+margin_bottom = 22.0
+custom_icons/grabber_disabled = ExtResource( 7 )
 custom_styles/slider = SubResource( 1 )
 custom_styles/grabber_area = SubResource( 2 )
 max_value = 25.0
 value = 12.0
 editable = false
 ticks_on_borders = true
+
+[node name="LifeBar_rand" type="Sprite" parent="PunkteAnzeige"]
+position = Vector2( 139.984, 11.0123 )
+texture = ExtResource( 8 )
 [connection signal="toggled" from="Pause" to="." method="_on_Pause_toggled"]
 [connection signal="button_up" from="AnleitungOeffnen" to="." method="_on_AnleitungOeffnen_button_up"]
-
