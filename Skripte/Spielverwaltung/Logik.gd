@@ -100,7 +100,7 @@ func erstelleMuenze():
 	 
 	#die Signale müssen verknüpft werden
 	neu.connect("muenze_beruehrt", spieler, "_on_Muenze_muenze_beruehrt")
-	neu.connect("neueMuenze", self, "_on_Muenze_neueMuenze")
+	#neu.connect("neueMuenze", self, "_on_Muenze_neueMuenze")
 	
 	#Für den Randomcoin muss ein weiteres Signal verknüpft werden
 	if (istrandom):
@@ -234,9 +234,12 @@ func _on_RCGeschwindigkeit_timeout():
 
 
 func _on_Spiel_draw():
-	raketenZeit = einstellungen.uebernehmeRaketenzeit()
-	print(raketenZeit)
-	raketenTimer.set_wait_time(raketenZeit)
+	if einstellungen.raketenzeitGeaendert:
+		print("slider")
+		raketenZeit = einstellungen.uebernehmeRaketenzeit()
+		print(raketenZeit)
+		raketenTimer.set_wait_time(raketenZeit)
+		einstellungen.raketenzeitGeaendert = false
 	raondomCoinAn = einstellungen.randomCoinAn
 
 

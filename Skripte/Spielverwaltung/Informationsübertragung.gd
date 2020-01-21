@@ -1,8 +1,11 @@
 extends Node
 
 var sprungkraft 
+var sprungkraftGeaendert = false
 var raketenzeit 
+var raketenzeitGeaendert = false 
 var geschwindigkeit 
+var geschwindigkeitGeaendert = false
 var soundAn = true
 var randomCoinAn = true
 var spielfigurgroesse

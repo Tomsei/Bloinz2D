@@ -17,7 +17,7 @@ _global_script_class_icons={
 
 config/name="Bloinz 2D"
 run/main_scene="res://Szenen/Oberflaeche/Main.tscn"
-config/icon="res://icon.png"
+config/icon="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_geradeStandard.png"
 
 [autoload]
 

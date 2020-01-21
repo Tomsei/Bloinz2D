@@ -48,15 +48,16 @@ func _on_SchwierigkeitSlider_value_changed(value):
 
 func _on_SprungkraftSlider_value_changed(value):
 	$SprungkraftAktuell.text = str(value)
-	#spieler.Sprungkraft = value
+	einstellungen.sprungkraftGeaendert = true
+
 
 func _on_BlobSlider_value_changed(value):
 	$BlobAktuell.text = str(value)
-	#spieler.speed = value
+	einstellungen.geschwindigkeitGeaendert = true
 
 func _on_RaketenSlider_value_changed(value):
 	$RaketeAktuell.text = str(value)
-	#rakete.set_wait_time(value)
+	einstellungen.raketenzeitGeaendert = true
 
 
 

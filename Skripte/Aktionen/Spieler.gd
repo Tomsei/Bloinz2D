@@ -391,8 +391,14 @@ func _on_Spiel_hide():
 	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
 
 func _on_Spiel_draw():
-	speed = einstellungen.uebernehmeGeschwindigkeit()
-	Sprungkraft = einstellungen.uebernehmeSprungkraft()
+	if einstellungen.geschwindigkeitGeaendert:
+		print("sliderGeschwindigkeit")
+		speed = einstellungen.uebernehmeGeschwindigkeit()
+		einstellungen.geschwindigkeitGeaendert = false
+	if einstellungen.sprungkraftGeaendert:
+		print ("sliderSprungkraft")
+		Sprungkraft = einstellungen.uebernehmeSprungkraft()
+		einstellungen.sprungkraftGeaendert = false
 
 # Laedt die einzelnen Blobbilder und weist diese dem Spieler zu.
 func lade_sprites():

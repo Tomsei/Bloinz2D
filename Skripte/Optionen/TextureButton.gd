@@ -8,6 +8,8 @@ onready var anleitung = get_tree().get_root().get_node("Main").get_node("Anleitu
 onready var seite1 = optionen.get_node("Seite1-Slider")
 onready var seite2 = optionen.get_node("Seite2-Editoren")
 onready var seite3 = optionen.get_node("Seite3-RandomCoin")
+onready var anleitungOeffnen = spiel.get_node("UI").get_node("AnleitungOeffnen")
+onready var pauseButton = spiel.get_node("UI").get_node("Pause")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -50,6 +52,8 @@ func _on_NochmalSpielen_button_up():
 # ruft die Optionen auf
 func _on_Optionen_button_up():
 	get_tree().paused = true
+	anleitungOeffnen.visible = false
+	pauseButton.pressed = false 
 	
 	start.visible = false
 	optionen.visible = true
