@@ -5,8 +5,6 @@ export var speed = 500
 export var Schwerkraft = 400
 export var Sprungkraft = 500
 
-# Szenengroesse
-var screen_size
 
 #Die Bewegung als Klassen Variable, damit über Delta Verönderungen stattfinden können | Vektor um in alle Richtungen bewegen zu können
 var Bewegung = Vector2()
@@ -42,8 +40,7 @@ signal spielGewonnen
 
 #Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
 func _ready():
-	#Die Bildschirmgröße abspeichern
-	screen_size = get_viewport_rect().size
+	#Blob Positionieren
 	position.x = 224
 	
 	skalieren(0.8) #Kollisionshapes auf Startgröße skalieren
@@ -85,7 +82,7 @@ func _physics_process(delta):
 	kollisionsPruefung()
 	
 	#Sicherstellen, dass abhängig von der Bildschirmgröße das Objekt nicht raus laufen kann
-	position.x = clamp(position.x, 0, screen_size.x)
+	position.x = clamp(position.x, 0, 448)
 
 
 #Funktion zum ermitteln welche Tasten gedrückt wurden 
