@@ -166,7 +166,7 @@ Methode, die bei jedem neuen Time_Frame aufgerufen wird
 func _process(delta):
 		if Input.is_action_just_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
-			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
+			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767 and mouseposition.y >= 0:
 				if modus =="Fuellen":
 					array = create_2d_array(64,64,Color(0,0,0,0));
 					befuellen();
@@ -180,7 +180,7 @@ func _process(delta):
 					aktualisiere_Vorschau();
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
-			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
+			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.y >= 0 and mouseposition.x < 767:
 				if modus=="Stift":
 					punkt_malen_pixel((mouseposition.x-256),mouseposition.y);
 					aktualisiere_Vorschau();

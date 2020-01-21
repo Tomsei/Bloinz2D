@@ -40,11 +40,18 @@ func _ready():
 	
 	skalieren(0.8) #Kollisionshapes auf Startgröße skalieren
 	
+	########
+	#
+	blob_aktualisieren();
+	########
+	
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
 	
 	einstellungen.setzeSpielerEinstellungen(Sprungkraft, speed)
 
+func blob_aktualisieren():
+	pass;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind
 func _physics_process(delta):

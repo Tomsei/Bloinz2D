@@ -83,16 +83,16 @@ text = "Nein"
 
 [node name="Zeichenflaeche" type="Sprite" parent="."]
 position = Vector2( 512, 258 )
+z_index = -1
 script = ExtResource( 1 )
 
 [node name="temporaereZeichenflaeche" type="Sprite" parent="."]
 position = Vector2( 512, 258 )
-z_index = 1
 
 [node name="Malenhintergrund" type="Sprite" parent="."]
 position = Vector2( 512, 257 )
 scale = Vector2( 8, 8 )
-z_index = -1
+z_index = -2
 texture = ExtResource( 2 )
 
 [node name="Speichern" type="Button" parent="."]
