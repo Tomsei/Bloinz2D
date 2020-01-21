@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Skripte/Spielverwaltung/Laden.gd" type="Script" id=1]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Ladelabel" type="Label" parent="."]
+margin_left = 174.468
+margin_top = 170.591
+margin_right = 214.468
+margin_bottom = 184.591
+text = "Lädt!"

@@ -58,6 +58,7 @@ func _on_Seite3_button_up():
 func _on_Ja_button_up():
 	$Popup.hide()
 	persistenz.zuruecksetzen()
+	get_tree().change_scene("res://Szenen/Oberflaeche/Main.tscn")
 
 
 func _on_Abbrechen_button_up():
