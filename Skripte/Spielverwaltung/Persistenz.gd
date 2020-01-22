@@ -3,13 +3,16 @@ extends Node2D
 var hauptverzeichnis_benutzer = OS.get_user_data_dir() + "/"
 var nicht_kopieren = [".git", ".gitignore", "project.godot", ".cfg"]
 var dateien_behalten = false
+
 func _ready():
 	if (OS.get_user_data_dir() != "/userfs"):
 		hauptverzeichnis_benutzer = OS.get_user_data_dir()
 
 func init():
+	var dateien_vorhanden = pruefe_ob_dateien_existieren()
 	dateien_behalten = true
 	erstelle_datei_und_ordnerstruktur("res://")
+	return dateien_vorhanden
 
 func zuruecksetzen():
 	dateien_behalten = false
@@ -147,3 +150,7 @@ func datei_existiert(dateipfad):
 func ordner_existiert(ordnerpfad):
 	var ordner = Directory.new()
 	return dateien_behalten && ordner.dir_exists(hauptverzeichnis_benutzer + ordnerpfad.lstrip("res:/"))
+
+func pruefe_ob_dateien_existieren():
+	var datei = File.new()
+	return datei.file_exists(hauptverzeichnis_benutzer + "icon.png")
