@@ -1,24 +1,25 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Skripte/Aktionen/Spieler.gd" type="Script" id=1]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_seitlich.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_gerade.png" type="Texture" id=2]
 [ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_gerade.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_seitlich.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_seitlich.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_seitlich.png" type="Texture" id=6]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_gerade.png" type="Texture" id=7]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_gerade.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_gerade.png" type="Texture" id=9]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_seitlich.png" type="Texture" id=10]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_gerade.png" type="Texture" id=11]
-[ext_resource path="res://Szenen/Spielfiguren/SpielerSchutz.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Bilder/Standardspielfiguren/Weiteres/Magnet_gedreht.png" type="Texture" id=13]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_gerade.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_seitlich.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_seitlich.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_seitlich.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_seitlich.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_gerade.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_gerade.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_seitlich.png" type="Texture" id=11]
+[ext_resource path="res://Skripte/Aktionen/AnimatedSprite.gd" type="Script" id=12]
+[ext_resource path="res://Szenen/Spielfiguren/SpielerSchutz.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Bilder/Standardspielfiguren/Weiteres/Magnet_gedreht.png" type="Texture" id=14]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "negativ_1_seitlich",
+"name": "neutral_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ) ],
@@ -28,42 +29,42 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "neutral_seitlich",
+"name": "negativ_2_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "positiv_1_seitlich",
+"name": "negativ_2_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "positiv_2_seitlich",
+"name": "neutral_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "negativ_1_gerade",
+"name": "positiv_1_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
-"name": "positiv_2_gerade",
+"name": "positiv_2_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "neutral_gerade",
+"name": "negativ_1_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
-"name": "negativ_2_seitlich",
+"name": "positiv_2_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "negativ_2_gerade",
+"name": "negativ_1_seitlich",
 "speed": 5.0
 } ]
 
@@ -88,30 +89,32 @@ func abspielen(sound):
 		play()"
 
 [node name="Player" type="KinematicBody2D"]
-position = Vector2( 1.85529, 0.205933 )
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "negativ_2_gerade"
+script = ExtResource( 12 )
 
 [node name="physischeKollisionBox" type="CollisionPolygon2D" parent="."]
-visible = false
-polygon = PoolVector2Array( -9.86449, -23.0926, 10.372, -22.8038, 26.445, -5.91447, 25.4254, 24.0598, 6.86996, 29.5652, -6.33864, 29.5749, -24.5316, 24.4676, -24.1238, -4.48712 )
+position = Vector2( -22, -25 )
+scale = Vector2( 0.90681, 0.788907 )
+polygon = PoolVector2Array( 0, 0 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 
 [node name="areaKollisionBox" type="CollisionPolygon2D" parent="Hitbox"]
-polygon = PoolVector2Array( -5.8407, -32.552, 5.91586, -32.3725, 31.0444, -7.96197, 31.8161, 22.5932, 18.1726, 36.4104, -18.0842, 37.0386, -31.9798, 21.6015, -31.6493, -10.021 )
+position = Vector2( -38, -45 )
+polygon = PoolVector2Array( 0, 0 )
 
-[node name="Schutz" parent="." instance=ExtResource( 12 )]
+[node name="Schutz" parent="." instance=ExtResource( 13 )]
 visible = false
 position = Vector2( 0, -40 )
 
 [node name="Magnet" type="Sprite" parent="."]
 visible = false
 position = Vector2( 4.20593, -25.5591 )
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 script = SubResource( 2 )
