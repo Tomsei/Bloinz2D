@@ -35,6 +35,7 @@ func starteSpiel():
 	else:
 		anleitung.visible = false
 		get_tree().paused = false
+		pauseButton.pressed = false
 
 
 # Startet das Spiel vom Startbildschirm

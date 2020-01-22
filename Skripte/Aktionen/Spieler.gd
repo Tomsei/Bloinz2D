@@ -424,3 +424,6 @@ func setze_animationeigenschaften(animationsname, bildname):
 	bilder.add_frame(animationsname, texture)
 	bilder.set_animation_loop(animationsname,true)
 	bilder.set_animation_speed(animationsname, 5.0)
+
+func _on_Player_spielVerloren():
+	pass # Replace with function body.
