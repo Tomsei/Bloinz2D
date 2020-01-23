@@ -64,77 +64,11 @@ func _on_Optionen_button_up():
 	seite2.visible = false
 	seite3.visible = false
 
-
-"""
-# Ruft den Spielstart auf
-func _on_Start_button_up():
-	print("Spiel starten")
-	spiel_starten()
-	#get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
-	#get_tree().paused = false
-
-# Ruft das Spiel nochmal auf, nachdem man gewonnen/verloren hat
-func _on_Nochmal_button_up():
-	print("Erneut spielen")
-	spiel_starten()
-
-# Öffnet die Optionen vom Startbildschirm aus
-func _on_Optionen_button_up():
-	print("Einstellungen")
-	optionen.visible = true
-	get_tree().paused = true
-	#get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
-
-
-# Öffnet den Malen-Editor aus den Optionen
-func _on_MalenEditor_button_up():
-	print("Wechsle zum malen")
-	get_tree().change_scene("res://Szenen/Editoren/Malen.tscn")
-
-func _on_NochmalSpielen_button_up():
-	print("Erneut spielen")
-	get_tree().change_scene("res://Szenen/Oberflaeche/Spieloberflaeche.tscn")
-
-# Geht von den normalen Einstellungen zu den weiteren Optionen
-"""
 func _on_mehr_pressed():
 	print("Weitere Einstellungen")
 	#mehrOptionen.visible = true;
 	JavaScript.eval("resizeSpiel(1000,1000)")
 
-"""
-# Geht von den Weiteren Optionen zurück zu den normalen Einstellungen
-func _on_zurueck_button_up():
-	print("Zurück zu Einstellungen")
-	#mehrOptionen.visible = false
-
-# Geht von den (weiteren) Optionen zurück zum Spiel
-func _on_zumSpiel_button_up():
-	print("Spielen")
-	#mehrOptionen.visible = false
-	optionen.visible = false
-	get_tree().paused = false
-
-func _on_CodeAnpassen_button_up():
-	print("gehe zum Editor")
-	get_tree().change_scene("res://Szenen/Editoren/textedit.tscn")
-
-
-func _on_DemoEinstellen_button_up():
-	print("Demo Einstellungen")
-	get_tree().change_scene("res://Szenen/Oberflaeche/DemoEinstellungen.tscn")
-
-func spiel_starten():
-	get_tree().paused = false
-	
-	start.visible = false
-	optionen.visible = false
-	ende.visible = false
-	spiel.visible = true
-
-func _on_Spielen_button_up():
-	pass # Replace with function body.
-"""
 
 func _on_MalenEditor_button_up():
 	print("Wechsle zum malen")
