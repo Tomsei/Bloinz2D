@@ -139,10 +139,12 @@ func _on_Spielen_button_up():
 func _on_MalenEditor_button_up():
 	print("Wechsle zum malen")
 	get_tree().change_scene("res://Szenen/Editoren/Malen.tscn")
+	get_tree().paused = false
 
 func _on_CodeEditor_button_up():
 	print("gehe zum Editor")
 	get_tree().change_scene("res://Szenen/Editoren/textedit.tscn")
+	get_tree().paused = false
 
 
 func _on_AllesZuruecksetzen_button_up():
