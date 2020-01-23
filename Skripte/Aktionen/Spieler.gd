@@ -51,6 +51,9 @@ func _ready():
 	$AnimatedSprite.play("neutral_gerade")
 	
 	einstellungen.setzeSpielerEinstellungen(Sprungkraft, speed)
+	
+	$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
+	$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind
@@ -241,12 +244,16 @@ func blobVeranederung(var seitlich):
 				blobstatus = blobStati.NEGATIV2
 				# Spiele den Sound fuer das Schrumpfen.
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
+				
+			$AnimatedSprite._create_collision_polygon("Blob_1_gerade")
+			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+				
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
-				skalieren(0.5)
+				#skalieren(0.5)
 			else:
 				$AnimatedSprite.play("negativ_2_gerade")
-				skalieren(0.5)
+				#skalieren(0.5)
 		
 		5, 6, 7, 8, 9:
 			# Prueft ob der Blobstatus sich veraendet hat.
@@ -257,12 +264,15 @@ func blobVeranederung(var seitlich):
 				blobstatus = blobStati.NEGATIV1
 				$AudioStreamPlayer2D.abspielen("Wachsen")
 			
+			$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
+			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+			
 			if seitlich:
 				$AnimatedSprite.play("negativ_1_seitlich")
-				skalieren(0.7)
+				#skalieren(0.7)
 			else:
 				$AnimatedSprite.play("negativ_1_gerade")
-				skalieren(0.7)
+				#skalieren(0.7)
 		
 		10, 11, 12, 13, 14:
 			# Prueft ob der Blobstatus sich veraendet hat.
@@ -273,12 +283,15 @@ func blobVeranederung(var seitlich):
 				blobstatus = blobStati.NEUTRAL
 				$AudioStreamPlayer2D.abspielen("Wachsen")
 			
+			$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
+			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+			
 			if seitlich:
 				$AnimatedSprite.play("neutral_seitlich")
-				skalieren(0.8)
+				#skalieren(0.8)
 			else:
 				$AnimatedSprite.play("neutral_gerade")
-				skalieren(0.8)
+				#skalieren(0.8)
 		15, 16, 17, 18, 19:
 			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.POSITIV1:
@@ -288,12 +301,15 @@ func blobVeranederung(var seitlich):
 				blobstatus = blobStati.POSITIV1
 				$AudioStreamPlayer2D.abspielen("Wachsen")
 			
+			$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
+			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+			
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
-				skalieren(0.9)
+				#skalieren(0.9)
 			else:
 				$AnimatedSprite.play("positiv_1_gerade")
-				skalieren(0.9)
+				#skalieren(0.9)
 		
 		20, 21, 22, 23, 24:
 			# Prueft ob der Blobstatus sich veraendet hat.
@@ -301,12 +317,15 @@ func blobVeranederung(var seitlich):
 				blobstatus = blobStati.POSITIV2
 				$AudioStreamPlayer2D.abspielen("Wachsen")
 			
+			$AnimatedSprite._create_collision_polygon("Blob_5_gerade")
+			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+			
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")
-				skalieren(1.0)
+				#skalieren(1.0)
 			else:
 				$AnimatedSprite.play("positiv_2_gerade")
-				skalieren(1.0)
+				#skalieren(1.0)
 		25, 26, 27, 28, 29:
 			emit_signal("spielGewonnen")
 			$AnimatedSprite.play("neutral_gerade")

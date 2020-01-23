@@ -274,6 +274,7 @@ func speichern(bildname, Knopf):
 	#Bild in den Dateien speichern
 	if Vorschau=="Blob":
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Spielfiguren/"+bildname+".png");
+		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Spielfiguren/"+bildname.substr(0,7)+"seitlich.png");
 		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
 	elif Vorschau =="Coin":
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Coins/"+bildname+".png");	
