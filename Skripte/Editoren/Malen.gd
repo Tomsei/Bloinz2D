@@ -273,7 +273,7 @@ func speichern(bildname, Knopf):
 	#Bild in den Dateien speichern
 	if Vorschau=="Blob":
 		bild.save_png("Bilder/Standardspielfiguren/Spielfiguren/"+bildname+".png");
-		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
+		bild.save_png("Bilder/Standardspielfiguren/Spielfiguren/"+bildname.substr(0,7)+"seitlich.png");
 	elif Vorschau =="Coin":
 		bild.save_png("Bilder/Standardspielfiguren/Coins/"+bildname+".png");	
 	else:
