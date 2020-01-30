@@ -15,6 +15,8 @@ var funktionen_mit_variablen = [{}]
 var aktuell_angezeigte_funktion
 var code_veraendert = false
 var hauptverzeichnis_benutzer = OS.get_user_data_dir() + "/"
+var funktionsnamen = []
+var funktionsknoepfe = []
 
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
 
@@ -137,13 +139,34 @@ func init_Codeeditoren():
 	# Der erste Codeeditor bekommt den Fokus.
 	tabcontainer.get_child(0).grab_focus()
 
+# Loest die Verbindung zu allen Funktionsknoepfen und entfernt diese.
 func leere_funktionsauswahl():
-	get_node("Funktionsauswahl").clear()
+	var funktionscontainer = get_node("FunktionsScrollContainer/FunktoinsContainer")
+	
+	for i in funktionsknoepfe.size():
+		funktionsknoepfe[i].disconnect("button_up", self, "_on_funktionsknopf")
+		funktionscontainer.remove_child(funktionsknoepfe[i])
 
+# Fuellt die Funktionsauswahl mit den fuer das ausgewaehlte Skript moeglichen Funktionen.
 func fuelle_funktionsauswahl():
-	get_node("Funktionsauswahl").add_item("alle")
+	erstelle_funktionknopf("alle")
 	for i in range(funktionen[cur_tab].size()):
-		get_node("Funktionsauswahl").add_item(funktionen[cur_tab].keys()[i])
+		erstelle_funktionknopf(funktionen[cur_tab].keys()[i])
+
+
+# Erstellt einen Funktionsknopf und fuegt diesem der Funktinosauswahlliste hinzu.
+func erstelle_funktionknopf(knopftext):
+	var funktionscontainer = get_node("FunktionsScrollContainer/FunktoinsContainer")
+	var knopf = Button.new()
+	
+	knopf.text = knopftext
+	knopf.flat = true
+	knopf.align = Button.ALIGN_LEFT
+	knopf.connect("button_up", self, "_on_funktionsknopf", [knopf.text])
+	
+	funktionscontainer.add_child(knopf)
+	funktionsknoepfe.append(knopf)
+	funktionsnamen.append(knopf.text)
 
 # Findet Funktionen und Variablen in einem Codeeditor und speichert diese in Variablen.
 # Ebenfalls werden die in den Funktionen genutzten Variablen diesen zugewiesen.
@@ -212,14 +235,10 @@ func zeige_variablen_von_funktion(funktionsname):
 	for variable in gelesene_variablen:
 		zeige_zeilen(variablen[cur_tab][variable][0], variablen[cur_tab][variable][1])
 
-# Setzt die Variable fuer die aktuell angezeigte Funktion.
-func setze_aktuell_angezeigte_funktion():
-	aktuell_angezeigte_funktion = get_node("Funktionsauswahl").get_item_text(get_node("Funktionsauswahl").selected)
 
-# Wenn in der Funktionsauswahl etwas gewaehlt wurde.
-# ID ist dabei die stelle an der die Auswahl steht.
-func _on_Funktionsauswahl_getroffen(ID):
-	setze_aktuell_angezeigte_funktion()
+# Wenn ein Funktionsknopf gedrueckt wurde, wird die Codeansicht auf die Funktion angepasst.
+func _on_funktionsknopf(knopftext):
+	aktuell_angezeigte_funktion = knopftext
 	if aktuell_angezeigte_funktion == "alle":
 		zeige_alles()
 	else:

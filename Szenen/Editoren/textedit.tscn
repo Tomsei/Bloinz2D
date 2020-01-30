@@ -24,13 +24,6 @@ margin_right = 560.0
 margin_bottom = 39.0
 text = "Funktionen:"
 
-[node name="Funktionsauswahl" type="OptionButton" parent="."]
-margin_left = 475.0
-margin_top = 46.0
-margin_right = 646.0
-margin_bottom = 66.0
-text = "Funktion auswählen!"
-
 [node name="Zurueck" type="Button" parent="."]
 margin_left = 557.651
 margin_top = 442.701
@@ -70,9 +63,16 @@ margin_right = 150.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Ja"
+
+[node name="FunktionsScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 483.0
+margin_top = 38.0
+margin_right = 670.0
+margin_bottom = 237.0
+
+[node name="FunktoinsContainer" type="VBoxContainer" parent="FunktionsScrollContainer"]
 [connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]
 [connection signal="tab_changed" from="TabContainer" to="." method="_on_TabContainer_tab_changed"]
-[connection signal="item_selected" from="Funktionsauswahl" to="." method="_on_Funktionsauswahl_getroffen"]
 [connection signal="button_up" from="Zurueck" to="." method="_on_Zurueck_button_up"]
 [connection signal="button_up" from="Speicherdialog/Knopfcontainer/Nein" to="." method="_on_nicht_speichern"]
 [connection signal="button_up" from="Speicherdialog/Knopfcontainer/Ja" to="." method="_on_Speicherdialog_speichern"]
