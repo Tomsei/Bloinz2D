@@ -154,3 +154,62 @@ func ordner_existiert(ordnerpfad):
 func pruefe_ob_dateien_existieren():
 	var datei = File.new()
 	return datei.file_exists(hauptverzeichnis_benutzer + "icon.png")
+
+func exportiere_eigene_dateien():
+	var exportstring = ""
+	var bilder = []
+	bilder = konvertiere_bilder_zu_base64()
+	exportstring = str(bilder[0])
+	return bilder
+
+func konvertiere_bilder_zu_base64():
+	var bilder = []
+	var bilderpfad = "res://Bilder/Standardspielfiguren/"
+	var coinpfad = bilderpfad + "Coins/"
+	var figurenpfad = bilderpfad + "Spielfiguren/"
+	var hintergrundpfad = bilderpfad + "Hintergrund/"
+	
+	bilder.append(lade_bildtextur(figurenpfad + "Blob_1_gerade.png"))
+	bilder.append(lade_bildtextur(figurenpfad + "Blob_2_gerade.png"))
+	bilder.append(lade_bildtextur(figurenpfad + "Blob_3_gerade.png"))
+	bilder.append(lade_bildtextur(figurenpfad + "Blob_4_gerade.png"))
+	bilder.append(lade_bildtextur(figurenpfad + "Blob_5_gerade.png"))
+	
+	bilder.append(lade_bildtextur(figurenpfad + "Kanonenkugel.png"))
+	
+	bilder.append(lade_bildtextur(coinpfad + "BadCoin1.png"))
+	bilder.append(lade_bildtextur(coinpfad + "BadCoin2.png"))
+	bilder.append(lade_bildtextur(coinpfad + "GoodCoin1.png"))
+	bilder.append(lade_bildtextur(coinpfad + "GoodCoin2.png"))
+	bilder.append(lade_bildtextur(coinpfad + "RandomCoin.png"))
+	
+	bilder.append(lade_bildtextur(hintergrundpfad + "Hintergrund.png"))
+	
+	return Marshalls.variant_to_base64(bilder ,true)
+
+
+func importiere_eigene_dateien(importstring):
+	print("Import")
+	var arr = Marshalls.base64_to_variant(importstring, true)
+	speicher_bilderarray(arr)
+
+func speicher_bilderarray(bilderarray):
+	var bilderpfad = "res://Bilder/Standardspielfiguren/"
+	var coinpfad = bilderpfad + "Coins/"
+	var figurenpfad = bilderpfad + "Spielfiguren/"
+	var hintergrundpfad = bilderpfad + "Hintergrund/"
+	
+	speicher_textur(bilderarray[0], figurenpfad + "Blob_1_gerade.png")
+	speicher_textur(bilderarray[1], figurenpfad + "Blob_2_gerade.png")
+	speicher_textur(bilderarray[2], figurenpfad + "Blob_3_gerade.png")
+	speicher_textur(bilderarray[3], figurenpfad + "Blob_4_gerade.png")
+	speicher_textur(bilderarray[4], figurenpfad + "Blob_5_gerade.png")
+	speicher_textur(bilderarray[5], figurenpfad + "Kanonenkugel.png")
+	
+	speicher_textur(bilderarray[6], coinpfad + "BadCoin1.png")
+	speicher_textur(bilderarray[7], coinpfad + "BadCoin2.png")
+	speicher_textur(bilderarray[8], coinpfad + "GoodCoin1.png")
+	speicher_textur(bilderarray[9], coinpfad + "GoodCoin2.png")
+	speicher_textur(bilderarray[10], coinpfad + "RandomCoin.png")
+	
+	speicher_textur(bilderarray[11], hintergrundpfad + "Hintergrund.png")

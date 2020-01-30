@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Skripte/Spielverwaltung/Nutzerdateien.gd" type="Script" id=1]
+
+[node name="Nutzerdateien" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Daten:"
+
+[node name="Nutzerdaten" type="TextEdit" parent="."]
+margin_left = 4.0
+margin_top = 18.0
+margin_right = 443.0
+margin_bottom = 315.0
+
+[node name="Importieren" type="Button" parent="."]
+margin_left = 10.3389
+margin_top = 333.428
+margin_right = 99.3389
+margin_bottom = 353.428
+text = "Importieren"
+
+[node name="Exportieren" type="Button" parent="."]
+margin_left = 351.521
+margin_top = 332.72
+margin_right = 436.521
+margin_bottom = 352.72
+text = "Exportieren"
+
+[node name="Zurueck" type="Button" parent="."]
+margin_left = 184.807
+margin_top = 333.428
+margin_right = 243.807
+margin_bottom = 353.428
+text = "Spielen"
+[connection signal="button_up" from="Importieren" to="." method="_on_Importieren"]
+[connection signal="button_up" from="Exportieren" to="." method="_on_Exportieren"]
+[connection signal="button_up" from="Zurueck" to="." method="_on_Zurueck"]
