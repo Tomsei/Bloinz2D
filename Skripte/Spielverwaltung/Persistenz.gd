@@ -66,6 +66,9 @@ func ist_ordner(dateiname):
 func speicher_bild_als_textur(bild, bildSpeicherpfad):
 	var textur = ImageTexture.new()
 	textur.create_from_image(bild)
+	speicher_textur(textur, bildSpeicherpfad)
+
+func speicher_textur(textur, bildSpeicherpfad):
 	var datei = File.new()
 	datei.open(hauptverzeichnis_benutzer + bildSpeicherpfad.lstrip("res:/"), File.WRITE)
 	datei.store_var(textur, true)
