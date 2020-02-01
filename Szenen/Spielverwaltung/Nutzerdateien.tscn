@@ -4,6 +4,7 @@
 
 [node name="Nutzerdateien" type="Node2D"]
 pause_mode = 2
+position = Vector2( 0, 222 )
 script = ExtResource( 1 )
 
 [node name="Label" type="Label" parent="."]
@@ -37,6 +38,17 @@ margin_top = 333.428
 margin_right = 243.807
 margin_bottom = 353.428
 text = "Spielen"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 15.8771
+margin_top = -205.292
+margin_right = 427.877
+margin_bottom = -10.2924
+text = "Hier kannst du dein aktuelles Design exportieren. Klicke dafür einfach auf \"Exportieren\", der Text aus dem Textfeld kopiert sich dann automatisch. Füge diesen Text an einer Stelle ein, wo du ihn speichern möchtest.
+
+Um das exportierte Design zu nutzen, füge den kopierten Text in das Textfeld ein und klicke auf \"importieren\"
+
+Achtung: Es wird nur das momentan aktive Design gespeichert! Deine Vorlagen werden nicht mit gespeichert. Wenn du diese ebenfalls haben möchtest, nutze sie als aktives Design und führe einen weiteren Export aus."
 [connection signal="button_up" from="Importieren" to="." method="_on_Importieren"]
 [connection signal="button_up" from="Exportieren" to="." method="_on_Exportieren"]
 [connection signal="button_up" from="Zurueck" to="." method="_on_Zurueck"]

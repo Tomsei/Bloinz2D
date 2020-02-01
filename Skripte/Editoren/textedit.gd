@@ -29,8 +29,8 @@ func _ready():
 	init()
 
 func init():
-	OS.set_window_size(Vector2(800,600))
-	JavaScript.eval("resizeSpiel(800,600)")
+	OS.set_window_size(Vector2(1030,680))
+	JavaScript.eval("resizeSpiel(1030,680)")
 	init_Skripte()
 	init_Icons()
 	init_Codeeditoren()
