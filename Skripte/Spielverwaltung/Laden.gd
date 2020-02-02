@@ -1,6 +1,7 @@
 extends Node2D
 
 func _ready():
+	print(get_tree());
 	var dateien_vorher_vorhanden
 	dateien_vorher_vorhanden = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance().init()
 	if dateien_vorher_vorhanden == true:

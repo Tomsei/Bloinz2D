@@ -275,13 +275,10 @@ func speichern(bildname, Knopf):
 	if Vorschau=="Blob":
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Spielfiguren/"+bildname+".png");
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Spielfiguren/"+bildname.substr(0,7)+"seitlich.png");
-		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
 	elif Vorschau =="Coin":
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Coins/"+bildname+".png");	
 	else:
-		for i in range(0,8):
-			#malenordner
-			persistenz.speicher_bild_als_textur(bild, "Bilder/Hintergruende/HimmelVerlauf"+str(i)+".png");
+		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Hintergrund/Hintergrund"+".png");
 	
 	#Knopf aktualisieren
 	knopf_aktualisieren(Knopf, bild);

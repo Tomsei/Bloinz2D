@@ -21,8 +21,7 @@ var SpeedboostAn = true
 func _ready():
 	get_tree().paused = true
 	JavaScript.eval("resizeSpiel(640,448)")
-	
-	pass # Replace with function body.
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -49,6 +48,9 @@ func uebernehmeRaketenzeit():
 
 func uebernehmeFigurGroesse():
 	return spielfigurgroesse
+	
+
+
 
 
 
