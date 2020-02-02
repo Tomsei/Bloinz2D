@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://Skripte/Editoren/Malen.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
@@ -44,11 +44,12 @@
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Loeschen.png" type="Texture" id=42]
 [ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_geradeStandard.png" type="Texture" id=43]
 [ext_resource path="res://Bilder/Hintergruende/Boden.png" type="Texture" id=44]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Wiederholen.png" type="Texture" id=45]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Rueckgaengig.png" type="Texture" id=46]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Verschieben.png" type="Texture" id=47]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/Ellipse.png" type="Texture" id=48]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/HintergrundColorpicker.png" type="Texture" id=49]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/speichern.png" type="Texture" id=45]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Wiederholen.png" type="Texture" id=46]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Rueckgaengig.png" type="Texture" id=47]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Verschieben.png" type="Texture" id=48]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Ellipse.png" type="Texture" id=49]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/HintergrundColorpicker.png" type="Texture" id=50]
 
 [node name="Maleneditor" type="Node2D"]
 pause_mode = 2
@@ -462,10 +463,10 @@ toggle_mode = true
 icon = ExtResource( 34 )
 
 [node name="Vorlage4" type="Button" parent="."]
-margin_left = 922.951
-margin_top = 365.074
-margin_right = 998.951
-margin_bottom = 435.074
+margin_left = 925.0
+margin_top = 362.0
+margin_right = 1001.0
+margin_bottom = 432.0
 icon = ExtResource( 35 )
 
 [node name="Vorlage3" type="Button" parent="."]
@@ -754,38 +755,44 @@ texture = ExtResource( 44 )
 
 [node name="speichernVorlage1" type="Button" parent="."]
 margin_left = 800.0
-margin_top = 162.0
-margin_right = 891.0
-margin_bottom = 182.0
-text = "speichern=>"
+margin_top = 156.0
+margin_right = 876.0
+margin_bottom = 194.0
+hint_tooltip = "speichern als Vorlage"
+icon = ExtResource( 45 )
 
 [node name="speichernVorlage2" type="Button" parent="."]
 margin_left = 800.0
-margin_top = 236.0
-margin_right = 891.0
-margin_bottom = 256.0
-text = "speichern=>"
+margin_top = 230.0
+margin_right = 876.0
+margin_bottom = 268.0
+hint_tooltip = "speichern als Vorlage"
+icon = ExtResource( 45 )
 
 [node name="speichernVorlage3" type="Button" parent="."]
 margin_left = 800.0
-margin_top = 310.0
-margin_right = 891.0
-margin_bottom = 330.0
-text = "speichern=>"
+margin_top = 304.0
+margin_right = 876.0
+margin_bottom = 342.0
+hint_tooltip = "speichern als Vorlage"
+icon = ExtResource( 45 )
 
 [node name="speichernVorlage4" type="Button" parent="."]
 margin_left = 800.0
-margin_top = 384.0
-margin_right = 891.0
-margin_bottom = 404.0
-text = "speichern=>"
+margin_top = 378.0
+margin_right = 876.0
+margin_bottom = 416.0
+rect_clip_content = true
+hint_tooltip = "speichern als Vorlage"
+icon = ExtResource( 45 )
 
 [node name="speichernVorlage5" type="Button" parent="."]
 margin_left = 800.0
-margin_top = 458.0
-margin_right = 891.0
-margin_bottom = 478.0
-text = "speichern=>"
+margin_top = 452.0
+margin_right = 876.0
+margin_bottom = 490.0
+hint_tooltip = "speichern als Vorlage"
+icon = ExtResource( 45 )
 
 [node name="UebernehmenBestaetigen" type="ConfirmationDialog" parent="."]
 margin_left = 351.56
@@ -814,7 +821,7 @@ margin_top = 160.0
 margin_right = 103.0
 margin_bottom = 198.0
 hint_tooltip = "Wiederholen"
-icon = ExtResource( 45 )
+icon = ExtResource( 46 )
 
 [node name="Rueckgaengig" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -824,7 +831,7 @@ margin_top = 160.0
 margin_right = 52.0
 margin_bottom = 198.0
 hint_tooltip = "Rückgängig"
-icon = ExtResource( 46 )
+icon = ExtResource( 47 )
 
 [node name="Bildrand" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -834,7 +841,7 @@ margin_top = 115.0
 margin_right = 52.0
 margin_bottom = 153.0
 hint_tooltip = "nach unten verschieben"
-icon = ExtResource( 47 )
+icon = ExtResource( 48 )
 
 [node name="Ellipse" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -845,7 +852,7 @@ margin_right = 103.0
 margin_bottom = 108.0
 hint_tooltip = "Ellipse"
 toggle_mode = true
-icon = ExtResource( 48 )
+icon = ExtResource( 49 )
 
 [node name="Farbauswahl" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -871,7 +878,7 @@ deferred_mode = true
 position = Vector2( 146.047, 214.507 )
 scale = Vector2( 9.3762, 13.7334 )
 z_index = -1
-texture = ExtResource( 49 )
+texture = ExtResource( 50 )
 
 [node name="Schliessen" type="Button" parent="Farbwahl"]
 margin_top = 438.0

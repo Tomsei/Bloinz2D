@@ -640,6 +640,7 @@ func _on_Leeren_pressed():
 	bild.fill(Color(0,0,0,0));
 	setze_Zeichenflaeche();
 	Abbild_auf_Rueckgaengigstapel();
+	aktualisiere_Vorschau();
 
 
 
