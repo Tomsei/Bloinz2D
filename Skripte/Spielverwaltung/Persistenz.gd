@@ -18,6 +18,10 @@ func zuruecksetzen():
 	dateien_behalten = false
 	erstelle_datei_und_ordnerstruktur("res://")
 
+func skripte_zuruecksetzen():
+	dateien_behalten = false
+	erstelle_datei_und_ordnerstruktur("res://Skripte")
+
 # Laedt ein Image aus uebergebenem Pfad. Pfad muss mit res:// anfangen.
 func lade_bild(bildpfad):
 	var textur = lade_bildtextur(bildpfad)

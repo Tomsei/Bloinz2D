@@ -15,10 +15,10 @@ text = "Lädt!"
 
 [node name="Loeschfrage" type="WindowDialog" parent="."]
 visible = true
-margin_left = 65.9101
-margin_top = 124.066
-margin_right = 378.91
-margin_bottom = 285.066
+margin_left = 66.0
+margin_top = 124.0
+margin_right = 379.0
+margin_bottom = 310.0
 
 [node name="Label" type="Label" parent="Loeschfrage"]
 margin_left = 10.985
@@ -43,5 +43,13 @@ margin_top = 104.0
 margin_right = 284.9
 margin_bottom = 134.0
 text = "Behalten"
+
+[node name="Skripteloeschen" type="Button" parent="Loeschfrage"]
+margin_left = 85.3185
+margin_top = 144.044
+margin_right = 222.319
+margin_bottom = 174.044
+text = "Nur Skripte löschen"
 [connection signal="button_up" from="Loeschfrage/Loeschen" to="." method="_on_Loeschen_button_up"]
 [connection signal="button_up" from="Loeschfrage/Behalten" to="." method="_on_Behalten_button_up"]
+[connection signal="button_up" from="Loeschfrage/Skripteloeschen" to="." method="_on_Skripteloeschen"]
