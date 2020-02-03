@@ -875,17 +875,24 @@ edit_alpha = false
 deferred_mode = true
 
 [node name="Sprite" type="Sprite" parent="Farbwahl"]
-position = Vector2( 146.047, 214.507 )
-scale = Vector2( 9.3762, 13.7334 )
+position = Vector2( 146.047, 227.119 )
+scale = Vector2( 9.3762, 14.5217 )
 z_index = -1
 texture = ExtResource( 50 )
 
-[node name="Schliessen" type="Button" parent="Farbwahl"]
+[node name="Zurueck" type="Button" parent="Farbwahl"]
 margin_top = 438.0
 margin_right = 290.0
 margin_bottom = 468.0
 rect_min_size = Vector2( 0, 30 )
-text = "übernehmen"
+text = "Zurück"
+
+[node name="Uebernehmen" type="Button" parent="Farbwahl"]
+margin_top = 468.0
+margin_right = 290.0
+margin_bottom = 498.0
+rect_min_size = Vector2( 0, 30 )
+text = "Übernehmen"
 [connection signal="pressed" from="CoinWechsel/Ja" to="Zeichenflaeche" method="_on_Ja_pressed"]
 [connection signal="pressed" from="CoinWechsel/Nein" to="Zeichenflaeche" method="_on_Nein_pressed"]
 [connection signal="pressed" from="Speichern" to="Zeichenflaeche" method="_on_Speichern_pressed"]
@@ -959,4 +966,5 @@ text = "übernehmen"
 [connection signal="pressed" from="Ellipse" to="Zeichenflaeche" method="_on_Ellipse_pressed"]
 [connection signal="pressed" from="Farbauswahl" to="Zeichenflaeche" method="_on_Farbauswahl_pressed"]
 [connection signal="hide" from="Farbwahl" to="Zeichenflaeche" method="_on_ColorPicker_hide"]
-[connection signal="pressed" from="Farbwahl/Schliessen" to="Zeichenflaeche" method="_on_Schliessen_pressed"]
+[connection signal="pressed" from="Farbwahl/Zurueck" to="Zeichenflaeche" method="_on_Zurueck_pressed"]
+[connection signal="pressed" from="Farbwahl/Uebernehmen" to="Zeichenflaeche" method="_on_Uebernehmen_pressed"]
