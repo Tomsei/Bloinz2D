@@ -29,8 +29,8 @@ func _ready():
 	init()
 
 func init():
-	OS.set_window_size(Vector2(800,600))
-	JavaScript.eval("resizeSpiel(800,600)")
+	OS.set_window_size(Vector2(1030,680))
+	JavaScript.eval("resizeSpiel(1030,680)")
 	init_Skripte()
 	init_Icons()
 	init_Codeeditoren()
@@ -184,8 +184,17 @@ func setze_funktion(textedit, text, zeile, skriptindex):
 		var texts = text.split(" ")
 		for i in range (texts.size()):
 			if texts[i] == "func":
-				# Setze den Funktionsnamen und lösche den Doppelpunkt
-				var funktions_name = texts[i + 1].rstrip(":")
+				var funktions_name = ""
+				# Eine Funktionszeile besteht immer mindestens aus 2 Werten: func und Funktionsname(Variable)
+				# Existieren mehr als 2 Werte muessen die restlichen Werte auch angehaengt werden.
+				if i < (texts.size() - 2):
+					for j in range ((i + 1), texts.size()):
+						# Der Doppelpunkt hinter dem Funktionsnamen wird nicht mit gespeichert.
+						funktions_name += " " + texts[j].rstrip(":")
+				# Wenn die Funktion keine weiteren Werte hat, muss nur der Funktionsname ohne
+				# abschliessendem Doppelpunkt gespeichert werden.
+				else:
+					funktions_name = texts[i + 1].rstrip(":")
 				# Bei mehr als einem Skript muss ein neues Dictionary hinzugefuegt werden.
 				if skriptindex > 0:
 					funktionen.append({})
