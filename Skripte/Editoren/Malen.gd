@@ -247,20 +247,14 @@ func _process(delta):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y <= 512:
 				wiederholenstapel = [];
-				Abbild_auf_Rueckgaengigstapel();
-				#noch Methode?
-				if modus=="Rechteck":
+				print(wiederholenstapel);
+				if modus=="Rechteck" or modus =="Linie" or modus =="Ellipse":
 					linienStart= null;
 					linienEnde = null;
 					uebernehme_temporaere_Zeichenflaeche();
-				elif modus=="Linie":
-					linienStart= null;
-					linienEnde = null;
-					uebernehme_temporaere_Zeichenflaeche();
-				elif modus=="Ellipse":
-					linienStart= null;
-					linienEnde = null;
-					uebernehme_temporaere_Zeichenflaeche();
+					Abbild_auf_Rueckgaengigstapel();
+					
+				print(wiederholenstapel);
 		elif Input.is_action_just_pressed("undo"):
 			mache_rueckgaengig();
 		elif Input.is_action_just_pressed("redo"):
@@ -560,6 +554,9 @@ func CoinWechsel(name):
 	
 	#Vorschau setzen
 	aktualisiere_Vorschau();
+	
+	#rückgängigstapel löschen
+	loesche_rueckgaengig_wiederholen();
 
 """
 lädt ein Bild aus den Dateien in die Variable bild ein und aktualisiert die Zeichenfläche
@@ -948,12 +945,6 @@ func Abbild_auf_Rueckgaengigstapel():
 func setze_Figurauswahlbuttons():
 	pass;
 	
-func alles_rueckgaengig():
-	#für jede Spielfigur:
-	
-	#setze Vorlagenbuttons auf alte Vorlage
-	pass;
-	#setze aktuelle Figur auf Standard
 
 func male_Linie(start,ende):
 	
@@ -1378,3 +1369,8 @@ func _on_Farbauswahl_pressed():
 
 func _on_Zurueck_pressed():
 	get_node("../Farbwahl").hide();
+	
+
+func loesche_rueckgaengig_wiederholen():
+	rueckgaengigstapel = [];
+	wiederholenstapel = [];
