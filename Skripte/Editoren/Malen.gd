@@ -40,7 +40,7 @@ var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instanc
 func _ready():
 	# Setze Bildschirmgroesse.
 	OS.set_window_size(Vector2(1030,680));
-	JavaScript.eval("resizeSpiel(800,1100)")
+	JavaScript.eval("resizeSpiel(1030,680)")
 	
 	#Farbe voreinstellen
 	aktuellerFarbbutton= get_node("../Farbe9");

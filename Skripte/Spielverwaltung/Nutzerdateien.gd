@@ -13,6 +13,7 @@ func _on_Importieren():
 func _on_Exportieren():
 	var text = persistenz.exportiere_eigene_dateien()
 	$Nutzerdaten.text = str(text)
+	$Nutzerdaten.copy()
 	print("export")
 
 

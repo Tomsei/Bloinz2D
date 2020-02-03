@@ -21,25 +21,27 @@ margin_right = 378.91
 margin_bottom = 285.066
 
 [node name="Label" type="Label" parent="Loeschfrage"]
-margin_left = 23.2624
+margin_left = 10.985
 margin_top = 19.3853
-margin_right = 283.262
-margin_bottom = 50.3853
-text = "Sie haben bereits Spieledaten.
-Wollen sie diese behalten oder löschen?"
+margin_right = 304.985
+margin_bottom = 67.3853
+text = "Du hast schon  Bilder gemalt oder etwas am 
+Code verändert.  
+
+Möchtest du das behalten oder neu anfangen?"
 
 [node name="Loeschen" type="Button" parent="Loeschfrage"]
-margin_left = 52.9866
-margin_top = 108.558
-margin_right = 64.9866
-margin_bottom = 128.558
-text = "Löschen"
+margin_left = 32.0
+margin_top = 104.0
+margin_right = 147.0
+margin_bottom = 134.0
+text = "Neu Anfangen"
 
 [node name="Behalten" type="Button" parent="Loeschfrage"]
-margin_left = 202.9
-margin_top = 109.85
-margin_right = 271.9
-margin_bottom = 129.85
+margin_left = 169.9
+margin_top = 104.0
+margin_right = 284.9
+margin_bottom = 134.0
 text = "Behalten"
 [connection signal="button_up" from="Loeschfrage/Loeschen" to="." method="_on_Loeschen_button_up"]
 [connection signal="button_up" from="Loeschfrage/Behalten" to="." method="_on_Behalten_button_up"]
