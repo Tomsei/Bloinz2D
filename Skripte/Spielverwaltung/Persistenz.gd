@@ -12,11 +12,13 @@ func init():
 	var dateien_vorhanden = pruefe_ob_dateien_existieren()
 	dateien_behalten = true
 	erstelle_datei_und_ordnerstruktur("res://")
+	loesche_veraenderungsdatei()
 	return dateien_vorhanden
 
 func zuruecksetzen():
 	dateien_behalten = false
 	erstelle_datei_und_ordnerstruktur("res://")
+	loesche_veraenderungsdatei()
 
 func skripte_zuruecksetzen():
 	dateien_behalten = false
@@ -78,6 +80,8 @@ func speicher_textur(textur, bildSpeicherpfad):
 	datei.store_var(textur, true)
 	datei.close()
 	
+	erstelle_veraenderungsdatei()
+
 # Speichert ein Bild als Varianttyp. Bild muss spaeter als Variant geladen werden.
 # Der Ladepfad muss ohne '.import' sein. Der speicherpfad sollte fuer den webexport
 # ohne .import und anstatt dem res:// das userverzeichnis haben.
@@ -90,6 +94,7 @@ func speicher_bild_als_variant(bildLadePfad,bildSpeicherpfad):
 	datei.store_var(bildtextur, true)
 	datei.close()
 	
+	erstelle_veraenderungsdatei()
 
 # Speichert eine wav-Datei als Varianttyp. wav muss spaeter als Variant geladen werden.
 # Der Ladepfad muss ohne '.import' sein. Der speicherpfad sollte fuer den webexport
@@ -101,6 +106,8 @@ func speicher_wav_als_variant(wavLadePfad, wavSpeicherpfad):
 	
 	datei.store_var(sound, true)
 	datei.close()
+	
+	erstelle_veraenderungsdatei()
 
 # Speichert ein Skript oder eine Szene im userverzeichnis ab.
 # Der Speicherpfad sollte fuer den webexport anstatt dem res:// das userverzeichnis haben.
@@ -111,9 +118,17 @@ func speicher_skript_oder_szene_als_var(skriptSzenenLadepfad,skriptSzenenSpeiche
 	var script_text = datei.get_as_text()
 	datei.close()
 	
-	datei.open(skriptSzenenSpeicherpfad, File.WRITE)
-	datei.store_string(script_text)
+	speicher_text(script_text, skriptSzenenSpeicherpfad)
+
+# Speichert textbasierte Dateien.
+func speicher_text(text, speicherpfad):
+	var datei = File.new()
+	
+	datei.open(speicherpfad, File.WRITE)
+	datei.store_string(text)
 	datei.close()
+	
+	erstelle_veraenderungsdatei()
 
 # Prueft ob das Element verbotene namen enthaelt.
 func hat_verbotene_namen(element):
@@ -160,7 +175,7 @@ func ordner_existiert(ordnerpfad):
 
 func pruefe_ob_dateien_existieren():
 	var datei = File.new()
-	return datei.file_exists(hauptverzeichnis_benutzer + "icon.png")
+	return datei.file_exists(hauptverzeichnis_benutzer + "veraendert")
 
 func exportiere_eigene_dateien():
 	var exportstring = ""
@@ -194,7 +209,6 @@ func konvertiere_bilder_zu_base64():
 	
 	return Marshalls.variant_to_base64(bilder ,true)
 
-
 func importiere_eigene_dateien(importstring):
 	print("Import")
 	var arr = Marshalls.base64_to_variant(importstring, true)
@@ -220,3 +234,12 @@ func speicher_bilderarray(bilderarray):
 	speicher_textur(bilderarray[10], coinpfad + "RandomCoin.png")
 	
 	speicher_textur(bilderarray[11], hintergrundpfad + "Hintergrund.png")
+
+func erstelle_veraenderungsdatei():
+	var veraenderungsdatei = File.new()
+	veraenderungsdatei.open(hauptverzeichnis_benutzer + "veraendert", File.WRITE)
+	veraenderungsdatei.close()
+
+func loesche_veraenderungsdatei():
+	var vaeraenderungsdatei = Directory.new()
+	vaeraenderungsdatei.remove(hauptverzeichnis_benutzer + "veraendert")

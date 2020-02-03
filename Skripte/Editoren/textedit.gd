@@ -60,17 +60,6 @@ func lade_datei(pfad):
 	datei.close()
 	return text
 
-# Speichert Text in eine Datei mit angegebenem Pfad.
-func save_file(text, pfad):
-	var datei = File.new()
-	var err = datei.open(OS.get_user_data_dir() + "/" + pfad.lstrip("res:/"), File.WRITE)
-	if err != OK:
-		printerr("Fehler beim Schreiben in Datei, error Code:", err)
-		return
-	datei.store_string(text)
-	datei.close()
-
-
 # Wird aufgerufen, wenn der Knopf losgelassen wird.
 func _on_Button_button_up():
 	speicher_skript(cur_tab)
@@ -78,7 +67,10 @@ func _on_Button_button_up():
 # Ruft die Speicherfunktion fuer einen uebergebenen Tab auf.
 func speicher_skript(tabindex):
 	var texteditor = $TabContainer.get_child(tabindex)
-	save_file(texteditor.get_text(), Skriptpfade.get(texteditor.name))
+	var speicherpfad = Skriptpfade.get(texteditor.name)
+	speicherpfad = hauptverzeichnis_benutzer + "/" + speicherpfad.lstrip("res:/")
+	
+	persistenz.speicher_text(texteditor.get_text(), speicherpfad)
 
 # Wenn ein anderer Tab sichtbar wird, wird dieser in cur_tab gespeichert.
 func _on_TabContainer_tab_changed(tab):
