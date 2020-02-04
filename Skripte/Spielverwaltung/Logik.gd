@@ -17,10 +17,10 @@ var muenzmagnetAktiv = false
 var raondomCoinAn = true
 
 #Variablen zum Prüfen welche Randomaktionen aktiviert sind
-var randomCoinFunktionMuenzregen = true;
-var randomCoinFunktionMagnet = true;
-var randomCoinFunktionSchutz = true;
-var randomCoinFunktionGeschwindigkeit = true;
+var randomCoinFunktionMuenzregen;
+var randomCoinFunktionMagnet;
+var randomCoinFunktionSchutz;
+var randomCoinFunktionGeschwindigkeit;
 
 
 """
@@ -241,6 +241,12 @@ func _on_Spiel_draw():
 		raketenTimer.set_wait_time(raketenZeit)
 		einstellungen.raketenzeitGeaendert = false
 	raondomCoinAn = einstellungen.randomCoinAn
+	#Variablen zum Prüfen welche Randomaktionen aktiviert sind
+	randomCoinFunktionMuenzregen = einstellungen.CoinRegenAn;
+	randomCoinFunktionMagnet = einstellungen.CoinMagnetAn;
+	randomCoinFunktionSchutz = einstellungen.RegenschirmAn;
+	randomCoinFunktionGeschwindigkeit = einstellungen.SpeedboostAn;
+	
 
 
 func _on_Spiel_hide():

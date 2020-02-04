@@ -1,19 +1,18 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Skripte/Spielverwaltung/Informationsübertragung.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/TileMaps/Spieloberflaeche.tres" type="TileSet" id=2]
 [ext_resource path="res://Bilder/Hintergruende/Verlauf.png" type="Texture" id=3]
 [ext_resource path="res://Szenen/Oberflaeche/Startbildschirm.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Szenen/Oberflaeche/Spiel.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Skripte/Spielverwaltung/Logik.gd" type="Script" id=6]
-[ext_resource path="res://Szenen/Oberflaeche/Anleitung.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Szenen/Oberflaeche/Ende.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Bilder/Buttons/Spiel/Zahnrad.png" type="Texture" id=9]
-[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=10]
-[ext_resource path="res://Bilder/Buttons/Spiel/TonAus.png" type="Texture" id=11]
-[ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=12]
-[ext_resource path="res://Skripte/Optionen/CheckButton.gd" type="Script" id=13]
-[ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Szenen/Oberflaeche/Anleitung.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Szenen/Oberflaeche/Ende.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Bilder/Buttons/Spiel/Zahnrad.png" type="Texture" id=8]
+[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=9]
+[ext_resource path="res://Bilder/Buttons/Spiel/TonAus.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=11]
+[ext_resource path="res://Skripte/Optionen/CheckButton.gd" type="Script" id=12]
+[ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=13]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2
@@ -36,19 +35,16 @@ texture = ExtResource( 3 )
 [node name="Spiel" parent="." instance=ExtResource( 5 )]
 visible = false
 
-[node name="Logik" parent="Spiel" index="0"]
-script = ExtResource( 6 )
-
 [node name="UI" parent="Spiel" index="1"]
 position = Vector2( 0, 0 )
 
 [node name="BodenCollisionShape" parent="Spiel" index="3"]
 pause_mode = 2
 
-[node name="Anleitung" parent="." instance=ExtResource( 7 )]
+[node name="Anleitung" parent="." instance=ExtResource( 6 )]
 visible = false
 
-[node name="Ende" parent="." instance=ExtResource( 8 )]
+[node name="Ende" parent="." instance=ExtResource( 7 )]
 visible = false
 
 [node name="EndeVerloren" parent="Ende" index="2"]
@@ -60,8 +56,8 @@ margin_left = 400.0
 margin_top = 24.0
 margin_right = 424.212
 margin_bottom = 53.895
-texture_normal = ExtResource( 9 )
-script = ExtResource( 10 )
+texture_normal = ExtResource( 8 )
+script = ExtResource( 9 )
 
 [node name="Sound" type="CheckButton" parent="."]
 pause_mode = 2
@@ -70,13 +66,13 @@ margin_top = 20.0
 margin_right = 383.161
 margin_bottom = 58.5959
 focus_mode = 0
-custom_icons/off = ExtResource( 11 )
-custom_icons/on = ExtResource( 12 )
+custom_icons/off = ExtResource( 10 )
+custom_icons/on = ExtResource( 11 )
 pressed = true
 enabled_focus_mode = 0
-script = ExtResource( 13 )
+script = ExtResource( 12 )
 
-[node name="AlleOptionen" parent="." instance=ExtResource( 14 )]
+[node name="AlleOptionen" parent="." instance=ExtResource( 13 )]
 pause_mode = 2
 visible = false
 [connection signal="button_up" from="Optionen" to="Optionen" method="_on_Optionen_button_up"]

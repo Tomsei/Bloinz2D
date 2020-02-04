@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Skripte/Optionen/Optionen.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Buttons/Optionen/3von3.png" type="Texture" id=2]
@@ -9,8 +9,7 @@
 [ext_resource path="res://Skripte/Optionen/CheckButton.gd" type="Script" id=7]
 [ext_resource path="res://Bilder/Buttons/Optionen/CheckButton_checked.png" type="Texture" id=8]
 [ext_resource path="res://Bilder/Buttons/Optionen/CheckButton_unchecked.png" type="Texture" id=9]
-[ext_resource path="res://Szenen/Oberflaeche/Checkbox.gd" type="Script" id=10]
-[ext_resource path="res://Skripte/Optionen/Checkbox.gd" type="Script" id=11]
+[ext_resource path="res://Skripte/Optionen/Checkbox.gd" type="Script" id=10]
 
 [node name="Optionen - RandomCoin" type="Node2D"]
 position = Vector2( -1, 0 )
@@ -74,7 +73,7 @@ custom_colors/font_color_pressed = Color( 0.901961, 0.721569, 0.0980392, 1 )
 pressed = true
 enabled_focus_mode = 0
 text = "   CoinMagnet"
-script = ExtResource( 11 )
+script = ExtResource( 10 )
 
 [node name="Regenschirm" type="CheckBox" parent="RandomCoin"]
 margin_left = 5.46638
@@ -92,7 +91,7 @@ custom_colors/font_color_pressed = Color( 0.901961, 0.721569, 0.0980392, 1 )
 pressed = true
 enabled_focus_mode = 0
 text = "   Regenschirm"
-script = ExtResource( 11 )
+script = ExtResource( 10 )
 
 [node name="Coin-Regen" type="CheckBox" parent="RandomCoin"]
 margin_left = 5.36838
@@ -110,7 +109,7 @@ custom_colors/font_color_pressed = Color( 0.901961, 0.721569, 0.0980392, 1 )
 pressed = true
 enabled_focus_mode = 0
 text = "   Coin-Regen"
-script = ExtResource( 11 )
+script = ExtResource( 10 )
 [connection signal="button_up" from="3von3/Seite2" to="." method="_on_Seite2_button_up"]
 [connection signal="toggled" from="RandomCoin" to="RandomCoin" method="_on_RandomCoin_toggled"]
 [connection signal="toggled" from="RandomCoin/Speedboost" to="RandomCoin/Speedboost" method="_on_Speedboost_toggled"]
