@@ -60,17 +60,6 @@ func lade_datei(pfad):
 	datei.close()
 	return text
 
-# Speichert Text in eine Datei mit angegebenem Pfad.
-func save_file(text, pfad):
-	var datei = File.new()
-	var err = datei.open(OS.get_user_data_dir() + "/" + pfad.lstrip("res:/"), File.WRITE)
-	if err != OK:
-		printerr("Fehler beim Schreiben in Datei, error Code:", err)
-		return
-	datei.store_string(text)
-	datei.close()
-
-
 # Wird aufgerufen, wenn der Knopf losgelassen wird.
 func _on_Button_button_up():
 	speicher_skript(cur_tab)
@@ -78,7 +67,10 @@ func _on_Button_button_up():
 # Ruft die Speicherfunktion fuer einen uebergebenen Tab auf.
 func speicher_skript(tabindex):
 	var texteditor = $TabContainer.get_child(tabindex)
-	save_file(texteditor.get_text(), Skriptpfade.get(texteditor.name))
+	var speicherpfad = Skriptpfade.get(texteditor.name)
+	speicherpfad = hauptverzeichnis_benutzer + "/" + speicherpfad.lstrip("res:/")
+	
+	persistenz.speicher_text(texteditor.get_text(), speicherpfad)
 
 # Wenn ein anderer Tab sichtbar wird, wird dieser in cur_tab gespeichert.
 func _on_TabContainer_tab_changed(tab):
@@ -184,8 +176,17 @@ func setze_funktion(textedit, text, zeile, skriptindex):
 		var texts = text.split(" ")
 		for i in range (texts.size()):
 			if texts[i] == "func":
-				# Setze den Funktionsnamen und lösche den Doppelpunkt
-				var funktions_name = texts[i + 1].rstrip(":")
+				var funktions_name = ""
+				# Eine Funktionszeile besteht immer mindestens aus 2 Werten: func und Funktionsname(Variable)
+				# Existieren mehr als 2 Werte muessen die restlichen Werte auch angehaengt werden.
+				if i < (texts.size() - 2):
+					for j in range ((i + 1), texts.size()):
+						# Der Doppelpunkt hinter dem Funktionsnamen wird nicht mit gespeichert.
+						funktions_name += " " + texts[j].rstrip(":")
+				# Wenn die Funktion keine weiteren Werte hat, muss nur der Funktionsname ohne
+				# abschliessendem Doppelpunkt gespeichert werden.
+				else:
+					funktions_name = texts[i + 1].rstrip(":")
 				# Bei mehr als einem Skript muss ein neues Dictionary hinzugefuegt werden.
 				if skriptindex > 0:
 					funktionen.append({})
