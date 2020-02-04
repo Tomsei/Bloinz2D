@@ -3,6 +3,7 @@ extends Node2D
 func _ready():
 	var dateien_vorher_vorhanden
 	dateien_vorher_vorhanden = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance().init()
+	
 	if dateien_vorher_vorhanden == true:
 		$Loeschfrage.show()
 	else:

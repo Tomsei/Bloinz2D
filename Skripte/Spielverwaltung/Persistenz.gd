@@ -9,10 +9,13 @@ func _ready():
 		hauptverzeichnis_benutzer = OS.get_user_data_dir()
 
 func init():
-	var dateien_vorhanden = pruefe_ob_dateien_existieren()
+	# Checkt ob Nutzerveraenderte Daten vorhanden sind.
+	var dateien_vorhanden = pruefe_ob_veranderte_dateien_existieren()
 	dateien_behalten = true
-	erstelle_datei_und_ordnerstruktur("res://")
-	loesche_veraenderungsdatei()
+	# Fuehre nur aus, wenn keine Dateien vorhanden sind.
+	if pruefe_ob_dateien_im_nutzerverzeichnis_existieren() == false:
+		erstelle_datei_und_ordnerstruktur("res://")
+		loesche_veraenderungsdatei()
 	return dateien_vorhanden
 
 func zuruecksetzen():
@@ -173,9 +176,15 @@ func ordner_existiert(ordnerpfad):
 	var ordner = Directory.new()
 	return dateien_behalten && ordner.dir_exists(hauptverzeichnis_benutzer + ordnerpfad.lstrip("res:/"))
 
-func pruefe_ob_dateien_existieren():
+func pruefe_ob_dateien_existieren(dateiname):
 	var datei = File.new()
-	return datei.file_exists(hauptverzeichnis_benutzer + "veraendert")
+	return datei.file_exists(hauptverzeichnis_benutzer + dateiname)
+
+func pruefe_ob_veranderte_dateien_existieren():
+	return pruefe_ob_dateien_existieren("veraendert")
+
+func pruefe_ob_dateien_im_nutzerverzeichnis_existieren():
+	return pruefe_ob_dateien_existieren("icon.png")
 
 func exportiere_eigene_dateien():
 	var exportstring = ""
