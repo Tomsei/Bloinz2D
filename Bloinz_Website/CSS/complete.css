@@ -1,0 +1,208 @@
+body {
+    background-color: #397086;
+
+	color: black;
+
+	font-size: 100%;
+    font-family: 'Heebo';
+    font-size: 15px;
+    margin-left: 8%;
+    margin-right: 8%;
+	
+}
+
+main {
+	background: #6aa7c0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+	border-radius: 12px;
+    padding-left: 8%;
+	padding-right: 8%;
+	padding-bottom: 8%;
+	padding-top: 20px;
+	font-size: 120%;
+	
+}
+
+
+
+
+
+/* CSS des Navigations Menü*/
+
+nav ul {
+    position: fixed;
+    top: 50%;
+    left: 90px;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 5px 0;
+    background: #d5f4ff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+nav ul li {
+    list-style: none;
+    text-align: center;
+    display: block;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+	border-color: black;
+	margin: 20px;
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+
+ul li a {
+    text-decoration: none;
+    padding: 10px 40px;
+    display: block;
+	color: black;
+}
+
+ul li a:hover {
+    color: #fa0303;
+    transition: 0.5s;
+}
+
+ul li a .nav-icon {
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    overflow: hidden;
+    margin: 0 auto 10px;
+    transition: 0.5s;
+}
+
+ul li a:hover .nav-icon {
+    border-radius: 12px;
+    background-color: rgba(255,3,3,0.7);
+    transition: 0.5s;
+}
+
+ul li a img{
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
+}
+
+
+
+
+
+
+
+
+/* CSS für die Spielanwendung*/
+
+.spielsektion{
+	margin-top: 4%;
+    text-align: center;
+}
+
+
+iframe {
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
+    border-width: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 50px 40px #b0d0dd
+}
+
+h1#bloinz {
+	margin-top: 10px;
+    text-align: center;
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 5em;
+	border-bottom-style: solid;
+	border-top-style: solid;
+	
+	background-image: linear-gradient(to right, #6aa7c0, #00e2ff, #6aa7c0);
+		
+}
+
+/*
+Überschrift Style
+*/
+
+h2 {
+    font-size: 2em
+}
+
+h3 {
+    font-size: 1.3em
+}
+
+
+
+#hauptseite a {
+    color: white;
+    text-decoration: none;
+}
+
+#hauptseite a:hover {
+    color: #484848;
+    text-decoration: underline;
+}
+
+
+footer {
+    text-align: center;
+    padding: 2%;
+    
+    border-top-style: solid;
+    border-bottom-style: solid;
+    margin: 2%;
+    
+    background-image: linear-gradient(to right, #397086, #6aa7c0, #397086)
+}
+
+
+footer a{
+    text-decoration: none;
+    color: white;
+}
+
+
+footer a:hover{
+    color: #484848;
+    text-decoration: underline;
+}
+
+
+
+/*
+Die Benutzten Schriften
+*/
+
+/* latin */
+@font-face {
+  font-family: 'Cabin Sketch';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Cabin Sketch Regular'), local('CabinSketch-Regular'), url(https://fonts.gstatic.com/s/cabinsketch/v13/QGYpz_kZZAGCONcK2A4bGOj8mNhN.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Heebo'), local('Heebo-Regular'), url(https://fonts.gstatic.com/s/heebo/v5/NGS6v5_NC0k9P9H2TbE.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/oswald/v29/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvsUZiZQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}

@@ -1,0 +1,108 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Skripte/Optionen/Optionen.gd" type="Script" id=1]
+[ext_resource path="res://Bilder/Buttons/Optionen/2von3.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilLinks_normal.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilLinks_pressed.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilRechts_normal.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Buttons/Optionen/PfeilRechts_pressed.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Buttons/Optionen/designAnpassen_normal.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Buttons/Optionen/designAnpassen_pressed.png" type="Texture" id=8]
+[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=9]
+[ext_resource path="res://Bilder/Buttons/Optionen/code_normal.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Buttons/Optionen/code_pressed.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Buttons/Optionen/allesZuruecksetzen_normal.png" type="Texture" id=12]
+[ext_resource path="res://Bilder/Buttons/Optionen/allesZuruecksetzen_pressed.png" type="Texture" id=13]
+
+[node name="Optionen - Editoren" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [ 66.5795, 382.926 ]
+}
+
+[node name="2von3" type="Sprite" parent="."]
+position = Vector2( 224, 75 )
+texture = ExtResource( 2 )
+
+[node name="Seite1" type="TextureButton" parent="2von3"]
+margin_left = -141.0
+margin_top = -32.0
+margin_right = -71.0
+margin_bottom = 30.0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+
+[node name="Seite3" type="TextureButton" parent="2von3"]
+margin_left = 70.0
+margin_top = -32.0
+margin_right = 140.0
+margin_bottom = 30.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+
+[node name="MalenEditor" type="TextureButton" parent="."]
+margin_left = 65.732
+margin_top = 242.0
+margin_right = 381.732
+margin_bottom = 298.0
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 8 )
+script = ExtResource( 9 )
+
+[node name="CodeEditor" type="TextureButton" parent="."]
+margin_left = 67.282
+margin_top = 172.0
+margin_right = 383.282
+margin_bottom = 228.0
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 11 )
+script = ExtResource( 9 )
+
+[node name="AllesZuruecksetzen" type="TextureButton" parent="."]
+margin_left = 66.5847
+margin_top = 375.0
+margin_right = 382.585
+margin_bottom = 456.0
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 13 )
+script = ExtResource( 9 )
+
+[node name="Popup" type="Popup" parent="."]
+margin_left = 62.3709
+margin_top = 228.806
+margin_right = 411.243
+margin_bottom = 437.409
+
+[node name="ColorRect" type="ColorRect" parent="Popup"]
+margin_left = -0.209045
+margin_right = 313.791
+margin_bottom = 178.296
+color = Color( 0.517647, 0.160784, 0.160784, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Popup"]
+margin_left = 17.0889
+margin_top = 17.6336
+margin_right = 305.089
+margin_bottom = 87.6336
+text = "Bist du dir sicher, dass du alle Änderungen am Code und deine selbstgemalten Bilder endgültig löschen möchtest? "
+
+[node name="Ja" type="Button" parent="Popup"]
+margin_left = 24.5548
+margin_top = 136.279
+margin_right = 123.555
+margin_bottom = 156.279
+text = "Ja"
+
+[node name="Abbrechen" type="Button" parent="Popup"]
+margin_left = 193.864
+margin_top = 136.279
+margin_right = 292.864
+margin_bottom = 156.279
+text = "Abbrechen"
+[connection signal="button_up" from="2von3/Seite1" to="." method="_on_Seite1_button_up"]
+[connection signal="button_up" from="2von3/Seite3" to="." method="_on_Seite3_button_up"]
+[connection signal="button_up" from="MalenEditor" to="MalenEditor" method="_on_MalenEditor_button_up"]
+[connection signal="button_up" from="CodeEditor" to="CodeEditor" method="_on_CodeEditor_button_up"]
+[connection signal="button_up" from="AllesZuruecksetzen" to="AllesZuruecksetzen" method="_on_AllesZuruecksetzen_button_up"]
+[connection signal="button_up" from="Popup/Ja" to="." method="_on_Ja_button_up"]
+[connection signal="button_up" from="Popup/Abbrechen" to="." method="_on_Abbrechen_button_up"]

@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Bloinz 2D Programmier Tutorial</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../CSS/complete.css">
+        <link rel="stylesheet" href="../CSS/Bildergalerie.css">
+        <script src="../Skripte/spielupdate.js"></script>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="../Spiel/gesamtesSpiel.html">
+                            <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_Spielbild.png"></div>
+                            <div class="nav-name">zum Spiel</div>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="#projektInformationen">
+                            <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_Infos.png"></div>
+                            <div class="nav-name">Informationen</div>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="#galerie">
+                            <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_gallerie.png"></div>
+                            <div class="nav-name">Galerie</div>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="#godot">
+                            <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_Godot.png"></div>
+                            <div class="nav-name">Godot</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/HTML/Impressum.html">
+                            <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_impressum.png"></div>
+                            <div class="nav-name"> Impressum</div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="hauptseite">
+            <section class="spielsektion">
+				<div class="randombilder" id="links">
+				</div>
+            	<iframe id="spiel" src="../Spiel/gesamtesSpiel.html" frameborder="1" height="640" width="448"></iframe>
+            </section>
+                <button onclick="resizeSpielParent(640, 448)"> Reszie Testen</button>
+            <section id="projektInformationen">
+                <header>
+                    <h2> Projekt Informationen</h2>
+                </header>
+                <article>
+                    <h3>Beschreibung des Projekts</h3>
+                    <p>
+                        Bei dem Projekt Bloinz2D handelt es sich um eine Spielanwendung an welche Grundlegende Prinzipien der Programmierung erklärt werden können. Das Projekt wurde mit der <a href="#godot">Game-Enging Godot</a> umgesetzt <br>
+                        Grundlagen der Objektorientierung werden durch das Spiel dargestellt. Sowohl Variablen, Methoden als auch grundlegende Vererbung ist in dem Spiel erkennbar. 
+                    </p>
+                    <h3>Spielbeschreibung</h3>
+                    <p>
+                        Es handelt sich um ein einfaches Spiel in dem es darum geht, dass eine Spielfigur unterschiedliche Münzen einsammeln kann, welche jeweils unterschiedliche Auswirkungen auf den Spieler haben. Es gibt poitive Münzen, welche die Spielergröße / Punktzahl erhöhen und negative welche sie verringert. <br>
+                        Zusätzlich zu den Normalen Münzen gibt es noch die Zufallsmünzen.Diese lösen zufällig ausgewählte Aktionen aus, welche das Spiel Beeinflussen. Beispielsweise gibt es die Aktion Münz-Magnet, welche alle guten Münzen zum Spieler zieht. <br>
+						Positive Münze: <img src="../Bilder/GoodCoin1.png">
+						Negative Münze: <img src="../Bilder/BadCoin1.png">
+						Zufalls Münze: <img src="../Bilder/RandomCoinStandard.png">
+						<br>
+						Das Spiel ist zuende sobald der Spieler eine bestimmte Größe erreicht hat. Sobald der Spieler ganz groß wird, also die Größe 25 erreicht hat ist das Spiel gewonnen. also die größe durch Negative Münzen verringert wurde hat der Spieler verloren. 
+                    </p>
+                </article>
+            </section>
+            <section id="galeriebereich" >
+                <h2>Galerie der besten Spielfiguren</h2>
+                <div id="galerie">                
+                    <div class="bild">
+                        <img src="../Bilder/Blob_1_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_2_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_3_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_4_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_5_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_2_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_2_gerade.png">
+                    </div>
+                    <div class="bild">
+                        <img src="../Bilder/Blob_2_gerade.png">
+                    </div>
+                </div>
+                <button onclick="test()"> Reszie Testen</button>
+            </section>
+            <section id="godot">
+                <article id="godot">
+                    <h3>Game-Engine Godot</h3>
+                    <p>
+                        Das Spiel wurde in der Game-Engine Godot erstellt. Diese ermöglicht eine schnelle und einfache Programmierung für Spielanwendungen. <br>
+                        Godot bietet eine einfache Übersicht über unterschiedliche Szenen um in diesen die gewünschten Spielobjekte zu erzeugen <br>
+                        Zusätzlich bietet GODOT eine eigene eingebundene Programmiersprache GD-Script über welche auch das Spiel Bloinz 2D komplett programmiert wurde
+                    </p>
+                    <p>
+                        Nachdem du unser kleines Spiel zu grundlegenden Programmier-Prinzipien hoffentlich ausfürhlich auseinander genommen hast, kannst du auch selbst eine kleine Spielanwendung erstellen <br>
+                        Um ein eigenen GODOT-Spiel zu entwickeln geht es hier zur offiziellen Website: <a href="https://godotengine.org/" target="_blank">Godot</a><br>
+                        zuätzlich empfehlen wir als Tutorial <a href="https://docs.godotengine.org/de/latest/getting_started/step_by_step/your_first_game.html" target="_blank">Dein erstes Spiel</a>
+                    </p>
+                </article>
+            </section>            
+        </main>
+        <footer>
+            <p>
+                Bloinz 2D ist ein Informatikprojekt der <a href="https://hs-duesseldorf.de/">Hochschule Düsseldorf</a> unter der Leitung von <a href="https://medien.hs-duesseldorf.de/personen/dahm/">Professor Dahm </a><br>
+                Mitwirkende: Charlotte Hasler, Katharina Mai, Sebastian Rindfleisch, Tom Seiffert
+            </p>
+        </footer>
+    </body>
+</html>

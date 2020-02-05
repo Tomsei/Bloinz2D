@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Skripte/Spielverwaltung/UI.gd" type="Script" id=1]
+[ext_resource path="res://Bilder/Buttons/Spiel/Pause.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Buttons/Spiel/Play.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Buttons/Spiel/Fragezeichen.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_leer.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_voll.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_anzeiger.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_rand.png" type="Texture" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[node name="UI" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 23.9527 ],
+"_edit_vertical_guides_": [ 26.9946 ]
+}
+
+[node name="Pause" type="CheckButton" parent="."]
+pause_mode = 2
+margin_left = 19.7249
+margin_top = 20.0306
+margin_right = 59.7249
+margin_bottom = 61.0306
+focus_mode = 0
+custom_icons/off = ExtResource( 2 )
+custom_icons/on = ExtResource( 3 )
+pressed = true
+enabled_focus_mode = 0
+flat = true
+
+[node name="AnleitungOeffnen" type="TextureButton" parent="."]
+pause_mode = 2
+visible = false
+margin_left = 67.0
+margin_top = 24.0
+margin_right = 88.7172
+margin_bottom = 57.0
+hint_tooltip = "Anleitung anzeigen"
+texture_normal = ExtResource( 4 )
+
+[node name="PunkteAnzeige" type="TextureProgress" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 84.0
+margin_top = 580.509
+margin_right = 364.0
+margin_bottom = 602.509
+max_value = 25.0
+value = 12.0
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 6 )
+
+[node name="PunkteAnzeigePunkt" type="HSlider" parent="PunkteAnzeige"]
+margin_left = -6.0
+margin_right = 286.0
+margin_bottom = 22.0
+custom_icons/grabber_disabled = ExtResource( 7 )
+custom_styles/slider = SubResource( 1 )
+custom_styles/grabber_area = SubResource( 2 )
+max_value = 25.0
+value = 12.0
+editable = false
+ticks_on_borders = true
+
+[node name="LifeBar_rand" type="Sprite" parent="PunkteAnzeige"]
+position = Vector2( 139.984, 11.0123 )
+texture = ExtResource( 8 )
+[connection signal="toggled" from="Pause" to="." method="_on_Pause_toggled"]
+[connection signal="button_up" from="AnleitungOeffnen" to="." method="_on_AnleitungOeffnen_button_up"]

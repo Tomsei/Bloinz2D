@@ -1,0 +1,955 @@
+[gd_scene load_steps=50 format=2]
+
+[ext_resource path="res://Skripte/Editoren/Malen.gd" type="Script" id=1]
+[ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Stift.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Linie.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Rechteck.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Radiergummi.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Spiegeln.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Farben/Farbe_0.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Farben/Farbe_1.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Farben/Farbe_2.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Farben/Farbe_3.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Farben/Farbe_4.png" type="Texture" id=12]
+[ext_resource path="res://Bilder/Farben/Farbe_5.png" type="Texture" id=13]
+[ext_resource path="res://Bilder/Farben/Farbe_6.png" type="Texture" id=14]
+[ext_resource path="res://Bilder/Farben/Farbe_7.png" type="Texture" id=15]
+[ext_resource path="res://Bilder/Farben/Farbe_8.png" type="Texture" id=16]
+[ext_resource path="res://Bilder/Farben/Farbe_9.png" type="Texture" id=17]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe1.png" type="Texture" id=18]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe2.png" type="Texture" id=19]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe3.png" type="Texture" id=20]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe4.png" type="Texture" id=21]
+[ext_resource path="res://Bilder/Farben/EigeneFarbe5.png" type="Texture" id=22]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_gerade.png" type="Texture" id=23]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_gerade.png" type="Texture" id=24]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_gerade.png" type="Texture" id=25]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_gerade.png" type="Texture" id=26]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_gerade.png" type="Texture" id=27]
+[ext_resource path="res://Bilder/Standardspielfiguren/Hintergrund/Hintergrund.png" type="Texture" id=28]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin1.png" type="Texture" id=29]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin2.png" type="Texture" id=30]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin1.png" type="Texture" id=31]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin2.png" type="Texture" id=32]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/RandomCoin.png" type="Texture" id=33]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png" type="Texture" id=34]
+[ext_resource path="res://icon.png" type="Texture" id=35]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_geradeDesign1.png" type="Texture" id=36]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_geradeStandard.png" type="Texture" id=37]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Stiftklein.png" type="Texture" id=38]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Stiftmittel.png" type="Texture" id=39]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Stiftgross.png" type="Texture" id=40]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Fuelleimer.png" type="Texture" id=41]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Loeschen.png" type="Texture" id=42]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_geradeStandard.png" type="Texture" id=43]
+[ext_resource path="res://Bilder/Hintergruende/Boden.png" type="Texture" id=44]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Wiederholen.png" type="Texture" id=45]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Rueckgaengig.png" type="Texture" id=46]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Verschieben.png" type="Texture" id=47]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/Ellipse.png" type="Texture" id=48]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/HintergrundColorpicker.png" type="Texture" id=49]
+
+[node name="Maleneditor" type="Node2D"]
+pause_mode = 2
+
+[node name="CoinWechsel" type="PopupDialog" parent="."]
+margin_left = 276.527
+margin_top = 256.79
+margin_right = 757.527
+margin_bottom = 400.79
+popup_exclusive = true
+
+[node name="Beschriftung" type="Label" parent="CoinWechsel"]
+margin_left = 26.3158
+margin_top = 29.4737
+margin_right = 452.316
+margin_bottom = 60.4737
+text = "Möchtest du wirklich auf eine andere Figur umschalten?
+Falls du dein Design noch nicht gespeichert hast, geht es verloren."
+
+[node name="Ja" type="Button" parent="CoinWechsel"]
+margin_left = 55.7895
+margin_top = 91.5791
+margin_right = 77.7895
+margin_bottom = 111.579
+text = "Ja"
+
+[node name="Nein" type="Button" parent="CoinWechsel"]
+margin_left = 171.579
+margin_top = 96.8422
+margin_right = 213.579
+margin_bottom = 116.842
+text = "Nein"
+
+[node name="Zeichenflaeche" type="Sprite" parent="."]
+position = Vector2( 512, 258 )
+script = ExtResource( 1 )
+
+[node name="temporaereZeichenflaeche" type="Sprite" parent="."]
+position = Vector2( 512, 258 )
+z_index = 1
+
+[node name="Malenhintergrund" type="Sprite" parent="."]
+position = Vector2( 512, 257 )
+scale = Vector2( 8, 8 )
+z_index = -1
+texture = ExtResource( 2 )
+
+[node name="Speichern" type="Button" parent="."]
+margin_left = 800.0
+margin_top = 543.968
+margin_right = 900.112
+margin_bottom = 563.968
+text = "Übernehmen"
+
+[node name="Vorlage" type="Button" parent="."]
+visible = false
+margin_left = 764.865
+margin_top = 546.795
+margin_right = 912.865
+margin_bottom = 566.795
+text = "als Vorlage Speichern"
+
+[node name="Stift" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 9.31784
+margin_top = 25.0
+margin_right = 53.3178
+margin_bottom = 63.0
+hint_tooltip = "Stift "
+toggle_mode = true
+icon = ExtResource( 3 )
+
+[node name="Linie" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 110.0
+margin_top = 70.0
+margin_right = 154.0
+margin_bottom = 108.0
+hint_tooltip = "Linie"
+toggle_mode = true
+icon = ExtResource( 4 )
+
+[node name="Rechteck" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 70.0
+margin_right = 52.0
+margin_bottom = 108.0
+hint_tooltip = "Rechteck"
+toggle_mode = true
+icon = ExtResource( 5 )
+
+[node name="Radierer" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 59.0
+margin_top = 25.0
+margin_right = 103.0
+margin_bottom = 63.0
+hint_tooltip = "Radierer"
+toggle_mode = true
+icon = ExtResource( 6 )
+
+[node name="Spiegeln" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 110.0
+margin_top = 115.0
+margin_right = 154.0
+margin_bottom = 153.0
+hint_tooltip = "horizontal spiegeln "
+icon = ExtResource( 7 )
+
+[node name="Farbe1" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 270.0
+margin_right = 36.0
+margin_bottom = 292.0
+toggle_mode = true
+icon = ExtResource( 8 )
+
+[node name="Farbe2" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 42.0
+margin_top = 270.0
+margin_right = 70.0
+margin_bottom = 292.0
+toggle_mode = true
+icon = ExtResource( 9 )
+
+[node name="Farbe3" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 76.0
+margin_top = 270.0
+margin_right = 104.0
+margin_bottom = 292.0
+toggle_mode = true
+icon = ExtResource( 10 )
+
+[node name="Farbe4" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 110.0
+margin_top = 270.0
+margin_right = 138.0
+margin_bottom = 292.0
+toggle_mode = true
+icon = ExtResource( 11 )
+
+[node name="Farbe5" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 144.0
+margin_top = 270.0
+margin_right = 172.0
+margin_bottom = 292.0
+toggle_mode = true
+icon = ExtResource( 12 )
+
+[node name="Farbe6" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 296.0
+margin_right = 36.0
+margin_bottom = 318.0
+toggle_mode = true
+icon = ExtResource( 13 )
+
+[node name="Farbe7" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 42.0
+margin_top = 296.0
+margin_right = 70.0
+margin_bottom = 318.0
+toggle_mode = true
+icon = ExtResource( 14 )
+
+[node name="Farbe8" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 76.0
+margin_top = 296.0
+margin_right = 104.0
+margin_bottom = 318.0
+toggle_mode = true
+icon = ExtResource( 15 )
+
+[node name="Farbe9" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 110.0
+margin_top = 296.0
+margin_right = 138.0
+margin_bottom = 318.0
+toggle_mode = true
+icon = ExtResource( 16 )
+
+[node name="Farbe10" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 144.0
+margin_top = 296.0
+margin_right = 172.0
+margin_bottom = 318.0
+toggle_mode = true
+icon = ExtResource( 17 )
+
+[node name="EigeneFarbe1" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 344.0
+margin_right = 36.0
+margin_bottom = 366.0
+toggle_mode = true
+icon = ExtResource( 18 )
+
+[node name="EigeneFarbe2" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 42.0
+margin_top = 344.0
+margin_right = 70.0
+margin_bottom = 366.0
+toggle_mode = true
+icon = ExtResource( 19 )
+
+[node name="EigeneFarbe3" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 76.0
+margin_top = 344.0
+margin_right = 104.0
+margin_bottom = 366.0
+toggle_mode = true
+icon = ExtResource( 20 )
+
+[node name="EigeneFarbe4" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 110.0
+margin_top = 344.0
+margin_right = 138.0
+margin_bottom = 366.0
+toggle_mode = true
+icon = ExtResource( 21 )
+
+[node name="EigeneFarbe5" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 144.0
+margin_top = 344.0
+margin_right = 172.001
+margin_bottom = 366.0
+toggle_mode = true
+icon = ExtResource( 22 )
+
+[node name="Label" type="Label" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 324.122
+margin_right = 107.0
+margin_bottom = 338.122
+text = "eigene Farben:"
+
+[node name="Label5" type="Label" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 5.345
+margin_right = 107.0
+margin_bottom = 36.345
+text = "Werkzeuge:
+"
+
+[node name="Label6" type="Label" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 205.715
+margin_right = 107.0
+margin_bottom = 236.715
+text = "Stiftgröße:
+"
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2( 2, 3 )
+points = PoolVector2Array( 254, -2, 254, 512, 767, 512, 767, -2, 254, -2 )
+width = 1.0
+default_color = Color( 0, 0, 0, 1 )
+texture_mode = -1094114483
+
+[node name="Blob_1_gerade" type="Button" parent="."]
+margin_left = 264.0
+margin_top = 519.0
+margin_right = 340.0
+margin_bottom = 589.0
+rect_pivot_offset = Vector2( 50.139, 26.261 )
+hint_tooltip = "mini Blob"
+toggle_mode = true
+icon = ExtResource( 23 )
+
+[node name="Blob_3_gerade" type="Button" parent="."]
+margin_left = 424.0
+margin_top = 519.0
+margin_right = 500.0
+margin_bottom = 589.0
+hint_tooltip = "mittlerer Blob"
+toggle_mode = true
+icon = ExtResource( 24 )
+
+[node name="Blob_2_gerade" type="Button" parent="."]
+margin_left = 344.0
+margin_top = 519.0
+margin_right = 420.0
+margin_bottom = 589.0
+hint_tooltip = "kleiner Blob"
+toggle_mode = true
+icon = ExtResource( 25 )
+
+[node name="Blob_4_gerade" type="Button" parent="."]
+margin_left = 504.0
+margin_top = 519.0
+margin_right = 580.0
+margin_bottom = 589.0
+hint_tooltip = "großer Blob"
+toggle_mode = true
+icon = ExtResource( 26 )
+
+[node name="Blob_5_gerade" type="Button" parent="."]
+margin_left = 584.0
+margin_top = 519.0
+margin_right = 660.0
+margin_bottom = 589.0
+hint_tooltip = "maxi Blob"
+toggle_mode = true
+icon = ExtResource( 27 )
+
+[node name="Hintergrund" type="Button" parent="."]
+margin_left = 677.0
+margin_top = 592.0
+margin_right = 753.0
+margin_bottom = 662.0
+hint_tooltip = "Hintergrund"
+toggle_mode = true
+icon = ExtResource( 28 )
+
+[node name="BadCoin1" type="Button" parent="."]
+margin_left = 264.0
+margin_top = 592.0
+margin_right = 340.0
+margin_bottom = 662.0
+hint_tooltip = "schlechter Coin 1"
+toggle_mode = true
+shortcut_in_tooltip = false
+icon = ExtResource( 29 )
+
+[node name="BadCoin2" type="Button" parent="."]
+margin_left = 344.0
+margin_top = 592.0
+margin_right = 420.0
+margin_bottom = 662.0
+hint_tooltip = "schlechter Coin 2"
+toggle_mode = true
+icon = ExtResource( 30 )
+
+[node name="GoodCoin1" type="Button" parent="."]
+margin_left = 424.0
+margin_top = 592.0
+margin_right = 500.0
+margin_bottom = 662.0
+hint_tooltip = "guter Coin 1"
+toggle_mode = true
+icon = ExtResource( 31 )
+
+[node name="GoodCoin2" type="Button" parent="."]
+margin_left = 504.0
+margin_top = 592.0
+margin_right = 580.0
+margin_bottom = 662.0
+hint_tooltip = "guter Coin 2"
+toggle_mode = true
+icon = ExtResource( 32 )
+
+[node name="RandomCoin" type="Button" parent="."]
+margin_left = 584.0
+margin_top = 592.0
+margin_right = 660.0
+margin_bottom = 662.0
+hint_tooltip = "Zufallscoin"
+toggle_mode = true
+icon = ExtResource( 33 )
+
+[node name="Kanonenkugel" type="Button" parent="."]
+margin_left = 677.0
+margin_top = 519.0
+margin_right = 753.0
+margin_bottom = 589.0
+hint_tooltip = "Kanonenkugel"
+toggle_mode = true
+icon = ExtResource( 34 )
+
+[node name="Vorlage4" type="Button" parent="."]
+margin_left = 922.951
+margin_top = 365.074
+margin_right = 998.951
+margin_bottom = 435.074
+icon = ExtResource( 35 )
+
+[node name="Vorlage3" type="Button" parent="."]
+margin_left = 925.0
+margin_top = 288.0
+margin_right = 1001.0
+margin_bottom = 358.0
+icon = ExtResource( 35 )
+
+[node name="Vorlage2" type="Button" parent="."]
+margin_left = 925.0
+margin_top = 214.0
+margin_right = 1001.0
+margin_bottom = 284.0
+icon = ExtResource( 35 )
+
+[node name="Vorlage5" type="Button" parent="."]
+margin_left = 925.0
+margin_top = 436.0
+margin_right = 1001.0
+margin_bottom = 506.0
+icon = ExtResource( 35 )
+
+[node name="Vorlage1" type="Button" parent="."]
+margin_left = 925.0
+margin_top = 140.0
+margin_right = 1001.0
+margin_bottom = 210.0
+icon = ExtResource( 36 )
+
+[node name="Standard" type="Button" parent="."]
+margin_left = 925.0
+margin_top = 35.977
+margin_right = 1001.0
+margin_bottom = 105.977
+icon = ExtResource( 37 )
+
+[node name="klein" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 224.0
+margin_right = 52.0
+margin_bottom = 262.0
+hint_tooltip = "Werkzeug klein"
+toggle_mode = true
+icon = ExtResource( 38 )
+
+[node name="mittel" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 60.0
+margin_top = 224.0
+margin_right = 104.0
+margin_bottom = 262.0
+hint_tooltip = "Werkzeug mittel"
+toggle_mode = true
+icon = ExtResource( 39 )
+
+[node name="gross" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 111.522
+margin_top = 224.0
+margin_right = 155.522
+margin_bottom = 262.0
+hint_tooltip = "Werkzeug groß"
+toggle_mode = true
+icon = ExtResource( 40 )
+
+[node name="Zurueck" type="Button" parent="."]
+margin_left = 800.0
+margin_top = 613.543
+margin_right = 922.0
+margin_bottom = 633.543
+text = "Zurück zum Spiel"
+
+[node name="Fuellen" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 110.0
+margin_top = 25.0
+margin_right = 154.0
+margin_bottom = 63.0
+hint_tooltip = "Füllen"
+toggle_mode = true
+icon = ExtResource( 41 )
+
+[node name="Leeren" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 59.0
+margin_top = 115.0
+margin_right = 103.0
+margin_bottom = 153.0
+hint_tooltip = "Fläche leeren"
+icon = ExtResource( 42 )
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 930.225
+margin_top = 115.588
+margin_right = 1031.22
+margin_bottom = 146.588
+text = "Vorlagen:"
+
+[node name="VorlageBestaetigen" type="WindowDialog" parent="."]
+editor/display_folded = true
+margin_left = 320.968
+margin_top = 202.989
+margin_right = 621.968
+margin_bottom = 368.989
+
+[node name="Design1" type="Button" parent="VorlageBestaetigen"]
+margin_left = 18.2576
+margin_top = 74.0641
+margin_right = 62.2576
+margin_bottom = 107.064
+text = "1"
+
+[node name="Design2" type="Button" parent="VorlageBestaetigen"]
+margin_left = 63.5731
+margin_top = 72.3858
+margin_right = 107.573
+margin_bottom = 105.386
+text = "2"
+
+[node name="Design3" type="Button" parent="VorlageBestaetigen"]
+margin_left = 120.637
+margin_top = 72.3858
+margin_right = 164.637
+margin_bottom = 105.386
+text = "3"
+
+[node name="Design4" type="Button" parent="VorlageBestaetigen"]
+margin_left = 176.023
+margin_top = 77.4209
+margin_right = 220.023
+margin_bottom = 110.421
+text = "4"
+
+[node name="Design5" type="Button" parent="VorlageBestaetigen"]
+margin_left = 241.479
+margin_top = 79.0992
+margin_right = 285.479
+margin_bottom = 112.099
+text = "5"
+
+[node name="Label" type="Label" parent="VorlageBestaetigen"]
+margin_left = 28.5321
+margin_top = 28.532
+margin_right = 257.532
+margin_bottom = 42.532
+text = "Speicherplatz für Vorlage auswählen"
+
+[node name="SpeichernBestaetigen" type="WindowDialog" parent="."]
+editor/display_folded = true
+margin_left = 320.968
+margin_top = 202.989
+margin_right = 621.968
+margin_bottom = 368.989
+
+[node name="Design1" type="Button" parent="SpeichernBestaetigen"]
+margin_left = 18.2576
+margin_top = 74.0641
+margin_right = 62.2576
+margin_bottom = 107.064
+text = "1"
+
+[node name="Design2" type="Button" parent="SpeichernBestaetigen"]
+margin_left = 63.5731
+margin_top = 72.3858
+margin_right = 107.573
+margin_bottom = 105.386
+text = "2"
+
+[node name="Design3" type="Button" parent="SpeichernBestaetigen"]
+margin_left = 120.637
+margin_top = 72.3858
+margin_right = 164.637
+margin_bottom = 105.386
+text = "3"
+
+[node name="Design4" type="Button" parent="SpeichernBestaetigen"]
+margin_left = 176.023
+margin_top = 77.4209
+margin_right = 220.023
+margin_bottom = 110.421
+text = "4"
+
+[node name="Design5" type="Button" parent="SpeichernBestaetigen"]
+margin_left = 241.479
+margin_top = 79.0992
+margin_right = 285.479
+margin_bottom = 112.099
+text = "5"
+
+[node name="Label" type="Label" parent="SpeichernBestaetigen"]
+margin_left = 28.5321
+margin_top = 28.532
+margin_right = 257.532
+margin_bottom = 42.532
+text = "Was soll mit dem akutellen Bild 
+gemacht werden?"
+
+[node name="Vorschau" type="Label" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 395.491
+margin_right = 70.0
+margin_bottom = 426.491
+rect_pivot_offset = Vector2( 216.591, 407.151 )
+text = "Vorschau:
+"
+
+[node name="Coin" type="Sprite" parent="."]
+position = Vector2( 146.914, 461.718 )
+z_index = -2
+texture = ExtResource( 29 )
+
+[node name="Blob" type="Sprite" parent="."]
+position = Vector2( 92.3878, 587.472 )
+z_index = -2
+z_as_relative = false
+texture = ExtResource( 43 )
+
+[node name="Hintergrund0" type="Sprite" parent="."]
+position = Vector2( 40, 443 )
+z_index = -3
+texture = ExtResource( 28 )
+
+[node name="Hintergrund1" type="Sprite" parent="."]
+position = Vector2( 104, 443 )
+z_index = -3
+texture = ExtResource( 28 )
+
+[node name="Hintergrund2" type="Sprite" parent="."]
+position = Vector2( 168, 443 )
+z_index = -3
+texture = ExtResource( 28 )
+
+[node name="Hintergrund3" type="Sprite" parent="."]
+position = Vector2( 40, 507 )
+z_index = -3
+texture = ExtResource( 28 )
+
+[node name="Hintergrund4" type="Sprite" parent="."]
+position = Vector2( 104, 507 )
+z_index = -3
+texture = ExtResource( 28 )
+
+[node name="Hintergrund5" type="Sprite" parent="."]
+position = Vector2( 168, 507 )
+z_index = -3
+texture = ExtResource( 28 )
+
+[node name="Hintergrund6" type="Sprite" parent="."]
+position = Vector2( 40, 571 )
+z_index = -3
+texture = ExtResource( 28 )
+
+[node name="Hintergrund7" type="Sprite" parent="."]
+position = Vector2( 104, 571 )
+z_index = -3
+texture = ExtResource( 28 )
+
+[node name="Hintergrund8" type="Sprite" parent="."]
+position = Vector2( 168, 571 )
+z_index = -3
+texture = ExtResource( 28 )
+
+[node name="Boden" type="Sprite" parent="."]
+position = Vector2( 40, 635 )
+z_index = -3
+texture = ExtResource( 44 )
+
+[node name="Boden2" type="Sprite" parent="."]
+position = Vector2( 104, 635 )
+z_index = -3
+texture = ExtResource( 44 )
+
+[node name="Boden3" type="Sprite" parent="."]
+position = Vector2( 168, 635 )
+z_index = -3
+texture = ExtResource( 44 )
+
+[node name="speichernVorlage1" type="Button" parent="."]
+margin_left = 800.0
+margin_top = 162.0
+margin_right = 891.0
+margin_bottom = 182.0
+text = "speichern=>"
+
+[node name="speichernVorlage2" type="Button" parent="."]
+margin_left = 800.0
+margin_top = 236.0
+margin_right = 891.0
+margin_bottom = 256.0
+text = "speichern=>"
+
+[node name="speichernVorlage3" type="Button" parent="."]
+margin_left = 800.0
+margin_top = 310.0
+margin_right = 891.0
+margin_bottom = 330.0
+text = "speichern=>"
+
+[node name="speichernVorlage4" type="Button" parent="."]
+margin_left = 800.0
+margin_top = 384.0
+margin_right = 891.0
+margin_bottom = 404.0
+text = "speichern=>"
+
+[node name="speichernVorlage5" type="Button" parent="."]
+margin_left = 800.0
+margin_top = 458.0
+margin_right = 891.0
+margin_bottom = 478.0
+text = "speichern=>"
+
+[node name="UebernehmenBestaetigen" type="ConfirmationDialog" parent="."]
+margin_left = 351.56
+margin_top = 165.012
+margin_right = 698.56
+margin_bottom = 287.012
+window_title = "Bitte bestätigen"
+dialog_text = "Das aktuelle Zeichnung als momentane Spielfigur übernehmen?
+Das alte wird gelöscht, sofern es nicht in den Vorlagen gespeichert ist"
+
+[node name="CoinWechsel1" type="ConfirmationDialog" parent="."]
+margin_left = 296.036
+margin_top = 194.575
+margin_right = 738.036
+margin_bottom = 316.575
+window_title = "Bitte bestätigen"
+dialog_text = "Möchtest du wirklich die akutell zu bearbeitende Figur ändern? 
+Falls du dein Design noch nicht gespeichert hats, geht es verloren."
+dialog_hide_on_ok = false
+
+[node name="Wiederholen" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 59.0
+margin_top = 160.0
+margin_right = 103.0
+margin_bottom = 198.0
+hint_tooltip = "Wiederholen"
+icon = ExtResource( 45 )
+
+[node name="Rueckgaengig" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 160.0
+margin_right = 52.0
+margin_bottom = 198.0
+hint_tooltip = "Rückgängig"
+icon = ExtResource( 46 )
+
+[node name="Bildrand" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 8.0
+margin_top = 115.0
+margin_right = 52.0
+margin_bottom = 153.0
+hint_tooltip = "nach unten verschieben"
+icon = ExtResource( 47 )
+
+[node name="Ellipse" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+margin_left = 59.0
+margin_top = 70.0
+margin_right = 103.0
+margin_bottom = 108.0
+hint_tooltip = "Ellipse"
+toggle_mode = true
+icon = ExtResource( 48 )
+
+[node name="Farbauswahl" type="Button" parent="." groups=[
+"Steuerelemente",
+]]
+visible = false
+margin_left = 6.0
+margin_top = 372.0
+margin_right = 177.0
+margin_bottom = 392.0
+text = "Farbe ändern"
+
+[node name="Farbwahl" type="ColorPicker" parent="."]
+pause_mode = 2
+visible = false
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 4.0
+margin_bottom = 4.0
+edit_alpha = false
+deferred_mode = true
+
+[node name="Sprite" type="Sprite" parent="Farbwahl"]
+position = Vector2( 146.047, 214.507 )
+scale = Vector2( 9.3762, 13.7334 )
+z_index = -1
+texture = ExtResource( 49 )
+
+[node name="Schliessen" type="Button" parent="Farbwahl"]
+margin_top = 438.0
+margin_right = 290.0
+margin_bottom = 468.0
+rect_min_size = Vector2( 0, 30 )
+text = "übernehmen"
+[connection signal="pressed" from="CoinWechsel/Ja" to="Zeichenflaeche" method="_on_Ja_pressed"]
+[connection signal="pressed" from="CoinWechsel/Nein" to="Zeichenflaeche" method="_on_Nein_pressed"]
+[connection signal="pressed" from="Speichern" to="Zeichenflaeche" method="_on_Speichern_pressed"]
+[connection signal="pressed" from="Vorlage" to="Zeichenflaeche" method="_on_Vorlage_pressed"]
+[connection signal="pressed" from="Stift" to="Zeichenflaeche" method="_on_Stift_pressed"]
+[connection signal="pressed" from="Linie" to="Zeichenflaeche" method="_on_Linie_pressed"]
+[connection signal="pressed" from="Rechteck" to="Zeichenflaeche" method="_on_Rechteck_pressed"]
+[connection signal="pressed" from="Radierer" to="Zeichenflaeche" method="_on_Radierer_pressed"]
+[connection signal="pressed" from="Spiegeln" to="Zeichenflaeche" method="_on_Spiegeln_pressed"]
+[connection signal="pressed" from="Farbe1" to="Zeichenflaeche" method="_on_Farbe1_pressed"]
+[connection signal="pressed" from="Farbe2" to="Zeichenflaeche" method="_on_Farbe2_pressed"]
+[connection signal="pressed" from="Farbe3" to="Zeichenflaeche" method="_on_Farbe3_pressed"]
+[connection signal="pressed" from="Farbe4" to="Zeichenflaeche" method="_on_Farbe4_pressed"]
+[connection signal="pressed" from="Farbe5" to="Zeichenflaeche" method="_on_Farbe5_pressed"]
+[connection signal="pressed" from="Farbe6" to="Zeichenflaeche" method="_on_Farbe6_pressed"]
+[connection signal="pressed" from="Farbe7" to="Zeichenflaeche" method="_on_Farbe7_pressed"]
+[connection signal="pressed" from="Farbe8" to="Zeichenflaeche" method="_on_Farbe8_pressed"]
+[connection signal="pressed" from="Farbe9" to="Zeichenflaeche" method="_on_Farbe9_pressed"]
+[connection signal="pressed" from="Farbe10" to="Zeichenflaeche" method="_on_Farbe10_pressed"]
+[connection signal="pressed" from="EigeneFarbe1" to="Zeichenflaeche" method="_on_EigeneFarbe1_pressed"]
+[connection signal="pressed" from="EigeneFarbe2" to="Zeichenflaeche" method="_on_EigeneFarbe2_pressed"]
+[connection signal="pressed" from="EigeneFarbe3" to="Zeichenflaeche" method="_on_EigeneFarbe3_pressed"]
+[connection signal="pressed" from="EigeneFarbe4" to="Zeichenflaeche" method="_on_EigeneFarbe4_pressed"]
+[connection signal="pressed" from="EigeneFarbe5" to="Zeichenflaeche" method="_on_EigeneFarbe5_pressed"]
+[connection signal="pressed" from="Blob_1_gerade" to="Zeichenflaeche" method="_on_Blob_1_gerade_pressed"]
+[connection signal="pressed" from="Blob_3_gerade" to="Zeichenflaeche" method="_on_Blob_3_gerade_pressed"]
+[connection signal="pressed" from="Blob_2_gerade" to="Zeichenflaeche" method="_on_Blob_2_gerade_pressed"]
+[connection signal="pressed" from="Blob_4_gerade" to="Zeichenflaeche" method="_on_Blob_4_gerade_pressed"]
+[connection signal="pressed" from="Blob_5_gerade" to="Zeichenflaeche" method="_on_Blob_5_gerade_pressed"]
+[connection signal="pressed" from="Hintergrund" to="Zeichenflaeche" method="_on_Hintergrund_pressed"]
+[connection signal="pressed" from="BadCoin1" to="Zeichenflaeche" method="_on_BadCoin1_pressed"]
+[connection signal="pressed" from="BadCoin2" to="Zeichenflaeche" method="_on_BadCoin2_pressed"]
+[connection signal="pressed" from="GoodCoin1" to="Zeichenflaeche" method="_on_GoodCoin1_pressed"]
+[connection signal="pressed" from="GoodCoin2" to="Zeichenflaeche" method="_on_GoodCoin2_pressed"]
+[connection signal="pressed" from="RandomCoin" to="Zeichenflaeche" method="_on_RandomCoin_pressed"]
+[connection signal="pressed" from="Kanonenkugel" to="Zeichenflaeche" method="_on_Kanonenkugel_pressed"]
+[connection signal="pressed" from="Vorlage4" to="Zeichenflaeche" method="_on_Vorlage4_pressed"]
+[connection signal="pressed" from="Vorlage3" to="Zeichenflaeche" method="_on_Vorlage3_pressed"]
+[connection signal="pressed" from="Vorlage2" to="Zeichenflaeche" method="_on_Vorlage2_pressed"]
+[connection signal="pressed" from="Vorlage5" to="Zeichenflaeche" method="_on_Vorlage5_pressed"]
+[connection signal="pressed" from="Vorlage1" to="Zeichenflaeche" method="_on_Vorlage1_pressed"]
+[connection signal="pressed" from="Standard" to="Zeichenflaeche" method="_on_Standard_pressed"]
+[connection signal="pressed" from="klein" to="Zeichenflaeche" method="_on_klein_pressed"]
+[connection signal="pressed" from="mittel" to="Zeichenflaeche" method="_on_mittel_pressed"]
+[connection signal="pressed" from="gross" to="Zeichenflaeche" method="_on_gro_pressed"]
+[connection signal="button_up" from="Zurueck" to="Zeichenflaeche" method="_on_Zurueck_button_up"]
+[connection signal="pressed" from="Fuellen" to="Zeichenflaeche" method="_on_Fuellen_pressed"]
+[connection signal="pressed" from="Leeren" to="Zeichenflaeche" method="_on_Leeren_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design1" to="Zeichenflaeche" method="_on_Design1_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design2" to="Zeichenflaeche" method="_on_Design2_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design3" to="Zeichenflaeche" method="_on_Design3_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design4" to="Zeichenflaeche" method="_on_Design4_pressed"]
+[connection signal="pressed" from="VorlageBestaetigen/Design5" to="Zeichenflaeche" method="_on_Design5_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design1" to="Zeichenflaeche" method="_on_Design1_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design2" to="Zeichenflaeche" method="_on_Design2_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design3" to="Zeichenflaeche" method="_on_Design3_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design4" to="Zeichenflaeche" method="_on_Design4_pressed"]
+[connection signal="pressed" from="SpeichernBestaetigen/Design5" to="Zeichenflaeche" method="_on_Design5_pressed"]
+[connection signal="pressed" from="speichernVorlage1" to="Zeichenflaeche" method="_on_Design1_pressed"]
+[connection signal="pressed" from="speichernVorlage2" to="Zeichenflaeche" method="_on_Design2_pressed"]
+[connection signal="pressed" from="speichernVorlage3" to="Zeichenflaeche" method="_on_Design3_pressed"]
+[connection signal="pressed" from="speichernVorlage4" to="Zeichenflaeche" method="_on_Design4_pressed"]
+[connection signal="pressed" from="speichernVorlage5" to="Zeichenflaeche" method="_on_Design5_pressed"]
+[connection signal="confirmed" from="UebernehmenBestaetigen" to="Zeichenflaeche" method="_on_UebernehmenBestaetigen_confirmed"]
+[connection signal="confirmed" from="CoinWechsel1" to="Zeichenflaeche" method="_on_CoinWechsel_confirmed"]
+[connection signal="custom_action" from="CoinWechsel1" to="Zeichenflaeche" method="_on_CoinWechsel_custom_action"]
+[connection signal="popup_hide" from="CoinWechsel1" to="Zeichenflaeche" method="_on_CoinWechsel_popup_hide"]
+[connection signal="pressed" from="Wiederholen" to="Zeichenflaeche" method="_on_Wiederholen_pressed"]
+[connection signal="pressed" from="Rueckgaengig" to="Zeichenflaeche" method="_on_Rueckgaengig_pressed"]
+[connection signal="pressed" from="Bildrand" to="Zeichenflaeche" method="_on_Bildrand_pressed"]
+[connection signal="pressed" from="Ellipse" to="Zeichenflaeche" method="_on_Ellipse_pressed"]
+[connection signal="pressed" from="Farbauswahl" to="Zeichenflaeche" method="_on_Farbauswahl_pressed"]
+[connection signal="hide" from="Farbwahl" to="Zeichenflaeche" method="_on_ColorPicker_hide"]
+[connection signal="pressed" from="Farbwahl/Schliessen" to="Zeichenflaeche" method="_on_Schliessen_pressed"]

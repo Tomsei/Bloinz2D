@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Skripte/Aktionen/Muenze/Muenze.gd" type="Script" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 18.456
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 21.1866
+
+[node name="Muenze" type="KinematicBody2D"]
+collision_layer = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )

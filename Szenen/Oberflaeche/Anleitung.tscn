@@ -1,0 +1,153 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Bilder/TileMaps/Anleitung.tres" type="TileSet" id=1]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin1.png" type="Texture" id=2]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/BadCoin2.png" type="Texture" id=3]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin1.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/GoodCoin2.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/Coins/RandomCoin.png" type="Texture" id=7]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_gerade.png" type="Texture" id=8]
+[ext_resource path="res://Bilder/Buttons/Anleitung/PfeilOben.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Buttons/Anleitung/PfeilLinks.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Buttons/Anleitung/PfeilRechts.png" type="Texture" id=11]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_leer.png" type="Texture" id=12]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_voll.png" type="Texture" id=13]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_anzeiger.png" type="Texture" id=14]
+[ext_resource path="res://Bilder/Buttons/Spiel/LifeBar_rand.png" type="Texture" id=15]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 3
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[node name="Anleitung" type="Node2D"]
+pause_mode = 2
+
+[node name="TileMap" type="TileMap" parent="."]
+material = SubResource( 1 )
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( 0, 2, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 65536, 1, 0, 65537, 1, 0, 65538, 1, 0, 65539, 1, 0, 65540, 1, 0, 65541, 1, 0, 65542, 1, 0, 131072, 1, 0, 131073, 1, 0, 131074, 1, 0, 131075, 1, 0, 131076, 1, 0, 131077, 1, 0, 131078, 1, 0, 196608, 1, 0, 196609, 1, 0, 196610, 1, 0, 196611, 1, 0, 196612, 1, 0, 196613, 1, 0, 196614, 1, 0, 262144, 1, 0, 262145, 1, 0, 262146, 1, 0, 262147, 1, 0, 262148, 1, 0, 262149, 1, 0, 262150, 1, 0, 327680, 1, 0, 327681, 1, 0, 327682, 1, 0, 327683, 1, 0, 327684, 1, 0, 327685, 1, 0, 327686, 1, 0, 393216, 1, 0, 393217, 1, 0, 393218, 1, 0, 393219, 1, 0, 393220, 1, 0, 393221, 1, 0, 393222, 1, 0, 458752, 1, 0, 458753, 1, 0, 458754, 1, 0, 458755, 1, 0, 458756, 1, 0, 458757, 1, 0, 458758, 1, 0, 524288, 1, 0, 524289, 1, 0, 524290, 1, 0, 524291, 1, 0, 524292, 1, 0, 524293, 1, 0, 524294, 1, 0, 589824, 1, 0, 589825, 1, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0, 589830, 1, 0 )
+
+[node name="Vermeide" type="Label" parent="."]
+margin_left = 260.0
+margin_top = 90.0
+margin_right = 365.0
+margin_bottom = 104.0
+text = "Vermeide Böses"
+
+[node name="BadCoin1" type="Sprite" parent="Vermeide"]
+position = Vector2( 52, 55 )
+texture = ExtResource( 2 )
+
+[node name="BadCoin2" type="Sprite" parent="Vermeide"]
+position = Vector2( 52, 119 )
+texture = ExtResource( 3 )
+
+[node name="Kanonenkugel" type="Sprite" parent="Vermeide"]
+position = Vector2( 52, 183 )
+texture = ExtResource( 4 )
+
+[node name="Sammle" type="Label" parent="."]
+margin_left = 98.0
+margin_top = 90.0
+margin_right = 193.0
+margin_bottom = 104.0
+text = "Sammle Gutes"
+
+[node name="GoodCoin1" type="Sprite" parent="Sammle"]
+position = Vector2( 47, 55 )
+texture = ExtResource( 5 )
+
+[node name="GoodCoin2" type="Sprite" parent="Sammle"]
+position = Vector2( 47, 119 )
+texture = ExtResource( 6 )
+
+[node name="RandomCoin" type="Sprite" parent="Sammle"]
+position = Vector2( 47, 183 )
+texture = ExtResource( 7 )
+
+[node name="Blob_3_gerade" type="Sprite" parent="."]
+position = Vector2( 224, 481 )
+texture = ExtResource( 8 )
+
+[node name="Bewegung" type="Label" parent="Blob_3_gerade"]
+margin_left = -103.0
+margin_top = -110.0
+margin_right = 104.001
+margin_bottom = -96.0
+text = "Bewege dich mit den Pfeiltasten"
+
+[node name="PfeilOben" type="Sprite" parent="Blob_3_gerade"]
+position = Vector2( -0.951553, -46.3075 )
+texture = ExtResource( 9 )
+
+[node name="PfeilLinks" type="Sprite" parent="Blob_3_gerade"]
+position = Vector2( -56.8987, 16.0876 )
+texture = ExtResource( 10 )
+
+[node name="PfeilRechts" type="Sprite" parent="Blob_3_gerade"]
+position = Vector2( 55.3152, 15.3184 )
+texture = ExtResource( 11 )
+
+[node name="LifeBar" type="TextureProgress" parent="."]
+margin_left = 84.0
+margin_top = 580.617
+margin_right = 364.0
+margin_bottom = 602.617
+max_value = 25.0
+value = 12.0
+texture_under = ExtResource( 12 )
+texture_progress = ExtResource( 13 )
+
+[node name="LifeBarAnzeiger" type="HSlider" parent="LifeBar"]
+margin_left = 0.0104065
+margin_top = 3.04236
+margin_right = 280.01
+margin_bottom = 19.0424
+custom_icons/grabber_disabled = ExtResource( 14 )
+custom_icons/grabber = ExtResource( 14 )
+custom_styles/slider = SubResource( 2 )
+custom_styles/grabber_disabled = SubResource( 3 )
+custom_styles/grabber_highlight = SubResource( 4 )
+custom_styles/grabber_area = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+max_value = 25.0
+value = 12.0
+editable = false
+scrollable = false
+ticks_on_borders = false
+
+[node name="LifeBar_rand" type="Sprite" parent="LifeBar"]
+position = Vector2( 140.011, 11.0284 )
+texture = ExtResource( 15 )
+
+[node name="LifeBarErklärung" type="Label" parent="LifeBar"]
+margin_left = 41.6376
+margin_top = -34.0028
+margin_right = 240.639
+margin_bottom = -20.0028
+text = "Hier siehst du, wie gut es läuft:"
+
+[node name="NichtGut" type="Label" parent="LifeBar/LifeBarErklärung"]
+margin_left = -115.807
+margin_top = 37.519
+margin_right = -53.8069
+margin_bottom = 51.519
+text = "Nicht gut"
+
+[node name="SehrGut" type="Label" parent="LifeBar/LifeBarErklärung"]
+margin_left = 257.427
+margin_top = 39.413
+margin_right = 309.427
+margin_bottom = 53.413
+text = "Sehr gut"
