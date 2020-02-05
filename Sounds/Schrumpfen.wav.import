@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Schrumpfen.wav-e1c0770f26e872da89d339a7bba2585e.sample"
+
+[deps]
+
+source_file="res://Sounds/Schrumpfen.wav"
+dest_files=[ "res://.import/Schrumpfen.wav-e1c0770f26e872da89d339a7bba2585e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
