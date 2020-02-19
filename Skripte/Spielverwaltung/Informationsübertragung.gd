@@ -21,7 +21,8 @@ var SpeedboostAn = true
 func _ready():
 	get_tree().paused = true
 	JavaScript.eval("resizeSpiel(640,448)")
-	
+	# Zentriert das Fenster in der Bildschirmmitte
+	preload("res://Szenen/Spielverwaltung/UI.tscn").instance().bildschirm_zentrieren()
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

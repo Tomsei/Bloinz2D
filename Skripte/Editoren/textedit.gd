@@ -27,6 +27,9 @@ func _ready():
 		hauptverzeichnis_benutzer = OS.get_user_data_dir()
 	# Initiiere Parameter.
 	init()
+	
+	# Zentriert das Fenster in der Bildschirmmitte
+	preload("res://Szenen/Spielverwaltung/UI.tscn").instance().bildschirm_zentrieren()
 
 func init():
 	OS.set_window_size(Vector2(1030,680))

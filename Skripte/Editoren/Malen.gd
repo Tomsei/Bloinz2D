@@ -42,6 +42,9 @@ func _ready():
 	OS.set_window_size(Vector2(1030,680));
 	JavaScript.eval("resizeSpiel(680,1030)")
 	
+	# Zentriert das Fenster in der Bildschirmmitte
+	preload("res://Szenen/Spielverwaltung/UI.tscn").instance().bildschirm_zentrieren()
+	
 	#Farbe voreinstellen
 	aktuellerFarbbutton= get_node("../Farbe9");
 	aktuellerFarbbutton.pressed= true;

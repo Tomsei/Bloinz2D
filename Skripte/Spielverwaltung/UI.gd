@@ -34,3 +34,9 @@ func _on_AnleitungOeffnen_button_up():
 	get_node("AnleitungOeffnen").visible = false
 	anleitung.visible = true
 
+# Zentriert das Fenster in der Bildschirmmitte
+func bildschirm_zentrieren():
+	var screen_size = OS.get_screen_size()
+	var window_size = OS.get_window_size()
+	
+	OS.set_window_position(screen_size*0.5 - window_size*0.5)

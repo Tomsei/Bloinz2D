@@ -13,6 +13,8 @@ var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instanc
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Zentriert das Fenster in der Bildschirmmitte
+	preload("res://Szenen/Spielverwaltung/UI.tscn").instance().bildschirm_zentrieren()
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
