@@ -18,17 +18,19 @@ func _process(delta):
 
 
 func _on_Pause_toggled(button_pressed):
-	if get_tree().paused == true:
-		get_tree().paused = false
-		anleitung.visible = false
-		get_node("AnleitungOeffnen").visible = false
-	else:
+	print(button_pressed);
+	if button_pressed:
 		get_tree().paused = true
-		get_node("AnleitungOeffnen").visible = true
+	else:
+		get_tree().paused = false
+		if anleitung.visible == true:
+			anleitung.visible = false
+			get_node("AnleitungOeffnen").visible = true
 
 
 func _on_AnleitungOeffnen_button_up():
-	print("test")
+	get_node("Pause").pressed = true
+	_on_Pause_toggled(true)
 	get_node("AnleitungOeffnen").visible = false
 	anleitung.visible = true
 
