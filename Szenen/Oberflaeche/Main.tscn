@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Skripte/Spielverwaltung/Informationsübertragung.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/TileMaps/Spieloberflaeche.tres" type="TileSet" id=2]
-[ext_resource path="res://Szenen/Oberflaeche/Hintergrund.gd" type="Script" id=3]
+[ext_resource path="res://Skripte/Editoren/Hintergrund.gd" type="Script" id=3]
 [ext_resource path="res://Bilder/Hintergruende/Verlauf.png" type="Texture" id=4]
 [ext_resource path="res://Szenen/Oberflaeche/Startbildschirm.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Szenen/Oberflaeche/Spiel.tscn" type="PackedScene" id=6]

@@ -167,7 +167,7 @@ Methode, die bei jedem neuen Time_Frame aufgerufen wird
 func _process(delta):
 		if Input.is_action_just_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
-			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
+			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
 				if modus =="Fuellen":
 					array = create_2d_array(64,64,Color(0,0,0,0));
 					befuellen();
@@ -181,7 +181,7 @@ func _process(delta):
 					aktualisiere_Vorschau();
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
-			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
+			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
 				if modus=="Stift":
 					punkt_malen_pixel((mouseposition.x-256),mouseposition.y);
 					aktualisiere_Vorschau();
@@ -244,17 +244,12 @@ func _process(delta):
 						#linienStart = null;
 						#linienEnde = null;
 		elif Input.is_action_just_released("draw"):
-			var mouseposition = get_global_mouse_position();
-			if mouseposition.x >= 256 and mouseposition.y <= 512:
-				wiederholenstapel = [];
-				print(wiederholenstapel);
-				if modus=="Rechteck" or modus =="Linie" or modus =="Ellipse":
-					linienStart= null;
-					linienEnde = null;
-					uebernehme_temporaere_Zeichenflaeche();
-					Abbild_auf_Rueckgaengigstapel();
-					
-				print(wiederholenstapel);
+			wiederholenstapel = [];
+			if modus=="Rechteck" or modus =="Linie" or modus =="Ellipse":
+				linienStart= null;
+				linienEnde = null;
+				uebernehme_temporaere_Zeichenflaeche();
+				Abbild_auf_Rueckgaengigstapel();
 		elif Input.is_action_just_pressed("undo"):
 			mache_rueckgaengig();
 		elif Input.is_action_just_pressed("redo"):
@@ -566,6 +561,7 @@ func einladen(pfad):
 	if Vorschau=="Blob":
 		bild = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
 		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
+		
 	elif Vorschau =="Coin":
 		bild = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
 	else:
