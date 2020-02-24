@@ -30,7 +30,7 @@ var blobstatus = blobStati.NEUTRAL
 # Repraesentation der Blobstati.
 enum blobStati {NEGATIV2, NEGATIV1, NEUTRAL, POSITIV1, POSITIV2}
 
-var bodenhoehe = 470
+var bodenhoehe = 482
 
 var bilder = SpriteFrames.new()
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
@@ -83,10 +83,11 @@ func _physics_process(delta):
 	move_and_slide(Bewegung, UP_Vector);
 	
 	kollisionsPruefung()
+	boden_Erkennung()
 	
 	#Sicherstellen, dass abhängig von der Bildschirmgröße das Objekt nicht raus laufen kann
 	position.x = clamp(position.x, 0, 448)
-
+	position.y = clamp(position.y, 0, 483)
 
 #Funktion zum ermitteln welche Tasten gedrückt wurden 
 func checkTastenEingabe():
@@ -94,7 +95,8 @@ func checkTastenEingabe():
 	#Nach rechts --> Blob nach rechts bewegen
 	if Input.is_action_pressed("ui_right"):
 		Bewegung.x += 1 * speed
-		sprungRestBewegung = 1*speed
+		if !is_on_floor:
+			sprungRestBewegung = 1*speed
 		
 		#Wenn nötig die Textur des Sprites passend ändern
 		if spriteUpdateNoetig():
@@ -104,7 +106,8 @@ func checkTastenEingabe():
 	#Nach links --> Blob nach links bewegen
 	if Input.is_action_pressed("ui_left"):
 		Bewegung.x -= 1 * speed
-		sprungRestBewegung = -1*speed
+		if !is_on_floor:
+			sprungRestBewegung = -1*speed
 		
 		#Wenn nötig die Textur des Sprites passen ändern
 		if spriteUpdateNoetig():
@@ -147,7 +150,7 @@ func sprung():
 	hoechsteBlobHoehe = bodenhoehe
 	
 	#Der Blob befindet sich auf dem Boden
-	if is_on_floor():
+	if is_on_floor:
 		doppelterSprung = false
 		Bewegung.y = - Sprungkraft
 		sprungRestBewegung = 0 #verhindert, das vom Boden Aus Sprung richtung weiter Rutscht
@@ -169,7 +172,7 @@ Wenn sie Höher ist wird neue blobHoehe gespeichert
 """
 func ermittelMaximalHoehe():
 	
-	if !is_on_floor():
+	if !is_on_floor:
 		if position.y < hoechsteBlobHoehe:
 			hoechsteBlobHoehe = position.y
 
@@ -184,20 +187,22 @@ Es soll ein zusätzliches Bouncen (Impuls nach oben) stattfinden,
 wenn zuvor nicht zu oft gesprungen wurde + Blob auf dem Boden ist
 """
 func sprungUpdate():
-	
+	if is_on_floor:
+		sprungRestBewegung = 0
 	#Bounce nur wenn BLob auf boden + Bounceanzahl nicht überschritten 
-	if is_on_floor() and bounceAnzahl < 3 and position.y > bodenhoehe and not Input.is_action_just_pressed("jump"):
+	if is_on_floor and bounceAnzahl < 3 and position.y > bodenhoehe and not Input.is_action_just_pressed("jump"):
 		bounceEffekt = bounceEffekt/2        #nächste Bounce halb so hoch
 		Bewegung.y = -bounceEffekt           #Bounce Impuls setzen
 		bounceAnzahl = bounceAnzahl+1        
 		sprungRestBewegung = 0               #Kein nachziehen, au auf dem boden liegt
+		print("bounce")
 	
 	#In der Luft ohne weitere Richtungseingabe
-	elif !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_right") and !is_on_floor():
+	elif !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_right") and !is_on_floor:
 		sprungRestBewegung = sprungRestBewegung / 1.05        #Bewegungsgeschwindigkeit des Nachziehens verringern
 		Bewegung.x = sprungRestBewegung                       #weiter in Richtung nachziehen
 
-
+var is_on_floor
 
 """
 Methode zum erkennen von Kollisionen mit anderen Objekten
@@ -207,9 +212,23 @@ wird die Methode blobKollision aufgerufen, sofern diese vorhanden ist
 --> somit können die Objekte passend auf Kollision mit Spielfigur reagieren
 """
 func kollisionsPruefung():
+	
 	for body in $Hitbox.get_overlapping_bodies():
 		if body.has_method("blobKollision"):
 			body.blobKollision()
+	print(sprungRestBewegung)
+
+
+func boden_Erkennung():
+	if $Hitbox.get_overlapping_bodies().size() == 0:
+		is_on_floor = false
+	else:
+		for body in $Hitbox.get_overlapping_bodies():
+			if body.get_name() == "BodenCollisionShape":
+				is_on_floor = true
+			else:
+				is_on_floor = false
+		
 
 
 
@@ -244,29 +263,25 @@ func blobVeranederung(var seitlich):
 				blobstatus = blobStati.NEGATIV2
 				# Spiele den Sound fuer das Schrumpfen.
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
-				
-			$AnimatedSprite._create_collision_polygon("Blob_1_gerade")
-			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
-				
+				$AnimatedSprite._create_collision_polygon("Blob_1_gerade")
+			
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
 				#skalieren(0.5)
 			else:
 				$AnimatedSprite.play("negativ_2_gerade")
 				#skalieren(0.5)
-		
 		5, 6, 7, 8, 9:
 			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.NEGATIV1:
 				blobstatus = blobStati.NEGATIV1
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
+				$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
 			elif blobstatus < blobStati.NEGATIV1:
 				blobstatus = blobStati.NEGATIV1
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-			
-			$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
-			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
-			
+				$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
+				
 			if seitlich:
 				$AnimatedSprite.play("negativ_1_seitlich")
 				#skalieren(0.7)
@@ -279,12 +294,12 @@ func blobVeranederung(var seitlich):
 			if blobstatus > blobStati.NEUTRAL:
 				blobstatus = blobStati.NEUTRAL
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
+				$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
 			elif blobstatus < blobStati.NEUTRAL:
 				blobstatus = blobStati.NEUTRAL
 				$AudioStreamPlayer2D.abspielen("Wachsen")
+				$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
 			
-			$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
-			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
 			
 			if seitlich:
 				$AnimatedSprite.play("neutral_seitlich")
@@ -297,12 +312,11 @@ func blobVeranederung(var seitlich):
 			if blobstatus > blobStati.POSITIV1:
 				blobstatus = blobStati.POSITIV1
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
+				$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
 			elif blobstatus < blobStati.POSITIV1:
 				blobstatus = blobStati.POSITIV1
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-			
-			$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
-			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+				$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
 			
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
@@ -316,9 +330,7 @@ func blobVeranederung(var seitlich):
 			if blobstatus < blobStati.POSITIV2:
 				blobstatus = blobStati.POSITIV2
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-			
-			$AnimatedSprite._create_collision_polygon("Blob_5_gerade")
-			$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+				$AnimatedSprite._create_collision_polygon("Blob_5_gerade")
 			
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")
