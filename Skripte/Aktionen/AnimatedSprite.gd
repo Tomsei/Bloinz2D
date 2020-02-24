@@ -27,14 +27,13 @@ func _create_collision_polygon(var bildname):
 	while is_instance_valid(get_parent().get_node("Hitbox").get_child(i)):
 		get_parent().get_node("Hitbox").get_child(i).queue_free()
 		i = i+1
-		print("delete")
 	
 	var texture = persistenz.lade_bildtextur("res://Bilder/Standardspielfiguren/Spielfiguren/" + bildname + ".png")
 	
 	var bm = BitMap.new()
 	bm.create_from_image_alpha(texture.get_data())
 	var rect = Rect2(position.x, position.y, texture.get_width(), texture.get_height())
-	var my_array = bm.opaque_to_polygons(rect, 0.0001)
+	var my_array = bm.opaque_to_polygons(rect, 0.00001)
 	var my_polygon = Polygon2D.new()
 	my_polygon.set_polygons(my_array)
 	var offsetX = 0

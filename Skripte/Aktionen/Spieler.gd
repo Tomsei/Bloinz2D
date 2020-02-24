@@ -88,7 +88,7 @@ func _physics_process(delta):
 	#Sicherstellen, dass abhängig von der Bildschirmgröße das Objekt nicht raus laufen kann
 	position.x = clamp(position.x, 0, 448)
 	position.y = clamp(position.y, 0, 483)
-
+	
 #Funktion zum ermitteln welche Tasten gedrückt wurden 
 func checkTastenEingabe():
 	
@@ -129,21 +129,20 @@ func checkTastenEingabe():
 
 
 #Sprung Funktion
-"""
-Methode zum springen
-Der Sprung wird in 4 unterschiedliche Verhaltensweisen aufgeteilt
-1. Der Blob befindet sind auf dem Boden
---> Der Blob soll normal Springen, 
 
-2. Der Blob befindet sich auf dem Boden ist aber nocht im Bounce Durchgang
---> Kein Springen ist möglich
+#Methode zum springen
+#Der Sprung wird in 4 unterschiedliche Verhaltensweisen aufgeteilt
+#1. Der Blob befindet sind auf dem Boden
+#--> Der Blob soll normal Springen, 
 
-3. Der Blob befindet sich in der Luft und hat noch keinen Doppelsprung ausgeführt
---> Der Blob soll ebenfalls springen können
+#2. Der Blob befindet sich auf dem Boden ist aber nocht im Bounce Durchgang
+#--> Kein Springen ist möglich
 
-4. Der Blob befindet sich in der Luft und hat bereits einen Doppelsprung ausgeführt
---> es ist kein Sprung für den Blob erlaubt
-"""
+#3. Der Blob befindet sich in der Luft und hat noch keinen Doppelsprung ausgeführt
+#--> Der Blob soll ebenfalls springen können
+
+#4. Der Blob befindet sich in der Luft und hat bereits einen Doppelsprung ausgeführt
+#--> es ist kein Sprung für den Blob erlaubt
 func sprung():
 	
 	#Die Blob Höhe auf Bodenhöhe setzen, damit für den Sprung neue höchste Höhe ermittelt werden kann
@@ -165,11 +164,10 @@ func sprung():
 		doppelterSprung = true
 
 
-"""
-Methode zum ermitteln der höchsten Position des Spielers nach seinem Flug
-Es wird geprüft ob aktuelle höhe des Spielers höher ist als die gespeicherte.
-Wenn sie Höher ist wird neue blobHoehe gespeichert
-"""
+
+#Methode zum ermitteln der höchsten Position des Spielers nach seinem Flug
+#Es wird geprüft ob aktuelle höhe des Spielers höher ist als die gespeicherte.
+#Wenn sie Höher ist wird neue blobHoehe gespeichert
 func ermittelMaximalHoehe():
 	
 	if !is_on_floor:
@@ -178,14 +176,12 @@ func ermittelMaximalHoehe():
 
 
 
-"""
-Methode um die fortlaufenden Bewegungen des Blobs zu berechnen
-1. es wird das Bouncen Des Blobs berechnent und ausgeführt
-2. Das die Sprungrichtung noch leicht 'nachzieht' beim springen
 
-Es soll ein zusätzliches Bouncen (Impuls nach oben) stattfinden,
-wenn zuvor nicht zu oft gesprungen wurde + Blob auf dem Boden ist
-"""
+#Methode um die fortlaufenden Bewegungen des Blobs zu berechnen
+#1. es wird das Bouncen Des Blobs berechnent und ausgeführt
+#2. Das die Sprungrichtung noch leicht 'nachzieht' beim springen
+#Es soll ein zusätzliches Bouncen (Impuls nach oben) stattfinden,
+#wenn zuvor nicht zu oft gesprungen wurde + Blob auf dem Boden ist
 func sprungUpdate():
 	if is_on_floor:
 		sprungRestBewegung = 0
@@ -195,7 +191,7 @@ func sprungUpdate():
 		Bewegung.y = -bounceEffekt           #Bounce Impuls setzen
 		bounceAnzahl = bounceAnzahl+1        
 		sprungRestBewegung = 0               #Kein nachziehen, au auf dem boden liegt
-		print("bounce")
+
 	
 	#In der Luft ohne weitere Richtungseingabe
 	elif !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_right") and !is_on_floor:
@@ -204,19 +200,18 @@ func sprungUpdate():
 
 var is_on_floor
 
-"""
-Methode zum erkennen von Kollisionen mit anderen Objekten
 
-für alle erkannten Objekte welche in die Area des Blobs gekommen sind 
-wird die Methode blobKollision aufgerufen, sofern diese vorhanden ist
---> somit können die Objekte passend auf Kollision mit Spielfigur reagieren
-"""
+#Methode zum erkennen von Kollisionen mit anderen Objekten
+#für alle erkannten Objekte welche in die Area des Blobs gekommen sind 
+#wird die Methode blobKollision aufgerufen, sofern diese vorhanden ist
+#--> somit können die Objekte passend auf Kollision mit Spielfigur reagieren
+
 func kollisionsPruefung():
 	
 	for body in $Hitbox.get_overlapping_bodies():
 		if body.has_method("blobKollision"):
 			body.blobKollision()
-	print(sprungRestBewegung)
+
 
 
 func boden_Erkennung():
@@ -234,16 +229,12 @@ func boden_Erkennung():
 
 
 
-"""
-Abhängig von der Blobgroese und Ausrichtung des Spielers soll die passende Textur geladen werden
 
-Sobald die Blobgröße kleiner 10 ist, ist das Spiel verloren
-Sobald die Blobgrößer größer als 15 ist, ist das Spiel gewonnen
-
-Zusätzlich wird das Kollisionshape bei einer Größen änderung angepasst
-
-@param setilich gibt an ob sich der Blob gerade in einer seitlichen Bewegung befindet
-"""
+#Abhängig von der Blobgroese und Ausrichtung des Spielers soll die passende Textur geladen werden
+#Sobald die Blobgröße kleiner 10 ist, ist das Spiel verloren
+#Sobald die Blobgrößer größer als 15 ist, ist das Spiel gewonnen
+#Zusätzlich wird das Kollisionshape bei einer Größen änderung angepasst
+#@param setilich gibt an ob sich der Blob gerade in einer seitlichen Bewegung befindet
 
 func blobVeranederung(var seitlich):
 	
@@ -345,23 +336,20 @@ func blobVeranederung(var seitlich):
 
 
 
-"""
-Methode um die Hitboxen des Spielers der Größe anzupassen
-@param faktor: um welchen Faktor das Shape skaliert werden soll
-"""
+
+#Methode um die Hitboxen des Spielers der Größe anzupassen
+#@param faktor: um welchen Faktor das Shape skaliert werden soll
 func skalieren(var faktor):
 	$physischeKollisionBox.scale = (Vector2(faktor, faktor))
 	$Hitbox/areaKollisionBox.scale = (Vector2(faktor, faktor))
 
 
 
-"""
-Methode zum überprüfen ob eine neue Textur geladen werden muss, oder ob die aktuelle Textur noch
-zum Verhalten des Users passt
 
-@return true: wenn die aktuelle Textur sich von der neuen unterscheiden würde (bild ist noch seitlich, aber keine Bewegung mehr + anders herum)
-Sonst false
-"""
+#Methode zum überprüfen ob eine neue Textur geladen werden muss, oder ob die aktuelle Textur noch
+#zum Verhalten des Users passt
+#@return true: wenn die aktuelle Textur sich von der neuen unterscheiden würde (bild ist noch seitlich, aber keine Bewegung mehr + anders herum)
+#Sonst false
 func spriteUpdateNoetig():
 	#keine Bewegung und noch Seitlich
 	if Bewegung.x == 0 and bilderSeitlich == true:
@@ -376,42 +364,36 @@ func spriteUpdateNoetig():
 
 
 
-"""
-Wenn eine Münze berührt wurde muss blob passend darauf reagieren
 
-Blobgröße wird in abhängigkeit von dem Wert der Münze verändert
-Ebenfalls werden im Anschluss die Texturen verändert, sofern das nötig ist
+#Wenn eine Münze berührt wurde muss blob passend darauf reagieren
+#Blobgröße wird in abhängigkeit von dem Wert der Münze verändert
+#Ebenfalls werden im Anschluss die Texturen verändert, sofern das nötig ist
+#@param wert: der Wert den die kollidierte Münze hatte
 
-@param wert: der Wert den die kollidierte Münze hatte
-"""
 func _on_Muenze_muenze_beruehrt(wert):
 		blobGroesse = blobGroesse + wert
 		blobVeranederung(false)
 
 
-"""
-Wenn die Kanone das berührt wurde, soll Blob passend darauf reagieren
---> Blobgroeße wird um eine Stufe (5) reduziert
 
-Textur des Blobs wird ebenfalls angepasst
-"""
+#Wenn die Kanone das berührt wurde, soll Blob passend darauf reagieren
+#--> Blobgroeße wird um eine Stufe (5) reduziert
+#Textur des Blobs wird ebenfalls angepasst
 func _on_Kanone_kanoneberuehrte():
 	blobGroesse = blobGroesse - 5
 	blobVeranederung(false)
 
-"""
-Methode um die Geschwindigkeit des Spielers zu verändern
-@geschwindigkeitsDifferenz ist der Wert der auf die Geschwindigkeit hinzugerechnet wird
---> negativer Wert verringert die Geschwindigkeit | positiver Wert erhöht die Geschwindigkeit
-"""
+
+#Methode um die Geschwindigkeit des Spielers zu verändern
+#@geschwindigkeitsDifferenz ist der Wert der auf die Geschwindigkeit hinzugerechnet wird
+#--> negativer Wert verringert die Geschwindigkeit | positiver Wert erhöht die Geschwindigkeit
+
 func veraendereSpielerGeschwindigkeit(var geschwindigkeitsDifferenz):
 	speed = speed + geschwindigkeitsDifferenz
 
-"""
-Methoden um die aktuellen Einstellungen in die OptionsSlider zu übertragen 
-und daraus zu übernehmen
-"""
 
+#Methoden um die aktuellen Einstellungen in die OptionsSlider zu übertragen 
+#und daraus zu übernehmen
 func uebertrageEinstellungen():
 	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
 
