@@ -507,7 +507,7 @@ func fuellen2(neueFarbe,x,y, alteFarbe):
 	Punktstapel.push_front(Vector2(x,y));
 	while(!Punktstapel.empty()):
 		var koordinaten = Punktstapel.pop_front();
-		if(array[koordinaten.x][koordinaten.y] == alteFarbe):
+		if(array[koordinaten.x][koordinaten.y] == alteFarbe or (array[koordinaten.x][koordinaten.y].a8 == 0 and alteFarbe.a8 == 0)):
 			array[koordinaten.x][koordinaten.y]= neueFarbe;
 			if( koordinaten.x+1 <64):
 				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
