@@ -30,7 +30,9 @@ var temporaeresBild;
 var temporaereZeichenflaeche;
 var coinWechsel;
 var alteVorschau;
-var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
+var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance();
+var aenderung = 0;
+var ist_geladen = false;
 
 
 
@@ -38,6 +40,8 @@ var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instanc
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+
 	# Setze Bildschirmgroesse.
 	OS.set_window_size(Vector2(1030,680));
 	JavaScript.eval("resizeSpiel(800,1100)")
@@ -89,9 +93,9 @@ func _ready():
 	
 
 	
-	rueckgaengigstapel= [];
-	Abbild_auf_Rueckgaengigstapel();
-	print(rueckgaengigstapel);
+	#rueckgaengigstapel= [];
+	#Abbild_auf_Rueckgaengigstapel();
+
 
 	
 	wiederholenstapel=[];
@@ -105,8 +109,14 @@ func _ready():
 	get_node("../Farbwahl").get_children()[6].get_children()[1].hide();
 	get_node("../Farbwahl").get_children()[5].hide();
 	get_node("../Farbwahl").get_children()[4].get_children()[4].hide();
-
-
+	
+	#TEST#
+	print(rueckgaengigstapel);
+	print(aenderung);
+	
+	ist_geladen = true;
+	rueckgaengigstapel = [];
+	
 
 
 func create_2d_array(width, height, value):
@@ -165,6 +175,7 @@ func befuellen():
 Methode, die bei jedem neuen Time_Frame aufgerufen wird
 """
 func _process(delta):
+		print(aenderung);
 		if Input.is_action_just_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
@@ -179,6 +190,7 @@ func _process(delta):
 					bild.unlock();
 					setze_Zeichenflaeche();
 					aktualisiere_Vorschau();
+					Abbild_auf_Rueckgaengigstapel();
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
@@ -239,18 +251,23 @@ func _process(delta):
 							cy= linienStart.y+floor(0.5*radiusy);
 						else:
 							cy= linienEnde.y+floor(0.5*radiusy);
-
 						male_Ellipse(cx,cy,radiusx,radiusy);
-						#linienStart = null;
-						#linienEnde = null;
 		elif Input.is_action_just_released("draw"):
-			wiederholenstapel = [];
-			if modus=="Rechteck" or modus =="Linie" or modus =="Ellipse":
+			#wiederholenstapel = [];
+			var mouseposition = get_global_mouse_position();
+			if (modus=="Rechteck" or modus =="Linie" or modus =="Ellipse") and linienStart != null:
 				linienStart= null;
 				linienEnde = null;
 				uebernehme_temporaere_Zeichenflaeche();
+				# Absetzen auch außerhalb Zeichenfläche aber kein Abbild bei Klick außerhalb
 				Abbild_auf_Rueckgaengigstapel();
+			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
+				if modus =="Radierer" or modus=="Stift":
+					print("im Stift");
+					Abbild_auf_Rueckgaengigstapel();
+					print(rueckgaengigstapel);
 		elif Input.is_action_just_pressed("undo"):
+			print(rueckgaengigstapel);
 			mache_rueckgaengig();
 		elif Input.is_action_just_pressed("redo"):
 			wiederhole();
@@ -316,6 +333,7 @@ func _on_Spiegeln_pressed():
 	bild.flip_x();
 	bild.unlock();
 	setze_Zeichenflaeche();
+	aktualisiere_Vorschau();
 	Abbild_auf_Rueckgaengigstapel();
 
 
@@ -501,44 +519,55 @@ func fuellen2(neueFarbe,x,y, alteFarbe):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y-1));
 	
 
+func Figur_wechseln_bei_Aenderung(_vorschau):
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = _vorschau;
+	deaktiviere_Buttons();
 
-
+"""
+Wird aufgerufen, wenn der Knopf BadCoin1 gedrückt wird
+falls es eine Änderung gibt, wird ein Popup aufgerufen
+sonst wird direkt gewechselt zur Figur schlechter Coin 1
+"""
 func _on_BadCoin1_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Coin";
-	coinWechsel="BadCoin1";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
-
+	coinWechsel= "BadCoin1";
+	if aenderung == true:
+		Figur_wechseln_bei_Aenderung("Coin");
+	else:
+		Vorschau = "Coin";
+		CoinWechsel();
+"""
+Wird aufgerufen, wenn der Knopf GoodCoin1 gedrückt wird
+falls es eine Änderung gibt, wird ein Popup aufgerufen
+sonst wird direkt gewechselt zur Figur guter Coin 1
+"""
 func _on_GoodCoin1_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Coin";
-	coinWechsel="GoodCoin1";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "GoodCoin1";
+	if aenderung == true:
+		Figur_wechseln_bei_Aenderung("Coin");
+	else:
+		Vorschau = "Coin";
+		CoinWechsel();
 
 """
 Prozedur, die aufgerufen wird, falls ein Knopf der unteren Leiste gedrückt wird
 Damit wechselt sich die Spielfigur, deren Design gerade bearbeitet wird
 @param name - Name der neu zu bearbeitenden Spielfigur
 """
-func CoinWechsel(name):
+func CoinWechsel():
 	
 	
 	# aktiven Knopf auf nicht pressed setzen
-	#get_node("../"+aktiverKnopf).pressed = false;
+	get_node("../"+aktiverKnopf).pressed = false;
 	
 	#neuen Knopf aktiv setzen
-	aktiverKnopf= name;
+	aktiverKnopf= coinWechsel;
 	
 	#Einladen auf die Zeichenfläche
-	einladen(name);
+	einladen(coinWechsel);
 
 	
 	#Standardbutton setzen
@@ -552,6 +581,9 @@ func CoinWechsel(name):
 	
 	#rückgängigstapel löschen
 	loesche_rueckgaengig_wiederholen();
+	
+	#Änderungsboolean zurücksetzen
+	aenderung = false;
 
 """
 lädt ein Bild aus den Dateien in die Variable bild ein und aktualisiert die Zeichenfläche
@@ -560,8 +592,6 @@ func einladen(pfad):
 	bild = Image.new();
 	if Vorschau=="Blob":
 		bild = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
-		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
-		
 	elif Vorschau =="Coin":
 		bild = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
 	else:
@@ -1090,6 +1120,7 @@ func wechsel_zu_eigene_Farbe():
 		oeffne_Farbauswahl();
 	else:
 		get_node("../Farbauswahl").show();
+		get_node("../Farbwahl").color= eigeneFarbe[eigeneFarbeaktuell-1];
 		aktuelleFarbe = eigeneFarbe[eigeneFarbeaktuell-1];
 		if modus =="Radierer":
 			Farbwechsel_bei_Radierer();
@@ -1191,21 +1222,21 @@ func leere_temporaere_Zeichenflaeche():
 
 
 func _on_Ja_pressed():
-	modus = alterModus;
-	CoinWechsel(coinWechsel);
+	CoinWechsel();
 	get_node("../CoinWechsel").hide();
 	aktiviere_Buttons();
+	modus = alterModus;
 	
 
 
 
 func _on_Nein_pressed():
-	modus = alterModus;
 	Vorschau = alteVorschau;
 	get_node("../CoinWechsel").hide();
 	get_node("../"+aktiverKnopf).pressed= true;
 	get_node("../"+coinWechsel).pressed= false;
 	aktiviere_Buttons();
+	modus = alterModus;
 	
 func deaktiviere_Buttons():
 	var Kinder = get_parent().get_children();
