@@ -3,12 +3,14 @@ extends Sprite
 
 var bildgroesse;
 var aktuelleFarbe;
-var modus;
+var modus=null;
 var linienStart;
 var linienEnde;
 var stiftgroesse;
 #sich auf der Zeichenfläche befindende Bild
 var bild;
+# Bild, bevor es eventuell verändert wurde
+var originalbild;
 var alterInhalt
 var textur;
 var array;
@@ -32,7 +34,7 @@ var coinWechsel;
 var alteVorschau;
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance();
 var aenderung = 0;
-var ist_geladen = false;
+
 
 
 
@@ -53,7 +55,7 @@ func _ready():
 
 	
 	#Stiftgroesse voreinstellen
-	modus = "Stift";
+	#modus = "Stift";
 	stiftgroesse = 1;
 	aktuellerStiftbutton = get_node("../klein");
 	aktuellerStiftbutton.pressed= true;
@@ -64,6 +66,7 @@ func _ready():
 	bildgroesse = 64;
 	bild = Image.new();
 	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA8);
+	originalbild = Image.new();
 	textur = ImageTexture.new();
 	aktiverKnopf=" ";
 
@@ -76,7 +79,10 @@ func _ready():
 	get_node("../Blob_1_gerade").pressed = true;
 	Vorschau="Blob"
 	
+	#Bild der Figur einladen
 	einladen(aktiverKnopf);
+	originalbild.copy_from(bild);
+	bild.premultiply_alpha();
 	#Standardbutton setzen
 	setze_Standardbutton();
 	#Vorlagebuttonssetzen
@@ -93,11 +99,8 @@ func _ready():
 	
 
 	
-	#rueckgaengigstapel= [];
-	#Abbild_auf_Rueckgaengigstapel();
-
-
-	
+	rueckgaengigstapel= [];
+	Abbild_auf_Rueckgaengigstapel();
 	wiederholenstapel=[];
 	
 	#eigene Farben einladen
@@ -112,10 +115,6 @@ func _ready():
 	
 	#TEST#
 	print(rueckgaengigstapel);
-	print(aenderung);
-	
-	ist_geladen = true;
-	rueckgaengigstapel = [];
 	
 
 
@@ -175,7 +174,6 @@ func befuellen():
 Methode, die bei jedem neuen Time_Frame aufgerufen wird
 """
 func _process(delta):
-		print(aenderung);
 		if Input.is_action_just_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
 			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
@@ -215,15 +213,11 @@ func _process(delta):
 					if linienStart == null:
 						linienStart = get_global_mouse_position();
 						linienStart.x = linienStart.x-256;
-						#punkt_malen_pixel(linienStart.x, linienStart.y);
-						#setze_Zeichenflaeche();
 					else:
 						linienEnde = get_global_mouse_position();
 						linienEnde.x = linienEnde.x-256;
 						leere_temporaere_Zeichenflaeche();
 						male_Linie(linienStart,linienEnde);
-						#linienStart = null;
-						#linienEnde = null;
 				elif modus == "Ellipse":
 					if linienStart == null:
 						linienStart = get_global_mouse_position();
@@ -266,6 +260,11 @@ func _process(delta):
 					print("im Stift");
 					Abbild_auf_Rueckgaengigstapel();
 					print(rueckgaengigstapel);
+				elif modus == "Dialog" or modus == null:
+					if modus == null:
+						modus="Stift";
+					else:
+						modus=alterModus;
 		elif Input.is_action_just_pressed("undo"):
 			print(rueckgaengigstapel);
 			mache_rueckgaengig();
@@ -507,7 +506,7 @@ func fuellen2(neueFarbe,x,y, alteFarbe):
 	Punktstapel.push_front(Vector2(x,y));
 	while(!Punktstapel.empty()):
 		var koordinaten = Punktstapel.pop_front();
-		if(array[koordinaten.x][koordinaten.y] == alteFarbe or (array[koordinaten.x][koordinaten.y].a8 == 0 and alteFarbe.a8 == 0)):
+		if(array[koordinaten.x][koordinaten.y] == alteFarbe ):#r (array[koordinaten.x][koordinaten.y].a8 == 0 and alteFarbe.a8 == 0)):
 			array[koordinaten.x][koordinaten.y]= neueFarbe;
 			if( koordinaten.x+1 <64):
 				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
@@ -534,7 +533,9 @@ sonst wird direkt gewechselt zur Figur schlechter Coin 1
 """
 func _on_BadCoin1_pressed():
 	coinWechsel= "BadCoin1";
-	if aenderung == true:
+	print(bild.get_data());
+	print(originalbild);
+	if bild.get_data() != originalbild.get_data():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		Vorschau = "Coin";
@@ -546,7 +547,7 @@ sonst wird direkt gewechselt zur Figur guter Coin 1
 """
 func _on_GoodCoin1_pressed():
 	coinWechsel= "GoodCoin1";
-	if aenderung == true:
+	if aenderung >=  2:
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		Vorschau = "Coin";
@@ -582,8 +583,11 @@ func CoinWechsel():
 	#rückgängigstapel löschen
 	loesche_rueckgaengig_wiederholen();
 	
-	#Änderungsboolean zurücksetzen
-	aenderung = false;
+	#Änderungswert zurücksetzen
+	aenderung = 0;
+	
+	#neues Bild auf Rückgängigstapel
+	Abbild_auf_Rueckgaengigstapel();
 
 """
 lädt ein Bild aus den Dateien in die Variable bild ein und aktualisiert die Zeichenfläche
@@ -672,11 +676,15 @@ func aktualisiere_Vorschau():
 			get_node("../"+Vorschau+str(i)).texture = texturklein;	
 	
 """
+TODO Änderung ??
 """
 func _on_Speichern_pressed():
+	#if aenderung >= 2:
 	get_node("../UebernehmenBestaetigen").show();
 	alterModus= modus;
 	modus="Dialog";
+	#else:
+		
 	
 	
 
@@ -693,41 +701,6 @@ func _on_Leeren_pressed():
 	setze_Zeichenflaeche();
 	Abbild_auf_Rueckgaengigstapel();
 	aktualisiere_Vorschau();
-
-
-
-
-func _on_Design1_pressed():
-	get_node("../VorlageBestaetigen").hide();
-	speichern(aktiverKnopf+"Design1", "Vorlage1");
-	modus= alterModus;
-	
-
-
-func _on_Design2_pressed():
-	get_node("../VorlageBestaetigen").hide();
-	speichern(aktiverKnopf+"Design2", "Vorlage2");
-	modus= alterModus;
-
-
-func _on_Design3_pressed():
-	get_node("../VorlageBestaetigen").hide();
-	speichern(aktiverKnopf+"Design3", "Vorlage3");
-	modus= alterModus;
-
-
-
-func _on_Design4_pressed():
-	get_node("../VorlageBestaetigen").hide();
-	speichern(aktiverKnopf+"Design4", "Vorlage4");
-	modus= alterModus;
-
-
-
-func _on_Design5_pressed():
-	get_node("../VorlageBestaetigen").hide();
-	speichern(aktiverKnopf+"Design5", "Vorlage5");
-	modus= alterModus;
 
 
 func _on_Vorlage1_pressed():
@@ -773,114 +746,94 @@ func _on_Standard_pressed():
 
 
 func _on_BadCoin2_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Coin";
-	coinWechsel="BadCoin2";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "BadCoin2";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Coin");
+	else:
+		Vorschau = "Coin";
+		CoinWechsel();
 
 
 func _on_GoodCoin2_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Coin";
-	coinWechsel="GoodCoin2";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "GoodCoin2";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Coin");
+	else:
+		Vorschau = "Coin";
+		CoinWechsel();
 
 
 func _on_RandomCoin_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Coin";
-	coinWechsel="RandomCoin";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "RainbowCoin2";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Coin");
+	else:
+		Vorschau = "Coin";
+		CoinWechsel();
 
 func _on_Blob_1_gerade_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Blob";
-	coinWechsel="Blob_1_gerade";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "Blob_1_gerade";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Blob");
+	else:
+		Vorschau = "Blob";
+		CoinWechsel();
 
 
 func _on_Blob_3_gerade_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Blob";
-	coinWechsel="Blob_3_gerade";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "Blob_3_gerade";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Blob");
+	else:
+		Vorschau = "Blob";
+		CoinWechsel();
 
 
 func _on_Blob_2_gerade_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Blob";
-	coinWechsel="Blob_2_gerade";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "Blob_2_gerade";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Blob");
+	else:
+		Vorschau = "Blob";
+		CoinWechsel();
 
 
 func _on_Blob_4_gerade_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Blob";
-	coinWechsel="Blob_4_gerade";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "Blob_4_gerade";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Blob");
+	else:
+		Vorschau = "Blob";
+		CoinWechsel();
 
 
 func _on_Blob_5_gerade_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Blob";
-	coinWechsel="Blob_5_gerade";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "Blob_5_gerade";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Blob");
+	else:
+		Vorschau = "Blob";
+		CoinWechsel();
 
 
 
 func _on_Hintergrund_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Hintergrund";
-	coinWechsel="Hintergrund";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "Hintergrund";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Hintergrund");
+	else:
+		Vorschau = "Hintergrund";
+		CoinWechsel();
 	
 
 
 func _on_Kanonenkugel_pressed():
-	get_node("../CoinWechsel").show();
-	alterModus= modus;
-	modus="Dialog";
-	alteVorschau= Vorschau;
-	Vorschau = "Blob";
-	coinWechsel="Kanonenkugel";
-	get_node("../"+aktiverKnopf).pressed= false;
-	deaktiviere_Buttons();
+	coinWechsel= "Kanonenkugel";
+	if aenderung >=  2:
+		Figur_wechseln_bei_Aenderung("Blob");
+	else:
+		Vorschau = "Blob";
+		CoinWechsel();
 
 
 func _on_UebernehmenBestaetigen_confirmed():
@@ -890,7 +843,9 @@ func _on_UebernehmenBestaetigen_confirmed():
 
 func _on_Rueckgaengig_pressed():
 	mache_rueckgaengig();
-
+"""
+Die letzte ausgeführte Aktion wird nocheinmal wiederholt
+"""
 func mache_rueckgaengig():
 	if rueckgaengigstapel.size() > 1:
 		print("bin in rückgängig");
@@ -902,12 +857,16 @@ func mache_rueckgaengig():
 func _on_Wiederholen_pressed():
 	wiederhole();
 
+"""
+Die letze rückgängig gemachte Aktion wird noch einmal wiederholt
+"""
 func wiederhole():
 	if wiederholenstapel.size() > 0:
 		bild.copy_from(wiederholenstapel.back());
 		rueckgaengigstapel.push_back(wiederholenstapel.pop_back());
 		setze_Zeichenflaeche();
 		aktualisiere_Vorschau();
+
 
 func groesse_Zeichnung():
 	bild.lock();
@@ -967,7 +926,8 @@ func Abbild_auf_Rueckgaengigstapel():
 		var bildkopie = Image.new();
 		bildkopie.copy_from(bild);
 		rueckgaengigstapel.push_back(bildkopie);
-		
+	if aenderung < 2:
+		aenderung = aenderung +1;
 func setze_Figurauswahlbuttons():
 	pass;
 	
@@ -1225,7 +1185,7 @@ func _on_Ja_pressed():
 	CoinWechsel();
 	get_node("../CoinWechsel").hide();
 	aktiviere_Buttons();
-	modus = alterModus;
+
 	
 
 
@@ -1236,7 +1196,8 @@ func _on_Nein_pressed():
 	get_node("../"+aktiverKnopf).pressed= true;
 	get_node("../"+coinWechsel).pressed= false;
 	aktiviere_Buttons();
-	modus = alterModus;
+
+
 	
 func deaktiviere_Buttons():
 	var Kinder = get_parent().get_children();
@@ -1385,13 +1346,9 @@ func _on_ColorPicker_hide():
 	else:
 		modus = alterModus;
 	
-
-
-
+	
 func _on_Farbauswahl_pressed():
 	oeffne_Farbauswahl();
-
-
 
 
 func _on_Zurueck_pressed():
@@ -1401,3 +1358,7 @@ func _on_Zurueck_pressed():
 func loesche_rueckgaengig_wiederholen():
 	rueckgaengigstapel = [];
 	wiederholenstapel = [];
+
+
+func _on_VorlageBestaetigen_confirmed():
+	pass # Replace with function body.

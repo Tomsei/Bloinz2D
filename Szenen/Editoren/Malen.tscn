@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://Skripte/Editoren/Malen.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
@@ -50,6 +50,8 @@
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Verschieben.png" type="Texture" id=48]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Ellipse.png" type="Texture" id=49]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/HintergrundColorpicker.png" type="Texture" id=50]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/export.png" type="Texture" id=51]
+[ext_resource path="res://Bilder/Buttons/Maleneditor/import.png" type="Texture" id=52]
 
 [node name="Maleneditor" type="Node2D"]
 pause_mode = 2
@@ -98,10 +100,10 @@ z_index = -1
 texture = ExtResource( 2 )
 
 [node name="Speichern" type="Button" parent="."]
-margin_left = 800.0
-margin_top = 543.968
-margin_right = 900.112
-margin_bottom = 563.968
+margin_left = 774.0
+margin_top = 542.0
+margin_right = 874.112
+margin_bottom = 562.0
 text = "Übernehmen"
 
 [node name="Vorlage" type="Button" parent="."]
@@ -540,10 +542,10 @@ toggle_mode = true
 icon = ExtResource( 40 )
 
 [node name="Zurueck" type="Button" parent="."]
-margin_left = 800.0
-margin_top = 613.543
-margin_right = 922.0
-margin_bottom = 633.543
+margin_left = 771.471
+margin_top = 610.869
+margin_right = 893.471
+margin_bottom = 630.869
 text = "Zurück zum Spiel"
 
 [node name="Fuellen" type="Button" parent="." groups=[
@@ -573,105 +575,6 @@ margin_top = 115.588
 margin_right = 1031.22
 margin_bottom = 146.588
 text = "Vorlagen:"
-
-[node name="VorlageBestaetigen" type="WindowDialog" parent="."]
-editor/display_folded = true
-margin_left = 320.968
-margin_top = 202.989
-margin_right = 621.968
-margin_bottom = 368.989
-
-[node name="Design1" type="Button" parent="VorlageBestaetigen"]
-margin_left = 18.2576
-margin_top = 74.0641
-margin_right = 62.2576
-margin_bottom = 107.064
-text = "1"
-
-[node name="Design2" type="Button" parent="VorlageBestaetigen"]
-margin_left = 63.5731
-margin_top = 72.3858
-margin_right = 107.573
-margin_bottom = 105.386
-text = "2"
-
-[node name="Design3" type="Button" parent="VorlageBestaetigen"]
-margin_left = 120.637
-margin_top = 72.3858
-margin_right = 164.637
-margin_bottom = 105.386
-text = "3"
-
-[node name="Design4" type="Button" parent="VorlageBestaetigen"]
-margin_left = 176.023
-margin_top = 77.4209
-margin_right = 220.023
-margin_bottom = 110.421
-text = "4"
-
-[node name="Design5" type="Button" parent="VorlageBestaetigen"]
-margin_left = 241.479
-margin_top = 79.0992
-margin_right = 285.479
-margin_bottom = 112.099
-text = "5"
-
-[node name="Label" type="Label" parent="VorlageBestaetigen"]
-margin_left = 28.5321
-margin_top = 28.532
-margin_right = 257.532
-margin_bottom = 42.532
-text = "Speicherplatz für Vorlage auswählen"
-
-[node name="SpeichernBestaetigen" type="WindowDialog" parent="."]
-editor/display_folded = true
-margin_left = 320.968
-margin_top = 202.989
-margin_right = 621.968
-margin_bottom = 368.989
-
-[node name="Design1" type="Button" parent="SpeichernBestaetigen"]
-margin_left = 18.2576
-margin_top = 74.0641
-margin_right = 62.2576
-margin_bottom = 107.064
-text = "1"
-
-[node name="Design2" type="Button" parent="SpeichernBestaetigen"]
-margin_left = 63.5731
-margin_top = 72.3858
-margin_right = 107.573
-margin_bottom = 105.386
-text = "2"
-
-[node name="Design3" type="Button" parent="SpeichernBestaetigen"]
-margin_left = 120.637
-margin_top = 72.3858
-margin_right = 164.637
-margin_bottom = 105.386
-text = "3"
-
-[node name="Design4" type="Button" parent="SpeichernBestaetigen"]
-margin_left = 176.023
-margin_top = 77.4209
-margin_right = 220.023
-margin_bottom = 110.421
-text = "4"
-
-[node name="Design5" type="Button" parent="SpeichernBestaetigen"]
-margin_left = 241.479
-margin_top = 79.0992
-margin_right = 285.479
-margin_bottom = 112.099
-text = "5"
-
-[node name="Label" type="Label" parent="SpeichernBestaetigen"]
-margin_left = 28.5321
-margin_top = 28.532
-margin_right = 257.532
-margin_bottom = 42.532
-text = "Was soll mit dem akutellen Bild 
-gemacht werden?"
 
 [node name="Vorschau" type="Label" parent="." groups=[
 "Steuerelemente",
@@ -805,15 +708,13 @@ window_title = "Bitte bestätigen"
 dialog_text = "Das aktuelle Zeichnung als momentane Spielfigur übernehmen?
 Das alte wird gelöscht, sofern es nicht in den Vorlagen gespeichert ist"
 
-[node name="CoinWechsel1" type="ConfirmationDialog" parent="."]
-margin_left = 296.036
-margin_top = 194.575
-margin_right = 738.036
-margin_bottom = 316.575
+[node name="VorlageBestaetigen" type="ConfirmationDialog" parent="."]
+margin_left = 351.56
+margin_top = 165.012
+margin_right = 698.56
+margin_bottom = 287.012
 window_title = "Bitte bestätigen"
-dialog_text = "Möchtest du wirklich die akutell zu bearbeitende Figur ändern? 
-Falls du dein Design noch nicht gespeichert hats, geht es verloren."
-dialog_hide_on_ok = false
+dialog_text = "Bist du sicher, dass du deine Vorlage überschrieiben willst?"
 
 [node name="Wiederholen" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -895,6 +796,22 @@ margin_right = 290.0
 margin_bottom = 498.0
 rect_min_size = Vector2( 0, 30 )
 text = "Übernehmen"
+
+[node name="Button" type="Button" parent="."]
+margin_left = 899.538
+margin_top = 542.0
+margin_right = 943.538
+margin_bottom = 580.0
+hint_tooltip = "Designs speichern"
+icon = ExtResource( 51 )
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 959.27
+margin_top = 542.0
+margin_right = 1003.27
+margin_bottom = 580.0
+hint_tooltip = "Designs einladen"
+icon = ExtResource( 52 )
 [connection signal="pressed" from="CoinWechsel/Ja" to="Zeichenflaeche" method="_on_Ja_pressed"]
 [connection signal="pressed" from="CoinWechsel/Nein" to="Zeichenflaeche" method="_on_Nein_pressed"]
 [connection signal="pressed" from="Speichern" to="Zeichenflaeche" method="_on_Speichern_pressed"]
@@ -943,25 +860,13 @@ text = "Übernehmen"
 [connection signal="button_up" from="Zurueck" to="Zeichenflaeche" method="_on_Zurueck_button_up"]
 [connection signal="pressed" from="Fuellen" to="Zeichenflaeche" method="_on_Fuellen_pressed"]
 [connection signal="pressed" from="Leeren" to="Zeichenflaeche" method="_on_Leeren_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design1" to="Zeichenflaeche" method="_on_Design1_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design2" to="Zeichenflaeche" method="_on_Design2_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design3" to="Zeichenflaeche" method="_on_Design3_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design4" to="Zeichenflaeche" method="_on_Design4_pressed"]
-[connection signal="pressed" from="VorlageBestaetigen/Design5" to="Zeichenflaeche" method="_on_Design5_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design1" to="Zeichenflaeche" method="_on_Design1_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design2" to="Zeichenflaeche" method="_on_Design2_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design3" to="Zeichenflaeche" method="_on_Design3_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design4" to="Zeichenflaeche" method="_on_Design4_pressed"]
-[connection signal="pressed" from="SpeichernBestaetigen/Design5" to="Zeichenflaeche" method="_on_Design5_pressed"]
 [connection signal="pressed" from="speichernVorlage1" to="Zeichenflaeche" method="_on_Design1_pressed"]
 [connection signal="pressed" from="speichernVorlage2" to="Zeichenflaeche" method="_on_Design2_pressed"]
 [connection signal="pressed" from="speichernVorlage3" to="Zeichenflaeche" method="_on_Design3_pressed"]
 [connection signal="pressed" from="speichernVorlage4" to="Zeichenflaeche" method="_on_Design4_pressed"]
 [connection signal="pressed" from="speichernVorlage5" to="Zeichenflaeche" method="_on_Design5_pressed"]
 [connection signal="confirmed" from="UebernehmenBestaetigen" to="Zeichenflaeche" method="_on_UebernehmenBestaetigen_confirmed"]
-[connection signal="confirmed" from="CoinWechsel1" to="Zeichenflaeche" method="_on_CoinWechsel_confirmed"]
-[connection signal="custom_action" from="CoinWechsel1" to="Zeichenflaeche" method="_on_CoinWechsel_custom_action"]
-[connection signal="popup_hide" from="CoinWechsel1" to="Zeichenflaeche" method="_on_CoinWechsel_popup_hide"]
+[connection signal="confirmed" from="VorlageBestaetigen" to="Zeichenflaeche" method="_on_VorlageBestaetigen_confirmed"]
 [connection signal="pressed" from="Wiederholen" to="Zeichenflaeche" method="_on_Wiederholen_pressed"]
 [connection signal="pressed" from="Rueckgaengig" to="Zeichenflaeche" method="_on_Rueckgaengig_pressed"]
 [connection signal="pressed" from="Bildrand" to="Zeichenflaeche" method="_on_Bildrand_pressed"]
