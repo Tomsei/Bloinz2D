@@ -266,6 +266,7 @@ func lade_skript(pfad):
 	datei.close()
 	return text
 
+# Liest Skript aus und veraendert den Wert der uebergebenen Variable.
 func schreibe_variable_in_datei(variablenname, neuer_wert, dateipfad):
 	var kompletter_code = ""
 	var datei = File.new()

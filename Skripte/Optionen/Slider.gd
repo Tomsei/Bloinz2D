@@ -51,6 +51,7 @@ func _on_SprungkraftSlider_value_changed(value):
 	$SprungkraftAktuell.text = str(value)
 	einstellungen.sprungkraftGeaendert = true
 	
+	# Schreibt Veraenderung in das Skript.
 	persistenz.schreibe_variable_in_datei("Sprungkraft", value, "res://Skripte/Aktionen/Spieler.gd")
 
 
@@ -58,12 +59,14 @@ func _on_BlobSlider_value_changed(value):
 	$BlobAktuell.text = str(value)
 	einstellungen.geschwindigkeitGeaendert = true
 	
+	# Schreibt Veraenderung in das Skript.
 	persistenz.schreibe_variable_in_datei("speed", value, "res://Skripte/Aktionen/Spieler.gd")
 
 func _on_RaketenSlider_value_changed(value):
 	$RaketeAktuell.text = str(value)
 	einstellungen.raketenzeitGeaendert = true
 	
+	# Schreibt Veraenderung in das Skript.
 	persistenz.schreibe_variable_in_datei("raketenZeit", value, "res://Skripte/Spielverwaltung/Logik.gd")
 
 
