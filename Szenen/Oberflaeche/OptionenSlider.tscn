@@ -130,8 +130,8 @@ margin_bottom = 15.4594
 custom_colors/font_color = Color( 0.901961, 0.721569, 0.0980392, 1 )
 text = "10"
 [connection signal="draw" from="." to="tempoBlob/BlobSlider" method="_on_Optionen_Slider_draw"]
-[connection signal="draw" from="." to="raketenAbstand/RaketenSlider" method="_on_Optionen_Slider_draw"]
 [connection signal="draw" from="." to="Schwierigkeit/SchwierigkeitSlider" method="_on_Optionen_Slider_draw"]
+[connection signal="draw" from="." to="raketenAbstand/RaketenSlider" method="_on_Optionen_Slider_draw"]
 [connection signal="hide" from="." to="Sprungkraft/SprungkraftSlider" method="_on_Optionen_Slider_hide"]
 [connection signal="button_up" from="1von3/Seite2" to="." method="_on_Seite2_button_up"]
 [connection signal="value_changed" from="Schwierigkeit/SchwierigkeitSlider" to="Schwierigkeit/SchwierigkeitSlider" method="_on_SchwierigkeitSlider_value_changed"]

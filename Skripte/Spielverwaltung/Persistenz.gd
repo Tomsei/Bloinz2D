@@ -252,3 +252,34 @@ func erstelle_veraenderungsdatei():
 func loesche_veraenderungsdatei():
 	var vaeraenderungsdatei = Directory.new()
 	vaeraenderungsdatei.remove(hauptverzeichnis_benutzer + "veraendert")
+
+func lade_skript(pfad):
+	var datei = File.new()
+	var err = datei.open(hauptverzeichnis_benutzer + + pfad.lstrip("res:/"), File.READ)
+	if err != OK:
+		err = datei.open(pfad, File.READ)
+		if err != OK:
+			printerr("Datei konnte nicht geladen werden, error code ", err)
+			return ""
+	var text = datei.get_as_text()
+	
+	datei.close()
+	return text
+
+func schreibe_variable_in_datei(variablenname, neuer_wert, dateipfad):
+	var kompletter_code = ""
+	var datei = File.new()
+	var err = datei.open(hauptverzeichnis_benutzer + dateipfad.lstrip("res:/"), File.READ)
+	if err != OK:
+		err = datei.open(dateipfad, File.READ)
+		if err != OK:
+			printerr("Datei konnte nicht geladen werden, error code ", err)
+			return ""
+	while(!datei.eof_reached()):
+		var codezeile = datei.get_line()
+		if (codezeile.find("var " + variablenname) != -1):
+			var variable = codezeile.split("=")[0]
+			codezeile = variable + "= " + str(neuer_wert)
+			print (codezeile)
+		kompletter_code += codezeile + "\n"
+	speicher_text(kompletter_code, hauptverzeichnis_benutzer + dateipfad.lstrip("res:/"))
