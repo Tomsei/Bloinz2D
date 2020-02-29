@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/HTML/Impressum.html">
+                        <a href="https://midb.medien.hs-duesseldorf.de/impressum/" target="_blank">
                             <div class="nav-icon"><img src="../Bilder/Nav-Bilder/nav_impressum.png"></div>
                             <div class="nav-name"> Impressum</div>
                         </a>
@@ -50,29 +50,30 @@
 				<div class="randombilder" id="links">
 				</div>
             	<iframe id="spiel" src="../Spiel/gesamtesSpiel.html" frameborder="1" height="640" width="448"></iframe>
+                <br>
+                
             </section>
-                <button onclick="resizeSpielParent(640, 448)"> Reszie Testen</button>
+            <section id = "download">
+                <a id="download">Download</a>
+            </section>
+            
+            
             <section id="projektInformationen">
                 <header>
                     <h2> Projekt Informationen</h2>
                 </header>
                 <article>
-                    <h3>Beschreibung des Projekts</h3>
-                    <p>
-                        Bei dem Projekt Bloinz2D handelt es sich um eine Spielanwendung an welche Grundlegende Prinzipien der Programmierung erklärt werden können. Das Projekt wurde mit der <a href="#godot">Game-Enging Godot</a> umgesetzt <br>
-                        Grundlagen der Objektorientierung werden durch das Spiel dargestellt. Sowohl Variablen, Methoden als auch grundlegende Vererbung ist in dem Spiel erkennbar. 
-                    </p>
                     <h3>Spielbeschreibung</h3>
                     <p>
-                        Es handelt sich um ein einfaches Spiel in dem es darum geht, dass eine Spielfigur unterschiedliche Münzen einsammeln kann, welche jeweils unterschiedliche Auswirkungen auf den Spieler haben. Es gibt poitive Münzen, welche die Spielergröße / Punktzahl erhöhen und negative welche sie verringert. <br>
-                        Zusätzlich zu den Normalen Münzen gibt es noch die Zufallsmünzen.Diese lösen zufällig ausgewählte Aktionen aus, welche das Spiel Beeinflussen. Beispielsweise gibt es die Aktion Münz-Magnet, welche alle guten Münzen zum Spieler zieht. <br>
-						Positive Münze: <img src="../Bilder/GoodCoin1.png">
-						Negative Münze: <img src="../Bilder/BadCoin1.png">
-						Zufalls Münze: <img src="../Bilder/RandomCoinStandard.png">
-						<br>
-						Das Spiel ist zuende sobald der Spieler eine bestimmte Größe erreicht hat. Sobald der Spieler ganz groß wird, also die Größe 25 erreicht hat ist das Spiel gewonnen. also die größe durch Negative Münzen verringert wurde hat der Spieler verloren. 
+                       In Bloinz 2D muss man als kleiner Blob bösen Münzen und Kanonenkugeln ausweichen, während man gute Münzen sammelt um Punkte zu erlagen. Dabe unterstützt einen der Randomcoin, welcher eine zufällige positive Aktion ausführt, wie beispielsweise einen Münzmagneten, welcher gute Münzen anzieht.
                     </p>
-                </article>
+                    <p>
+                        Der Spieler startet bei einer mittleren Größe. Um zu gewinnen müssen genügen Positive Coins eingesammelt werden um die Größe 25 zu erreichen. Dann ist das Spiel gewonnen. Aber aufgepasst wenn die Negativen Münzen eingesammelt werden gibt es Minus Punkte und der Blob wird kleiner. Sobald der Blob die Größe 0 erreicht ist das Spiel leider verloren
+                    </p> 
+                    <p>
+                        Zusätzlich bietet Bloinz 2D die Möglichkeit die Spielfiguren im Aussehen als auch im Verhalten zu verändern. Es gibt die Möglichkeit  das Design ganz nach seinen eigenen Wünschen anzupassen.  Auch das Verhalten wie beispielsweise die Sprungkraft oder Geschwindigkeit lassen sich Umstellen. Dies geht sowohl in den Einstellungen als auch im eigentlichen Skript des Spiels, wodurch grobe Einblicke in die Welt der Programmierung gegeben werden
+                    </p>
+                </article>         
             </section>
             <section id="galeriebereich" >
                 <h2>Galerie der besten Spielfiguren</h2>
@@ -102,7 +103,16 @@
                         <img src="../Bilder/Blob_2_gerade.png">
                     </div>
                 </div>
-                <button onclick="test()"> Reszie Testen</button>
+            </section>
+            <section>
+                <h3>Beschreibung des Projekts</h3>
+                <p>
+                    Bei dem Projekt Bloinz2D handelt es sich um eine Spielanwendung an welche Grundlegende Prinzipien der Programmierung erklärt werden können. Das Projekt wurde mit der <a href="#godot">Game-Enging Godot</a> umgesetzt <br>
+                    Die Grundlegenden Programmier Prinzipien wie Variablen und Methoden können direkt am Code nachvollzogen werden und gleichzeitig auch bearbeitet werden. So kann man die Werte einer Variablen anpassen um sich das Spiel einfacher zu machen oder eine ganze Methode umschreiben um gegebenenfalls andere Feautures noch zu integrieren.
+                    <br> Auch Objektorientierung ist aus dem Spiel herzuleiten. Die Vererbung von Eigenschaften wird bei den Münzen deutlich. So gibt es eine allgemeine Münz-Elternklasse von welcher dann alle einzelnen Münzen jeweils abgeleitet werden und mit ihren speziellen Eigenschaften ergänzt werden. Auch dies lässt sich im Code Editor nachvollziehen.                    
+                    <br>
+                    Ein weiterer Essenzieller Punkt des Projekts ist das Anpassen des Aussehens der Spielfiguren, somit lässt sich das Spiel in die unterschiedlichsten Stiele verändern, ganz nach der eigenen Kreativität
+                </p>
             </section>
             <section id="godot">
                 <article id="godot">

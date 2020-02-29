@@ -89,6 +89,13 @@ ul li a img{
 }
 
 
+#muenzbilder {
+    text-align: center;
+    padding-top: 10px ;
+}
+
+
+
 
 
 
@@ -100,6 +107,7 @@ ul li a img{
 .spielsektion{
 	margin-top: 4%;
     text-align: center;
+    margin-bottom: 4%
 }
 
 
@@ -108,7 +116,8 @@ iframe {
     border-color: rgb(0, 0, 0);
     border-width: 5px;
     border-radius: 10px;
-    box-shadow: 0px 10px 50px 40px #b0d0dd
+    box-shadow: 0px -20px 50px 20px #b0d0dd;
+    z-index: -1;
 }
 
 h1#bloinz {
@@ -122,6 +131,31 @@ h1#bloinz {
 	background-image: linear-gradient(to right, #6aa7c0, #00e2ff, #6aa7c0);
 		
 }
+
+
+#download{
+    text-align: center;
+    z-index: 10;
+}
+#download a {
+    font-size: 150%;
+    background-color: grey;
+    padding-top:  2%;
+    padding-bottom: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5px;
+}
+
+#download a:hover {
+    text-decoration: none;
+    color: darkslategrey;
+    border-color: #1f1d1d;
+}
+
+
 
 /*
 Überschrift Style
@@ -137,12 +171,12 @@ h3 {
 
 
 
-#hauptseite a {
+main a {
     color: white;
     text-decoration: none;
 }
 
-#hauptseite a:hover {
+main a:hover {
     color: #484848;
     text-decoration: underline;
 }
@@ -170,6 +204,8 @@ footer a:hover{
     color: #484848;
     text-decoration: underline;
 }
+
+
 
 
 
