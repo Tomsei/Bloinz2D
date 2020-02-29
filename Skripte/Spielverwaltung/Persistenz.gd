@@ -280,7 +280,18 @@ func schreibe_variable_in_datei(variablenname, neuer_wert, dateipfad):
 		var codezeile = datei.get_line()
 		if (codezeile.find("var " + variablenname) != -1):
 			var variable = codezeile.split("=")[0]
-			codezeile = variable + "= " + str(neuer_wert)
-			print (codezeile)
+			if typeof(neuer_wert) == TYPE_DICTIONARY:
+				codezeile = variable + "= " + erstelle_dictionary_werte(neuer_wert)
+			else:
+				codezeile = variable + "= " + str(neuer_wert)
+			
 		kompletter_code += codezeile + "\n"
 	speicher_text(kompletter_code, hauptverzeichnis_benutzer + dateipfad.lstrip("res:/"))
+
+func erstelle_dictionary_werte(dictionary):
+	var dictionarywerte = "{"
+	var schluessel = dictionary.keys()
+	for ein_schluessel in schluessel:
+		dictionarywerte += "\"" + str(ein_schluessel) + "\" : Vector2" + str(dictionary[ein_schluessel]) + " , "
+	dictionarywerte = dictionarywerte.rstrip(" , ") + "}"
+	return dictionarywerte
