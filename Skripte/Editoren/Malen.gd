@@ -34,7 +34,7 @@ var coinWechsel;
 var alteVorschau;
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance();
 var aenderung = 0;
-
+var vorlage;
 
 
 
@@ -1361,4 +1361,47 @@ func loesche_rueckgaengig_wiederholen():
 
 
 func _on_VorlageBestaetigen_confirmed():
-	pass # Replace with function body.
+	speichern(aktiverKnopf+"Design"+str(vorlage), "Vorlage"+str(vorlage));
+	
+func _on_Design1_pressed():
+	get_node("../VorlageBestaetigen").show();
+	alterModus = modus;
+	modus = "Dialog";
+	vorlage = 1;
+
+	
+	
+
+
+func _on_Design2_pressed():
+	get_node("../VorlageBestaetigen").show();
+	alterModus = modus;
+	modus = "Dialog";
+	vorlage = 2;
+
+
+
+func _on_Design3_pressed():
+	get_node("../VorlageBestaetigen").show();
+	alterModus = modus;
+	modus = "Dialog";
+	vorlage = 3;
+
+
+
+
+func _on_Design4_pressed():
+	get_node("../VorlageBestaetigen").show();
+	alterModus = modus;
+	modus = "Dialog";
+	vorlage = 4;
+
+
+
+
+func _on_Design5_pressed():
+	get_node("../VorlageBestaetigen").show();
+	alterModus = modus;
+	modus = "Dialog";
+	vorlage = 5;
+
