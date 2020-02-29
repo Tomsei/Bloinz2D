@@ -15,6 +15,7 @@ var CoinRegenAn = true
 var CoinMagnetAn = true
 var RegenschirmAn = true
 var SpeedboostAn = true
+var figurengroesse;
 
 
 # Called when the node enters the scene tree for the first time.

@@ -30,7 +30,8 @@ var temporaeresBild;
 var temporaereZeichenflaeche;
 var coinWechsel;
 var alteVorschau;
-var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
+var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance();
+var groesseFigur;
 
 
 
@@ -83,8 +84,13 @@ func _ready():
 	#Vorschau aktualisieren
 	aktualisiere_Vorschau();
 	
-	#Spielfiguren auf Knöpfen laden
+	#Größen der einzelnen Figuren 
+	groesseFigur = {};
+	#Spielfiguren auf Knöpfen laden und Größe ausrechnen
 	lade_Knopfbilder();
+	#Informationen weitergeben
+	einstellungen.figurengroesse= groesseFigur;
+	print(groesseFigur);
 
 	#Bei neuladen es Maleneditors:
 	#setze alle Figurauswahlbuttons auf das neue aktuelle Design
@@ -108,6 +114,11 @@ func _ready():
 	get_node("../Farbwahl").get_children()[6].get_children()[1].hide();
 	get_node("../Farbwahl").get_children()[5].hide();
 	get_node("../Farbwahl").get_children()[4].get_children()[4].hide();
+	
+
+
+
+	
 
 
 
@@ -285,7 +296,8 @@ func speichern(bildname, Knopf):
 		for i in range(0,8):
 			#malenordner
 			persistenz.speicher_bild_als_textur(bild, "Bilder/Hintergruende/HimmelVerlauf"+str(i)+".png");
-	
+	groesseFigur[bildname]= groesse_Zeichnung(bild);
+	einstellungen.figurengroesse= groesseFigur;
 	#Knopf aktualisieren
 	knopf_aktualisieren(Knopf, bild);
 
@@ -862,29 +874,33 @@ func wiederhole():
 		setze_Zeichenflaeche();
 		aktualisiere_Vorschau();
 
-func groesse_Zeichnung():
-	bild.lock();
-	maxy= 0;
+func groesse_Zeichnung(_bild):
+	_bild.lock();
+	maxy= null;
+	minx = null;
+	maxx= null;
+	miny= null;
 	for x in range (64):
 		for y in range (64):
-			if(bild.get_pixel(x,y) != Color(0,0,0,0)):
-				if minx == null:
+			if(_bild.get_pixel(x,y).a != 0):
+				if minx == null or x < minx:
 					minx = x;
-				maxx= x;
-				if miny == null:
+				if miny == null or y< miny:
 					miny = y;
-				if y < miny:
-					miny = y;
-				if y > maxy:
+				if maxx == null or x > maxx:
+					maxx = x;
+				if maxy == null or y > maxy:
 					maxy = y;
-	bild.unlock();
-	#rückgangig
+	_bild.unlock();
+	print(minx, maxx, miny, maxy);
+	return Vector2(maxx-minx+1,maxy-miny+1);
+
 	"""
 	verschiebt die Zeichnung in Y Richtung nach unten zum Bildrand,
 	damit die Spielfigur nicht mehr schwebt im Spiel
 	"""
 func setze_an_unteren_Bildrand():
-	groesse_Zeichnung();
+	groesse_Zeichnung(bild);
 	var bildkopie = Image.new();
 	bildkopie.copy_from(bild);
 	bild.lock();
@@ -1284,29 +1300,49 @@ func lade_Knopfbilder():
 	
 	#Blobs
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_1_gerade.png");
+	groesseFigur["Blob_1_gerade"] = groesse_Zeichnung(bildtemporaer);
 	knopf_aktualisieren("Blob_1_gerade",bildtemporaer);	
+	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_2_gerade.png");
 	knopf_aktualisieren("Blob_2_gerade",bildtemporaer);	
+	groesseFigur["Blob_2_gerade"] = groesse_Zeichnung(bildtemporaer);
+	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_3_gerade.png");
 	knopf_aktualisieren("Blob_3_gerade",bildtemporaer);	
+	groesseFigur["Blob_3_gerade"] = groesse_Zeichnung(bildtemporaer);
+	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_4_gerade.png");
 	knopf_aktualisieren("Blob_4_gerade",bildtemporaer);	
+	groesseFigur["Blob_4_gerade"] = groesse_Zeichnung(bildtemporaer);
+	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+"Blob_5_gerade.png");
 	knopf_aktualisieren("Blob_5_gerade",bildtemporaer);	
+	groesseFigur["Blob_5_gerade"] = groesse_Zeichnung(bildtemporaer);
+	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+"Kanonenkugel.png");
 	knopf_aktualisieren("Kanonenkugel",bildtemporaer);	
+	groesseFigur["Kanonenkugel"] = groesse_Zeichnung(bildtemporaer);
 	
 	#Coins
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Coins/"+"GoodCoin1.png");
 	knopf_aktualisieren("GoodCoin1",bildtemporaer);
+	groesseFigur["GoodCoin1"] = groesse_Zeichnung(bildtemporaer);
+	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Coins/"+"GoodCoin2.png");
 	knopf_aktualisieren("GoodCoin2",bildtemporaer);	
+	groesseFigur["GoodCoin2"] = groesse_Zeichnung(bildtemporaer);
+	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Coins/"+"BadCoin1.png");
 	knopf_aktualisieren("BadCoin1",bildtemporaer);	
+	groesseFigur["BadCoin1"] = groesse_Zeichnung(bildtemporaer);
+	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Coins/"+"BadCoin2.png");
 	knopf_aktualisieren("BadCoin2",bildtemporaer);	
+	groesseFigur["BadCoin2"] = groesse_Zeichnung(bildtemporaer);
+	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Coins/"+"RandomCoin.png");
 	knopf_aktualisieren("RandomCoin",bildtemporaer);
+	groesseFigur["RandomCoin"] = groesse_Zeichnung(bildtemporaer);
 	
 	#Hintergrund	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Hintergrund/"+"Hintergrund.png");
