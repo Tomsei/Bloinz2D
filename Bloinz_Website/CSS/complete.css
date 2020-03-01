@@ -150,8 +150,9 @@ h1#bloinz {
 #download a:hover {
     text-decoration: none;
     background-color: #e6b819;
-    background-color: #397086;
+    background-color: #004560;
     color: white;
+    transition: 0.5s;
 
 
 }
