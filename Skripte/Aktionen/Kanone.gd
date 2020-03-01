@@ -31,6 +31,7 @@ Konstruktor der Klasse Kanone
 """
 func _ready():
 	lade_Sprite_Bild()
+	erstelle_Hitbox()
 	screen_size = get_viewport_rect().size
 	
 	hoehe = randomZahlZwischen(400,490) #Zuffällige Flughöhe
@@ -141,3 +142,30 @@ func blobKollision():
 # Muss ueber umweg geschehen, da Bilder nicht direkt aus dem userverzeichnis geladen werden koennen.
 func lade_Sprite_Bild():
 	$Sprite.texture =  persistenz.lade_bildtextur("res://Bilder/Standardspielfiguren/Spielfiguren/Kanonenkugel.png")
+
+#Methode zum erstellen des Collision Shapes der Kanone
+func erstelle_Hitbox():
+	print ("Yeay Kanone wowow")
+	var alle_Groessen = einstellungen.figurengroesse
+	
+	var groesse = alle_Groessen["Kanonenkugel"]
+	print(groesse)
+	
+	var shape = RectangleShape2D.new()
+	shape.set_extents(Vector2(groesse.x/2,groesse.y/2))
+	
+	#Collision Shape für die Area
+	$Area2D/CollisionShape2D2.set_shape(shape)
+	print(64-groesse.y)
+	$Area2D/CollisionShape2D2.position.y = 0
+	$Area2D/CollisionShape2D2.position.y += ((64-groesse.y) /2) 
+	
+	#Collision Shape für den Kinematic Body
+	var shape2 = RectangleShape2D.new()
+	shape.set_extents(Vector2(groesse.x/2.5,groesse.y/2.5))
+	
+	$CollisionShape2D.set_shape(shape)
+	print(64-groesse.y)
+	$CollisionShape2D.position.y = 0
+	$CollisionShape2D.position.y += ((64-groesse.y) /2) 
+

@@ -22,14 +22,17 @@ signal neueMuenze
 signal randomAktion
 
 
-#Der Coin Wert muss abgespeichert werden --> beinhaltet somit auch Coin Typ
-var coinWert
+
+var cointyp #welcher Münztyp liegt vor
+var coinWert #wie viel Punkte bringt eine Münze
+
 
 #Variablen zur Bewegung der Coins
 var Geschwindigkeit = 0
 var Bewegung = Vector2(0,0)
 var UP_Vektor = Vector2(0, -1) #Wo ist Oben
 
+onready var bild_Groesse
 
 var screen_size
 var bodenhoehe = 473
@@ -45,6 +48,7 @@ Beim Initialisieren der Szene / Klasse (Konstruktor) der Münze werden
 func _ready():
 	screen_size = get_viewport_rect().size
 	ZufallsPosition()
+	
 
 
 """
@@ -101,6 +105,38 @@ func blobKollision():
 	
 	queue_free()
 
+
+
+
+#Methode zum erstellen der Hitbox / des Trefferbereichs einer Münze passend zu irem Bild
+func erstelle_Hitbox():
+	print ("muenze muezne munze")
+	
+	var alle_Groessen = einstellungen.figurengroesse
+
+
+	print(bild_Groesse)
+	
+	var shape = RectangleShape2D.new()
+	shape.set_extents(Vector2(bild_Groesse.x/2,bild_Groesse.y/2))
+	
+	
+	#Collisionshape für die Area berechnen
+	$Area2D/CollisionShape2D.set_shape(shape)
+	$Area2D/CollisionShape2D.position.y = 0
+	$Area2D/CollisionShape2D.position.y += ((64-bild_Groesse.y) /2) 
+	
+	var shape2 = RectangleShape2D.new()
+	shape2.set_extents(Vector2(bild_Groesse.x/2.5,bild_Groesse.y/2.5))
+	
+	#CollisionShape für den Kinematic Body Berechnen festlegen
+	$CollisionShape2D.set_shape(shape2)
+	$CollisionShape2D.position.y = 0
+	$CollisionShape2D.position.y += ((64-bild_Groesse.y) /2)
+
+
 # Laedt ein Bild aus dem Userverzeichnis mit dem Pfad.
 func lade_bild_von_user(pfad):
 	return persistenz.lade_bildtextur(pfad)
+
+
