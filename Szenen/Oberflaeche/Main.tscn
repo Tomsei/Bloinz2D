@@ -2,18 +2,17 @@
 
 [ext_resource path="res://Skripte/Spielverwaltung/Informationsübertragung.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/TileMaps/Spieloberflaeche.tres" type="TileSet" id=2]
-[ext_resource path="res://Skripte/Editoren/Hintergrund.gd" type="Script" id=3]
-[ext_resource path="res://Bilder/Hintergruende/Verlauf.png" type="Texture" id=4]
-[ext_resource path="res://Szenen/Oberflaeche/Startbildschirm.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Szenen/Oberflaeche/Spiel.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Szenen/Oberflaeche/Anleitung.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Szenen/Oberflaeche/Ende.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Bilder/Buttons/Spiel/Zahnrad.png" type="Texture" id=9]
-[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=10]
-[ext_resource path="res://Bilder/Buttons/Spiel/TonAus.png" type="Texture" id=11]
-[ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=12]
-[ext_resource path="res://Skripte/Optionen/CheckButton.gd" type="Script" id=13]
-[ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Bilder/Hintergruende/Verlauf.png" type="Texture" id=3]
+[ext_resource path="res://Szenen/Oberflaeche/Startbildschirm.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Szenen/Oberflaeche/Spiel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Szenen/Oberflaeche/Anleitung.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Szenen/Oberflaeche/Ende.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Bilder/Buttons/Spiel/Zahnrad.png" type="Texture" id=8]
+[ext_resource path="res://Skripte/Optionen/TextureButton.gd" type="Script" id=9]
+[ext_resource path="res://Bilder/Buttons/Spiel/TonAus.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Buttons/Spiel/TonAn.png" type="Texture" id=11]
+[ext_resource path="res://Skripte/Optionen/CheckButton.gd" type="Script" id=12]
+[ext_resource path="res://Szenen/Oberflaeche/AlleOptionen.tscn" type="PackedScene" id=13]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 2
@@ -25,16 +24,15 @@ script = ExtResource( 1 )
 tile_set = ExtResource( 2 )
 format = 1
 tile_data = PoolIntArray( 0, 11, 0, 1, 11, 0, 2, 11, 0, 3, 11, 0, 4, 11, 0, 5, 11, 0, 6, 11, 0, 8, 0, 0, 10, 0, 0, 11, 0, 0, 65536, 11, 0, 65537, 11, 0, 65538, 11, 0, 65539, 11, 0, 65540, 11, 0, 65541, 11, 0, 65542, 11, 0, 131072, 11, 0, 131073, 11, 0, 131074, 11, 0, 131075, 11, 0, 131076, 11, 0, 131077, 11, 0, 131078, 11, 0, 196608, 11, 0, 196609, 11, 0, 196610, 11, 0, 196611, 11, 0, 196612, 11, 0, 196613, 11, 0, 196614, 11, 0, 262144, 11, 0, 262145, 11, 0, 262146, 11, 0, 262147, 11, 0, 262148, 11, 0, 262149, 11, 0, 262150, 11, 0, 327680, 11, 0, 327681, 11, 0, 327682, 11, 0, 327683, 11, 0, 327684, 11, 0, 327685, 11, 0, 327686, 11, 0, 393216, 11, 0, 393217, 11, 0, 393218, 11, 0, 393219, 11, 0, 393220, 11, 0, 393221, 11, 0, 393222, 11, 0, 458752, 11, 0, 458753, 11, 0, 458754, 11, 0, 458755, 11, 0, 458756, 11, 0, 458757, 11, 0, 458758, 11, 0, 524288, 1, 0, 524289, 1, 0, 524290, 1, 0, 524291, 1, 0, 524292, 1, 0, 524293, 1, 0, 524294, 1, 0, 589824, 10, 0, 589825, 10, 0, 589826, 10, 0, 589827, 10, 0, 589828, 10, 0, 589829, 10, 0, 589830, 10, 0 )
-script = ExtResource( 3 )
 
 [node name="Verlauf" type="Sprite" parent="Hintergrund"]
 material = SubResource( 1 )
 position = Vector2( 223.542, 256.237 )
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 
-[node name="Start" parent="." instance=ExtResource( 5 )]
+[node name="Start" parent="." instance=ExtResource( 4 )]
 
-[node name="Spiel" parent="." instance=ExtResource( 6 )]
+[node name="Spiel" parent="." instance=ExtResource( 5 )]
 visible = false
 
 [node name="UI" parent="Spiel" index="1"]

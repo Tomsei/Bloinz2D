@@ -760,7 +760,6 @@ text = "Farbe ändern"
 
 [node name="Farbwahl" type="ColorPicker" parent="."]
 pause_mode = 2
-editor/display_folded = true
 visible = false
 margin_left = 4.0
 margin_top = 4.0
@@ -849,7 +848,9 @@ icon = ExtResource( 51 )
 [connection signal="pressed" from="speichernVorlage4" to="Zeichenflaeche" method="_on_Design4_pressed"]
 [connection signal="pressed" from="speichernVorlage5" to="Zeichenflaeche" method="_on_Design5_pressed"]
 [connection signal="confirmed" from="UebernehmenBestaetigen" to="Zeichenflaeche" method="_on_UebernehmenBestaetigen_confirmed"]
+[connection signal="hide" from="UebernehmenBestaetigen" to="Zeichenflaeche" method="_on_UebernehmenBestaetigen_hide"]
 [connection signal="confirmed" from="VorlageBestaetigen" to="Zeichenflaeche" method="_on_VorlageBestaetigen_confirmed"]
+[connection signal="hide" from="VorlageBestaetigen" to="Zeichenflaeche" method="_on_VorlageBestaetigen_hide"]
 [connection signal="pressed" from="Wiederholen" to="Zeichenflaeche" method="_on_Wiederholen_pressed"]
 [connection signal="pressed" from="Rueckgaengig" to="Zeichenflaeche" method="_on_Rueckgaengig_pressed"]
 [connection signal="pressed" from="Bildrand" to="Zeichenflaeche" method="_on_Bildrand_pressed"]

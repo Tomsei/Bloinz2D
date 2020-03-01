@@ -42,6 +42,7 @@ var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instanc
 var aenderung = 0;
 var vorlage;
 var groesseFigur;
+var popup_offen= false;
 
 
 
@@ -284,7 +285,7 @@ func _process(delta):
 				elif modus == "Dialog" or modus == null:
 					if modus == null:
 						modus="Stift";
-					else:
+					elif popup_offen != true:
 						modus=alter_modus;
 		elif Input.is_action_just_pressed("undo"):
 			print(rueckgaengigstapel);
@@ -296,7 +297,11 @@ func _process(delta):
 speichert die Zeichenfläche ab
 """
 func speichern(bildname, Knopf):
-
+	
+	#Bild an die richtige Position verschieben
+	setze_an_linken_Bildrand();
+	setze_an_unteren_Bildrand();
+	
 	#Bild in den Dateien speichern
 	if vorschau=="Blob":
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Spielfiguren/"+bildname+".png");
@@ -577,6 +582,7 @@ func Figur_wechseln_bei_Aenderung(_vorschau):
 	alte_vorschau= vorschau;
 	vorschau = _vorschau;
 	deaktiviere_Buttons();
+	popup_offen = true;
 
 """
 Wird aufgerufen, wenn der Knopf BadCoin1 gedrückt wird
@@ -738,6 +744,9 @@ func _on_Speichern_pressed():
 	get_node("../UebernehmenBestaetigen").show();
 	alter_modus= modus;
 	modus="Dialog";
+	deaktiviere_Buttons();
+	popup_offen = true;
+	print(modus);
 	#else:
 		
 	
@@ -889,6 +898,7 @@ func _on_UebernehmenBestaetigen_confirmed():
 
 
 
+
 func _on_Rueckgaengig_pressed():
 	mache_rueckgaengig();
 """
@@ -971,7 +981,7 @@ func setze_an_linken_Bildrand():
 		for x in range(64):
 			bild.set_pixel(x,y, Color(0,0,0,0));
 	for y in range(64):
-		for x in range(20):
+		for x in range(maxx-minx+1):
 			bild.set_pixel(x,y,bildkopie.get_pixel(x+verschiebung, y));
 
 	bild.unlock();
@@ -1140,17 +1150,24 @@ func _on_EigeneFarbe1_pressed():
 	eigeneFarbeaktuell = 1;
 	wechsel_zu_eigene_Farbe();
 
-	
-
+"""
+wenn ein Farbbutton gedrückt wird, wo man die Farbe selber einstellen kann
+beim 1.Mal öffnet sich der Colorpicker
+danach wird die dort gespeicherte Farbe ausgewählt
+"""
 func wechsel_zu_eigene_Farbe():
 	if aktuellerFarbbutton != get_node("../EigeneFarbe"+str(eigeneFarbeaktuell)):
 		aktuellerFarbbutton.pressed= false;
 		aktuellerFarbbutton= get_node("../EigeneFarbe"+str(eigeneFarbeaktuell));
 	else:
 		aktuellerFarbbutton.pressed= true;
+	print(eigeneFarbe[eigeneFarbeaktuell-1]);
 	if eigeneFarbe[eigeneFarbeaktuell-1] == Color(0,0,0,0):
+		get_node("../Farbwahl/Zurueck").hide();
 		oeffne_Farbauswahl();
+		
 	else:
+		get_node("../Farbwahl/Zurueck").show();
 		get_node("../Farbauswahl").show();
 		get_node("../Farbwahl").color= eigeneFarbe[eigeneFarbeaktuell-1];
 		aktuelle_farbe = eigeneFarbe[eigeneFarbeaktuell-1];
@@ -1257,6 +1274,7 @@ func _on_Ja_pressed():
 	CoinWechsel();
 	get_node("../CoinWechsel").hide();
 	aktiviere_Buttons();
+	popup_offen = false;
 
 	
 
@@ -1268,6 +1286,7 @@ func _on_Nein_pressed():
 	get_node("../"+aktiver_knopf).pressed= true;
 	get_node("../"+coinWechsel).pressed= false;
 	aktiviere_Buttons();
+	popup_offen = false;
 
 
 	
@@ -1424,6 +1443,7 @@ func lade_Knopfbilder():
 func _on_Uebernehmen_pressed():
 	eigeneFarbe[eigeneFarbeaktuell-1]= get_node("../Farbwahl").get_pick_color();
 	aktuelle_farbe= eigeneFarbe[eigeneFarbeaktuell-1];
+	print(eigeneFarbe[eigeneFarbeaktuell-1]);
 	eigene_Farbe_speichern("EigeneFarbe"+str(eigeneFarbeaktuell));
 	get_node("../Farbwahl").hide();
 
@@ -1440,6 +1460,7 @@ func _on_ColorPicker_hide():
 	
 	
 func _on_Farbauswahl_pressed():
+	get_node("../Farbwahl/Zurueck").show();
 	oeffne_Farbauswahl();
 
 
@@ -1460,6 +1481,8 @@ func _on_Design1_pressed():
 	alter_modus = modus;
 	modus = "Dialog";
 	vorlage = 1;
+	deaktiviere_Buttons();
+	popup_offen= true;
 
 	
 	
@@ -1470,7 +1493,8 @@ func _on_Design2_pressed():
 	alter_modus = modus;
 	modus = "Dialog";
 	vorlage = 2;
-
+	deaktiviere_Buttons();
+	popup_offen= true;
 
 
 func _on_Design3_pressed():
@@ -1478,6 +1502,8 @@ func _on_Design3_pressed():
 	alter_modus = modus;
 	modus = "Dialog";
 	vorlage = 3;
+	deaktiviere_Buttons();
+	popup_offen= true;
 
 
 
@@ -1487,6 +1513,8 @@ func _on_Design4_pressed():
 	alter_modus = modus;
 	modus = "Dialog";
 	vorlage = 4;
+	deaktiviere_Buttons();
+	popup_offen= true;
 
 
 
@@ -1496,4 +1524,17 @@ func _on_Design5_pressed():
 	alter_modus = modus;
 	modus = "Dialog";
 	vorlage = 5;
+	deaktiviere_Buttons();
+	popup_offen= true;
 
+
+
+func _on_UebernehmenBestaetigen_hide():
+	print("Here I am");
+	aktiviere_Buttons();
+	popup_offen = false;
+
+
+func _on_VorlageBestaetigen_hide():
+	aktiviere_Buttons();
+	popup_offen = false;
