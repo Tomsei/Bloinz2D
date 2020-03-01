@@ -259,6 +259,9 @@ func _on_Player_spielGewonnen():
 	gewonnen.visible= true
 	verloren.visible = false
 	get_tree().paused = true
+	entferne_Spielobjekte()
+
+	
 
 
 func _on_Player_spielVerloren():
@@ -267,3 +270,16 @@ func _on_Player_spielVerloren():
 	verloren.visible = true
 	gewonnen.visible = false
 	get_tree().paused = true
+	entferne_Spielobjekte()
+
+
+
+func entferne_Spielobjekte():
+	var i = 5
+	while is_instance_valid(get_child(i)):
+		get_child(i).queue_free()
+		i = i+1
+	_on_MuenzTimer_timeout()
+	_on_RandomCoinZeit_timeout()
+	_on_RCGeschwindigkeit_timeout()
+ 

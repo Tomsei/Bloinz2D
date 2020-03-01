@@ -47,7 +47,6 @@ func _on_SpielStarten_button_up():
 func _on_NochmalSpielen_button_up():
 	print ("nochmal Spielen")
 	# Spiel soll eigentlich richtig von vorne gespielt werden, nicht das alte mit neuer Blobgröße weitergespielt
-	#spiel.get_node("Player").blobGroesse = 12
 	starteSpiel()
 
 # ruft die Optionen auf

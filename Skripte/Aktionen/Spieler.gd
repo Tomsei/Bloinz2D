@@ -51,9 +51,7 @@ func _ready():
 	$AnimatedSprite.play("neutral_gerade")
 	
 	einstellungen.setzeSpielerEinstellungen(Sprungkraft, speed)
-	
-	#$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
-	#$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+
 	create_collision_shape("Blob_3_gerade")
 
 
@@ -253,8 +251,8 @@ func blobVeranederung(var seitlich):
 			print("verloren")
 			emit_signal("spielVerloren")
 			$AnimatedSprite.play("neutral_gerade")
-			blobGroesse = 12
 			#get_tree().reload_current_scene()
+			
 		0, 1, 2, 3, 4:
 			# Prueft ob der Blobstatus sich veraendet hat.
 			if blobstatus > blobStati.NEGATIV2:
@@ -348,7 +346,6 @@ func blobVeranederung(var seitlich):
 		25, 26, 27, 28, 29:
 			emit_signal("spielGewonnen")
 			$AnimatedSprite.play("neutral_gerade")
-			blobGroesse = 12
 
 
 
@@ -446,6 +443,7 @@ func _on_Spiel_hide():
 	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
 
 func _on_Spiel_draw():
+	Spielstart_Ausrichtung()
 	if einstellungen.geschwindigkeitGeaendert:
 		print("sliderGeschwindigkeit")
 		speed = einstellungen.uebernehmeGeschwindigkeit()
@@ -454,6 +452,21 @@ func _on_Spiel_draw():
 		print ("sliderSprungkraft")
 		Sprungkraft = einstellungen.uebernehmeSprungkraft()
 		einstellungen.sprungkraftGeaendert = false
+
+
+
+func Spielstart_Ausrichtung():
+	position.x = 224
+	position.y = 483
+	sprungRestBewegung = 0
+	blobGroesse = 12
+	blobstatus = blobStati.NEUTRAL
+	hoechsteBlobHoehe = 530
+	
+	$AnimatedSprite.play("neutral_gerade")
+	create_collision_shape("Blob_3_gerade")
+	$Schutz._on_Schutz_Dauer_timeout()
+
 
 # Laedt die einzelnen Blobbilder und weist diese dem Spieler zu.
 func lade_sprites():

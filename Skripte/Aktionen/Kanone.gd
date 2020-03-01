@@ -34,7 +34,7 @@ func _ready():
 	erstelle_Hitbox()
 	screen_size = get_viewport_rect().size
 	
-	hoehe = randomZahlZwischen(400,490) #Zuffällige Flughöhe
+	hoehe = randomZahlZwischen(400,482) #Zuffällige Flughöhe
 	
 	#kanonen Warnung laden
 	var Kanonenwarnung = load("res://Szenen/Spielfiguren/Kanonenwarnung.tscn");
