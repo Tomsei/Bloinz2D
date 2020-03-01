@@ -49,8 +49,8 @@ signal spielVerloren
 signal spielGewonnen
 
 
-#Methode wird zu Beginn des Spiels aufgerufen. Spielerposition setzen
-#Bilder Laden + Kollisionsbox erstellen
+#Methode wird zu Beginn des Spiels aufgerufen. Ist also der Konstruktor der Klasse
+#Spielerposition setzen Bilder Laden + Kollisionsbox erstellen
 func _ready():
 	#Blob Positionieren
 	position.x = 224
