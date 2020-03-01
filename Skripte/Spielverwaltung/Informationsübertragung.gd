@@ -70,6 +70,9 @@ func uebernehmeRaketenzeit():
 
 func uebernehmeFigurGroesse():
 	return spielfigurgroesse
+	
+
+
 
 
 
