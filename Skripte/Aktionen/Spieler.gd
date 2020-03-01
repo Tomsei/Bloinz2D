@@ -52,8 +52,11 @@ func _ready():
 	
 	einstellungen.setzeSpielerEinstellungen(Sprungkraft, speed)
 	
-	$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
-	$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+	#$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
+	#$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
+	create_collision_shape("Blob_3_gerade")
+
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind
@@ -88,7 +91,12 @@ func _physics_process(delta):
 	#Sicherstellen, dass abhängig von der Bildschirmgröße das Objekt nicht raus laufen kann
 	position.x = clamp(position.x, 0, 448)
 	position.y = clamp(position.y, 0, 483)
-	
+
+
+
+
+
+
 #Funktion zum ermitteln welche Tasten gedrückt wurden 
 func checkTastenEingabe():
 	
@@ -254,7 +262,8 @@ func blobVeranederung(var seitlich):
 				blobstatus = blobStati.NEGATIV2
 				# Spiele den Sound fuer das Schrumpfen.
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
-				$AnimatedSprite._create_collision_polygon("Blob_1_gerade")
+				#$AnimatedSprite._create_collision_polygon("Blob_1_gerade")
+				create_collision_shape("Blob_1_gerade")
 			
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
@@ -267,11 +276,13 @@ func blobVeranederung(var seitlich):
 			if blobstatus > blobStati.NEGATIV1:
 				blobstatus = blobStati.NEGATIV1
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
-				$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
+				#$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
+				create_collision_shape("Blob_2_gerade")
 			elif blobstatus < blobStati.NEGATIV1:
 				blobstatus = blobStati.NEGATIV1
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-				$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
+				#$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
+				create_collision_shape("Blob_2_gerade")
 				
 			if seitlich:
 				$AnimatedSprite.play("negativ_1_seitlich")
@@ -285,11 +296,13 @@ func blobVeranederung(var seitlich):
 			if blobstatus > blobStati.NEUTRAL:
 				blobstatus = blobStati.NEUTRAL
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
-				$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
+				#$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
+				create_collision_shape("Blob_3_gerade")
 			elif blobstatus < blobStati.NEUTRAL:
 				blobstatus = blobStati.NEUTRAL
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-				$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
+				#$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
+				create_collision_shape("Blob_3_gerade")
 			
 			
 			if seitlich:
@@ -303,11 +316,13 @@ func blobVeranederung(var seitlich):
 			if blobstatus > blobStati.POSITIV1:
 				blobstatus = blobStati.POSITIV1
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
-				$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
+				#$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
+				create_collision_shape("Blob_4_gerade")
 			elif blobstatus < blobStati.POSITIV1:
 				blobstatus = blobStati.POSITIV1
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-				$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
+				#$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
+				create_collision_shape("Blob_4_gerade")
 			
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
@@ -321,7 +336,8 @@ func blobVeranederung(var seitlich):
 			if blobstatus < blobStati.POSITIV2:
 				blobstatus = blobStati.POSITIV2
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-				$AnimatedSprite._create_collision_polygon("Blob_5_gerade")
+				#$AnimatedSprite._create_collision_polygon("Blob_5_gerade")
+				create_collision_shape("Blob_5_gerade")
 			
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")
@@ -362,6 +378,35 @@ func spriteUpdateNoetig():
 	else:
 		return false
 
+
+
+func create_collision_shape(var stufe):
+	print (einstellungen.figurengroesse)
+	var groessen = einstellungen.figurengroesse
+	
+	var groesse = groessen[stufe]
+	
+	
+	print(groesse)
+	
+	var shape = RectangleShape2D.new()
+	shape.set_extents(Vector2(groesse.x/2,groesse.y/2))
+	
+	var collision = CollisionShape2D.new()
+	collision.set_shape(shape)
+	
+	#var polygon = CollisionPolygon2D.new()
+	#polygon.set_indexed(Vector2(groesse.x,groesse.y))
+
+	#$Hitbox.add_child(collision)
+	
+	
+	$Hitbox/areaKollisionBoxneu.set_shape(shape)
+	print(64-groesse.y)
+	$Hitbox/areaKollisionBoxneu.position.y = 0
+	$Hitbox/areaKollisionBoxneu.position.y += ((64-groesse.y) /2) 
+	#my_collision.position -= Vector2((texture.get_width() / 2) + offsetX, (texture.get_height() / 2) + offsetY) * scale.x
+	
 
 
 

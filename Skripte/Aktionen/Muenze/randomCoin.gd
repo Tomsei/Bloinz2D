@@ -12,6 +12,8 @@ func _ready():
 	$Sprite.texture = .lade_bild_von_user("res://Bilder/Standardspielfiguren/Coins/RandomCoin.png");
 	coinWert = 5
 	Geschwindigkeit = 100
+	bild_Groesse = einstellungen.figurengroesse["RandomCoin"]
+	erstelle_Hitbox()
 	
 
 

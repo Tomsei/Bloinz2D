@@ -1,4 +1,4 @@
-extends "res://Skripte/Aktionen/Muenze/Muenze.gd"
+extends "res://Skripte/Aktionen/Muenze/badCoin_allgemein.gd"
 
 """
 Szene / Klasse für die schlechten Coins Typ 2
@@ -10,11 +10,10 @@ Erbt die Methoden und Variablen von der Super Klasse Muenze
 func _ready():
 	$Sprite.texture = .lade_bild_von_user("res://Bilder/Standardspielfiguren/Coins/BadCoin2.png");
 	coinWert = -2
+	cointyp = -2 #repräsentiert Coin (nicht selbst umstellen)
 	Geschwindigkeit = 150
+	bild_Groesse = einstellungen.figurengroesse["BadCoin2"]
+	erstelle_Hitbox()
 
 
-"""
-Methode um Badcoin vom Regenschirm verschwinden zu lassen
-"""
-func blockiereMuenze():
-	queue_free()
+
