@@ -960,7 +960,7 @@ func setze_an_unteren_Bildrand():
 	Abbild_auf_Rueckgaengigstapel();
 	
 func setze_an_linken_Bildrand():
-	groesse_Zeichnung();
+	groesse_Zeichnung(bild);
 	var bildkopie = Image.new();
 	bildkopie.copy_from(bild);
 	bild.lock();
