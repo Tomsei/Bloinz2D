@@ -36,7 +36,10 @@ func _on_AnleitungOeffnen_button_up():
 
 # Zentriert das Fenster in der Bildschirmmitte
 func bildschirm_zentrieren():
+	# Aktuelle Bildschirmgroesse
 	var screen_size = OS.get_screen_size()
+	# Aktuelle Fenstergroesse
 	var window_size = OS.get_window_size()
 	
+	# Setzt das Fenster in die Mitte des Bildschirms
 	OS.set_window_position(screen_size*0.5 - window_size*0.5)
