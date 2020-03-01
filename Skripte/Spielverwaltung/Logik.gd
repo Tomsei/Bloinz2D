@@ -198,7 +198,7 @@ wird nur durchgeführt wenn Spieler nicht bereits schneller
 """
 func randomAktion_spielerGeschwindigkeit():
 	if !erhoehteGeschwindigkeit:
-		spieler.veraendereSpielerGeschwindigkeit(300)
+		spieler.veraendere_Spieler_Geschwindigkeit(300)
 		erhoehteGeschwindigkeit = true
 		geschwindigkeitZeit.start()
 
@@ -229,7 +229,7 @@ Nach der Zeit der Geschwindigkeit, soll Spieler wieder langsamer werden
 """
 func _on_RCGeschwindigkeit_timeout():
 	if erhoehteGeschwindigkeit:
-		spieler.veraendereSpielerGeschwindigkeit(-300)
+		spieler.veraendere_Spieler_Geschwindigkeit(-300)
 		erhoehteGeschwindigkeit = false
 
 

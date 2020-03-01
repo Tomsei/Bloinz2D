@@ -102,10 +102,7 @@ scale = Vector2( 0.90681, 0.788907 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 
-[node name="areaKollisionBox" type="CollisionPolygon2D" parent="Hitbox"]
-polygon = PoolVector2Array( 0, 0 )
-
-[node name="areaKollisionBoxneu" type="CollisionShape2D" parent="Hitbox"]
+[node name="areaKollisionBox" type="CollisionShape2D" parent="Hitbox"]
 
 [node name="Schutz" parent="." instance=ExtResource( 12 )]
 visible = false
