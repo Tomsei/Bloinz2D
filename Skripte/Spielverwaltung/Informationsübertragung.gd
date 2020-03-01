@@ -18,13 +18,32 @@ var SpeedboostAn = true
 var figurengroesse;
 
 
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().paused = true
 	JavaScript.eval("resizeSpiel(640,448)")
 	# Zentriert das Fenster in der Bildschirmmitte
 	preload("res://Szenen/Spielverwaltung/UI.tscn").instance().bildschirm_zentrieren()
-	pass # Replace with function body.
+	
+	if figurengroesse == null:
+		figurengroesse = {}
+		
+		figurengroesse["BadCoin1"] = Vector2(44,44)
+		figurengroesse["BadCoin2"] = Vector2(44,44)
+		figurengroesse["Blob_1_gerade"] = Vector2(30,32)
+		figurengroesse["Blob_2_gerade"] = Vector2(36,40)
+		figurengroesse["Blob_3_gerade"] = Vector2(44,48)
+		figurengroesse["Blob_4_gerade"] = Vector2(52,56)
+		figurengroesse["Blob_5_gerade"] = Vector2(60,64)
+		figurengroesse["GoodCoin1"] = Vector2(40,40)
+		figurengroesse["GoodCoin2"] = Vector2(40,40)
+		figurengroesse["Kanonenkugel"] = Vector2(62,48)
+		figurengroesse["RandomCoin"] = Vector2(40,40) 
+
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

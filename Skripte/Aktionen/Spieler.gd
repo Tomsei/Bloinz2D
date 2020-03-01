@@ -54,7 +54,7 @@ func _ready():
 	
 	#$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
 	#$Hitbox/areaKollisionBox.scale = (Vector2(1.4, 1.4))
-	#create_collision_shape("Blob_3_gerade")
+	create_collision_shape("Blob_3_gerade")
 
 
 
