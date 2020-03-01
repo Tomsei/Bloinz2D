@@ -88,7 +88,6 @@ func erstelleMuenze():
 			muenze = load("res://Szenen/Muenzen/goodCoin1.tscn")
 		3,4: 
 			muenze = load("res://Szenen/Muenzen/goodCoin2.tscn")
-			print("da");
 		5,6, 7: 
 			muenze = load("res://Szenen/Muenzen/badCoin1.tscn")
 		8,9: 

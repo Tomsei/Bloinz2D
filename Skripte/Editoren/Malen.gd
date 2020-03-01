@@ -2,27 +2,19 @@ extends Sprite
 
 
 var bildgroesse;
-#Farbe mit welcher zur Zeit gezeichnet wird
-var aktuelle_farbe;
-#Werkzeug welches ausgewählt ist, z.B. Stift, Linie, Ellipse ...
-var modus=null;
-
-var linien_start;
-var linien_ende;
-#Größe des Stiftes
+var aktuelleFarbe;
+var modus;
+var linienStart;
+var linienEnde;
 var stiftgroesse;
 #sich auf der Zeichenfläche befindende Bild
 var bild;
-# Bild, bevor es eventuell verändert wurde
-var original_bild;
 var alterInhalt
 var textur;
 var array;
-#
-var aktiver_knopf;
-#Modus, welcher vor einem Dialogfenster aktiv war
-var alter_modus;
-var vorschau;
+var aktiverKnopf;
+var alterModus;
+var Vorschau;
 var aktuellerFarbbutton;
 var aktuellerStiftbutton;
 var aktuellerModusbutton;
@@ -37,10 +29,8 @@ var eigeneFarbeaktuell;
 var temporaeresBild;
 var temporaereZeichenflaeche;
 var coinWechsel;
-var alte_vorschau;
+var alteVorschau;
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance();
-var aenderung = 0;
-var vorlage;
 var groesseFigur;
 
 
@@ -49,8 +39,6 @@ var groesseFigur;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-
 	# Setze Bildschirmgroesse.
 	OS.set_window_size(Vector2(1030,680));
 	JavaScript.eval("resizeSpiel(680,1030)")
@@ -61,11 +49,11 @@ func _ready():
 	#Farbe voreinstellen
 	aktuellerFarbbutton= get_node("../Farbe9");
 	aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(1,1,1,1);
+	aktuelleFarbe = Color(1,1,1,1);
 
 	
 	#Stiftgroesse voreinstellen
-	#modus = "Stift";
+	modus = "Stift";
 	stiftgroesse = 1;
 	aktuellerStiftbutton = get_node("../klein");
 	aktuellerStiftbutton.pressed= true;
@@ -76,29 +64,25 @@ func _ready():
 	bildgroesse = 64;
 	bild = Image.new();
 	bild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA8);
-	original_bild = Image.new();
 	textur = ImageTexture.new();
-	aktiver_knopf=" ";
+	aktiverKnopf=" ";
 
 	temporaeresBild= Image.new();
 	temporaeresBild.create(bildgroesse, bildgroesse, false, Image.FORMAT_RGBA8);
 	temporaereZeichenflaeche=get_node("../temporaereZeichenflaeche");
 	
 	#Anfangsknopf auf ersten Blob setzen
-	aktiver_knopf= "Blob_1_gerade";
+	aktiverKnopf= "Blob_1_gerade";
 	get_node("../Blob_1_gerade").pressed = true;
-	vorschau="Blob"
+	Vorschau="Blob"
 	
-	#Bild der Figur einladen
-	einladen(aktiver_knopf);
-	original_bild.copy_from(bild);
-	bild.premultiply_alpha();
+	einladen(aktiverKnopf);
 	#Standardbutton setzen
 	setze_Standardbutton();
 	#Vorlagebuttonssetzen
 	setze_Vorlagen();
 	#Vorschau aktualisieren
-	aktualisiere_vorschau();
+	aktualisiere_Vorschau();
 	
 	#Größen der einzelnen Figuren 
 	groesseFigur = {};
@@ -116,6 +100,9 @@ func _ready():
 	
 	rueckgaengigstapel= [];
 	Abbild_auf_Rueckgaengigstapel();
+	print(rueckgaengigstapel);
+
+	
 	wiederholenstapel=[];
 	
 	#eigene Farben einladen
@@ -128,14 +115,14 @@ func _ready():
 	get_node("../Farbwahl").get_children()[5].hide();
 	get_node("../Farbwahl").get_children()[4].get_children()[4].hide();
 	
-	#TEST#
-	print(rueckgaengigstapel);
+
+
+
 	
 
-"""
-Funktion, die ein 2D-Array erstellt
-übernommen, siehe Quellen
-"""
+
+
+
 func create_2d_array(width, height, value):
     var a = []
 
@@ -149,9 +136,12 @@ func create_2d_array(width, height, value):
     return a
 
 
+func Knoepfe_zuruecksetzen():
+	pass
+
 """ 
 malt einen Punkt auf das 64 * 64 große Bild
-dabei wird darauf geachtet, dass der Zeichenstil im Pixelformat ist 
+dabei wird darauf geachtet, dass ...
 Eingabe x: x-Wert vom Pixel unten links
 Eingabe y: y-Wert vom Pixel unten links 
 """	
@@ -161,15 +151,11 @@ func punkt_malen_pixel(x,y):
 	bild.lock();
 	for i in range(0, stiftgroesse):
 		for j in range(0, stiftgroesse):
-			bild.set_pixel(xneu+i, yneu+j, aktuelle_farbe);
+			bild.set_pixel(xneu+i, yneu+j, aktuelleFarbe);
 	bild.unlock();
 
-"""
-löscht einen Punkt auf dem 64 * 64 große Bild
-dabei wird darauf geachtet, dass der Zeichenstil im Pixelformat ist 
-Eingabe x: x-Wert vom Pixel unten links
-Eingabe y: y-Wert vom Pixel unten links 
-"""
+
+
 func punkt_loeschen_pixel(x, y):
 	var xneu = floor(x/8);
 	var yneu = floor(y/8);
@@ -178,12 +164,10 @@ func punkt_loeschen_pixel(x, y):
 		for j in range(0, stiftgroesse):
 			bild.set_pixel(xneu+i, yneu+j, Color(0,0,0,0));
 	bild.unlock();
+	textur = ImageTexture.new();
+	textur.create_from_image(bild);
+	texture= textur;
 
-"""
-Ein Array in der selben Größe wie das Bild der Zeichenfläche
-wird mit den Farbinformationen befüllt
--> wird später zum schnelleren Füllen benötigt
-"""
 func befuellen():
 	bild.lock();
 	for x in range(64):
@@ -197,158 +181,154 @@ Methode, die bei jedem neuen Time_Frame aufgerufen wird
 func _process(delta):
 		if Input.is_action_just_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
-			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
+			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
 				if modus =="Fuellen":
 					array = create_2d_array(64,64,Color(0,0,0,0));
 					befuellen();
-					fuellen2(aktuelle_farbe,((mouseposition.x-256)/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
+					fuellen2(aktuelleFarbe,((mouseposition.x-256)/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
 					bild.lock();
 					for zeile in range(64):
 						for spalte in range(64):
 							bild.set_pixel(zeile, spalte,array[zeile][spalte]);
 					bild.unlock();
 					setze_Zeichenflaeche();
-					aktualisiere_vorschau();
-					Abbild_auf_Rueckgaengigstapel();
+					aktualisiere_Vorschau();
 		elif Input.is_action_pressed("draw"):
 			var mouseposition = get_global_mouse_position();
-			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
+			if mouseposition.x >= 256 and mouseposition.y <= 512 and mouseposition.x < 767:
 				if modus=="Stift":
 					punkt_malen_pixel((mouseposition.x-256),mouseposition.y);
-					aktualisiere_vorschau();
+					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
 				elif modus == "Radierer":
 					punkt_loeschen_pixel((mouseposition.x-256),mouseposition.y);
-					aktualisiere_vorschau();
+					aktualisiere_Vorschau();
 					setze_Zeichenflaeche();
 				elif modus == "Rechteck":
-					if linien_start == null:
-						linien_start = get_global_mouse_position();
-						linien_start.x = linien_start.x-256;
+					if linienStart == null:
+						linienStart = get_global_mouse_position();
+						linienStart.x = linienStart.x-256;
 					else:
-						linien_ende = get_global_mouse_position();
-						linien_ende.x = linien_ende.x-256;
+						linienEnde = get_global_mouse_position();
+						linienEnde.x = linienEnde.x-256;
 						leere_temporaere_Zeichenflaeche();
-						male_Rechteck(linien_start,linien_ende);
+						male_Rechteck(linienStart,linienEnde);
 				elif modus == "Linie":
-					if linien_start == null:
-						linien_start = get_global_mouse_position();
-						linien_start.x = linien_start.x-256;
+					if linienStart == null:
+						linienStart = get_global_mouse_position();
+						linienStart.x = linienStart.x-256;
+						#punkt_malen_pixel(linienStart.x, linienStart.y);
+						#setze_Zeichenflaeche();
 					else:
-						linien_ende = get_global_mouse_position();
-						linien_ende.x = linien_ende.x-256;
+						linienEnde = get_global_mouse_position();
+						linienEnde.x = linienEnde.x-256;
 						leere_temporaere_Zeichenflaeche();
-						male_Linie(linien_start,linien_ende);
+						male_Linie(linienStart,linienEnde);
+						#linienStart = null;
+						#linienEnde = null;
 				elif modus == "Ellipse":
-					if linien_start == null:
-						linien_start = get_global_mouse_position();
-						linien_start.x = linien_start.x-256;
-						linien_start.x = floor(linien_start.x/8);
-						linien_start.y = floor(linien_start.y/8);
+					if linienStart == null:
+						linienStart = get_global_mouse_position();
+						linienStart.x = linienStart.x-256;
+						linienStart.x = floor(linienStart.x/8);
+						linienStart.y = floor(linienStart.y/8);
 						print("im Modus");
 					else:
-						linien_ende = get_global_mouse_position();
-						linien_ende.x = linien_ende.x-256;
-						linien_ende.x = floor(linien_ende.x/8);
-						linien_ende.y = floor(linien_ende.y/8);
+						linienEnde = get_global_mouse_position();
+						linienEnde.x = linienEnde.x-256;
+						linienEnde.x = floor(linienEnde.x/8);
+						linienEnde.y = floor(linienEnde.y/8);
 						leere_temporaere_Zeichenflaeche();
 
-						var radiusx =abs(linien_ende.x-linien_start.x);
-						var radiusy= abs(linien_ende.y-linien_start.y);
+						var radiusx =abs(linienEnde.x-linienStart.x);
+						var radiusy= abs(linienEnde.y-linienStart.y);
 
 						var cx;
 						var cy;
-						if linien_ende.x > linien_start.x:
-							cx= linien_start.x+floor(0.5*radiusx);
+						if linienEnde.x > linienStart.x:
+							cx= linienStart.x+floor(0.5*radiusx);
 						else:
-							cx= linien_ende.x+floor(0.5*radiusx);
-						if linien_ende.y > linien_start.y:
-							cy= linien_start.y+floor(0.5*radiusy);
+							cx= linienEnde.x+floor(0.5*radiusx);
+						if linienEnde.y > linienStart.y:
+							cy= linienStart.y+floor(0.5*radiusy);
 						else:
-							cy= linien_ende.y+floor(0.5*radiusy);
+							cy= linienEnde.y+floor(0.5*radiusy);
+
 						male_Ellipse(cx,cy,radiusx,radiusy);
+						#linienStart = null;
+						#linienEnde = null;
 		elif Input.is_action_just_released("draw"):
-			#wiederholenstapel = [];
 			var mouseposition = get_global_mouse_position();
-			if (modus=="Rechteck" or modus =="Linie" or modus =="Ellipse") and linien_start != null:
-				linien_start= null;
-				linien_ende = null;
-				uebernehme_temporaere_Zeichenflaeche();
-				# Absetzen auch außerhalb Zeichenfläche aber kein Abbild bei Klick außerhalb
+			if mouseposition.x >= 256 and mouseposition.y <= 512:
+				wiederholenstapel = [];
 				Abbild_auf_Rueckgaengigstapel();
-			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
-				if modus =="Radierer" or modus=="Stift":
-					print("im Stift");
-					Abbild_auf_Rueckgaengigstapel();
-					print(rueckgaengigstapel);
-				elif modus == "Dialog" or modus == null:
-					if modus == null:
-						modus="Stift";
-					else:
-						modus=alter_modus;
+				#noch Methode?
+				if modus=="Rechteck":
+					linienStart= null;
+					linienEnde = null;
+					uebernehme_temporaere_Zeichenflaeche();
+				elif modus=="Linie":
+					linienStart= null;
+					linienEnde = null;
+					uebernehme_temporaere_Zeichenflaeche();
+				elif modus=="Ellipse":
+					linienStart= null;
+					linienEnde = null;
+					uebernehme_temporaere_Zeichenflaeche();
 		elif Input.is_action_just_pressed("undo"):
-			print(rueckgaengigstapel);
 			mache_rueckgaengig();
 		elif Input.is_action_just_pressed("redo"):
 			wiederhole();
 
 """
-speichert die Zeichenfläche ab
+speichert die Zeichenfläche als png
 """
 func speichern(bildname, Knopf):
 
 	#Bild in den Dateien speichern
-	if vorschau=="Blob":
+	if Vorschau=="Blob":
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Spielfiguren/"+bildname+".png");
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Spielfiguren/"+bildname.substr(0,7)+"seitlich.png");
-	elif vorschau =="Coin":
+		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
+	elif Vorschau =="Coin":
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Coins/"+bildname+".png");	
 	else:
-		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Hintergrund/Hintergrund"+".png");
-	
+		for i in range(0,8):
+			#malenordner
+			persistenz.speicher_bild_als_textur(bild, "Bilder/Hintergruende/HimmelVerlauf"+str(i)+".png");
+	groesseFigur[bildname]= groesse_Zeichnung(bild);
+	einstellungen.figurengroesse= groesseFigur;
 	#Knopf aktualisieren
 	knopf_aktualisieren(Knopf, bild);
 
 """
 aktualisiert das Icon eines Knopfes mit einem Bild
-Eingabe Name: Name des Knopfes der aktualisiert werden soll
-Eingabe _bild: Bild welches auf den Knopf soll
+@param Name - Name des Knopfes der aktualisiert werden soll
 """
 func knopf_aktualisieren(Name, _bild):
 	#Knopf mit aktualisiertem Bild
 	var Pfad = "../"+ Name;
-	get_node(Pfad).icon= mache_Textur(_bild);
-"""
-Hilfsfunktion welches eine Textur von einem Bild erstellt
-"""
-func mache_Textur(_bild):
+	get_node(Pfad).icon= mache_Buttontextur(_bild);
+
+func mache_Buttontextur(_bild):
 	var buttontextur = ImageTexture.new()
 	buttontextur.create_from_image(_bild);
 	return buttontextur;
 
-"""
-Wenn der Stiftknopf gedrückt wird,
-wird der Modus auf Stift umgestellt
-"""
+
 func _on_Stift_pressed():
 	modus = "Stift";
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Stift");
 
-"""
-Wenn der Linienknopf gedrückt wird,
-wird der Modus auf Linie umgestellt
-"""
+
+
 func _on_Linie_pressed():
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Linie");
 	modus = "Linie";
 
 
-"""
-Wenn der Radiererknopf gedrückt wird,
-wird der Modus auf Radierer umgestellt
-"""
 func _on_Radierer_pressed():
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Radierer");
@@ -356,24 +336,22 @@ func _on_Radierer_pressed():
 
 
 """
-Spiegelt das Bild horizontal wenn der Knopf Spiegeln gedrückt wird
+TODO
 """
 func _on_Spiegeln_pressed():
+	
+	var hilfe;
 	bild.lock();
 	bild.flip_x();
 	bild.unlock();
 	setze_Zeichenflaeche();
-	aktualisiere_vorschau();
 	Abbild_auf_Rueckgaengigstapel();
 
 
 func _on_Farbe1_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe1"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe1");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(0.9,0.23,0.1);
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe1");
+	aktuelleFarbe = Color(0.9,0.23,0.1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
@@ -381,12 +359,9 @@ func _on_Farbe1_pressed():
 
 
 func _on_Farbe2_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe2"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe2");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(0.9,0.72,0.1);
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe2");
+	aktuelleFarbe = Color(0.9,0.72,0.1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
@@ -394,12 +369,9 @@ func _on_Farbe2_pressed():
 
 
 func _on_Farbe3_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe3"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe3");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(0.46,0.9,0.1);
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe3");
+	aktuelleFarbe = Color(0.46,0.9,0.1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
@@ -407,12 +379,9 @@ func _on_Farbe3_pressed():
 
 
 func _on_Farbe4_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe4"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe4");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(0.1,0.9,0.81);
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe4");
+	aktuelleFarbe = Color(0.1,0.9,0.81);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
@@ -420,12 +389,9 @@ func _on_Farbe4_pressed():
 
 
 func _on_Farbe5_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe5"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe5");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(0.1,0.36,0.9);
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe5");
+	aktuelleFarbe = Color(0.1,0.36,0.9);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
@@ -433,12 +399,9 @@ func _on_Farbe5_pressed():
 
 
 func _on_Farbe6_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe6"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe6");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(0.63,0.1,0.9);
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe6");
+	aktuelleFarbe = Color(0.63,0.1,0.9);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
@@ -446,12 +409,9 @@ func _on_Farbe6_pressed():
 
 
 func _on_Farbe7_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe7"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe7");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(0.9,0.1,0.78);
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe7");
+	aktuelleFarbe = Color(0.9,0.1,0.78);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
@@ -459,12 +419,9 @@ func _on_Farbe7_pressed():
 
 
 func _on_Farbe8_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe8"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe8");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(0.95,0.78,0.59);
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe8");
+	aktuelleFarbe = Color(0.95,0.78,0.59);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
@@ -472,12 +429,10 @@ func _on_Farbe8_pressed():
 
 
 func _on_Farbe9_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe9"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe9");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(1,1,1);
+	
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe9");
+	aktuelleFarbe = Color(1,1,1);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
@@ -485,20 +440,16 @@ func _on_Farbe9_pressed():
 
 
 func _on_Farbe10_pressed():
-	if aktuellerFarbbutton != get_node("../Farbe10"):
-		aktuellerFarbbutton.pressed= false;
-		aktuellerFarbbutton= get_node("../Farbe10");
-	else:
-		aktuellerFarbbutton.pressed= true;
-	aktuelle_farbe = Color(0,0,0);
+	aktuellerFarbbutton.pressed= false;
+	aktuellerFarbbutton= get_node("../Farbe10");
+	aktuelleFarbe = Color(0,0,0);
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
 
 
-"""
-setzt die Stiftgröße auf klein
-"""
+
+
 func _on_klein_pressed():
 		
 	aktuellerStiftbutton.pressed= false;
@@ -506,55 +457,39 @@ func _on_klein_pressed():
 	stiftgroesse= 1;
 
 
-"""
-setzt die Stiftgröße auf mittel
-"""
 func _on_mittel_pressed():
 	aktuellerStiftbutton.pressed= false;
 	aktuellerStiftbutton = get_node("../mittel");
 	stiftgroesse= 2;
 
 
-"""
-setzt die Stiftgröße auf groß
-"""
 func _on_gro_pressed():
 	aktuellerStiftbutton.pressed= false;
 	aktuellerStiftbutton = get_node("../gross");
 	stiftgroesse= 3;
 
 
-"""
-wechselt mit dem Zurückbutton zurück in das Spiel
-"""
 func _on_Zurueck_button_up():
 	print("gehe zurück zum Spiel")
 	get_tree().change_scene("res://Szenen/Oberflaeche/Main.tscn")
 	OS.set_window_size(Vector2(448,640))
 
 
-"""
-setzt den Modus auf Füllen
-"""
 func _on_Fuellen_pressed():
 	modus="Fuellen";
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Fuellen");
 
-"""
-füllt eine Fläche die ausgewählt wurde mit dem Floodfill Algorithmus
-Eingabe x:
-Eingabe y:
-Eingabe alteFarbe: Farbe der Fläche die eingefärbt werden soll
-Eingabe neueFarbe: neue Farbe mit der die Fläche eingefärbt wird
-"""
+
+
+
 func fuellen2(neueFarbe,x,y, alteFarbe):
 	var Punktstapel;
 	Punktstapel=[];
 	Punktstapel.push_front(Vector2(x,y));
 	while(!Punktstapel.empty()):
 		var koordinaten = Punktstapel.pop_front();
-		if(array[koordinaten.x][koordinaten.y] == alteFarbe ):#r (array[koordinaten.x][koordinaten.y].a8 == 0 and alteFarbe.a8 == 0)):
+		if(array[koordinaten.x][koordinaten.y] == alteFarbe):
 			array[koordinaten.x][koordinaten.y]= neueFarbe;
 			if( koordinaten.x+1 <64):
 				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
@@ -564,63 +499,46 @@ func fuellen2(neueFarbe,x,y, alteFarbe):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y+1));
 			if(koordinaten.y-1 >=0):
 				Punktstapel.push_front(Vector2(koordinaten.x,koordinaten.y-1));
+	
 
 
-"""
-Falls man eine Änderung an der Zeichenfläche vorgenommen hat und dann die 
-Eingabe _vorschau:
-"""
-func Figur_wechseln_bei_Aenderung(_vorschau):
+
+func _on_BadCoin1_pressed():
 	get_node("../CoinWechsel").show();
-	alter_modus= modus;
+	alterModus= modus;
 	modus="Dialog";
-	alte_vorschau= vorschau;
-	vorschau = _vorschau;
+	alteVorschau= Vorschau;
+	Vorschau = "Coin";
+	coinWechsel="BadCoin1";
+	get_node("../"+aktiverKnopf).pressed= false;
 	deaktiviere_Buttons();
 
-"""
-Wird aufgerufen, wenn der Knopf BadCoin1 gedrückt wird
-falls es eine Änderung gibt, wird ein Popup aufgerufen
-sonst wird direkt gewechselt zur Figur schlechter Coin 1
-"""
-func _on_BadCoin1_pressed():
-	coinWechsel= "BadCoin1";
-	print(bild.get_data());
-	print(original_bild);
-	if bild.get_data() != original_bild.get_data():
-		Figur_wechseln_bei_Aenderung("Coin");
-	else:
-		vorschau = "Coin";
-		CoinWechsel();
-"""
-Wird aufgerufen, wenn der Knopf GoodCoin1 gedrückt wird
-falls es eine Änderung gibt, wird ein Popup aufgerufen
-sonst wird direkt gewechselt zur Figur guter Coin 1
-"""
 func _on_GoodCoin1_pressed():
-	coinWechsel= "GoodCoin1";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Coin");
-	else:
-		vorschau = "Coin";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Coin";
+	coinWechsel="GoodCoin1";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 """
 Prozedur, die aufgerufen wird, falls ein Knopf der unteren Leiste gedrückt wird
 Damit wechselt sich die Spielfigur, deren Design gerade bearbeitet wird
 @param name - Name der neu zu bearbeitenden Spielfigur
 """
-func CoinWechsel():
+func CoinWechsel(name):
 	
 	
 	# aktiven Knopf auf nicht pressed setzen
-	get_node("../"+aktiver_knopf).pressed = false;
+	#get_node("../"+aktiverKnopf).pressed = false;
 	
 	#neuen Knopf aktiv setzen
-	aktiver_knopf= coinWechsel;
+	aktiverKnopf= name;
 	
 	#Einladen auf die Zeichenfläche
-	einladen(coinWechsel);
+	einladen(name);
 
 	
 	#Standardbutton setzen
@@ -629,29 +547,18 @@ func CoinWechsel():
 	#Vorlagebuttonssetzen
 	setze_Vorlagen();
 	
-	#vorschau setzen
-	aktualisiere_vorschau();
-	
-	#rückgängigstapel löschen
-	loesche_rueckgaengig_wiederholen();
-	
-	#Änderungswert zurücksetzen
-	aenderung = 0;
-	
-	#neues Bild auf Rückgängigstapel
-	Abbild_auf_Rueckgaengigstapel();
-	
-	#neues Originalbild
-	original_bild= bild;
+	#Vorschau setzen
+	aktualisiere_Vorschau();
 
 """
 lädt ein Bild aus den Dateien in die Variable bild ein und aktualisiert die Zeichenfläche
 """	
 func einladen(pfad):
 	bild = Image.new();
-	if vorschau=="Blob":
+	if Vorschau=="Blob":
 		bild = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
-	elif vorschau =="Coin":
+		#temporaeresBild.load("Bilder/Standardspielfiguren/Spielfiguren/"+pfad+".png");
+	elif Vorschau =="Coin":
 		bild = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+pfad+".png");	
 	else:
 		bild = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Hintergrund/"+pfad+".png");
@@ -690,12 +597,12 @@ lädt das Standardbild als Textur in den Button ein  #setze Button
 """
 func setze_Standardbutton():
 	var icon = Image.new();
-	if vorschau =="Blob":
-		icon = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+aktiver_knopf+"Standard.png");
-	elif vorschau =="Coin":
-		icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+aktiver_knopf+"Standard.png");
+	if Vorschau =="Blob":
+		icon = persistenz.lade_bild("Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Standard.png");
+	elif Vorschau =="Coin":
+		icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Standard.png");
 	else:
-		icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiver_knopf+"Standard.png");
+		icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Standard.png");
 	var buttontextur = ImageTexture.new();
 	buttontextur.create_from_image(icon);
 	get_node("../Standard").icon= buttontextur;
@@ -707,12 +614,12 @@ als Vorschau in die jeweiligen Buttons
 func setze_Vorlagen():
 	for i in range(1,6):
 		var icon = Image.new();
-		if vorschau == "Blob":
-			icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+aktiver_knopf+"Design"+str(i)+".png");
-		elif vorschau =="Coin":
-			icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+aktiver_knopf+"Design"+str(i)+".png");
+		if Vorschau == "Blob":
+			icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Spielfiguren/"+aktiverKnopf+"Design"+str(i)+".png");
+		elif Vorschau =="Coin":
+			icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Coins/"+aktiverKnopf+"Design"+str(i)+".png");
 		else:
-			icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiver_knopf+"Design"+str(i)+".png");	
+			icon = persistenz.lade_bild("res://Bilder/Standardspielfiguren/Hintergrund/"+aktiverKnopf+"Design"+str(i)+".png");	
 		var buttontextur = ImageTexture.new();
 		buttontextur.create_from_image(icon);
 		get_node("../Vorlage"+str(i)).icon= buttontextur;
@@ -721,26 +628,29 @@ func setze_Vorlagen():
 aktualisiert das Vorschaubild an der linken Seite je nachdem, 
 welche Spielfigur oder der Hintergrund gerade bearbeitet wird
 """
-func aktualisiere_vorschau():
+func aktualisiere_Vorschau():
 	var texturklein = ImageTexture.new();
 	texturklein.create_from_image(bild,0);
-	if vorschau == "Blob" or vorschau == "Coin":
-		get_node("../"+vorschau).texture = texturklein;
+	if Vorschau == "Blob" or Vorschau == "Coin":
+		get_node("../"+Vorschau).texture = texturklein;
 	else:
 		for i in range(0,9):
-			get_node("../"+vorschau+str(i)).texture = texturklein;	
+			get_node("../"+Vorschau+str(i)).texture = texturklein;	
 	
 """
-TODO Änderung ??
 """
 func _on_Speichern_pressed():
-	#if aenderung >= 2:
 	get_node("../UebernehmenBestaetigen").show();
-	alter_modus= modus;
+	alterModus= modus;
 	modus="Dialog";
-	#else:
-		
 	
+	
+
+func _on_Vorlage_pressed():
+	alterModus=modus;
+	modus="Dialog";
+	get_node("../VorlageBestaetigen").show();
+
 """
 setzt die Zeichenfläche mit durchsichtigen Pixeln
 """
@@ -748,172 +658,221 @@ func _on_Leeren_pressed():
 	bild.fill(Color(0,0,0,0));
 	setze_Zeichenflaeche();
 	Abbild_auf_Rueckgaengigstapel();
-	aktualisiere_vorschau();
+
+
+
+
+func _on_Design1_pressed():
+	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design1", "Vorlage1");
+	modus= alterModus;
+	
+
+
+func _on_Design2_pressed():
+	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design2", "Vorlage2");
+	modus= alterModus;
+
+
+func _on_Design3_pressed():
+	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design3", "Vorlage3");
+	modus= alterModus;
+
+
+
+func _on_Design4_pressed():
+	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design4", "Vorlage4");
+	modus= alterModus;
+
+
+
+func _on_Design5_pressed():
+	get_node("../VorlageBestaetigen").hide();
+	speichern(aktiverKnopf+"Design5", "Vorlage5");
+	modus= alterModus;
 
 
 func _on_Vorlage1_pressed():
 	#Vorlage einladen
-	einladen(aktiver_knopf+"Design1");
-	aktualisiere_vorschau();
+	einladen(aktiverKnopf+"Design1");
+	aktualisiere_Vorschau();
 
 
 
 
 func _on_Vorlage2_pressed():
 	#Vorlage einladen
-	einladen(aktiver_knopf+"Design2");
-	aktualisiere_vorschau();
+	einladen(aktiverKnopf+"Design2");
+	aktualisiere_Vorschau();
 
 
 
 func _on_Vorlage3_pressed():
 	#Vorlage einladen
-	einladen(aktiver_knopf+"Design3");
-	aktualisiere_vorschau();
+	einladen(aktiverKnopf+"Design3");
+	aktualisiere_Vorschau();
 
 
 
 
 func _on_Vorlage4_pressed():
 	#Vorlage einladen
-	einladen(aktiver_knopf+"Design4");
-	aktualisiere_vorschau();
+	einladen(aktiverKnopf+"Design4");
+	aktualisiere_Vorschau();
 
 
 func _on_Vorlage5_pressed():
 	#Vorlage einladen
-	einladen(aktiver_knopf+"Design5");
-	aktualisiere_vorschau();
+	einladen(aktiverKnopf+"Design5");
+	aktualisiere_Vorschau();
 
 
 func _on_Standard_pressed():
 	#Standard einladen
-	einladen(aktiver_knopf+"Standard");
-	aktualisiere_vorschau();
+	einladen(aktiverKnopf+"Standard");
+	aktualisiere_Vorschau();
 
 
 
 func _on_BadCoin2_pressed():
-	coinWechsel= "BadCoin2";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Coin");
-	else:
-		vorschau = "Coin";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Coin";
+	coinWechsel="BadCoin2";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_GoodCoin2_pressed():
-	coinWechsel= "GoodCoin2";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Coin");
-	else:
-		vorschau = "Coin";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Coin";
+	coinWechsel="GoodCoin2";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_RandomCoin_pressed():
-	coinWechsel= "RandomCoin";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Coin");
-	else:
-		vorschau = "Coin";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Coin";
+	coinWechsel="RandomCoin";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 func _on_Blob_1_gerade_pressed():
-	coinWechsel= "Blob_1_gerade";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Blob");
-	else:
-		vorschau = "Blob";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Blob";
+	coinWechsel="Blob_1_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_Blob_3_gerade_pressed():
-	coinWechsel= "Blob_3_gerade";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Blob");
-	else:
-		vorschau = "Blob";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Blob";
+	coinWechsel="Blob_3_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_Blob_2_gerade_pressed():
-	coinWechsel= "Blob_2_gerade";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Blob");
-	else:
-		vorschau = "Blob";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Blob";
+	coinWechsel="Blob_2_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_Blob_4_gerade_pressed():
-	coinWechsel= "Blob_4_gerade";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Blob");
-	else:
-		vorschau = "Blob";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Blob";
+	coinWechsel="Blob_4_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_Blob_5_gerade_pressed():
-	coinWechsel= "Blob_5_gerade";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Blob");
-	else:
-		vorschau = "Blob";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Blob";
+	coinWechsel="Blob_5_gerade";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 
 func _on_Hintergrund_pressed():
-	coinWechsel= "Hintergrund";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Hintergrund");
-	else:
-		vorschau = "Hintergrund";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Hintergrund";
+	coinWechsel="Hintergrund";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 	
 
 
 func _on_Kanonenkugel_pressed():
-	coinWechsel= "Kanonenkugel";
-	if aenderung >=  2:
-		Figur_wechseln_bei_Aenderung("Blob");
-	else:
-		vorschau = "Blob";
-		CoinWechsel();
+	get_node("../CoinWechsel").show();
+	alterModus= modus;
+	modus="Dialog";
+	alteVorschau= Vorschau;
+	Vorschau = "Blob";
+	coinWechsel="Kanonenkugel";
+	get_node("../"+aktiverKnopf).pressed= false;
+	deaktiviere_Buttons();
 
 
 func _on_UebernehmenBestaetigen_confirmed():
-	speichern(aktiver_knopf, aktiver_knopf);
+	speichern(aktiverKnopf, aktiverKnopf);
 
 
 
 func _on_Rueckgaengig_pressed():
 	mache_rueckgaengig();
-"""
-Die letzte ausgeführte Aktion wird nocheinmal wiederholt
-"""
+
 func mache_rueckgaengig():
 	if rueckgaengigstapel.size() > 1:
 		print("bin in rückgängig");
 		wiederholenstapel.push_back(rueckgaengigstapel.pop_back());
 		bild.copy_from(rueckgaengigstapel.back());
 		setze_Zeichenflaeche();
-		aktualisiere_vorschau();
+		aktualisiere_Vorschau();
 
 func _on_Wiederholen_pressed():
 	wiederhole();
 
-"""
-Die letze rückgängig gemachte Aktion wird noch einmal wiederholt
-"""
 func wiederhole():
 	if wiederholenstapel.size() > 0:
 		bild.copy_from(wiederholenstapel.back());
 		rueckgaengigstapel.push_back(wiederholenstapel.pop_back());
 		setze_Zeichenflaeche();
-		aktualisiere_vorschau();
+		aktualisiere_Vorschau();
 
 func groesse_Zeichnung(_bild):
 	_bild.lock();
@@ -956,33 +915,12 @@ func setze_an_unteren_Bildrand():
 	bild.unlock();
 	bildkopie.unlock();
 	setze_Zeichenflaeche();
-	aktualisiere_vorschau();
-	Abbild_auf_Rueckgaengigstapel();
-	
-func setze_an_linken_Bildrand():
-	groesse_Zeichnung();
-	var bildkopie = Image.new();
-	bildkopie.copy_from(bild);
-	bild.lock();
-	bildkopie.lock();
-	var verschiebung = minx;
-	print(minx);
-	for y in range(64):
-		for x in range(64):
-			bild.set_pixel(x,y, Color(0,0,0,0));
-	for y in range(64):
-		for x in range(20):
-			bild.set_pixel(x,y,bildkopie.get_pixel(x+verschiebung, y));
-
-	bild.unlock();
-	bildkopie.unlock();
-	setze_Zeichenflaeche();
-	aktualisiere_vorschau();
+	aktualisiere_Vorschau();
 	Abbild_auf_Rueckgaengigstapel();
 
 
 func _on_Bildrand_pressed():
-	setze_an_linken_Bildrand();
+	setze_an_unteren_Bildrand();
 	
 """
 Methode, die augerufen wird, sobald sich etwas auf der Zeichenfläche ändert
@@ -998,11 +936,16 @@ func Abbild_auf_Rueckgaengigstapel():
 		var bildkopie = Image.new();
 		bildkopie.copy_from(bild);
 		rueckgaengigstapel.push_back(bildkopie);
-	if aenderung < 2:
-		aenderung = aenderung +1;
+		
 func setze_Figurauswahlbuttons():
 	pass;
 	
+func alles_rueckgaengig():
+	#für jede Spielfigur:
+	
+	#setze Vorlagenbuttons auf alte Vorlage
+	pass;
+	#setze aktuelle Figur auf Standard
 
 func male_Linie(start,ende):
 	
@@ -1101,9 +1044,9 @@ func male_Linie(start,ende):
 	while schnell!=ziel: 
 		#Male den aktuellen Pixel mit Überprüfung, welcher Wert schneller ansteigt. 
 		if xschnell:
-			temporaeresBild.set_pixel(schnell,langsam, aktuelle_farbe);
+			temporaeresBild.set_pixel(schnell,langsam, aktuelleFarbe);
 		else:
-			temporaeresBild.set_pixel(langsam,schnell, aktuelle_farbe);
+			temporaeresBild.set_pixel(langsam,schnell, aktuelleFarbe);
 		#Wenn Q negativ ist, erhöhe Q um Q_equal
 		if (Q<0):
 			Q = Q + Q_equal;
@@ -1112,14 +1055,14 @@ func male_Linie(start,ende):
 			Q = Q + Q_step;
 			langsam+= stepLangsam;
 		schnell+=stepSchnell
-	temporaeresBild.set_pixel(x1,y1, aktuelle_farbe);
+	temporaeresBild.set_pixel(x1,y1, aktuelleFarbe);
 	temporaeresBild.unlock();
 	setze_temporaere_Zeichenflaeche();
 	
 func eigene_Farbe_speichern(name):
 	var icon1 = Image.new();
 	icon1.create(16, 16, false, Image.FORMAT_RGBA8);
-	icon1.fill(aktuelle_farbe);
+	icon1.fill(aktuelleFarbe);
 	icon1.lock();
 	icon1.unlock();
 	knopf_aktualisieren(name, icon1);
@@ -1152,15 +1095,14 @@ func wechsel_zu_eigene_Farbe():
 		oeffne_Farbauswahl();
 	else:
 		get_node("../Farbauswahl").show();
-		get_node("../Farbwahl").color= eigeneFarbe[eigeneFarbeaktuell-1];
-		aktuelle_farbe = eigeneFarbe[eigeneFarbeaktuell-1];
+		aktuelleFarbe = eigeneFarbe[eigeneFarbeaktuell-1];
 		if modus =="Radierer":
 			Farbwechsel_bei_Radierer();
 
 func oeffne_Farbauswahl():
 	get_node("../Farbwahl").show();
 	get_tree().call_group("Steuerelemente", "hide");
-	alter_modus = modus;
+	alterModus = modus;
 	modus="Farbauswahl";
 	deaktiviere_Buttons();
 
@@ -1209,13 +1151,13 @@ func male_Rechteck(start, ende):
 		ende.y = zwischen;
 	temporaeresBild.lock();
 	for i in range (0, abs(start.x-ende.x)):
-		temporaeresBild.set_pixel(start.x+i, start.y, aktuelle_farbe);
+		temporaeresBild.set_pixel(start.x+i, start.y, aktuelleFarbe);
 	for i in range (0, abs(start.x-ende.x)):
-		temporaeresBild.set_pixel(start.x+i, ende.y, aktuelle_farbe);
+		temporaeresBild.set_pixel(start.x+i, ende.y, aktuelleFarbe);
 	for i in range (0, abs(start.y-ende.y)):
-		temporaeresBild.set_pixel(start.x, start.y+i, aktuelle_farbe);
+		temporaeresBild.set_pixel(start.x, start.y+i, aktuelleFarbe);
 	for i in range (0, abs(start.y-ende.y)+1):
-		temporaeresBild.set_pixel(ende.x, start.y+i, aktuelle_farbe);
+		temporaeresBild.set_pixel(ende.x, start.y+i, aktuelleFarbe);
 	temporaeresBild.unlock();
 	
 	setze_temporaere_Zeichenflaeche();
@@ -1223,8 +1165,8 @@ func male_Rechteck(start, ende):
 
 func _on_Rechteck_pressed():
 	modus="Rechteck";
-	linien_ende = null;
-	linien_start= null;
+	linienEnde = null;
+	linienStart= null;
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Rechteck");
 	
@@ -1241,7 +1183,7 @@ func uebernehme_temporaere_Zeichenflaeche():
 	temporaeresBild.unlock();
 	#Bild neu auf Zeichenfläche laden
 	setze_Zeichenflaeche();
-	aktualisiere_vorschau();
+	aktualisiere_Vorschau();
 	#temporäre Zeichenfläche löschen
 	leere_temporaere_Zeichenflaeche();
 	setze_temporaere_Zeichenflaeche();
@@ -1254,22 +1196,21 @@ func leere_temporaere_Zeichenflaeche():
 
 
 func _on_Ja_pressed():
-	CoinWechsel();
+	modus = alterModus;
+	CoinWechsel(coinWechsel);
 	get_node("../CoinWechsel").hide();
 	aktiviere_Buttons();
-
 	
 
 
 
 func _on_Nein_pressed():
-	vorschau = alte_vorschau;
+	modus = alterModus;
+	Vorschau = alteVorschau;
 	get_node("../CoinWechsel").hide();
-	get_node("../"+aktiver_knopf).pressed= true;
+	get_node("../"+aktiverKnopf).pressed= true;
 	get_node("../"+coinWechsel).pressed= false;
 	aktiviere_Buttons();
-
-
 	
 func deaktiviere_Buttons():
 	var Kinder = get_parent().get_children();
@@ -1339,13 +1280,13 @@ func male_vier_Ellipsenpunkte(x,y, cx,cy):
 	
 	
 	if( amRand1 != true and amRand3 != true):
-		temporaeresBild.set_pixel(cx+x,cy+y,aktuelle_farbe);
+		temporaeresBild.set_pixel(cx+x,cy+y,aktuelleFarbe);
 	if( amRand2 != true and amRand3 != true):
-		temporaeresBild.set_pixel(cx-x,cy+y,aktuelle_farbe);
+		temporaeresBild.set_pixel(cx-x,cy+y,aktuelleFarbe);
 	if( amRand2 != true and amRand4 != true):
-		temporaeresBild.set_pixel(cx-x,cy-y,aktuelle_farbe);
+		temporaeresBild.set_pixel(cx-x,cy-y,aktuelleFarbe);
 	if( amRand1 != true and amRand4 != true):
-		temporaeresBild.set_pixel(cx+x,cy-y,aktuelle_farbe);
+		temporaeresBild.set_pixel(cx+x,cy-y,aktuelleFarbe);
 	
 
 func _on_Ellipse_pressed():
@@ -1406,94 +1347,27 @@ func lade_Knopfbilder():
 	#Hintergrund	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Hintergrund/"+"Hintergrund.png");
 	knopf_aktualisieren("Hintergrund",bildtemporaer);
+
 	
-	#eigene Farben
-	bildtemporaer = persistenz.lade_bild("Bilder/Farben/EigeneFarbe1.png");
-	knopf_aktualisieren("EigeneFarbe1",bildtemporaer);
-	bildtemporaer = persistenz.lade_bild("Bilder/Farben/EigeneFarbe2.png");
-	knopf_aktualisieren("EigeneFarbe2",bildtemporaer);
-	bildtemporaer = persistenz.lade_bild("Bilder/Farben/EigeneFarbe3.png");
-	knopf_aktualisieren("EigeneFarbe3",bildtemporaer);
-	bildtemporaer = persistenz.lade_bild("Bilder/Farben/EigeneFarbe4.png");
-	knopf_aktualisieren("EigeneFarbe4",bildtemporaer);
-	bildtemporaer = persistenz.lade_bild("Bilder/Farben/EigeneFarbe5.png");
-	knopf_aktualisieren("EigeneFarbe5",bildtemporaer);
 
 
-
-func _on_Uebernehmen_pressed():
-	eigeneFarbe[eigeneFarbeaktuell-1]= get_node("../Farbwahl").get_pick_color();
-	aktuelle_farbe= eigeneFarbe[eigeneFarbeaktuell-1];
-	eigene_Farbe_speichern("EigeneFarbe"+str(eigeneFarbeaktuell));
+func _on_Schliessen_pressed():
 	get_node("../Farbwahl").hide();
-
 
 
 
 func _on_ColorPicker_hide():
 	get_tree().call_group("Steuerelemente", "show");
 	aktiviere_Buttons();
-	if alter_modus =="Radierer":
+	eigeneFarbe[eigeneFarbeaktuell-1]= get_node("../Farbwahl").get_pick_color();
+	aktuelleFarbe= eigeneFarbe[eigeneFarbeaktuell-1];
+	eigene_Farbe_speichern("EigeneFarbe"+str(eigeneFarbeaktuell));
+	if alterModus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	else:
-		modus = alter_modus;
-	
-	
+		modus = alterModus;
+
+
+
 func _on_Farbauswahl_pressed():
 	oeffne_Farbauswahl();
-
-
-func _on_Zurueck_pressed():
-	get_node("../Farbwahl").hide();
-	
-
-func loesche_rueckgaengig_wiederholen():
-	rueckgaengigstapel = [];
-	wiederholenstapel = [];
-
-
-func _on_VorlageBestaetigen_confirmed():
-	speichern(aktiver_knopf+"Design"+str(vorlage), "Vorlage"+str(vorlage));
-	
-func _on_Design1_pressed():
-	get_node("../VorlageBestaetigen").show();
-	alter_modus = modus;
-	modus = "Dialog";
-	vorlage = 1;
-
-	
-	
-
-
-func _on_Design2_pressed():
-	get_node("../VorlageBestaetigen").show();
-	alter_modus = modus;
-	modus = "Dialog";
-	vorlage = 2;
-
-
-
-func _on_Design3_pressed():
-	get_node("../VorlageBestaetigen").show();
-	alter_modus = modus;
-	modus = "Dialog";
-	vorlage = 3;
-
-
-
-
-func _on_Design4_pressed():
-	get_node("../VorlageBestaetigen").show();
-	alter_modus = modus;
-	modus = "Dialog";
-	vorlage = 4;
-
-
-
-
-func _on_Design5_pressed():
-	get_node("../VorlageBestaetigen").show();
-	alter_modus = modus;
-	modus = "Dialog";
-	vorlage = 5;
-
