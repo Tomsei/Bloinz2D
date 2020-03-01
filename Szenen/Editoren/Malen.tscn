@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://Skripte/Editoren/Malen.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Hintergruende/Malenhintergrund.png" type="Texture" id=2]
@@ -51,7 +51,6 @@
 [ext_resource path="res://Bilder/Buttons/Maleneditor/Ellipse.png" type="Texture" id=49]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/HintergrundColorpicker.png" type="Texture" id=50]
 [ext_resource path="res://Bilder/Buttons/Maleneditor/export.png" type="Texture" id=51]
-[ext_resource path="res://Bilder/Buttons/Maleneditor/import.png" type="Texture" id=52]
 
 [node name="Maleneditor" type="Node2D"]
 pause_mode = 2
@@ -105,14 +104,6 @@ margin_top = 542.0
 margin_right = 874.112
 margin_bottom = 562.0
 text = "Übernehmen"
-
-[node name="Vorlage" type="Button" parent="."]
-visible = false
-margin_left = 764.865
-margin_top = 546.795
-margin_right = 912.865
-margin_bottom = 566.795
-text = "als Vorlage Speichern"
 
 [node name="Stift" type="Button" parent="." groups=[
 "Steuerelemente",
@@ -803,20 +794,11 @@ margin_left = 899.538
 margin_top = 542.0
 margin_right = 943.538
 margin_bottom = 580.0
-hint_tooltip = "Designs speichern"
+hint_tooltip = "Designs speichern oder laden"
 icon = ExtResource( 51 )
-
-[node name="Importieren" type="Button" parent="."]
-margin_left = 959.27
-margin_top = 542.0
-margin_right = 1003.27
-margin_bottom = 580.0
-hint_tooltip = "Designs einladen"
-icon = ExtResource( 52 )
 [connection signal="pressed" from="CoinWechsel/Ja" to="Zeichenflaeche" method="_on_Ja_pressed"]
 [connection signal="pressed" from="CoinWechsel/Nein" to="Zeichenflaeche" method="_on_Nein_pressed"]
 [connection signal="pressed" from="Speichern" to="Zeichenflaeche" method="_on_Speichern_pressed"]
-[connection signal="pressed" from="Vorlage" to="Zeichenflaeche" method="_on_Vorlage_pressed"]
 [connection signal="pressed" from="Stift" to="Zeichenflaeche" method="_on_Stift_pressed"]
 [connection signal="pressed" from="Linie" to="Zeichenflaeche" method="_on_Linie_pressed"]
 [connection signal="pressed" from="Rechteck" to="Zeichenflaeche" method="_on_Rechteck_pressed"]
