@@ -29,6 +29,12 @@ var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instanc
 #-es wird zufällig festgelegt ob die Kanone von recht / links kommt
 func _ready():
 	lade_Sprite_Bild()
+	
+	#eine Zufällige Richtung der Kanone bestimmen
+	if random_Zahl_Zwischen(0,1) == 1:
+		richtung_Links = true
+	
+	erstelle_Hitbox()
 	screen_size = get_viewport_rect().size
 	
 	hoehe = random_Zahl_Zwischen(400,482) #Zuffällige Flughöhe
@@ -38,9 +44,8 @@ func _ready():
 	var neue_Warnung
 	
 	#Zufällige Flugrichtung festlegen
-	if random_Zahl_Zwischen(0,1) == 1:
+	if richtung_Links:
 		kanone_Links()
-		richtung_Links = true
 		
 		#Warnung rechts erstellen
 		neue_Warnung = Kanonenwarnung.instance()
@@ -145,12 +150,13 @@ func erstelle_Hitbox():
 	var shape = RectangleShape2D.new()
 	shape.set_extents(Vector2(bild_breite/2,bild_hoehe/2))
 	$Area2D/CollisionShape2D2.set_shape(shape)
+	$Area2D/CollisionShape2D2.position.y = 0
 	
 	#Collision Shape für den Kinematic Body
 	var shape2 = RectangleShape2D.new()
 	shape.set_extents(Vector2(bild_breite/2.2,bild_hoehe/2.2))
 	$CollisionShape2D.set_shape(shape2)
-	
+	$CollisionShape2D.position.y = 0
 	#Bild und Shape passend positionieren
 	$Sprite.position.x = 0
 	if richtung_Links:
