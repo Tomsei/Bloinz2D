@@ -114,6 +114,8 @@ func _physics_process(delta):
 #Die Setilichen Bilder abspielen, bei Bewegung 
 func pruefe_User_Eingaben():
 	
+	var bild_Groesse
+	
 	#Nach rechts --> Blob nach rechts bewegen
 	if Input.is_action_pressed("ui_right"):
 		Bewegung.x += 1 * geschwindigkeit
@@ -432,16 +434,31 @@ func erstelle_Kollisionsbox(var stufe):
 	var alle_Groessen = einstellungen.figurengroesse
 	var bild_Groesse = alle_Groessen[stufe]
 	
+	#Passende Bild Maße berechnen
+	var bild_breite = bild_Groesse[1].x - bild_Groesse[0].x
+	var bild_hoehe = bild_Groesse[1].y - bild_Groesse[0].y
+	
 	#Shape erstellen
 	var shape = RectangleShape2D.new()
-	shape.set_extents(Vector2(bild_Groesse.x/2,bild_Groesse.y/2))
+	shape.set_extents(Vector2(bild_breite/2,bild_hoehe/2))
 	
-	#Shape Zuweisen + Positionieren
+	#Verschiebung der Hitbox auf die passende Stelle berechnen
+	var untere_Verschiebung = ((bild_Groesse[0].y) + (63-bild_Groesse[1].y))/2
+	
+	#Kollisionsbox setzen + ausrichten
 	$Hitbox/areaKollisionBox.set_shape(shape)
+	$AnimatedSprite.position.x = 0
+	$AnimatedSprite.position.x += 32-bild_Groesse[0].x - bild_breite/2
+	
 	$Hitbox/areaKollisionBox.position.y = 0
-	$Hitbox/areaKollisionBox.position.y += ((64-bild_Groesse.y) /2) 
-	$Hitbox/areaKollisionBox.position.x = 0
-	$Hitbox/areaKollisionBox.position.x -= ((64-bild_Groesse.x) /2)
+	$Hitbox/areaKollisionBox.position.y += (untere_Verschiebung)
+	$AnimatedSprite.position.y = 0
+	if bild_Groesse[1].y != 63:
+		$AnimatedSprite.position.y += (63-bild_Groesse[1].y)
+
+
+
+
 
 
 #Methode zum einladen der einzelnen Blobbilder in den Spieler

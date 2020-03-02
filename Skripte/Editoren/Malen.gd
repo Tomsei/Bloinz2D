@@ -306,9 +306,6 @@ speichert die Zeichenfläche ab
 """
 func speichern(bildname, Knopf):
 	
-	#Bild an die richtige Position verschieben
-	setze_an_linken_Bildrand();
-	setze_an_unteren_Bildrand();
 	
 	#Bild in den Dateien speichern
 	if vorschau=="Blob":
@@ -321,6 +318,8 @@ func speichern(bildname, Knopf):
 	
 	#Knopf aktualisieren
 	knopf_aktualisieren(Knopf, bild);
+	groesseFigur[bildname] = groesse_Zeichnung(bild);
+	einstellungen.figurengroesse = groesseFigur
 
 """
 aktualisiert das Icon eines Knopfes mit einem Bild

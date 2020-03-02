@@ -90,25 +90,32 @@ func blobKollision():
 #Methode zum erstellen der Hitbox / des Trefferbereichs einer Münze passend zu ihrem Bild
 #Bild Größe wird durch die Subklassen festgelegt --> passend zur Größe ein Shape berechnen
 func erstelle_Hitbox():
+
+	#Passende Bild Maße berechnen
+	var bild_breite = bild_Groesse[1].x - bild_Groesse[0].x
+	var bild_hoehe = bild_Groesse[1].y - bild_Groesse[0].y
 	
 	#Area Shape erstellen
 	var shape = RectangleShape2D.new()
-	shape.set_extents(Vector2(bild_Groesse.x/2,bild_Groesse.y/2))
-	
+	shape.set_extents(Vector2(bild_breite/2,bild_hoehe/2))
 	
 	#Collisionshape für die Area berechnen
 	$Area2D/CollisionShape2D.set_shape(shape)
-	$Area2D/CollisionShape2D.position.y = 0
-	$Area2D/CollisionShape2D.position.y += ((64-bild_Groesse.y) /2) 
+	#$Area2D/CollisionShape2D.position.y = 0
+	#$Area2D/CollisionShape2D.position.y += ((64-bild_Groesse.y) /2) 
 	
 	#KinematicBody shape erstellen
 	var shape2 = RectangleShape2D.new()
-	shape2.set_extents(Vector2(bild_Groesse.x/2.5,bild_Groesse.y/2.5))
+	shape2.set_extents(Vector2(bild_breite/2.5,bild_hoehe/2.5))
 	
 	#CollisionShape für den Kinematic Body festlegen
 	$CollisionShape2D.set_shape(shape2)
-	$CollisionShape2D.position.y = 0
-	$CollisionShape2D.position.y += ((64-bild_Groesse.y) /2)
+	#$CollisionShape2D.position.y = 0
+	#$CollisionShape2D.position.y += ((64-bild_Groesse.y) /2)
+	
+	
+	
+	
 
 
 # Methode zum einladen eines Bildes aus dem Userverzeichnis 

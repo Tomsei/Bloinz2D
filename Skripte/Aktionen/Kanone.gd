@@ -134,21 +134,29 @@ func blobKollision():
 func erstelle_Hitbox():
 	#Bild Größe ermitteln
 	var alle_Groessen = einstellungen.figurengroesse
-	var groesse = alle_Groessen["Kanonenkugel"]
+	var bild_Groesse = alle_Groessen["Kanonenkugel"]
+	
+	#Passende Bild Maße berechnen
+	var bild_breite = bild_Groesse[1].x - bild_Groesse[0].x
+	var bild_hoehe = bild_Groesse[1].y - bild_Groesse[0].y
+	
+	print (bild_breite)
+	print (bild_hoehe)
+	
 	
 	#Collision Shape für die Area
 	var shape = RectangleShape2D.new()
-	shape.set_extents(Vector2(groesse.x/2,groesse.y/2))
+	shape.set_extents(Vector2(bild_breite/2,bild_hoehe/2))
 	$Area2D/CollisionShape2D2.set_shape(shape)
 	$Area2D/CollisionShape2D2.position.y = 0
-	$Area2D/CollisionShape2D2.position.y += ((64-groesse.y) /2) 
+	#$Area2D/CollisionShape2D2.position.y += ((64-groesse.y) /2) 
 	
 	#Collision Shape für den Kinematic Body
 	var shape2 = RectangleShape2D.new()
-	shape.set_extents(Vector2(groesse.x/2.5,groesse.y/2.5))
+	shape.set_extents(Vector2(bild_breite/2.5,bild_hoehe/2.5))
 	$CollisionShape2D.set_shape(shape)
 	$CollisionShape2D.position.y = 0
-	$CollisionShape2D.position.y += ((64-groesse.y) /2) 
+	#$CollisionShape2D.position.y += ((64-groesse.y) /2) 
 
 
 # Methode zum laden des Bildes ins Sprite 

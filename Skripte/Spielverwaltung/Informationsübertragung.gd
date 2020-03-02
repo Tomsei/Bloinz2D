@@ -30,18 +30,17 @@ func _ready():
 	
 	if figurengroesse == null:
 		figurengroesse = {}
-		
-		figurengroesse["BadCoin1"] = Vector2(44,44)
-		figurengroesse["BadCoin2"] = Vector2(44,44)
-		figurengroesse["Blob_1_gerade"] = Vector2(30,32)
-		figurengroesse["Blob_2_gerade"] = Vector2(36,40)
-		figurengroesse["Blob_3_gerade"] = Vector2(44,48)
-		figurengroesse["Blob_4_gerade"] = Vector2(52,56)
-		figurengroesse["Blob_5_gerade"] = Vector2(60,64)
-		figurengroesse["GoodCoin1"] = Vector2(40,40)
-		figurengroesse["GoodCoin2"] = Vector2(40,40)
-		figurengroesse["Kanonenkugel"] = Vector2(62,48)
-		figurengroesse["RandomCoin"] = Vector2(40,40) 
+		figurengroesse["BadCoin1"] = [Vector2(10,10), Vector2(53,53)]
+		figurengroesse["BadCoin2"] = [Vector2(10,10), Vector2(53,53)]
+		figurengroesse["Blob_1_gerade"] = [Vector2(17,32), Vector2(46,63)]
+		figurengroesse["Blob_2_gerade"] = [Vector2(14,24), Vector2(49, 63)]
+		figurengroesse["Blob_3_gerade"] = [Vector2(10,16), Vector2(53,63)]
+		figurengroesse["Blob_4_gerade"] = [Vector2(6,8), Vector2(57,63)]
+		figurengroesse["Blob_5_gerade"] = [Vector2(2,0), Vector2(61, 63)]
+		figurengroesse["GoodCoin1"] = [Vector2(12,12), Vector2(51,51)]
+		figurengroesse["GoodCoin2"] = [Vector2(12,12), Vector2(51,51)]
+		figurengroesse["Kanonenkugel"] = [Vector2(1,8), Vector2(62,55)]
+		figurengroesse["RandomCoin"] = [Vector2(12,12), Vector2(51,51)]
 
 
 

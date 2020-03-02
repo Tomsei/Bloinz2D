@@ -3,13 +3,13 @@
 [ext_resource path="res://Skripte/Aktionen/Spieler.gd" type="Script" id=1]
 [ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_seitlich.png" type="Texture" id=2]
 [ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_gerade.png" type="Texture" id=3]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_seitlich.png" type="Texture" id=4]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_gerade.png" type="Texture" id=5]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_gerade.png" type="Texture" id=6]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_seitlich.png" type="Texture" id=4]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_seitlich.png" type="Texture" id=5]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_seitlich.png" type="Texture" id=6]
 [ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_seitlich.png" type="Texture" id=7]
 [ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_4_gerade.png" type="Texture" id=8]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_5_seitlich.png" type="Texture" id=9]
-[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_3_seitlich.png" type="Texture" id=10]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_2_gerade.png" type="Texture" id=9]
+[ext_resource path="res://Bilder/Standardspielfiguren/Spielfiguren/Blob_1_gerade.png" type="Texture" id=10]
 [ext_resource path="res://Szenen/Spielfiguren/SpielerSchutz.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Bilder/Standardspielfiguren/Weiteres/Magnet_gedreht.png" type="Texture" id=12]
 
@@ -27,17 +27,17 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "negativ_2_seitlich",
+"name": "neutral_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "negativ_1_gerade",
+"name": "negativ_2_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "negativ_2_gerade",
+"name": "positiv_2_seitlich",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
@@ -57,16 +57,16 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "positiv_2_seitlich",
+"name": "negativ_1_gerade",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
-"name": "neutral_seitlich",
+"name": "negativ_2_gerade",
 "speed": 5.0
 } ]
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=2]
 script/source = "extends AnimatedSprite
 
 var persistenz = preload(\"res://Szenen/Spielverwaltung/Persistenz.tscn\").instance()
@@ -119,7 +119,7 @@ func _create_collision_polygon(var bildname):
 		my_collision.scale = scale 
 		get_parent().get_node(\"Hitbox\").call_deferred(\"add_child\", my_collision)"
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends AudioStreamPlayer2D
 
 # Variable fuer Sounds.
@@ -146,7 +146,7 @@ script = ExtResource( 1 )
 position = Vector2( 0, 1.52588e-005 )
 frames = SubResource( 1 )
 animation = "negativ_2_gerade"
-script = SubResource( 3 )
+script = SubResource( 2 )
 
 [node name="physischeKollisionBox" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0, 1 )
@@ -166,4 +166,4 @@ position = Vector2( 4.20593, -25.5591 )
 texture = ExtResource( 12 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-script = SubResource( 2 )
+script = SubResource( 3 )
