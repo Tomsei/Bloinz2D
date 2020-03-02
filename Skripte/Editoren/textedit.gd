@@ -131,6 +131,8 @@ func init_Codeeditoren():
 		tabcontainer.get_child(i).text = lade_datei(Skriptpfade.get(Codeeditornamen[i]))
 		# Soll Kommentarfarbe hinzufuegen.
 		tabcontainer.get_child(i).add_color_region("#", ".", Color(0,1.0,0), true)
+		# Benutzeranweisungen werden speziell angezeigt.
+		tabcontainer.get_child(i).add_color_region("\"", "\"", Color(1.0,0.0,0), true)
 		# Zeilen duerfen versteckt werden.
 		tabcontainer.get_child(i).hiding_enabled = true
 		# Farbliche Hervorhebung aktivieren.
