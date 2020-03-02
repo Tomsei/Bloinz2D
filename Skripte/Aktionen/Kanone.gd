@@ -29,7 +29,6 @@ var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instanc
 #-es wird zufällig festgelegt ob die Kanone von recht / links kommt
 func _ready():
 	lade_Sprite_Bild()
-	erstelle_Hitbox()
 	screen_size = get_viewport_rect().size
 	
 	hoehe = random_Zahl_Zwischen(400,482) #Zuffällige Flughöhe
@@ -52,6 +51,8 @@ func _ready():
 		#Warnung links erstellen
 		neue_Warnung = Kanonenwarnung.instance()
 		neue_Warnung.warnungRechts(hoehe)
+	
+	erstelle_Hitbox()
 	
 	position.y = hoehe
 	#Warnung im Spiel anzeigen
@@ -140,23 +141,26 @@ func erstelle_Hitbox():
 	var bild_breite = bild_Groesse[1].x - bild_Groesse[0].x
 	var bild_hoehe = bild_Groesse[1].y - bild_Groesse[0].y
 	
-	print (bild_breite)
-	print (bild_hoehe)
-	
-	
 	#Collision Shape für die Area
 	var shape = RectangleShape2D.new()
 	shape.set_extents(Vector2(bild_breite/2,bild_hoehe/2))
 	$Area2D/CollisionShape2D2.set_shape(shape)
-	$Area2D/CollisionShape2D2.position.y = 0
-	#$Area2D/CollisionShape2D2.position.y += ((64-groesse.y) /2) 
 	
 	#Collision Shape für den Kinematic Body
 	var shape2 = RectangleShape2D.new()
-	shape.set_extents(Vector2(bild_breite/2.5,bild_hoehe/2.5))
-	$CollisionShape2D.set_shape(shape)
-	$CollisionShape2D.position.y = 0
-	#$CollisionShape2D.position.y += ((64-groesse.y) /2) 
+	shape.set_extents(Vector2(bild_breite/2.2,bild_hoehe/2.2))
+	$CollisionShape2D.set_shape(shape2)
+	
+	#Bild und Shape passend positionieren
+	$Sprite.position.x = 0
+	if richtung_Links:
+		print("richtig")
+		$Sprite.position.x += 32 - (63-bild_Groesse[1].x) - bild_breite/2
+	else:
+		$Sprite.position.x += 32-bild_Groesse[0].x - bild_breite/2
+	
+	$Sprite.position.y = 0
+	$Sprite.position.y += 32-bild_Groesse[0].y - bild_hoehe/2
 
 
 # Methode zum laden des Bildes ins Sprite 

@@ -126,6 +126,7 @@ func pruefe_User_Eingaben():
 		if bild_Update_Noetig():
 			blob_Veraenderung(true)
 			$AnimatedSprite.flip_h = false #Spiegelung des seitlichen Richtung
+			positioniere_Bild_Zu_Kollisionsbox(false)
 	
 	#Nach links --> Blob nach links bewegen
 	if Input.is_action_pressed("ui_left"):
@@ -137,6 +138,7 @@ func pruefe_User_Eingaben():
 		if bild_Update_Noetig():
 			blob_Veraenderung(true)
 			$AnimatedSprite.flip_h = true #Spiegelung des seitlichen Richtung
+			positioniere_Bild_Zu_Kollisionsbox(true)
 	
 	#Bei keiner Bewegung muss gerade Bild geladen werden
 	if !Input.is_action_just_pressed("ui_left") and !Input.is_action_just_pressed("ui_right"):
@@ -457,7 +459,41 @@ func erstelle_Kollisionsbox(var stufe):
 		$AnimatedSprite.position.y += (63-bild_Groesse[1].y)
 
 
-
+#Methode um KollsisionBox und Bild jeweils übereinander zu legen nachdem sie Gespiegelt wurden
+#Abhängig von der aktuellen Spieler Stufe wird die passende Bild Größe ermittelt
+#Über die Bild Größe lässt sich eine passende Translation (Verschiebung) des Bildes im Spiel berechnen
+#
+#@param gespiegelt gibt an ob das Bild gerade gespiegelt wird oder nicht
+func positioniere_Bild_Zu_Kollisionsbox(var gespiegelt):
+	
+	#Ermitteln der Blob Stufe
+	var stufe
+	match blob_Groesse:
+		0, 1, 2, 3, 4:
+			stufe = "Blob_1_gerade"
+		5, 6, 7, 8, 9:
+			stufe = "Blob_2_gerade"
+		10, 11, 12, 13, 14:
+			stufe = "Blob_3_gerade"
+		15, 16, 17, 18, 19:
+			stufe = "Blob_4_gerade"
+		20, 21, 22, 23, 24:
+			stufe = "Blob_5_gerade"
+	
+	#passende Größe zum aktuellen Bild ermitteln
+	var alle_Groessen = einstellungen.figurengroesse
+	var bild_Groesse = alle_Groessen[stufe]
+	
+	#Passende Bild Maße berechnen
+	var bild_breite = bild_Groesse[1].x - bild_Groesse[0].x
+	var bild_hoehe = bild_Groesse[1].y - bild_Groesse[0].y
+	
+	#Passende Positionierung des Bildes
+	$AnimatedSprite.position.x = 0
+	if gespiegelt:
+		 $AnimatedSprite.position.x += 32 - (63-bild_Groesse[1].x) - bild_breite/2
+	else:
+		$AnimatedSprite.position.x += 32-bild_Groesse[0].x - bild_breite/2
 
 
 
