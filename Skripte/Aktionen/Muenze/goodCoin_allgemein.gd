@@ -14,7 +14,10 @@ extends "res://Skripte/Aktionen/Muenze/Muenze.gd"
 #
 #@param x_Position_Spieler die XPosition des Spielers
 
-
+""" -------------------------------------------------- """
+""" Die Münzen fliegen zu schnell in die Blobrichtung? """
+""" Versuch die Geschwindigkeit zu verlangsamen        """
+""" -------------------------------------------------- """
 func muenzMagnet(var x_Position_Spieler):
 	
 	#Spieler Richtung + Entfernung ermitteln

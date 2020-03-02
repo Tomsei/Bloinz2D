@@ -37,6 +37,9 @@ func fallen():
 		queue_free()
 
 
+""" ---------------------------------------------------------- """
+""" Ist es möglich die Flugkurve des Randomcoins zu vergößern? """
+""" ---------------------------------------------------------- """
 #Methode zum Berechnen der besonderen Flugkurve eines Random Coins
 #die Richtung in welcher die Kurve laufen soll wird geprüft und dann im 
 #Anschluss in die Bewegung umgewandelt 

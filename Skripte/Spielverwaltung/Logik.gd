@@ -184,7 +184,11 @@ func _on_randomMuenze_randomAktion():
 		raondomCoinAn = false
 
 
-
+""" ------------------------------------------ """
+""" Das Prinzip einer einfachen for-Schleife:  """
+""" alles wird so oft wie angegeben wiederholt """
+""" Lasse doch ein paar mehr Münzen erscheinen """
+""" ------------------------------------------------------------ """
 #Methode für Randomaktion zum erstellen von 5 weiteren Münzen
 func randomAktion_erstelle_Muenzen():
 	for i in 5:

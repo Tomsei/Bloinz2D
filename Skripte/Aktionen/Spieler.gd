@@ -8,6 +8,9 @@ extends KinematicBody2D
 #Kollisionserkennung mit anderen Spiel Objekten
 #Spielerverhalten nach Neustart eines Spiels
 
+""" ----------------------------------------------------------- """
+""" Probiere doch mal die Werte hier zu anderen Zahlen zu ändern"""
+""" ----------------------------------------------------------- """
 
 #Variablen für die Spielerbewegung
 var geschwindigkeit = 500
@@ -107,7 +110,10 @@ func _physics_process(delta):
 
 
 
-
+""" --------------------------------------- """
+""" Lassen sich die Tasteneingaben umdrehen """
+""" um bei ui_right nach links zu laufen?   """
+""" --------------------------------------- """
 #Methode ermittelt Tastatureingaben und reagiert passend darauf
 #Abhängig von Eingabe Rechts Links Bewegung
 #Wenn Spieler in der Luft -> Kurven Bewegung addieren
@@ -257,7 +263,10 @@ func _on_Muenze_muenze_beruehrt(wert):
 		blob_Veraenderung(false)
 
 
-
+""" --------------------------------------- """
+""" Ist die Kanone Zu Stark? Sie könnte bei """
+""" einer Kollision auch Punkte bringen     """
+""" --------------------------------------- """
 #Methode zur Reaktion auf eine Berührung mit der Rakete 
 # Blobgroeße wird um eine Stufe (5) reduziert
 # Textur des Blobs wird ebenfalls angepasst

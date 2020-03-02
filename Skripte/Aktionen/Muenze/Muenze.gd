@@ -68,7 +68,9 @@ func soll_Muenze_Verschwinden():
 		if body.name == "Kanone" or body.name == "BodenCollisionShape":
 			return true 
 
-
+""" ------------------------------------------------------------- """
+""" Probier doch mal alle Coins an der gleichen Stelle erscheinen """
+""" ------------------------------------------------------------- """
 #Methode zum ermitteln einer Zufälligen Position an der oberen Kante des Bildfensters
 func zufalls_Position():
 	position.x = rand_range(0, 448)
@@ -76,7 +78,9 @@ func zufalls_Position():
 	
 
 
-
+""" -------------------------------------------------- """
+""" Ist es Möglich den Wert für jede Münze zu erhöhen? """
+""" -------------------------------------------------- """
 #Methode zum reagieren auf eine Kollision mit der Spielerfigur 
 #--> wird aufgerufen, sobald die Spielfigur eine Kollision mit der Münze registriert
 #Senden des Signals der Münzberührung mit dem individuellen coinWert + Münze entfernen

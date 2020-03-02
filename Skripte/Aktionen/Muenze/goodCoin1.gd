@@ -6,7 +6,7 @@ extends "res://Skripte/Aktionen/Muenze/goodCoin_allgemein.gd"
 #Erbt die Methoden und Variablen von der Super Klasse goodCoin_allgemein
 #-> somit auch von Muenze (Vererbungshierarchie)
 
-#Wird beim instanzieren aufgerufen (Konstruktor)
+#Methode Wird beim instanzieren aufgerufen (Konstruktor)
 #Die Münze wird als Good Coin 1 erstellt
 func _ready():
 	$Sprite.texture = .lade_bild_von_user("res://Bilder/Standardspielfiguren/Coins/GoodCoin1.png");

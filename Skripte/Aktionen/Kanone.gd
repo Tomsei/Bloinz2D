@@ -22,6 +22,10 @@ var screen_size
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
 
 
+""" -------------------------------------------------------------------  """
+""" Es ist langweilig, dass die Kanone nur im unteren Bereich erscheint? """
+""" Erweitere doch die Größe | PS. Nach oben sinken die y Werte          """
+""" -------------------------------------------------------------------- """
 #Konstruktor der Klasse Kanone
 #-das passende Bild wird geladen + die daraus Resultierende Kollisionsbox erzeugt
 #-die Kanonenwarnung wird erstellt und eine Zufällige Flughähe festgelegt
@@ -146,17 +150,23 @@ func erstelle_Hitbox():
 	var bild_breite = bild_Groesse[1].x - bild_Groesse[0].x
 	var bild_hoehe = bild_Groesse[1].y - bild_Groesse[0].y
 	
+
+	
+	
 	#Collision Shape für die Area
 	var shape = RectangleShape2D.new()
 	shape.set_extents(Vector2(bild_breite/2,bild_hoehe/2))
 	$Area2D/CollisionShape2D2.set_shape(shape)
 	$Area2D/CollisionShape2D2.position.y = 0
 	
+	
 	#Collision Shape für den Kinematic Body
 	var shape2 = RectangleShape2D.new()
-	shape.set_extents(Vector2(bild_breite/2.2,bild_hoehe/2.2))
-	$CollisionShape2D.set_shape(shape2)
+	shape.set_extents(Vector2(bild_breite/2.5,bild_hoehe/2.5))
+	$CollisionShape2D.set_shape(shape)
 	$CollisionShape2D.position.y = 0
+	
+	
 	#Bild und Shape passend positionieren
 	$Sprite.position.x = 0
 	if richtung_Links:
@@ -166,6 +176,7 @@ func erstelle_Hitbox():
 	
 	$Sprite.position.y = 0
 	$Sprite.position.y += 32-bild_Groesse[0].y - bild_hoehe/2
+
 
 
 # Methode zum laden des Bildes ins Sprite 

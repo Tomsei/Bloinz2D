@@ -6,7 +6,7 @@ extends "res://Skripte/Aktionen/Muenze/badCoin_allgemein.gd"
 #Erbt die Methoden und Variablen von der Super Klasse badCoin_allgemein 
 #-> somit auch von Muenze (Vererbungshierarchie)
 
-#Wird beim instanzieren aufgerufen (Konstruktor)
+#Methode Wird beim instanzieren aufgerufen (Konstruktor)
 #Die Münze wird als bad Coin 2 erstellt
 func _ready():
 	$Sprite.texture = .lade_bild_von_user("res://Bilder/Standardspielfiguren/Coins/BadCoin2.png");

@@ -6,7 +6,11 @@ extends "res://Skripte/Aktionen/Muenze/badCoin_allgemein.gd"
 #Erbt die Methoden und Variablen von der Super Klasse badCoin_allgemein
 #-> somit auch von Muenze (Vererbungshierarchie)
 
-#Wird beim instanzieren aufgerufen (Konstruktor)
+""" ------------------------------------------------------------ """
+""" Jaa stimmt keiner Mag Punkt Abzug. Tricks das Spiel aus      """
+""" Anstelle eines Punktabzuges sollen Punkte hinzugefügt werden """
+""" ------------------------------------------------------------ """
+#Methode Wird beim instanzieren aufgerufen (Konstruktor)
 #Die Münze wird als bad Coin 1 erstellt
 func _ready():
 	$Sprite.texture = .lade_bild_von_user("res://Bilder/Standardspielfiguren/Coins/BadCoin1.png");
