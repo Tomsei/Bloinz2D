@@ -320,6 +320,8 @@ func speichern(bildname, Knopf):
 	knopf_aktualisieren(Knopf, bild);
 	groesseFigur[bildname] = groesse_Zeichnung(bild);
 	einstellungen.figurengroesse = groesseFigur
+	# Speichern der Figurengroesse.
+	persistenz.schreibe_variable_in_datei("figurengroesse", groesseFigur, "res://Skripte/Spielverwaltung/Informationsübertragung.gd")
 
 """
 aktualisiert das Icon eines Knopfes mit einem Bild
@@ -1524,6 +1526,9 @@ func lade_Knopfbilder():
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Coins/"+"RandomCoin.png");
 	knopf_aktualisieren("RandomCoin",bildtemporaer);
 	groesseFigur["RandomCoin"] = groesse_Zeichnung(bildtemporaer);
+	
+	# Figruengroesse speichern.
+	persistenz.schreibe_variable_in_datei("figurengroesse", groesseFigur, "res://Skripte/Spielverwaltung/Informationsübertragung.gd")
 	
 	#Hintergrund	
 	bildtemporaer = persistenz.lade_bild("Bilder/Standardspielfiguren/Hintergrund/"+"Hintergrund.png");

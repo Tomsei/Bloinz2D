@@ -417,7 +417,6 @@ func schreibe_variable_in_datei(variablenname, neuer_wert, dateipfad):
 			var variable = codezeile.split("=")[0]
 			if typeof(neuer_wert) == TYPE_DICTIONARY:
 				codezeile = variable + "= " + erstelle_dictionary_werte(neuer_wert)
-				print(codezeile)
 			else:
 				codezeile = variable + "= " + str(neuer_wert)
 			

@@ -15,7 +15,7 @@ var CoinRegenAn = true
 var CoinMagnetAn = true
 var RegenschirmAn = true
 var SpeedboostAn = true
-var figurengroesse;
+var figurengroesse
 
 
 
