@@ -19,7 +19,7 @@ var Sprungkraft = 500
 var Bewegung = Vector2()
 #Orientierungsvektor der der nach oben zeigt (Zum Top des Spiels) 
 #Wichtig: y = -1 wegen gedrehter Y Achse (- geht nach oben)
-var UP_Vector = Vector2(0,-1)
+var up_Vektor = Vector2(0,-1)
 
 
 #Blob Eigenschaften für das Springen
@@ -31,7 +31,7 @@ var sprung_Rest_Bewegung = 0 				#Seitliche Bewegung im Sprung
 
 var blob_Groesse = 12 		#die aktuelle Spielergröße
 var bilder_Seitlich = false
-const boden_hoehe = 482
+const boden_Hoehe = 482
 var spieler_Auf_Boden
 
 
@@ -94,7 +94,7 @@ func _physics_process(delta):
 	weitere_Sprungbewegung()
 	
 	#Bewegungsausführung | Up Vektor um zu erkennen was der Boden ist
-	move_and_slide(Bewegung, UP_Vector);
+	move_and_slide(Bewegung, up_Vektor);
 	
 	kollisions_Pruefung()
 	boden_Erkennung()
@@ -166,7 +166,7 @@ func pruefe_User_Eingaben():
 func sprung():
 	
 	#höchste Blob Höhe resetten
-	hoechste_Blob_Hoehe = boden_hoehe
+	hoechste_Blob_Hoehe = boden_Hoehe
 	
 	#Der Blob befindet sich auf dem Boden
 	if spieler_Auf_Boden:
@@ -208,7 +208,7 @@ func weitere_Sprungbewegung():
 		sprung_Rest_Bewegung = 0
 		
 	#Bounce nur wenn BLob auf boden + bounce_Anzahl nicht überschritten 
-	if spieler_Auf_Boden and bounce_Anzahl < 3 and position.y > boden_hoehe and not Input.is_action_just_pressed("jump"):
+	if spieler_Auf_Boden and bounce_Anzahl < 3 and position.y > boden_Hoehe and not Input.is_action_just_pressed("jump"):
 		bounce_Kraft = bounce_Kraft/2        #nächste Bounce halb so hoch
 		Bewegung.y = -bounce_Kraft           #Bounce Impuls setzen
 		bounce_Anzahl = bounce_Anzahl+1        
@@ -244,8 +244,8 @@ func boden_Erkennung():
 func kollisions_Pruefung():
 	
 	for body in $Hitbox.get_overlapping_bodies():
-		if body.has_method("blobKollision"):
-			body.blobKollision()
+		if body.has_method("blob_Kollision"):
+			body.blob_Kollision()
 
 
 #Methode zur Reaktion auf eine Münz Berührung

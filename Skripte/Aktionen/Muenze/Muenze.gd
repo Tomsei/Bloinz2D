@@ -80,7 +80,7 @@ func zufalls_Position():
 #Methode zum reagieren auf eine Kollision mit der Spielerfigur 
 #--> wird aufgerufen, sobald die Spielfigur eine Kollision mit der Münze registriert
 #Senden des Signals der Münzberührung mit dem individuellen coinWert + Münze entfernen
-func blobKollision():
+func blob_Kollision():
 	emit_signal("muenze_beruehrt", coinWert)
 	queue_free()
 

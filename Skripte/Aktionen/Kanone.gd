@@ -12,9 +12,9 @@ onready var spiel = get_tree().get_root().get_node("Main").get_node("Spiel")
 
 signal kanoneberuehrt #wird ausgesendet wenn Kanone berührt wurde
 
-#Kanonen Bewegung-Variablen
+#Kanonen bewegung-Variablen
 var geschwindigkeit = random_Zahl_Zwischen(130, 180)
-var Bewegung = Vector2(0,0) #Bewegung für X und Y
+var bewegung = Vector2(0,0) #bewegung für X und Y
 var hoehe = 500
 var richtung_Links = false #repräsentiert Flugrichtung
 
@@ -59,7 +59,7 @@ func _ready():
 	spiel.add_child(neue_Warnung)
 
 
-#Mehtode welche für jeden Frame aufgerufen wird und Bewegung initialisiert
+#Mehtode welche für jeden Frame aufgerufen wird und bewegung initialisiert
 #--> Nach der Zufällig ermittelten Richtung wird dann Rakete bewegt
 func _physics_process(delta):
 	if richtung_Links:
@@ -99,8 +99,8 @@ func kanone_Rechts():
 #-die X Koordinate in Positiver X Richtung verändern
 #-das Bild in passende Richtung drehen
 func bewegung_Links():
-	Bewegung.x = geschwindigkeit
-	move_and_slide(Bewegung)
+	bewegung.x = geschwindigkeit
+	move_and_slide(bewegung)
 	$Sprite.flip_h = true
 	
 	#Kanone Entfernen sobald sie aus dem Bild ist
@@ -112,8 +112,8 @@ func bewegung_Links():
 #-die X Koordinate in negatvier X Richtung verändern
 #-das Bild in passende Richtung drehen
 func bewegung_Rechts():
-	Bewegung.x = -geschwindigkeit
-	move_and_slide(Bewegung)
+	bewegung.x = -geschwindigkeit
+	move_and_slide(bewegung)
 	$Sprite.flip_h = false
 	
 	#Kanone Entfernen sobald sie aus dem Bild ist
@@ -123,7 +123,7 @@ func bewegung_Rechts():
 
 #Methode wenn die Kollision mit dem Blob stattgefunden hatt
 #Kanone verschwindet + entsendet passendes Signal für den Blob
-func blobKollision():
+func blob_Kollision():
 	emit_signal("kanoneberuehrt")
 	queue_free()
 
@@ -154,7 +154,6 @@ func erstelle_Hitbox():
 	#Bild und Shape passend positionieren
 	$Sprite.position.x = 0
 	if richtung_Links:
-		print("richtig")
 		$Sprite.position.x += 32 - (63-bild_Groesse[1].x) - bild_breite/2
 	else:
 		$Sprite.position.x += 32-bild_Groesse[0].x - bild_breite/2

@@ -12,7 +12,7 @@ extends "res://Skripte/Aktionen/Muenze/Muenze.gd"
 
 #Variablen für die Kurven Berechnung
 var kurvenbreite = 200
-var inRechtsBewegung = false
+var in_rechts_Bewegung = false
 
 
 func _ready():
@@ -29,7 +29,7 @@ func _ready():
 #Zusätzlich zu dem Normalen Fallen soll noch die Kurven Bewegung mit einberechnet werden
 func fallen():
 	Bewegung.y = geschwindigkeit
-	berechneKurve() #kurve dem Fallen hinzufügen
+	berechne_Kurve() #kurve dem Fallen hinzufügen
 	
 	#Wenn Münze verschwinden soll, die Münze "frei" setzen
 	if soll_Muenze_Verschwinden():
@@ -41,13 +41,13 @@ func fallen():
 #die Richtung in welcher die Kurve laufen soll wird geprüft und dann im 
 #Anschluss in die Bewegung umgewandelt 
 #Kurvenbreite gibt an wie weit Münze hin und her fliegt
-func berechneKurve():
+func berechne_Kurve():
 	if(Bewegung.x > kurvenbreite):
-		inRechtsBewegung = false
+		in_rechts_Bewegung = false
 	elif Bewegung.x < -kurvenbreite:
-		inRechtsBewegung = true
+		in_rechts_Bewegung = true
 	
-	if inRechtsBewegung:
+	if in_rechts_Bewegung:
 		Bewegung.x += 5
 	else:
 		Bewegung.x -= 5
@@ -57,7 +57,7 @@ func berechneKurve():
 #Methode zum reagieren auf eine Kollision mit der Spielerfigur 
 #--> wird aufgerufen, sobald die Spielfigur eine Kollision mit dem RandomCoin registriert
 #Senden des Signals das eine Random Aktion folgen soll + Münze entfernen
-func blobKollision():
+func blob_Kollision():
 	
 	emit_signal("randomAktion")
 	queue_free()
