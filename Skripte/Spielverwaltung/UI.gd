@@ -7,8 +7,6 @@ onready var spiel = get_tree().get_root().get_node("Main").get_node("Spiel")
 onready var ende = get_tree().get_root().get_node("Main").get_node("Ende")
 onready var anleitung = get_tree().get_root().get_node("Main").get_node("Anleitung")
 
-func _ready():
-	pass
 
 func _process(delta):
 	# Noch in die Logik verschieben!
