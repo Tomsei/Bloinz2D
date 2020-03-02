@@ -108,7 +108,7 @@ func init_Icons():
 	Icons["Böse Münze 2"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/BadCoin2_Icon.png")
 	Icons["Gute Münze 1"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/GoodCoin1_Icon.png")
 	Icons["Gute Münze 2"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/GoodCoin1_Icon.png")
-	Icons["Zufalls Münze"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/randomCoin1_Icon.png")
+	Icons["Zufalls Münze"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/randomCoin_Icon.png")
 	Icons["Gute Münze Allgemein"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/GoodCoin_allgemein_Icon.png")
 	Icons["Böse Münze Allgemein"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/BadCoin_allgemein_Icon.png")
 	Icons["Münze"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/Muenze_Icon.png")
