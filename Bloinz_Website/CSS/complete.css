@@ -266,13 +266,11 @@ footer a:hover{
         width: 40px;
         height: 40px;
         text-align: center;
+	}
 }
 
-@media (max-height: 500px) {
+@media (max-height: 710px) {
     
-	main {
-		background-color: black;
-	}
 	
 	nav ul li {
         margin: 10px;
@@ -291,6 +289,7 @@ footer a:hover{
         width: 40px;
         height: 40px;
         text-align: center;
+	}
 }
 
 
