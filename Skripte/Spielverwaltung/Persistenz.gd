@@ -400,3 +400,34 @@ func loesche_veraenderungsdatei():
 	var vaeraenderungsdatei = Directory.new()
 	# Entfernt die Veraenderungsdatei aus dem Benutzerverzeichnis.
 	vaeraenderungsdatei.remove(hauptverzeichnis_benutzer + "veraendert")
+
+# Liest Skript aus und veraendert den Wert der uebergebenen Variable.
+func schreibe_variable_in_datei(variablenname, neuer_wert, dateipfad):
+	var kompletter_code = ""
+	var datei = File.new()
+	var err = datei.open(hauptverzeichnis_benutzer + dateipfad.lstrip("res:/"), File.READ)
+	if err != OK:
+		err = datei.open(dateipfad, File.READ)
+		if err != OK:
+			printerr("Datei konnte nicht geladen werden, error code ", err)
+			return ""
+	while(!datei.eof_reached()):
+		var codezeile = datei.get_line()
+		if (codezeile.find("var " + variablenname) != -1):
+			var variable = codezeile.split("=")[0]
+			if typeof(neuer_wert) == TYPE_DICTIONARY:
+				codezeile = variable + "= " + erstelle_dictionary_werte(neuer_wert)
+			else:
+				codezeile = variable + "= " + str(neuer_wert)
+			
+		kompletter_code += codezeile + "\n"
+	speicher_text(kompletter_code, hauptverzeichnis_benutzer + dateipfad.lstrip("res:/"))
+
+# Erzeugt die Stringrepraesentation eines Dictionarys mit String als Schluessel und einem Vector2 als Key.
+func erstelle_dictionary_werte(dictionary):
+	var dictionarywerte = "{"
+	var schluessel = dictionary.keys()
+	for ein_schluessel in schluessel:
+		dictionarywerte += "\"" + str(ein_schluessel) + "\" : Vector2" + str(dictionary[ein_schluessel]) + " , "
+	dictionarywerte = dictionarywerte.rstrip(" , ") + "}"
+	return dictionarywerte
