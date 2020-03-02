@@ -1654,3 +1654,8 @@ func _on_VorlageBestaetigen_hide():
 	aktiviere_buttons();
 	popup_offen = false;
 
+
+# Ruft die Export/Import Szene auf.
+func _on_Exportieren_Importieren():
+	OS.set_window_size(Vector2(448,640))
+	get_tree().change_scene("res://Szenen/Spielverwaltung/Nutzerdateien.tscn")

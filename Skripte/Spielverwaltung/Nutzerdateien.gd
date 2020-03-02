@@ -5,6 +5,9 @@ extends Node2D
 # Refferenz auf die Szene Persistenz wird geladen.
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
 
+func _ready():
+	preload("res://Szenen/Spielverwaltung/UI.tscn").instance().bildschirm_zentrieren()
+
 # Wenn der Knopf zum Importieren gedrueckt wird.
 # Zum importieren sollte im Textfeld Nutzerdaten ein base64-String stehen, der konvertiert werden kann.
 func _on_Importieren():

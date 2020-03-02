@@ -861,4 +861,4 @@ icon = ExtResource( 52 )
 [connection signal="hide" from="Farbwahl" to="Zeichenflaeche" method="_on_ColorPicker_hide"]
 [connection signal="pressed" from="Farbwahl/Zurueck" to="Zeichenflaeche" method="_on_Zurueck_pressed"]
 [connection signal="pressed" from="Farbwahl/Uebernehmen" to="Zeichenflaeche" method="_on_Uebernehmen_pressed"]
-
+[connection signal="button_up" from="Exportieren" to="Zeichenflaeche" method="_on_Exportieren_Importieren"]
