@@ -39,6 +39,7 @@ nav ul {
     background: #d5f4ff;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: 0.5s;
 }
 
 nav ul li {
@@ -89,10 +90,6 @@ ul li a img{
 }
 
 
-#muenzbilder {
-    text-align: center;
-    padding-top: 10px ;
-}
 
 
 
@@ -139,20 +136,25 @@ h1#bloinz {
 }
 #download a {
     font-size: 150%;
-    background-color: grey;
-    padding-top:  2%;
-    padding-bottom: 2%;
-    padding-left: 5%;
-    padding-right: 5%;
-    border-color: black;
-    border-style: solid;
-    border-radius: 5px;
+    background-color: #d5f4ff;
+    color: black;
+    padding-top:  1.5%;
+    padding-bottom: 1.5%;
+    padding-bottom: 1.5%;
+    padding-left: 4%;
+    padding-right: 4%;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 #download a:hover {
     text-decoration: none;
-    color: darkslategrey;
-    border-color: #1f1d1d;
+    background-color: #e6b819;
+    background-color: #004560;
+    color: white;
+    transition: 0.5s;
+
+
 }
 
 
@@ -162,11 +164,13 @@ h1#bloinz {
 */
 
 h2 {
-    font-size: 2em
+    font-size: 2em;
+    text-align: center;
 }
 
 h3 {
-    font-size: 1.3em
+    font-size: 1.3em;
+    text-align: center;
 }
 
 
@@ -179,6 +183,10 @@ main a {
 main a:hover {
     color: #484848;
     text-decoration: underline;
+}
+
+article {
+    text-align: justify;
 }
 
 
@@ -206,6 +214,45 @@ footer a:hover{
 }
 
 
+/* Nav Größe anpassen */
+@media (max-width: 1420px) {
+    
+    nav ul li {
+        margin: 10px;
+    }
+    
+    ul li a {
+    padding: 10px 10px;
+	color: black;
+    }
+    
+    nav ul {
+    left: 60px;
+    }
+}
+
+@media (max-width: 910px) {
+    nav ul li {
+        margin: 10px;
+    }
+    
+    ul li a {
+        padding: 0;
+        font-size: 80%;
+    }
+    
+    nav ul {
+        left: 40px;
+    }
+    
+    ul li a .nav-icon {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+}
+
+    
+}
 
 
 

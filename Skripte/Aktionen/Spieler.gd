@@ -1,257 +1,327 @@
 extends KinematicBody2D
 
-#Variable um die Geschwindigkeit der Spielerbewegung einstellen zu können
-export var speed = 500
-export var Schwerkraft = 400
-export var Sprungkraft = 500
+#Spieler Szene / Klasse
+#In der Klasse ist das Verhalten des Spielers implementiert:
+
+#Bewegung (laufen / Springen) abhängig von Tastatru Eingabe
+#Veränderung des Spieleraussehens  abhängig von der Spier Größe
+#Kollisionserkennung mit anderen Spiel Objekten
+#Spielerverhalten nach Neustart eines Spiels
 
 
-#Die Bewegung als Klassen Variable, damit über Delta Verönderungen stattfinden können | Vektor um in alle Richtungen bewegen zu können
+#Variablen für die Spielerbewegung
+var geschwindigkeit = 500
+var Schwerkraft = 400
+var Sprungkraft = 500
+
+
+#Bewegungsvariable als Vektor -> X und Y Bewegung speicherbar
 var Bewegung = Vector2()
-
-#ein Vektor der nach oben Zeigt (Zum Top des Spiels) | y = -1 wegen gedrehter Y Achse
+#Orientierungsvektor der der nach oben zeigt (Zum Top des Spiels) 
+#Wichtig: y = -1 wegen gedrehter Y Achse (- geht nach oben)
 var UP_Vector = Vector2(0,-1)
 
 
-#Blob Eigenschaften
-var doppelterSprung = false # wurde doppelSprung bereits ausgeführt oder nicht?
+#Blob Eigenschaften für das Springen
+var doppelter_Sprung = false 			#wurde doppelSprung bereits ausgeführt oder nicht?
+var hoechste_Blob_Hoehe = 409 			#maximaleBlobhöhe in Sprung
+var bounce_Anzahl = 0
+var bounce_Kraft = 1000 - position.y 	#Wie stark wird gebouncet
+var sprung_Rest_Bewegung = 0 				#Seitliche Bewegung im Sprung
 
-var hoechsteBlobHoehe = 409 #maximaleBLobhöhe in Sprung
-var bounceAnzahl = 0
-var bounceEffekt = 1000 - position.y # Wie start soll er wieder springen
-var sprungRestBewegung = 0
+var blob_Groesse = 12 		#die aktuelle Spielergröße
+var bilder_Seitlich = false
+const boden_hoehe = 482
+var spieler_Auf_Boden
 
-var blobGroesse = 12 #die aktuelle Größe und das Blob Aussehen wird hierraus bestimmt
-# --> Unterschiedliche Blobphasen aufgeteilt in 10 Schritte --> -10 | -5 | 0 | 5 | 10
-var bilderSeitlich = false
 
+#Variablen zur Unterscheidung von Blob Stadien
 var blobstatus = blobStati.NEUTRAL
-
 # Repraesentation der Blobstati.
 enum blobStati {NEGATIV2, NEGATIV1, NEUTRAL, POSITIV1, POSITIV2}
 
-var bodenhoehe = 482
 
+#Variablen zum Bilder Einladen
 var bilder = SpriteFrames.new()
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
 
 signal spielVerloren
 signal spielGewonnen
 
-#Funktion wird zu Beginn des Spiels aufgerufen und ermittelt die Spielfeld Größe und setzt die Startposition
+
+#Methode wird zu Beginn des Spiels aufgerufen. Ist also der Konstruktor der Klasse
+#Spielerposition setzen Bilder Laden + Kollisionsbox erstellen
 func _ready():
 	#Blob Positionieren
 	position.x = 224
-	
-	skalieren(0.8) #Kollisionshapes auf Startgröße skalieren
-	
+	#Blob Bilder laden
 	lade_sprites()
 	
 	#Am Start ist der blob im neutralen Zustand
 	$AnimatedSprite.play("neutral_gerade")
-	
-	einstellungen.setzeSpielerEinstellungen(Sprungkraft, speed)
-
-	create_collision_shape("Blob_3_gerade")
-
+	#Speileinstellungen übernehmen
+	einstellungen.setzeSpielerEinstellungen(Sprungkraft, geschwindigkeit)
+	erstelle_Kollisionsbox("Blob_3_gerade")
 
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame. --> Delta wird also verwendet, damti Bewegung auch flÃ¼ssig wenn weniger fps vorhanden sind
+
+#Methode wird bei jedem Bild / Frame aufgerufen
+#Führt die aktuelle Bewegung des Spielers in Abhängigkeit zu den Eingaben aus
+#Es wird die Sprungkurve ermittelt + das Bouncen wenn nötig durchgeführt
+#
+#@param delta ist die Zeit zwischen zwei Bildern 
+#-> ermöglicht flüssige Spieler Bewegung
+
 func _physics_process(delta):
 	
-	#Grundätzlich soll keine Bewegung zur Zeite existieren
-	Bewegung.x = 0;
+	#Berechnung der Bewegung:
+	Bewegung.x = 0; #ohne Eingabe keine rechts / links Bewegung
 	
-	#die Schwerkraft berechnen --> Je länger der Fall ist, umso stärker wird die Schwerkraft
-	#delta steht für jeden Frame --> mit jedem Frame wird die Schwerkraft stärker
+	#Schwerkraftberechnung -> langer Fall = stärker fallen
+	#delta -> mit jedem Bild stärkere Schwerkraft
 	Bewegung.y = Bewegung.y + Schwerkraft * delta*2
 	
-	#Die Bewegung abhängig von den betätigten Tasten
-	checkTastenEingabe()
+	#Bewegung abhängig der User Eingaben
+	pruefe_User_Eingaben()
+	ermittel_Maximal_Hoehe()
 	
-	#Sofern der Blob in der Luft ist wird ermittelt wie hoch er in dem jeweiligen Sprung gekommen ist
-	ermittelMaximalHoehe()
+	#Bouncekraft für 1 Bounce bestimmen 
+	if bounce_Anzahl == 0:
+		bounce_Kraft = 1000-hoechste_Blob_Hoehe 
 	
-	#die BauneKraft berechnen, sofern der Blob vorher noch nicht gebounce ist
-	if bounceAnzahl == 0:
-		bounceEffekt = 1000-hoechsteBlobHoehe 
+	#zusätliche Sprungbewegung (Bouncen / Sprungkurve)
+	weitere_Sprungbewegung()
 	
-	#nach einem Sprung soll die Bounce Fähigkeit gegeben sein
-	sprungUpdate()
-	
-	#Ausführen der Bewegung fürr den Cinematic Body | Up Vektor um zu erkennen was der Boden ist
+	#Bewegungsausführung | Up Vektor um zu erkennen was der Boden ist
 	move_and_slide(Bewegung, UP_Vector);
 	
-	kollisionsPruefung()
+	kollisions_Pruefung()
 	boden_Erkennung()
 	
-	#Sicherstellen, dass abhängig von der Bildschirmgröße das Objekt nicht raus laufen kann
+	#Spieler Position auf Spielfeld begrenzen
 	position.x = clamp(position.x, 0, 448)
-	position.y = clamp(position.y, 0, 483)
+	position.y = clamp(position.y, -200, 483)
 
 
 
 
 
 
-#Funktion zum ermitteln welche Tasten gedrückt wurden 
-func checkTastenEingabe():
+#Methode ermittelt Tastatureingaben und reagiert passend darauf
+#Abhängig von Eingabe Rechts Links Bewegung
+#Wenn Spieler in der Luft -> Kurven Bewegung addieren
+#Die Setilichen Bilder abspielen, bei Bewegung 
+func pruefe_User_Eingaben():
 	
 	#Nach rechts --> Blob nach rechts bewegen
 	if Input.is_action_pressed("ui_right"):
-		Bewegung.x += 1 * speed
-		if !is_on_floor:
-			sprungRestBewegung = 1*speed
+		Bewegung.x += 1 * geschwindigkeit
+		if !spieler_Auf_Boden:
+			sprung_Rest_Bewegung = 1*geschwindigkeit
 		
-		#Wenn nötig die Textur des Sprites passend ändern
-		if spriteUpdateNoetig():
-			blobVeranederung(true)
+		#Wenn nötig Bild Textur auf setilich ändern
+		if bild_Update_Noetig():
+			blob_Veraenderung(true)
 			$AnimatedSprite.flip_h = false #Spiegelung des seitlichen Richtung
 	
 	#Nach links --> Blob nach links bewegen
 	if Input.is_action_pressed("ui_left"):
-		Bewegung.x -= 1 * speed
-		if !is_on_floor:
-			sprungRestBewegung = -1*speed
+		Bewegung.x -= 1 * geschwindigkeit
+		if !spieler_Auf_Boden:
+			sprung_Rest_Bewegung = -1*geschwindigkeit
 		
-		#Wenn nötig die Textur des Sprites passen ändern
-		if spriteUpdateNoetig():
-			blobVeranederung(true)
+		#Wenn nötig Bild Textur auf setilich ändern
+		if bild_Update_Noetig():
+			blob_Veraenderung(true)
 			$AnimatedSprite.flip_h = true #Spiegelung des seitlichen Richtung
 	
-	#Wenn keine Bewegung stattfindet muss das Bild auf den Stand gewechselt werden
+	#Bei keiner Bewegung muss gerade Bild geladen werden
 	if !Input.is_action_just_pressed("ui_left") and !Input.is_action_just_pressed("ui_right"):
-		if spriteUpdateNoetig():
-			blobVeranederung(false)
+		if bild_Update_Noetig():
+			blob_Veraenderung(false)
 	
-	#Wenn der Input für das Springen gerade gekommen ist und der Spieler ein Boden berührt
+	#Sprunginput gerade gekommen --> springen
 	if Input.is_action_just_pressed("jump"):
-		#Dann soll gesprungen werden
 		sprung() #Die Methode zum Springen wird genutzt
 
 
 
 
 
-#Sprung Funktion
-
-#Methode zum springen
+#Sprung Methode berechnet das Springen 
 #Der Sprung wird in 4 unterschiedliche Verhaltensweisen aufgeteilt
-#1. Der Blob befindet sind auf dem Boden
+# 1. Der Blob befindet sind auf dem Boden
 #--> Der Blob soll normal Springen, 
-
-#2. Der Blob befindet sich auf dem Boden ist aber nocht im Bounce Durchgang
+# 2. Der Blob befindet sich auf dem Boden ist aber nocht im Bounce Durchgang
 #--> Kein Springen ist möglich
-
-#3. Der Blob befindet sich in der Luft und hat noch keinen Doppelsprung ausgeführt
+# 3. Der Blob befindet sich in der Luft und hat noch keinen Doppelsprung ausgeführt
 #--> Der Blob soll ebenfalls springen können
-
-#4. Der Blob befindet sich in der Luft und hat bereits einen Doppelsprung ausgeführt
+# 4. Der Blob befindet sich in der Luft und hat bereits einen Doppelsprung ausgeführt
 #--> es ist kein Sprung für den Blob erlaubt
 func sprung():
 	
-	#Die Blob Höhe auf Bodenhöhe setzen, damit für den Sprung neue höchste Höhe ermittelt werden kann
-	hoechsteBlobHoehe = bodenhoehe
+	#höchste Blob Höhe resetten
+	hoechste_Blob_Hoehe = boden_hoehe
 	
 	#Der Blob befindet sich auf dem Boden
-	if is_on_floor:
-		doppelterSprung = false
-		Bewegung.y = - Sprungkraft
-		sprungRestBewegung = 0 #verhindert, das vom Boden Aus Sprung richtung weiter Rutscht
+	if spieler_Auf_Boden:
+		doppelter_Sprung = false
+		Bewegung.y = - Sprungkraft #negativ (Y Achse gedreht)
+		sprung_Rest_Bewegung = 0 #Sprungkurve nicht am Boden weiter
 		
-		#es soll nicht gesprungen werden, wenn der Blob gerade am Bounce ist!
-		if bounceAnzahl == 3:
-			bounceAnzahl = 0 #Bei einem neuen Sprung, soll Bounce wieder neu berechnet werden können
+		#Nach 3 Bounces Anzahl resetten (Neuer Bounce für neuen Sprung)
+		if bounce_Anzahl == 3:
+			bounce_Anzahl = 0 
 		
-	#Wenn noch kein doppelSprung ausgeführt wurde, ist ein weiter Impuls nach oben möglich
-	elif doppelterSprung == false:
+	#Wenn noch kein doppelSprung ausgeführt wurde den Sprungimpuls geben
+	elif doppelter_Sprung == false:
 		Bewegung.y = -Sprungkraft
-		doppelterSprung = true
+		doppelter_Sprung = true
 
 
 
 #Methode zum ermitteln der höchsten Position des Spielers nach seinem Flug
 #Es wird geprüft ob aktuelle höhe des Spielers höher ist als die gespeicherte.
 #Wenn sie Höher ist wird neue blobHoehe gespeichert
-func ermittelMaximalHoehe():
+func ermittel_Maximal_Hoehe():
 	
-	if !is_on_floor:
-		if position.y < hoechsteBlobHoehe:
-			hoechsteBlobHoehe = position.y
+	if !spieler_Auf_Boden:
+		if position.y < hoechste_Blob_Hoehe:
+			hoechste_Blob_Hoehe = position.y
 
 
 
 
 #Methode um die fortlaufenden Bewegungen des Blobs zu berechnen
-#1. es wird das Bouncen Des Blobs berechnent und ausgeführt
-#2. Das die Sprungrichtung noch leicht 'nachzieht' beim springen
-#Es soll ein zusätzliches Bouncen (Impuls nach oben) stattfinden,
-#wenn zuvor nicht zu oft gesprungen wurde + Blob auf dem Boden ist
-func sprungUpdate():
-	if is_on_floor:
-		sprungRestBewegung = 0
-	#Bounce nur wenn BLob auf boden + Bounceanzahl nicht überschritten 
-	if is_on_floor and bounceAnzahl < 3 and position.y > bodenhoehe and not Input.is_action_just_pressed("jump"):
-		bounceEffekt = bounceEffekt/2        #nächste Bounce halb so hoch
-		Bewegung.y = -bounceEffekt           #Bounce Impuls setzen
-		bounceAnzahl = bounceAnzahl+1        
-		sprungRestBewegung = 0               #Kein nachziehen, au auf dem boden liegt
+# 1. es wird das Bouncen Des Blobs berechnent und ausgeführt
+# --> zuätlicher Bounce Impuls, wenn Spieler auf Boden + Bouncanzahl nicht überschritten
+# 2. Die Sprunkruve wird berechnet -> leichts nachziehen der Sprungrichtung 
+func weitere_Sprungbewegung():
+	
+	#Bei Boden Berührung keine Sprungkruve
+	if spieler_Auf_Boden:
+		sprung_Rest_Bewegung = 0
+		
+	#Bounce nur wenn BLob auf boden + bounce_Anzahl nicht überschritten 
+	if spieler_Auf_Boden and bounce_Anzahl < 3 and position.y > boden_hoehe and not Input.is_action_just_pressed("jump"):
+		bounce_Kraft = bounce_Kraft/2        #nächste Bounce halb so hoch
+		Bewegung.y = -bounce_Kraft           #Bounce Impuls setzen
+		bounce_Anzahl = bounce_Anzahl+1        
+		sprung_Rest_Bewegung = 0             #Kein Kurve nach Bodenberührung
 
 	
-	#In der Luft ohne weitere Richtungseingabe
-	elif !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_right") and !is_on_floor:
-		sprungRestBewegung = sprungRestBewegung / 1.05        #Bewegungsgeschwindigkeit des Nachziehens verringern
-		Bewegung.x = sprungRestBewegung                       #weiter in Richtung nachziehen
+	#In der Luft ohne weitere Richtungseingabe -> Sprungkurve ermitteln
+	elif !Input.is_action_pressed("ui_left") and !Input.is_action_pressed("ui_right") and !spieler_Auf_Boden:
+		sprung_Rest_Bewegung = sprung_Rest_Bewegung / 1.05  #Bewegungsgeschwindigkeit verringern
+		Bewegung.x = sprung_Rest_Bewegung
 
-var is_on_floor
+
+#Methode zum Erkennen ob Spieler den Boden berührt oder nicht
+#Über die Kollisionen der Spieler Hitbox wird ermittelt ob der Boden berührt wird
+func boden_Erkennung():
+	#gibt es überhaubt eine Kollision
+	if $Hitbox.get_overlapping_bodies().size() == 0:
+		spieler_Auf_Boden = false
+	#wenn ja Prüfe ob die Kollision der Boden ist
+	else:
+		for body in $Hitbox.get_overlapping_bodies():
+			if body.get_name() == "BodenCollisionShape":
+				spieler_Auf_Boden = true
+			else:
+				spieler_Auf_Boden = false
+
 
 
 #Methode zum erkennen von Kollisionen mit anderen Objekten
 #für alle erkannten Objekte welche in die Area des Blobs gekommen sind 
 #wird die Methode blobKollision aufgerufen, sofern diese vorhanden ist
 #--> somit können die Objekte passend auf Kollision mit Spielfigur reagieren
-
-func kollisionsPruefung():
+func kollisions_Pruefung():
 	
 	for body in $Hitbox.get_overlapping_bodies():
 		if body.has_method("blobKollision"):
 			body.blobKollision()
 
 
-
-func boden_Erkennung():
-	if $Hitbox.get_overlapping_bodies().size() == 0:
-		is_on_floor = false
-	else:
-		for body in $Hitbox.get_overlapping_bodies():
-			if body.get_name() == "BodenCollisionShape":
-				is_on_floor = true
-			else:
-				is_on_floor = false
-		
+#Methode zur Reaktion auf eine Münz Berührung
+#Blobgröße wird in abhängigkeit von dem Wert der Münze verändert
+#eine mögliche Blob Veränderung wird eingeleitet
+#@param wert: der Wert den die kollidierte Münze hatte
+func _on_Muenze_muenze_beruehrt(wert):
+		blob_Groesse = blob_Groesse + wert
+		blob_Veraenderung(false)
 
 
 
+#Methode zur Reaktion auf eine Berührung mit der Rakete 
+# Blobgroeße wird um eine Stufe (5) reduziert
+# Textur des Blobs wird ebenfalls angepasst
+func _on_Kanone_kanoneberuehrte():
+	blob_Groesse = blob_Groesse - 5
+	blob_Veraenderung(false)
+
+
+#Methode um die Geschwindigkeit des Spielers zu verändern
+# @geschwindigkeitsDifferenz ist der Wert der auf die Geschwindigkeit hinzugerechnet wird
+# --> negativer Wert verringert die Geschwindigkeit | positiver Wert erhöht die Geschwindigkeit
+func veraendere_Spieler_Geschwindigkeit(var geschwindigkeitsDifferenz):
+	geschwindigkeit = geschwindigkeit + geschwindigkeitsDifferenz
+
+
+#Methoden um die aktuellen Einstellungen in die OptionsSlider zu übertargen
+func _on_Spiel_hide():
+	einstellungen.setzeSpielerEinstellungen(Sprungkraft,geschwindigkeit)
 
 
 
-#Abhängig von der Blobgroese und Ausrichtung des Spielers soll die passende Textur geladen werden
-#Sobald die Blobgröße kleiner 10 ist, ist das Spiel verloren
-#Sobald die Blobgrößer größer als 15 ist, ist das Spiel gewonnen
-#Zusätzlich wird das Kollisionshape bei einer Größen änderung angepasst
+#Methode wird ausgeführt sobald der Spieler Sichtbar wird
+#also wenn das Spiel wieder startet nach Optionen / Spielneustart
+# -Die Spieler Ausrichtung wird vorgenommen
+# -Spieleinstellungen der Optionen werden übernommen
+func _on_Spiel_draw():
+	spielstart_Ausrichtung()
+	if einstellungen.geschwindigkeitGeaendert:
+		print("sliderGeschwindigkeit")
+		geschwindigkeit = einstellungen.uebernehmeGeschwindigkeit()
+		einstellungen.geschwindigkeitGeaendert = false
+	if einstellungen.sprungkraftGeaendert:
+		print ("sliderSprungkraft")
+		Sprungkraft = einstellungen.uebernehmeSprungkraft()
+		einstellungen.sprungkraftGeaendert = false
+
+
+#Methode zum Ausrichten des Spielers (Spielstart)
+#Position + Größe und weitere Eigenschaften auf Standard setzen
+func spielstart_Ausrichtung():
+	blob_Groesse = 12
+	position.x = 224
+	position.y = 483
+	sprung_Rest_Bewegung = 0
+	blobstatus = blobStati.NEUTRAL
+	hoechste_Blob_Hoehe = 530
+	
+	$AnimatedSprite.play("neutral_gerade")
+	erstelle_Kollisionsbox("Blob_3_gerade")
+	$Schutz._on_Schutz_Dauer_timeout()
+
+
+#Methode zum Ändern eines Spielers
+#Abhängig von der Größe wird passendes Bild gesetzt
+#Bei Stufenwechsel wird ein Sound abgespielt und eine neue Kollisionsbox ermittelt
+# -Sobald die Blobgröße kleiner 0 ist, ist das Spiel verloren
+# -Sobald die Blobgrößer größer als 25 ist, ist das Spiel gewonnen
+# -Für die Anderen Stufen werden jeweils die passenden Bilder gesetzt + Sound abgespielt
 #@param setilich gibt an ob sich der Blob gerade in einer seitlichen Bewegung befindet
 
-func blobVeranederung(var seitlich):
+func blob_Veraenderung(var seitlich):
 	
 	#switch Casse über alle Größen des Blobs es wird jeweils das passende Bild gesetzt
 	#Zustäzlich wird überprüft ob Blob in Bewegung bzw. seitlich ist
-	match blobGroesse:
+	match blob_Groesse:
 		-1,-2,-3,-4,-5:
-			print("verloren")
 			emit_signal("spielVerloren")
 			$AnimatedSprite.play("neutral_gerade")
-			#get_tree().reload_current_scene()
 			
 		0, 1, 2, 3, 4:
 			# Prueft ob der Blobstatus sich veraendet hat.
@@ -260,215 +330,121 @@ func blobVeranederung(var seitlich):
 				blobstatus = blobStati.NEGATIV2
 				# Spiele den Sound fuer das Schrumpfen.
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
-				#$AnimatedSprite._create_collision_polygon("Blob_1_gerade")
-				create_collision_shape("Blob_1_gerade")
+				erstelle_Kollisionsbox("Blob_1_gerade")
 			
 			if seitlich:
 				$AnimatedSprite.play("negativ_2_seitlich")
-				#skalieren(0.5)
 			else:
 				$AnimatedSprite.play("negativ_2_gerade")
-				#skalieren(0.5)
+				
 		5, 6, 7, 8, 9:
-			# Prueft ob der Blobstatus sich veraendet hat.
+			# Prueft ob der Blobstatus sich veraendet hat. Sound + Status anpassen
 			if blobstatus > blobStati.NEGATIV1:
 				blobstatus = blobStati.NEGATIV1
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
-				#$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
-				create_collision_shape("Blob_2_gerade")
+				erstelle_Kollisionsbox("Blob_2_gerade")
 			elif blobstatus < blobStati.NEGATIV1:
 				blobstatus = blobStati.NEGATIV1
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-				#$AnimatedSprite._create_collision_polygon("Blob_2_gerade")
-				create_collision_shape("Blob_2_gerade")
+				erstelle_Kollisionsbox("Blob_2_gerade")
 				
 			if seitlich:
 				$AnimatedSprite.play("negativ_1_seitlich")
-				#skalieren(0.7)
 			else:
 				$AnimatedSprite.play("negativ_1_gerade")
-				#skalieren(0.7)
 		
 		10, 11, 12, 13, 14:
-			# Prueft ob der Blobstatus sich veraendet hat.
+			# Prueft ob der Blobstatus sich veraendet hat. Sound + Status anpassen
 			if blobstatus > blobStati.NEUTRAL:
 				blobstatus = blobStati.NEUTRAL
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
-				#$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
-				create_collision_shape("Blob_3_gerade")
+				erstelle_Kollisionsbox("Blob_3_gerade")
 			elif blobstatus < blobStati.NEUTRAL:
 				blobstatus = blobStati.NEUTRAL
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-				#$AnimatedSprite._create_collision_polygon("Blob_3_gerade")
-				create_collision_shape("Blob_3_gerade")
-			
+				erstelle_Kollisionsbox("Blob_3_gerade")
 			
 			if seitlich:
 				$AnimatedSprite.play("neutral_seitlich")
-				#skalieren(0.8)
 			else:
 				$AnimatedSprite.play("neutral_gerade")
-				#skalieren(0.8)
+			
 		15, 16, 17, 18, 19:
-			# Prueft ob der Blobstatus sich veraendet hat.
+			# Prueft ob der Blobstatus sich veraendet hat. Sound + Status anpassen
 			if blobstatus > blobStati.POSITIV1:
 				blobstatus = blobStati.POSITIV1
 				$AudioStreamPlayer2D.abspielen("Schrumpfen")
-				#$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
-				create_collision_shape("Blob_4_gerade")
+				erstelle_Kollisionsbox("Blob_4_gerade")
 			elif blobstatus < blobStati.POSITIV1:
 				blobstatus = blobStati.POSITIV1
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-				#$AnimatedSprite._create_collision_polygon("Blob_4_gerade")
-				create_collision_shape("Blob_4_gerade")
+				erstelle_Kollisionsbox("Blob_4_gerade")
 			
 			if seitlich:
 				$AnimatedSprite.play("positiv_1_seitlich")
-				#skalieren(0.9)
 			else:
 				$AnimatedSprite.play("positiv_1_gerade")
-				#skalieren(0.9)
 		
 		20, 21, 22, 23, 24:
-			# Prueft ob der Blobstatus sich veraendet hat.
+			# Prueft ob der Blobstatus sich veraendet hat. Sound + Status anpassen
 			if blobstatus < blobStati.POSITIV2:
 				blobstatus = blobStati.POSITIV2
 				$AudioStreamPlayer2D.abspielen("Wachsen")
-				#$AnimatedSprite._create_collision_polygon("Blob_5_gerade")
-				create_collision_shape("Blob_5_gerade")
+				erstelle_Kollisionsbox("Blob_5_gerade")
 			
 			if seitlich:
 				$AnimatedSprite.play("positiv_2_seitlich")
-				#skalieren(1.0)
 			else:
 				$AnimatedSprite.play("positiv_2_gerade")
-				#skalieren(1.0)
+				
 		25, 26, 27, 28, 29:
 			emit_signal("spielGewonnen")
 			$AnimatedSprite.play("neutral_gerade")
 
 
-
-
-#Methode um die Hitboxen des Spielers der Größe anzupassen
-#@param faktor: um welchen Faktor das Shape skaliert werden soll
-func skalieren(var faktor):
-	$physischeKollisionBox.scale = (Vector2(faktor, faktor))
-	$Hitbox/areaKollisionBox.scale = (Vector2(faktor, faktor))
-
-
-
-
-#Methode zum überprüfen ob eine neue Textur geladen werden muss, oder ob die aktuelle Textur noch
-#zum Verhalten des Users passt
-#@return true: wenn die aktuelle Textur sich von der neuen unterscheiden würde (bild ist noch seitlich, aber keine Bewegung mehr + anders herum)
-#Sonst false
-func spriteUpdateNoetig():
+#Methode zum überprüfen ob eine neue Textur geladen werden muss, 
+#oder ob die aktuelle Textur noch zur Stufe des Users passt
+#Aufgeteilt in zwei Fälle: Bewegung findet statt + Bild star 
+# Keine Bewegung + Bild seitlich
+#
+#@return true: wenn die aktuelle Textur sich von der neuen unterscheiden würde 
+# sonst false
+func bild_Update_Noetig():
 	#keine Bewegung und noch Seitlich
-	if Bewegung.x == 0 and bilderSeitlich == true:
-		bilderSeitlich = false
+	if Bewegung.x == 0 and bilder_Seitlich == true:
+		bilder_Seitlich = false
 		return true
 	#Bewegung und noch Starr
-	elif Bewegung.x != 0 and bilderSeitlich == false:
-		bilderSeitlich = true
+	elif Bewegung.x != 0 and bilder_Seitlich == false:
+		bilder_Seitlich = true
 		return true
 	else:
 		return false
 
 
-
-func create_collision_shape(var stufe):
-	print (einstellungen.figurengroesse)
-	var groessen = einstellungen.figurengroesse
+#Methode um eine Passende Kollisionsbox für ein Bild zu erstellen
+#Damit eigene Bilder auch passende Kollisionsbox erhalten
+#Über die gespeicherten Größen der Bilder wird ein gewünschtes Shape erstellt
+#
+#@param stufe: für welche Blobstufe (Bild) das Polygon erstellt werden soll
+func erstelle_Kollisionsbox(var stufe):
+	#Bild Größen Ermitteln
+	var alle_Groessen = einstellungen.figurengroesse
+	var bild_Groesse = alle_Groessen[stufe]
 	
-	var groesse = groessen[stufe]
-	
-	
-	print(groesse)
-	
+	#Shape erstellen
 	var shape = RectangleShape2D.new()
-	shape.set_extents(Vector2(groesse.x/2,groesse.y/2))
+	shape.set_extents(Vector2(bild_Groesse.x/2,bild_Groesse.y/2))
 	
-	var collision = CollisionShape2D.new()
-	collision.set_shape(shape)
-	
-	#var polygon = CollisionPolygon2D.new()
-	#polygon.set_indexed(Vector2(groesse.x,groesse.y))
-
-	#$Hitbox.add_child(collision)
-	
-	
-	$Hitbox/areaKollisionBoxneu.set_shape(shape)
-	print(64-groesse.y)
-	$Hitbox/areaKollisionBoxneu.position.y = 0
-	$Hitbox/areaKollisionBoxneu.position.y += ((64-groesse.y) /2) 
-	#my_collision.position -= Vector2((texture.get_width() / 2) + offsetX, (texture.get_height() / 2) + offsetY) * scale.x
-	
+	#Shape Zuweisen + Positionieren
+	$Hitbox/areaKollisionBox.set_shape(shape)
+	$Hitbox/areaKollisionBox.position.y = 0
+	$Hitbox/areaKollisionBox.position.y += ((64-bild_Groesse.y) /2) 
+	$Hitbox/areaKollisionBox.position.x = 0
+	$Hitbox/areaKollisionBox.position.x -= ((64-bild_Groesse.x) /2)
 
 
-
-#Wenn eine Münze berührt wurde muss blob passend darauf reagieren
-#Blobgröße wird in abhängigkeit von dem Wert der Münze verändert
-#Ebenfalls werden im Anschluss die Texturen verändert, sofern das nötig ist
-#@param wert: der Wert den die kollidierte Münze hatte
-
-func _on_Muenze_muenze_beruehrt(wert):
-		blobGroesse = blobGroesse + wert
-		blobVeranederung(false)
-
-
-
-#Wenn die Kanone das berührt wurde, soll Blob passend darauf reagieren
-#--> Blobgroeße wird um eine Stufe (5) reduziert
-#Textur des Blobs wird ebenfalls angepasst
-func _on_Kanone_kanoneberuehrte():
-	blobGroesse = blobGroesse - 5
-	blobVeranederung(false)
-
-
-#Methode um die Geschwindigkeit des Spielers zu verändern
-#@geschwindigkeitsDifferenz ist der Wert der auf die Geschwindigkeit hinzugerechnet wird
-#--> negativer Wert verringert die Geschwindigkeit | positiver Wert erhöht die Geschwindigkeit
-
-func veraendereSpielerGeschwindigkeit(var geschwindigkeitsDifferenz):
-	speed = speed + geschwindigkeitsDifferenz
-
-
-#Methoden um die aktuellen Einstellungen in die OptionsSlider zu übertragen 
-#und daraus zu übernehmen
-func uebertrageEinstellungen():
-	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
-
-func _on_Spiel_hide():
-	einstellungen.setzeSpielerEinstellungen(Sprungkraft,speed)
-
-func _on_Spiel_draw():
-	Spielstart_Ausrichtung()
-	if einstellungen.geschwindigkeitGeaendert:
-		print("sliderGeschwindigkeit")
-		speed = einstellungen.uebernehmeGeschwindigkeit()
-		einstellungen.geschwindigkeitGeaendert = false
-	if einstellungen.sprungkraftGeaendert:
-		print ("sliderSprungkraft")
-		Sprungkraft = einstellungen.uebernehmeSprungkraft()
-		einstellungen.sprungkraftGeaendert = false
-
-
-
-func Spielstart_Ausrichtung():
-	position.x = 224
-	position.y = 483
-	sprungRestBewegung = 0
-	blobGroesse = 12
-	blobstatus = blobStati.NEUTRAL
-	hoechsteBlobHoehe = 530
-	
-	$AnimatedSprite.play("neutral_gerade")
-	create_collision_shape("Blob_3_gerade")
-	$Schutz._on_Schutz_Dauer_timeout()
-
-
-# Laedt die einzelnen Blobbilder und weist diese dem Spieler zu.
+#Methode zum einladen der einzelnen Blobbilder in den Spieler
 func lade_sprites():
 	bilder = SpriteFrames.new()
 	setze_animationeigenschaften("negativ_1_gerade","Blob_2_gerade")
@@ -488,7 +464,7 @@ func lade_sprites():
 	
 	$AnimatedSprite.frames = bilder
 
-
+#Grundlegende Methode zum Zuweisen der Bilder
 func setze_animationeigenschaften(animationsname, bildname):
 	var texture = persistenz.lade_bildtextur("res://Bilder/Standardspielfiguren/Spielfiguren/" + bildname + ".png")
 	bilder.add_animation(animationsname)
@@ -496,5 +472,3 @@ func setze_animationeigenschaften(animationsname, bildname):
 	bilder.set_animation_loop(animationsname,true)
 	bilder.set_animation_speed(animationsname, 5.0)
 
-func _on_Player_spielVerloren():
-	pass # Replace with function body.

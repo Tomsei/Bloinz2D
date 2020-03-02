@@ -13,8 +13,8 @@ func _ready():
 func _process(delta):
 	# Noch in die Logik verschieben!
 	if spieler != null:
-		$PunkteAnzeige.value = spieler.blobGroesse 
-		$PunkteAnzeige/PunkteAnzeigePunkt.value = spieler.blobGroesse
+		$PunkteAnzeige.value = spieler.blob_Groesse 
+		$PunkteAnzeige/PunkteAnzeigePunkt.value = spieler.blob_Groesse
 
 
 func _on_Pause_toggled(button_pressed):
