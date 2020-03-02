@@ -1,12 +1,12 @@
 extends Sprite
 
-
+#gibt Größe des Bildes an, auf welchem gemalt wird
 var bildgroesse;
 #Farbe mit welcher zur Zeit gezeichnet wird
 var aktuelle_farbe;
 #Werkzeug welches ausgewählt ist, z.B. Stift, Linie, Ellipse ...
 var modus=null;
-
+#wichtig für Linie,Ellipse, Rechteck
 var linien_start;
 var linien_ende;
 #Größe des Stiftes
@@ -18,32 +18,37 @@ var original_bild;
 var alterInhalt
 var textur;
 var array;
-#
+#merkt sich, welcher Figurknopf gedrückt ist
 var aktiver_knopf;
 #Modus, welcher vor einem Dialogfenster aktiv war
 var alter_modus;
+#merkt sich ob die Vorschau ein Blob, Coin oder Hintergrund ist 
 var vorschau;
+#welche Buttons gerade gedrückt sind
 var aktuellerFarbbutton;
 var aktuellerStiftbutton;
 var aktuellerModusbutton;
+#für rückgängig und wiederholen
 var rueckgaengigstapel;
 var wiederholenstapel;
+#Größe des Bildes
 var minx;
 var maxx;
 var miny;
 var maxy;
+#für eigene Farbe
 var eigeneFarbe;
 var eigeneFarbeaktuell;
+#werden genutzt bei der Vorschau von Linie, Ellipse und Rechteck
 var temporaeresBild;
 var temporaereZeichenflaeche;
 var coinWechsel;
 var alte_vorschau;
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance();
 var vorlage;
+#speichert die Größen aller Figuren
 var groesseFigur;
 var popup_offen= false;
-
-
 
 
 
@@ -110,14 +115,8 @@ func _ready():
 	lade_Knopfbilder();
 	#Informationen weitergeben
 	einstellungen.figurengroesse= groesseFigur;
-	print(groesseFigur);
 
-	#Bei neuladen es Maleneditors:
-	#setze alle Figurauswahlbuttons auf das neue aktuelle Design
-	setze_Figurauswahlbuttons();
-	
-
-	
+	#initalisiere die Rückgängigstapel
 	rueckgaengigstapel= [];
 	Abbild_auf_Rueckgaengigstapel();
 	wiederholenstapel=[];
@@ -131,14 +130,14 @@ func _ready():
 	get_node("../Farbwahl").get_children()[6].get_children()[1].hide();
 	get_node("../Farbwahl").get_children()[5].hide();
 	get_node("../Farbwahl").get_children()[4].get_children()[4].hide();
-	
-	#TEST#
-	print(rueckgaengigstapel);
-	
+
 
 """
 Funktion, die ein 2D-Array erstellt
-übernommen, siehe Quellen xxx
+übernommen, siehe Quellen 
+Eingabe width: Weite des Arrays
+Eingabe height: Höhe des Arrays
+Eingabe value: Wert mit dem das Array gefüllt werden soll
 """
 func create_2d_array(width, height, value):
     var a = []
@@ -168,6 +167,7 @@ func punkt_malen_pixel(x,y):
 			bild.set_pixel(xneu+i, yneu+j, aktuelle_farbe);
 	bild.unlock();
 
+
 """
 löscht einen Punkt auf dem 64 * 64 große Bild
 dabei wird darauf geachtet, dass der Zeichenstil im Pixelformat ist 
@@ -183,6 +183,7 @@ func punkt_loeschen_pixel(x, y):
 			bild.set_pixel(xneu+i, yneu+j, Color(0,0,0,0));
 	bild.unlock();
 
+
 """
 Ein Array in der selben Größe wie das Bild der Zeichenfläche
 wird mit den Farbinformationen befüllt
@@ -194,6 +195,7 @@ func befuellen():
 		for y in range(64):
 			array[x][y] = bild.get_pixel(x,y);
 	bild.unlock();
+
 
 """
 Methode, die bei jedem neuen Time_Frame aufgerufen wird
@@ -208,7 +210,7 @@ func _process(delta):
 					wiederholenstapel = [];
 					array = create_2d_array(64,64,Color(0,0,0,0));
 					befuellen();
-					fuellen2(aktuelle_farbe,((mouseposition.x-256)/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
+					fuellen(aktuelle_farbe,((mouseposition.x-256)/8),(mouseposition.y/8), array[(mouseposition.x-256)/8][mouseposition.y/8]);
 					bild.lock();
 					for zeile in range(64):
 						for spalte in range(64):
@@ -252,7 +254,6 @@ func _process(delta):
 						linien_start.x = linien_start.x-256;
 						linien_start.x = floor(linien_start.x/8);
 						linien_start.y = floor(linien_start.y/8);
-						print("im Modus");
 					else:
 						linien_ende = get_global_mouse_position();
 						linien_ende.x = linien_ende.x-256;
@@ -275,7 +276,6 @@ func _process(delta):
 							cy= linien_ende.y+floor(0.5*radiusy);
 						male_Ellipse(cx,cy,radiusx,radiusy);
 		elif Input.is_action_just_released("draw"):
-			
 			var mouseposition = get_global_mouse_position();
 			if (modus=="Rechteck" or modus =="Linie" or modus =="Ellipse") and linien_start != null:
 				linien_start= null;
@@ -287,24 +287,24 @@ func _process(delta):
 			if mouseposition.x >= 256 and mouseposition.y < 512 and mouseposition.x < 767 and mouseposition.y >= 0:
 				if modus =="Radierer" or modus=="Stift":
 					wiederholenstapel = [];
-					print("im Stift");
 					Abbild_auf_Rueckgaengigstapel();
-					print(rueckgaengigstapel);
 				elif modus == "Dialog" or modus == null:
 					if modus == null:
 						modus="Stift";
 					elif popup_offen != true:
 						modus=alter_modus;
 		elif Input.is_action_just_pressed("undo"):
-			print(rueckgaengigstapel);
 			mache_rueckgaengig();
 		elif Input.is_action_just_pressed("redo"):
 			wiederhole();
 
+
 """
 speichert die Zeichenfläche ab
+Eingabe bildname: gib den Namen für den Speicherpfad an
+Eingabe Knopf: gibt an welcher Knopf aktualisiert werden soll
 """
-func speichern(bildname, Knopf):
+func speichern(bildname, knopf):
 	
 	
 	#Bild in den Dateien speichern
@@ -317,28 +317,33 @@ func speichern(bildname, Knopf):
 		persistenz.speicher_bild_als_textur(bild, "Bilder/Standardspielfiguren/Hintergrund/Hintergrund"+".png");
 	
 	#Knopf aktualisieren
-	knopf_aktualisieren(Knopf, bild);
+	knopf_aktualisieren(knopf, bild);
 	groesseFigur[bildname] = groesse_Zeichnung(bild);
 	einstellungen.figurengroesse = groesseFigur
 	# Speichern der Figurengroesse.
 	persistenz.schreibe_variable_in_datei("figurengroesse", groesseFigur, "res://Skripte/Spielverwaltung/Informationsübertragung.gd")
+
 
 """
 aktualisiert das Icon eines Knopfes mit einem Bild
 Eingabe Name: Name des Knopfes der aktualisiert werden soll
 Eingabe _bild: Bild welches auf den Knopf soll
 """
-func knopf_aktualisieren(Name, _bild):
+func knopf_aktualisieren(name, _bild):
 	#Knopf mit aktualisiertem Bild
-	var Pfad = "../"+ Name;
+	var Pfad = "../"+ name;
 	get_node(Pfad).icon= mache_Textur(_bild);
+
+
 """
 Hilfsfunktion welches eine Textur von einem Bild erstellt
+Eingabe _bild: Bild aus dem eine Textur gemacht werden soll
 """
 func mache_Textur(_bild):
 	var buttontextur = ImageTexture.new()
 	buttontextur.create_from_image(_bild);
 	return buttontextur;
+
 
 """
 Wenn der Stiftknopf gedrückt wird,
@@ -348,6 +353,7 @@ func _on_Stift_pressed():
 	modus = "Stift";
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Stift");
+
 
 """
 Wenn der Linienknopf gedrückt wird,
@@ -381,6 +387,7 @@ func _on_Spiegeln_pressed():
 	wiederholenstapel= [];
 	Abbild_auf_Rueckgaengigstapel();
 
+
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
 """
@@ -394,6 +401,7 @@ func _on_Farbe1_pressed():
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
+
 
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
@@ -409,6 +417,7 @@ func _on_Farbe2_pressed():
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
 
+
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
 """
@@ -422,6 +431,7 @@ func _on_Farbe3_pressed():
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
+
 
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
@@ -437,6 +447,7 @@ func _on_Farbe4_pressed():
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
 
+
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
 """
@@ -450,6 +461,7 @@ func _on_Farbe5_pressed():
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
+
 
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
@@ -465,6 +477,7 @@ func _on_Farbe6_pressed():
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
 
+
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
 """
@@ -478,6 +491,7 @@ func _on_Farbe7_pressed():
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
+
 
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
@@ -493,6 +507,7 @@ func _on_Farbe8_pressed():
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
 
+
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
 """
@@ -506,6 +521,7 @@ func _on_Farbe9_pressed():
 	if modus =="Radierer":
 		Farbwechsel_bei_Radierer();
 	get_node("../Farbauswahl").hide();
+
 
 """
 Wenn der Farbknopf gedrückt wird, wird die vorgespeicherte Farbe als aktuelle Farbe gesetzt
@@ -554,7 +570,6 @@ func _on_gro_pressed():
 wechselt mit dem Zurückbutton zurück in das Spiel
 """
 func _on_Zurueck_button_up():
-	print("gehe zurück zum Spiel")
 	get_tree().change_scene("res://Szenen/Oberflaeche/Main.tscn")
 	OS.set_window_size(Vector2(448,640))
 
@@ -574,7 +589,7 @@ Eingabe y:
 Eingabe alteFarbe: Farbe der Fläche die eingefärbt werden soll
 Eingabe neueFarbe: neue Farbe mit der die Fläche eingefärbt wird
 """
-func fuellen2(neueFarbe,x,y, alteFarbe):
+func fuellen(neueFarbe,x,y, alteFarbe):
 	var Punktstapel;
 	Punktstapel=[];
 	Punktstapel.push_front(Vector2(x,y));
@@ -594,7 +609,7 @@ func fuellen2(neueFarbe,x,y, alteFarbe):
 
 """
 Falls man eine Änderung an der Zeichenfläche vorgenommen hat und dann die 
-Eingabe _vorschau:
+Eingabe _vorschau: zeigt, was der Typ der Figur ist für die Vorschau
 """
 func Figur_wechseln_bei_Aenderung(_vorschau):
 	get_node("../CoinWechsel").show();
@@ -604,6 +619,7 @@ func Figur_wechseln_bei_Aenderung(_vorschau):
 	vorschau = _vorschau;
 	deaktiviere_buttons();
 	popup_offen = true;
+
 
 """
 Wird aufgerufen, wenn der Knopf BadCoin1 gedrückt wird
@@ -616,7 +632,9 @@ func _on_BadCoin1_pressed():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		vorschau = "Coin";
-		CoinWechsel();
+		Coin_Wechsel();
+
+
 """
 Wird aufgerufen, wenn der Knopf GoodCoin1 gedrückt wird
 falls es eine Änderung gibt, wird ein Popup aufgerufen
@@ -628,14 +646,15 @@ func _on_GoodCoin1_pressed():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		vorschau = "Coin";
-		CoinWechsel();
+		Coin_Wechsel();
+
 
 """
 Prozedur, die aufgerufen wird, falls ein Knopf der unteren Leiste gedrückt wird
 Damit wechselt sich die Spielfigur, deren Design gerade bearbeitet wird
 @param name - Name der neu zu bearbeitenden Spielfigur
 """
-func CoinWechsel():
+func Coin_Wechsel():
 	
 	
 	# aktiven Knopf auf nicht pressed setzen
@@ -667,8 +686,10 @@ func CoinWechsel():
 	#neues Originalbild
 	original_bild= bild;
 
+
 """
 lädt ein Bild aus den Dateien in die Variable bild ein und aktualisiert die Zeichenfläche
+Eingabe pfad: gibt den Namen an für den Pfad wo sich das Bild befindet
 """	
 func einladen(pfad):
 	bild = Image.new();
@@ -696,6 +717,7 @@ func setze_Zeichenflaeche():
 	textur.create_from_image(bildkopie,0);
 	texture = textur;
 
+
 """
 setzt die Textur der temporaeren Zeichenfläche als Vergrößerung von der Variablen temporaeresBild
 """
@@ -711,6 +733,8 @@ func setze_temporaere_Zeichenflaeche():
 	textur1.create_from_image(bildkopie,0);
 	#temporaereZeichenflaeche.
 	temporaereZeichenflaeche.texture= textur1;
+
+
 """
 lädt das Standardbild als Textur in den Button ein  #setze Button
 """
@@ -725,6 +749,7 @@ func setze_Standardbutton():
 	var buttontextur = ImageTexture.new();
 	buttontextur.create_from_image(icon);
 	get_node("../Standard").icon= buttontextur;
+
 
 """
 lädt die eigenen Designs und Vorlagen für die zu bearbeitende Spielfigur
@@ -743,6 +768,7 @@ func setze_Vorlagen():
 		buttontextur.create_from_image(icon);
 		get_node("../Vorlage"+str(i)).icon= buttontextur;
 
+
 """
 aktualisiert das Vorschaubild an der linken Seite je nachdem, 
 welche Spielfigur oder der Hintergrund gerade bearbeitet wird
@@ -755,21 +781,19 @@ func aktualisiere_vorschau():
 	else:
 		for i in range(0,9):
 			get_node("../"+vorschau+str(i)).texture = texturklein;	
-	
+
+
 """
-TODO Änderung ??
+Wenn das Bild für die aktuelle Figur übernommen werden soll, zeigt sich ein Popup
 """
 func _on_Speichern_pressed():
-	#if aenderung >= 2:
 	get_node("../UebernehmenBestaetigen").show();
 	alter_modus= modus;
 	modus="Dialog";
 	deaktiviere_buttons();
 	popup_offen = true;
-	print(modus);
-	#else:
-		
-	
+
+
 """
 setzt die Zeichenfläche mit durchsichtigen Pixeln
 """
@@ -780,6 +804,7 @@ func _on_Leeren_pressed():
 	Abbild_auf_Rueckgaengigstapel();
 	aktualisiere_vorschau();
 
+
 """
 lade Vorlage 1 auf die Zeichenfläche, wenn der Knopf gedrückt wurde
 """
@@ -787,7 +812,6 @@ func _on_Vorlage1_pressed():
 	#Vorlage einladen
 	einladen(aktiver_knopf+"Design1");
 	aktualisiere_vorschau();
-
 
 
 """
@@ -806,7 +830,7 @@ func _on_Vorlage3_pressed():
 	#Vorlage einladen
 	einladen(aktiver_knopf+"Design3");
 	aktualisiere_vorschau();
-
+	
 
 
 """
@@ -817,6 +841,7 @@ func _on_Vorlage4_pressed():
 	einladen(aktiver_knopf+"Design4");
 	aktualisiere_vorschau();
 
+
 """
 lade Vorlage 5 auf die Zeichenfläche, wenn der Knopf gedrückt wurde
 """
@@ -824,6 +849,7 @@ func _on_Vorlage5_pressed():
 	#Vorlage einladen
 	einladen(aktiver_knopf+"Design5");
 	aktualisiere_vorschau();
+
 
 """
 lade das Standardbild auf die Zeichenfläche, wenn der Knopf gedrückt wurde
@@ -845,7 +871,8 @@ func _on_BadCoin2_pressed():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		vorschau = "Coin";
-		CoinWechsel();
+		Coin_Wechsel();
+
 
 """
 Wird aufgerufen, wenn der Knopf GoodCoin2 gedrückt wird
@@ -858,7 +885,8 @@ func _on_GoodCoin2_pressed():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		vorschau = "Coin";
-		CoinWechsel();
+		Coin_Wechsel();
+
 
 """
 Wird aufgerufen, wenn der Knopf Random gedrückt wird
@@ -871,7 +899,9 @@ func _on_RandomCoin_pressed():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		vorschau = "Coin";
-		CoinWechsel();
+		Coin_Wechsel();
+
+
 """
 Wird aufgerufen, wenn der Knopf Blob_1_gerade gedrückt wird
 falls es eine Änderung gibt, wird ein Popup aufgerufen
@@ -883,7 +913,8 @@ func _on_Blob_1_gerade_pressed():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
-		CoinWechsel();
+		Coin_Wechsel();
+
 
 """
 Wird aufgerufen, wenn der Knopf Blob_3_gerade gedrückt wird
@@ -896,7 +927,8 @@ func _on_Blob_3_gerade_pressed():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
-		CoinWechsel();
+		Coin_Wechsel();
+
 
 """
 Wird aufgerufen, wenn der Knopf Blob_2_gerade gedrückt wird
@@ -909,7 +941,8 @@ func _on_Blob_2_gerade_pressed():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
-		CoinWechsel();
+		Coin_Wechsel();
+
 
 """
 Wird aufgerufen, wenn der Knopf Blob_4_gerade gedrückt wird
@@ -922,7 +955,8 @@ func _on_Blob_4_gerade_pressed():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
-		CoinWechsel();
+		Coin_Wechsel();
+
 
 """
 Wird aufgerufen, wenn der Knopf Blob_5_gerade gedrückt wird
@@ -935,7 +969,7 @@ func _on_Blob_5_gerade_pressed():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
-		CoinWechsel();
+		Coin_Wechsel();
 
 
 """
@@ -949,8 +983,8 @@ func _on_Hintergrund_pressed():
 		Figur_wechseln_bei_Aenderung("Hintergrund");
 	else:
 		vorschau = "Hintergrund";
-		CoinWechsel();
-	
+		Coin_Wechsel();
+
 
 """
 Wird aufgerufen, wenn der Knopf Kanonenkugek gedrückt wird
@@ -963,12 +997,14 @@ func _on_Kanonenkugel_pressed():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
-		CoinWechsel();
+		Coin_Wechsel();
 
 
+"""
+Wenn das PopUp bestätigt wird, wird die Zeichenfläche endgültig gespeichert
+"""
 func _on_UebernehmenBestaetigen_confirmed():
 	speichern(aktiver_knopf, aktiver_knopf);
-
 
 
 """
@@ -976,19 +1012,25 @@ wenn der Rückgängigknopf gedrückt wird, wird die letzte Aktion rückgängig g
 """
 func _on_Rueckgaengig_pressed():
 	mache_rueckgaengig();
+
+
 """
 Die letzte ausgeführte Aktion wird nocheinmal wiederholt
 """
 func mache_rueckgaengig():
 	if rueckgaengigstapel.size() > 1:
-		print("bin in rückgängig");
 		wiederholenstapel.push_back(rueckgaengigstapel.pop_back());
 		bild.copy_from(rueckgaengigstapel.back());
 		setze_Zeichenflaeche();
 		aktualisiere_vorschau();
 
+
+"""
+wenn der Wiederholenknopf gedrückt wird, wird die letzte Aktion wiederholt
+"""
 func _on_Wiederholen_pressed():
 	wiederhole();
+
 
 """
 Die letze rückgängig gemachte Aktion wird noch einmal wiederholt
@@ -999,6 +1041,8 @@ func wiederhole():
 		rueckgaengigstapel.push_back(wiederholenstapel.pop_back());
 		setze_Zeichenflaeche();
 		aktualisiere_vorschau();
+
+
 """
 Funktion, die die Größe des Inhalts einens Bildes ausrechnet ( da, wo das Bild nicht transparent ist)
 Eingabe _bild: Image, von welchem die Größe bestimmt werden soll
@@ -1022,8 +1066,8 @@ func groesse_Zeichnung(_bild):
 				if maxy == null or y > maxy:
 					maxy = y;
 	_bild.unlock();
-	print(minx, maxx, miny, maxy);
 	return [Vector2(minx,miny),Vector2(maxx,maxy)];
+
 
 """
 verschiebt die Zeichnung in Y Richtung nach unten zum Bildrand,
@@ -1048,7 +1092,11 @@ func setze_an_unteren_Bildrand():
 	aktualisiere_vorschau();
 	wiederholenstapel=[];
 	Abbild_auf_Rueckgaengigstapel();
-	
+
+
+"""
+verschiebt den Inhalt der Zeichenfläche an den linken Rand
+"""	
 func setze_an_linken_Bildrand():
 	groesse_Zeichnung(bild);
 	var bildkopie = Image.new();
@@ -1056,7 +1104,6 @@ func setze_an_linken_Bildrand():
 	bild.lock();
 	bildkopie.lock();
 	var verschiebung = minx;
-	print(minx);
 	for y in range(64):
 		for x in range(64):
 			bild.set_pixel(x,y, Color(0,0,0,0));
@@ -1069,23 +1116,15 @@ func setze_an_linken_Bildrand():
 	setze_Zeichenflaeche();
 	aktualisiere_vorschau();
 	Abbild_auf_Rueckgaengigstapel();
-"""
-Funktion, die den Mittelpunkt einer Figur berechnet
-Rückagbe: Koordinaten des Mittelpunkts als Vector2
-"""
-func ermittle_mittelpunkt(_bild):
-	groesse_Zeichnung(_bild);
-	var mittex = maxx-minx;
-	var mittey = maxy-miny;
-	return Vector2(mittex,mittey);
-	
+
 
 """
 falls der Knopf an unteren Bildrand gedrückt wird, wird die Figur nach unten verschoben
 """
 func _on_Bildrand_pressed():
 	setze_an_linken_Bildrand();
-	
+
+
 """
 Methode, die augerufen wird, sobald sich etwas auf der Zeichenfläche ändert
 macht ein aktuelles Abbild der Zeichenfläche auf den Rückgängigstapel
@@ -1100,11 +1139,12 @@ func Abbild_auf_Rueckgaengigstapel():
 		var bildkopie = Image.new();
 		bildkopie.copy_from(bild);
 		rueckgaengigstapel.push_back(bildkopie);
-func setze_Figurauswahlbuttons():
-	pass;
-	
+
+
 """
 Bresenham Algorithmus, welcher mit einem Start und Endpunkt eine Linie zeichnet in jedem Oktant
+Eingabe start: Koordinaten des Startpunkts
+Eingabe ende: Koordinaten des Endpunkts
 """
 func male_Linie(start,ende):
 	
@@ -1217,7 +1257,12 @@ func male_Linie(start,ende):
 	temporaeresBild.set_pixel(x1,y1, aktuelle_farbe);
 	temporaeresBild.unlock();
 	setze_temporaere_Zeichenflaeche();
-	
+
+
+"""
+speichert eine eigene Farbe persistent als Bild ab
+Eingabe name: Name der eigenen Farbe
+"""
 func eigene_Farbe_speichern(name):
 	var icon1 = Image.new();
 	icon1.create(16, 16, false, Image.FORMAT_RGBA8);
@@ -1227,20 +1272,25 @@ func eigene_Farbe_speichern(name):
 	knopf_aktualisieren(name, icon1);
 	#persistent Speichern
 	persistenz.speicher_bild_als_textur(icon1, "res://Bilder/Farben/"+name+".png")
-	
-	
 
 
+"""
+wechselt zum Stift, falls der Radierer aktiv war und eine Farbe gedrückt wird
+"""
 func Farbwechsel_bei_Radierer():
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Stift");
 	aktuellerModusbutton.pressed= true;
 	modus = "Stift";
-	
 
+
+"""
+wenn die eigene Farbe 1 gedrückt wird, wird zu dieser gewechselt
+"""
 func _on_EigeneFarbe1_pressed():
 	eigeneFarbeaktuell = 1;
 	wechsel_zu_eigene_Farbe();
+
 
 """
 wenn ein Farbbutton gedrückt wird, wo man die Farbe selber einstellen kann
@@ -1253,7 +1303,6 @@ func wechsel_zu_eigene_Farbe():
 		aktuellerFarbbutton= get_node("../EigeneFarbe"+str(eigeneFarbeaktuell));
 	else:
 		aktuellerFarbbutton.pressed= true;
-	print(eigeneFarbe[eigeneFarbeaktuell-1]);
 	if eigeneFarbe[eigeneFarbeaktuell-1] == Color(0,0,0,0):
 		get_node("../Farbwahl/Zurueck").hide();
 		oeffne_Farbauswahl();
@@ -1266,6 +1315,10 @@ func wechsel_zu_eigene_Farbe():
 		if modus =="Radierer":
 			Farbwechsel_bei_Radierer();
 
+
+"""
+öffnet den Colorpicker
+"""
 func oeffne_Farbauswahl():
 	get_node("../Farbwahl").show();
 	get_tree().call_group("Steuerelemente", "hide");
@@ -1273,25 +1326,42 @@ func oeffne_Farbauswahl():
 	modus="Farbauswahl";
 	deaktiviere_buttons();
 
+
+"""
+wenn die eigene Farbe 2 gedrückt wird, wird zu dieser gewechselt
+"""
 func _on_EigeneFarbe2_pressed():
 	eigeneFarbeaktuell = 2;
 	wechsel_zu_eigene_Farbe();
 
 
+"""
+wenn die eigene Farbe 3 gedrückt wird, wird zu dieser gewechselt
+"""
 func _on_EigeneFarbe3_pressed():
 	eigeneFarbeaktuell = 3;
 	wechsel_zu_eigene_Farbe();
 
 
+"""
+wenn die eigene Farbe 4 gedrückt wird, wird zu dieser gewechselt
+"""
 func _on_EigeneFarbe4_pressed():
 	eigeneFarbeaktuell = 4;
 	wechsel_zu_eigene_Farbe();
 
 
+"""
+wenn die eigene Farbe 5 gedrückt wird, wird zu dieser gewechselt
+"""
 func _on_EigeneFarbe5_pressed():
 	eigeneFarbeaktuell = 5;
 	wechsel_zu_eigene_Farbe();
 
+
+"""
+lädt die eigenen Farben aus dem Speicher in ein Array ein
+"""
 func eigene_Farben_einladen():
 	for i in range(1,6):
 		var icon = Image.new();
@@ -1301,6 +1371,11 @@ func eigene_Farben_einladen():
 		icon.unlock();
 
 
+"""
+malt ein Rechteck auf die temporäre Zeichenfläche
+Eingabe start: Starteckwerte
+Eingabe ende: Endeckwerte
+"""
 func male_Rechteck(start, ende):
 	start.x = floor(start.x/8);
 	start.y = floor(start.y/8);
@@ -1330,13 +1405,20 @@ func male_Rechteck(start, ende):
 	setze_temporaere_Zeichenflaeche();
 
 
+"""
+wenn der Knopf Rechteck gedrückt wird, wird der Modus auf Rechteck umgestellt
+"""
 func _on_Rechteck_pressed():
 	modus="Rechteck";
 	linien_ende = null;
 	linien_start= null;
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Rechteck");
-	
+
+
+"""
+kopiert die temporäre Zeichenfläche in die richtige
+"""
 func uebernehme_temporaere_Zeichenflaeche():
 	
 	#temporäre Zeichenfläche in richtiges Bild kopieren
@@ -1354,24 +1436,28 @@ func uebernehme_temporaere_Zeichenflaeche():
 	#temporäre Zeichenfläche löschen
 	leere_temporaere_Zeichenflaeche();
 	setze_temporaere_Zeichenflaeche();
-	
 
+
+"""
+leert die temporäre Zeichenfläche
+"""
 func leere_temporaere_Zeichenflaeche():
 	temporaeresBild.fill(Color(0,0,0,0));
 
 
-
-
+"""
+wechselt zu einer anderen Figur, weil das Popup bestätigt wurde
+"""
 func _on_Ja_pressed():
-	CoinWechsel();
+	Coin_Wechsel();
 	get_node("../CoinWechsel").hide();
 	aktiviere_buttons();
 	popup_offen = false;
 
-	
 
-
-
+"""
+wechselt nicht zu einer anderen Figur, weil das Popup nicht bestätigt wurde
+"""
 func _on_Nein_pressed():
 	vorschau = alte_vorschau;
 	get_node("../CoinWechsel").hide();
@@ -1379,6 +1465,7 @@ func _on_Nein_pressed():
 	get_node("../"+coinWechsel).pressed= false;
 	aktiviere_buttons();
 	popup_offen = false;
+
 
 """
 Funktion, die alle Buttons der Malenszene deaktiviert
@@ -1389,6 +1476,7 @@ func deaktiviere_buttons():
 		if Kind is Button:
 			Kind.disabled = true;
 
+
 """
 Funktion, die alle Buttons der Malenszene aktiviert
 """
@@ -1397,11 +1485,15 @@ func aktiviere_buttons():
 	for Kind in Kinder:
 		if Kind is Button:
 			Kind.disabled = false;
-			
-			
+
+
 """
 Algorithmus, der Pixel für Pixel eine Viertel Ellipse abgeht und deren Punkte ausrechnet
-siehe Quelle xxx
+Eingabe cx: Mittelpunkt x-Koordinate
+Eingabe cy: Mittelpunkt y-Koordinate
+Eingabe radiusx: Radius x-Richtung
+EIngabe radiusy: Radius y-Richtung
+siehe Quellen
 """
 func male_Ellipse(cx,cy, radiusx, radiusy):
 	var zweiAQuadrat = 2* radiusx*radiusx;
@@ -1447,8 +1539,14 @@ func male_Ellipse(cx,cy, radiusx, radiusy):
 			ywechsel = ywechsel +zweiAQuadrat;
 	temporaeresBild.unlock();
 	setze_temporaere_Zeichenflaeche();
+
+
 """
 Hilfsfunktion, welche auf jedem Quadrant einen Punkt einer Ellipse malt
+Eingabe cx: Mittelpunkt x-Koordinate
+Eingabe cy: Mittelpunkt y-Koordinate
+Eingabe x: x-Koordinate
+Eingabe y: y-Koordinate
 """
 func male_vier_Ellipsenpunkte(x,y, cx,cy):
 
@@ -1466,7 +1564,8 @@ func male_vier_Ellipsenpunkte(x,y, cx,cy):
 		temporaeresBild.set_pixel(cx-x,cy-y,aktuelle_farbe);
 	if( amRand1 != true and amRand4 != true):
 		temporaeresBild.set_pixel(cx+x,cy-y,aktuelle_farbe);
-	
+
+
 """
 wenn das Ellipsentool ausgewählt wird, wird der Modus auf Ellipse gestellt
 """
@@ -1474,7 +1573,8 @@ func _on_Ellipse_pressed():
 	modus="Ellipse";
 	aktuellerModusbutton.pressed= false;
 	aktuellerModusbutton = get_node("../Ellipse");
-	
+
+
 """
 lädt auf die Knöpfe die richtigen aktuell ausgewählten Bilder und ermittelt teilweise deren Größe
 """
@@ -1567,7 +1667,8 @@ func _on_ColorPicker_hide():
 		Farbwechsel_bei_Radierer();
 	else:
 		modus = alter_modus;
-	
+
+
 """
 Wenn der Farbwahl-Button gedrückt wird, wird der Colorpicker geöffnet
 """	
@@ -1575,12 +1676,13 @@ func _on_Farbauswahl_pressed():
 	get_node("../Farbwahl/Zurueck").show();
 	oeffne_Farbauswahl();
 
+
 """
 Wenn zurück gedrückt wird, wird der Colorpicker geschlossen
 """
 func _on_Zurueck_pressed():
 	get_node("../Farbwahl").hide();
-	
+
 
 """
 löscht den Rückgängig- und Wiederholenstapel
@@ -1589,49 +1691,59 @@ func loesche_rueckgaengig_wiederholen():
 	rueckgaengigstapel = [];
 	wiederholenstapel = [];
 
+
 """
 wenn die die Zeichenfläche endgültig als Vorlage
 gespeichert werden soll, dann wird diese als Bild persistiert
 """
 func _on_VorlageBestaetigen_confirmed():
 	speichern(aktiver_knopf+"Design"+str(vorlage), "Vorlage"+str(vorlage));
-	
+
+"""
+öffnet ein Popup um zu bestätigen, dass die Vorlage überschrieben werden soll
+"""
 func _on_Design1_pressed():
 	oeffne_popup();
 	get_node("../VorlageBestaetigen").show();
 	vorlage = 1;
 
 
+"""
+öffnet ein Popup um zu bestätigen, dass die Vorlage überschrieben werden soll
+"""
 func _on_Design2_pressed():
 	oeffne_popup();
 	get_node("../VorlageBestaetigen").show();
 	vorlage = 2;
 
 
-
+"""
+öffnet ein Popup um zu bestätigen, dass die Vorlage überschrieben werden soll
+"""
 func _on_Design3_pressed():
 	oeffne_popup();
 	get_node("../VorlageBestaetigen").show();
 	vorlage = 3;
 
 
-
-
-
+"""
+öffnet ein Popup um zu bestätigen, dass die Vorlage überschrieben werden soll
+"""
 func _on_Design4_pressed():
 	oeffne_popup();
 	get_node("../VorlageBestaetigen").show();
 	vorlage = 4;
 
 
-
-
+"""
+öffnet ein Popup um zu bestätigen, dass die Vorlage überschrieben werden soll
+"""
 func _on_Design5_pressed():
 	oeffne_popup();
 	get_node("../VorlageBestaetigen").show();
 	vorlage = 5;
 
-	
+
 """
 wenn ein Popup geöffnet wird, wird der Modus auf Dialog gestellt und der alte gespeichert
 zusätzlich werden alle Buttons deaktiviert
@@ -1650,6 +1762,8 @@ alle Buttons aktiviert
 func _on_UebernehmenBestaetigen_hide():
 	aktiviere_buttons();
 	popup_offen = false;
+
+
 """
 wenn das PopUp für die Vorlagen geschlossen wird, werden wieder
 alle Buttons aktiviert
@@ -1659,7 +1773,9 @@ func _on_VorlageBestaetigen_hide():
 	popup_offen = false;
 
 
-# Ruft die Export/Import Szene auf.
+"""
+Ruft die Export/Import Szene auf.
+"""
 func _on_Exportieren_Importieren():
 	OS.set_window_size(Vector2(448,640))
 	get_tree().change_scene("res://Szenen/Spielverwaltung/Nutzerdateien.tscn")
