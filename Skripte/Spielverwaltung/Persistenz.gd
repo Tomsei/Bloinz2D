@@ -417,17 +417,18 @@ func schreibe_variable_in_datei(variablenname, neuer_wert, dateipfad):
 			var variable = codezeile.split("=")[0]
 			if typeof(neuer_wert) == TYPE_DICTIONARY:
 				codezeile = variable + "= " + erstelle_dictionary_werte(neuer_wert)
+				print(codezeile)
 			else:
 				codezeile = variable + "= " + str(neuer_wert)
 			
 		kompletter_code += codezeile + "\n"
 	speicher_text(kompletter_code, hauptverzeichnis_benutzer + dateipfad.lstrip("res:/"))
 
-# Erzeugt die Stringrepraesentation eines Dictionarys mit String als Schluessel und einem Vector2 als Key.
+# Erzeugt die Stringrepraesentation eines Dictionarys mit String als Schluessel und einem Array mit zwei Vector2 als Wert.
 func erstelle_dictionary_werte(dictionary):
 	var dictionarywerte = "{"
 	var schluessel = dictionary.keys()
 	for ein_schluessel in schluessel:
-		dictionarywerte += "\"" + str(ein_schluessel) + "\" : Vector2" + str(dictionary[ein_schluessel]) + " , "
+		dictionarywerte += "\"" + str(ein_schluessel) + "\" : [Vector2"+ str(dictionary[ein_schluessel][0]) + ", Vector2" + str(dictionary[ein_schluessel][1]) + "] , "
 	dictionarywerte = dictionarywerte.rstrip(" , ") + "}"
 	return dictionarywerte
