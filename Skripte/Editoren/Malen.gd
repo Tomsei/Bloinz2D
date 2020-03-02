@@ -39,7 +39,6 @@ var temporaereZeichenflaeche;
 var coinWechsel;
 var alte_vorschau;
 var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance();
-var aenderung = 0;
 var vorlage;
 var groesseFigur;
 var popup_offen= false;
@@ -580,7 +579,7 @@ func fuellen2(neueFarbe,x,y, alteFarbe):
 	Punktstapel.push_front(Vector2(x,y));
 	while(!Punktstapel.empty()):
 		var koordinaten = Punktstapel.pop_front();
-		if(array[koordinaten.x][koordinaten.y] == alteFarbe ):#r (array[koordinaten.x][koordinaten.y].a8 == 0 and alteFarbe.a8 == 0)):
+		if(array[koordinaten.x][koordinaten.y] == alteFarbe or (array[koordinaten.x][koordinaten.y].a8 == 0 and alteFarbe.a8 == 0)):
 			array[koordinaten.x][koordinaten.y]= neueFarbe;
 			if( koordinaten.x+1 <64):
 				Punktstapel.push_front(Vector2(koordinaten.x+1,koordinaten.y));
@@ -612,8 +611,6 @@ sonst wird direkt gewechselt zur Figur schlechter Coin 1
 """
 func _on_BadCoin1_pressed():
 	coinWechsel= "BadCoin1";
-	print(bild.get_data());
-	print(original_bild);
 	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
@@ -626,7 +623,7 @@ sonst wird direkt gewechselt zur Figur guter Coin 1
 """
 func _on_GoodCoin1_pressed():
 	coinWechsel= "GoodCoin1";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		vorschau = "Coin";
@@ -662,8 +659,6 @@ func CoinWechsel():
 	#rückgängigstapel löschen
 	loesche_rueckgaengig_wiederholen();
 	
-	#Änderungswert zurücksetzen
-	aenderung = 0;
 	
 	#neues Bild auf Rückgängigstapel
 	Abbild_auf_Rueckgaengigstapel();
@@ -845,7 +840,7 @@ sonst wird direkt gewechselt zur Figur schlechter Coin 2
 """
 func _on_BadCoin2_pressed():
 	coinWechsel= "BadCoin2";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		vorschau = "Coin";
@@ -858,7 +853,7 @@ sonst wird direkt gewechselt zur Figur guter Coin 2
 """
 func _on_GoodCoin2_pressed():
 	coinWechsel= "GoodCoin2";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		vorschau = "Coin";
@@ -871,7 +866,7 @@ sonst wird direkt gewechselt zur Figur Zufallscoin
 """
 func _on_RandomCoin_pressed():
 	coinWechsel= "RandomCoin";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Coin");
 	else:
 		vorschau = "Coin";
@@ -883,7 +878,7 @@ sonst wird direkt gewechselt zur Figur Blob mini
 """
 func _on_Blob_1_gerade_pressed():
 	coinWechsel= "Blob_1_gerade";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
@@ -896,7 +891,7 @@ sonst wird direkt gewechselt zur Figur Blob mittel
 """
 func _on_Blob_3_gerade_pressed():
 	coinWechsel= "Blob_3_gerade";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
@@ -909,7 +904,7 @@ sonst wird direkt gewechselt zur Figur Blob klein
 """
 func _on_Blob_2_gerade_pressed():
 	coinWechsel= "Blob_2_gerade";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
@@ -922,7 +917,7 @@ sonst wird direkt gewechselt zur Figur Blob groß
 """
 func _on_Blob_4_gerade_pressed():
 	coinWechsel= "Blob_4_gerade";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
@@ -935,7 +930,7 @@ sonst wird direkt gewechselt zur Figur Blob maxi
 """
 func _on_Blob_5_gerade_pressed():
 	coinWechsel= "Blob_5_gerade";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
@@ -949,7 +944,7 @@ sonst wird direkt gewechselt zum Hintergrund
 """
 func _on_Hintergrund_pressed():
 	coinWechsel= "Hintergrund";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Hintergrund");
 	else:
 		vorschau = "Hintergrund";
@@ -963,7 +958,7 @@ sonst wird direkt gewechselt zur Kanonenkugel
 """
 func _on_Kanonenkugel_pressed():
 	coinWechsel= "Kanonenkugel";
-	if aenderung >=  2:
+	if bild.get_data() != original_bild.get_data():
 		Figur_wechseln_bei_Aenderung("Blob");
 	else:
 		vorschau = "Blob";
@@ -1027,7 +1022,7 @@ func groesse_Zeichnung(_bild):
 					maxy = y;
 	_bild.unlock();
 	print(minx, maxx, miny, maxy);
-	return Vector2(maxx-minx+1,maxy-miny+1);
+	return [Vector2(minx,miny),Vector2(maxx,maxy)];
 
 """
 verschiebt die Zeichnung in Y Richtung nach unten zum Bildrand,
@@ -1104,8 +1099,6 @@ func Abbild_auf_Rueckgaengigstapel():
 		var bildkopie = Image.new();
 		bildkopie.copy_from(bild);
 		rueckgaengigstapel.push_back(bildkopie);
-	if aenderung < 2:
-		aenderung = aenderung +1;
 func setze_Figurauswahlbuttons():
 	pass;
 	
@@ -1660,3 +1653,4 @@ alle Buttons aktiviert
 func _on_VorlageBestaetigen_hide():
 	aktiviere_buttons();
 	popup_offen = false;
+

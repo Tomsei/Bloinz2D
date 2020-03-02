@@ -32,7 +32,7 @@ script = ExtResource( 3 )
 [node name="Verlauf" type="Sprite" parent="Hintergrund"]
 material = SubResource( 1 )
 position = Vector2( 223.542, 256.237 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="Start" parent="." instance=ExtResource( 5 )]
 
@@ -45,10 +45,10 @@ position = Vector2( 0, 0 )
 [node name="BodenCollisionShape" parent="Spiel" index="3"]
 pause_mode = 2
 
-[node name="Anleitung" parent="." instance=ExtResource( 8 )]
+[node name="Anleitung" parent="." instance=ExtResource( 7 )]
 visible = false
 
-[node name="Ende" parent="." instance=ExtResource( 9 )]
+[node name="Ende" parent="." instance=ExtResource( 8 )]
 visible = false
 
 [node name="EndeVerloren" parent="Ende" index="2"]
@@ -60,6 +60,7 @@ margin_left = 400.0
 margin_top = 24.0
 margin_right = 424.212
 margin_bottom = 53.895
+texture_normal = ExtResource( 9 )
 script = ExtResource( 10 )
 
 [node name="Sound" type="CheckButton" parent="."]
@@ -95,3 +96,4 @@ visible = false
 [editable path="AlleOptionen/Seite2-Editoren"]
 
 [editable path="AlleOptionen/Seite3-RandomCoin"]
+
