@@ -41,10 +41,10 @@ position = Vector2( 0, 0 )
 [node name="BodenCollisionShape" parent="Spiel" index="3"]
 pause_mode = 2
 
-[node name="Anleitung" parent="." instance=ExtResource( 6 )]
+[node name="Anleitung" parent="." instance=ExtResource( 7 )]
 visible = false
 
-[node name="Ende" parent="." instance=ExtResource( 7 )]
+[node name="Ende" parent="." instance=ExtResource( 8 )]
 visible = false
 
 [node name="EndeVerloren" parent="Ende" index="2"]
@@ -56,7 +56,6 @@ margin_left = 400.0
 margin_top = 24.0
 margin_right = 424.212
 margin_bottom = 53.895
-texture_normal = ExtResource( 8 )
 script = ExtResource( 9 )
 
 [node name="Sound" type="CheckButton" parent="."]
