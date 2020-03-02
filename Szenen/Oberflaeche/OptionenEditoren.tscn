@@ -67,37 +67,32 @@ texture_normal = ExtResource( 12 )
 texture_pressed = ExtResource( 13 )
 script = ExtResource( 9 )
 
-[node name="Popup" type="Popup" parent="."]
-margin_left = 62.3709
-margin_top = 228.806
-margin_right = 411.243
-margin_bottom = 437.409
-
-[node name="ColorRect" type="ColorRect" parent="Popup"]
-margin_left = -0.209045
-margin_right = 313.791
-margin_bottom = 178.296
-color = Color( 0.517647, 0.160784, 0.160784, 1 )
+[node name="Popup" type="WindowDialog" parent="."]
+visible = true
+margin_left = 90.8524
+margin_top = 186.854
+margin_right = 361.852
+margin_bottom = 348.854
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Popup"]
-margin_left = 17.0889
-margin_top = 17.6336
-margin_right = 305.089
-margin_bottom = 87.6336
+margin_left = 31.0
+margin_top = 17.0
+margin_right = 248.0
+margin_bottom = 110.0
 text = "Bist du dir sicher, dass du alle Änderungen am Code und deine selbstgemalten Bilder endgültig löschen möchtest? "
 
 [node name="Ja" type="Button" parent="Popup"]
-margin_left = 24.5548
-margin_top = 136.279
-margin_right = 123.555
-margin_bottom = 156.279
+margin_left = 25.0
+margin_top = 100.0
+margin_right = 125.0
+margin_bottom = 130.0
 text = "Ja"
 
 [node name="Abbrechen" type="Button" parent="Popup"]
-margin_left = 193.864
-margin_top = 136.279
-margin_right = 292.864
-margin_bottom = 156.279
+margin_left = 150.0
+margin_top = 100.0
+margin_right = 250.0
+margin_bottom = 130.0
 text = "Abbrechen"
 [connection signal="button_up" from="2von3/Seite1" to="." method="_on_Seite1_button_up"]
 [connection signal="button_up" from="2von3/Seite3" to="." method="_on_Seite3_button_up"]
