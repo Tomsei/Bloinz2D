@@ -8,51 +8,56 @@ position = Vector2( 0, 222 )
 script = ExtResource( 1 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = 4.70764
-margin_top = 2.0
-margin_right = 46.7076
-margin_bottom = 16.0
+margin_left = 25.0703
+margin_top = 176.601
+margin_right = 67.0703
+margin_bottom = 190.601
 text = "Daten:"
 
 [node name="Nutzerdaten" type="TextEdit" parent="."]
-margin_left = 4.0
-margin_top = 18.0
-margin_right = 443.0
-margin_bottom = 315.0
+margin_left = 23.0
+margin_top = 194.0
+margin_right = 428.0
+margin_bottom = 231.0
 
 [node name="Importieren" type="Button" parent="."]
-margin_left = 10.3389
-margin_top = 333.428
-margin_right = 99.3389
-margin_bottom = 353.428
+margin_left = 255.414
+margin_top = 252.0
+margin_right = 405.414
+margin_bottom = 287.0
 text = "Importieren"
 
 [node name="Exportieren" type="Button" parent="."]
-margin_left = 351.521
-margin_top = 332.72
-margin_right = 436.521
-margin_bottom = 352.72
+margin_left = 40.1752
+margin_top = 252.0
+margin_right = 190.175
+margin_bottom = 287.0
 text = "Exportieren"
 
 [node name="Zurueck" type="Button" parent="."]
-margin_left = 184.807
-margin_top = 333.428
-margin_right = 243.807
-margin_bottom = 353.428
+margin_left = 176.852
+margin_top = 336.705
+margin_right = 276.852
+margin_bottom = 376.705
 text = "Spielen"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_left = 15.0
-margin_top = -205.0
-margin_right = 435.0
-margin_bottom = -3.0
+margin_left = 46.629
+margin_top = -179.0
+margin_right = 414.629
+margin_bottom = 148.0
 text = "Hier kannst du dein aktuelles Design exportieren. 
 
+Export:
 Klicke dafür einfach auf \"Exportieren\", der Text aus dem Textfeld kopiert sich dann automatisch in deine Zwischenablage, von wo aus du ihn an einer beliebigen Stelle einfügen kannst. 
 
+
+Import:
 Um das exportierte Design zu nutzen, füge den kopierten Text in das Textfeld ein und klicke auf \"importieren\"
 
-Achtung: Es wird nur das momentan aktive Design gespeichert! Deine Vorlagen werden nicht mit gespeichert. Wenn du diese ebenfalls haben möchtest, nutze sie als aktives Design und führe einen weiteren Export aus."
+
+Achtung! 
+Es wird nur das momentan aktive Design gespeichert! Deine Vorlagen werden nicht mit gespeichert. Wenn du diese ebenfalls haben möchtest, nutze sie als aktives Design und führe einen weiteren Export aus."
 [connection signal="button_up" from="Importieren" to="." method="_on_Importieren"]
 [connection signal="button_up" from="Exportieren" to="." method="_on_Exportieren"]
 [connection signal="button_up" from="Zurueck" to="." method="_on_Zurueck"]

@@ -19,7 +19,7 @@ main {
 	padding-right: 8%;
 	padding-bottom: 8%;
 	padding-top: 20px;
-	font-size: 120%;
+	font-size: 150%;
 	
 }
 
@@ -39,6 +39,7 @@ nav ul {
     background: #d5f4ff;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: 0.5s;
 }
 
 nav ul li {
@@ -95,11 +96,15 @@ ul li a img{
 
 
 
+
+
+
 /* CSS für die Spielanwendung*/
 
 .spielsektion{
 	margin-top: 4%;
     text-align: center;
+    margin-bottom: 2%
 }
 
 
@@ -108,7 +113,7 @@ iframe {
     border-color: rgb(0, 0, 0);
     border-width: 5px;
     border-radius: 10px;
-    box-shadow: 0px 10px 50px 40px #b0d0dd
+    box-shadow: 0px -20px 50px 20px #b0d0dd;
 }
 
 h1#bloinz {
@@ -123,28 +128,65 @@ h1#bloinz {
 		
 }
 
+
+#download{
+    text-align: center;
+    z-index: 10;
+}
+#download a {
+    font-size: 100%;
+    background-color: #d5f4ff;
+    color: black;
+    padding-top:  1%;
+    padding-bottom: 1%;
+    padding-bottom: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+	margin: 1%;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#download a:hover {
+    text-decoration: none;
+    background-color: #e6b819;
+    background-color: #004560;
+    color: white;
+    transition: 0.5s;
+
+
+}
+
+
+
 /*
 Überschrift Style
 */
 
 h2 {
-    font-size: 2em
+    font-size: 2em;
+    text-align: center;
 }
 
 h3 {
-    font-size: 1.3em
+    font-size: 1.3em;
+    text-align: center;
 }
 
 
 
-#hauptseite a {
+main a {
     color: white;
     text-decoration: none;
 }
 
-#hauptseite a:hover {
+main a:hover {
     color: #484848;
     text-decoration: underline;
+}
+
+article {
+    text-align: justify;
 }
 
 
@@ -170,6 +212,85 @@ footer a:hover{
     color: #484848;
     text-decoration: underline;
 }
+
+
+/* Nav Größe anpassen */
+@media (max-width: 1420px) {
+    
+    nav ul li {
+        margin: 10px;
+    }
+    
+    ul li a {
+    padding: 10px 10px;
+	color: black;
+    }
+    
+    nav ul {
+    left: 60px;
+    }
+}
+
+@media (max-height: 800px) {
+
+    nav ul li {
+        margin: 10px;
+    }
+    
+    ul li a {
+    padding: 10px 10px;
+	color: black;
+    }
+    
+    nav ul {
+    left: 60px;
+    }
+}
+
+@media (max-width: 900px) {
+    nav ul li {
+        margin: 10px;
+    }
+    
+    ul li a {
+        padding: 0;
+        font-size: 80%;
+    }
+    
+    nav ul {
+        left: 40px;
+    }
+    
+    ul li a .nav-icon {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+	}
+}
+
+@media (max-height: 710px) {
+    
+	
+	nav ul li {
+        margin: 10px;
+    }
+    
+    ul li a {
+        padding: 0;
+        font-size: 80%;
+    }
+    
+    nav ul {
+        left: 40px;
+    }
+    
+    ul li a .nav-icon {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+	}
+}
+
 
 
 

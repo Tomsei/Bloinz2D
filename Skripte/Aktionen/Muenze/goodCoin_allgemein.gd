@@ -1,32 +1,34 @@
 extends "res://Skripte/Aktionen/Muenze/Muenze.gd"
-"""
-Szene / Klasse für alle guten Coins
-Beinhaltet alle Methoden (ausgelöst durch Random) die für
-beide goodCoin Klassen benötigt werden
 
-Erbt die Methoden und Variablen von der Super Klasse muenze
-"""
+#Szene / Klasse für alle guten Coins
+#Beinhaltet alle Methoden die für beide goodCoin Klassen benötigt werden
+#--> Münmagnet zieht beide guten Münzen an
+
+#Erbt die Methoden und Variablen von der Super Klasse muenze
 
 
-"""
-Methode zum verändern der Flugbahn der Münze, 
-sodass sie in Richtung des Spielers fliegt
 
---> es wird die X Entfernung von der Münze durch die Boden Höhe der Münze gerechnet 
-um eine passende Geschwindigkeit in Blob Richtung zu errechnen
 
-@param xPosSpieler die XPosition des Spielers
-"""
+#Methode zum verändern der Flugbahn der Münze, sodass sie in Richtung des Spielers fliegt
+#--> Bewegungsrichtung zum Blob wird ermittelt und als Bewegung gesetzt
+#
+#@param x_Position_Spieler die XPosition des Spielers
 
-func muenzMagnet(var xPosSpieler):
+""" -------------------------------------------------- """
+""" Die Münzen fliegen zu schnell in die Blobrichtung? """
+""" Versuch die Geschwindigkeit zu verlangsamen        """
+""" -------------------------------------------------- """
+func muenzMagnet(var x_Position_Spieler):
 	
-	var differenz = xPosSpieler - position.x
+	#Spieler Richtung + Entfernung ermitteln
+	var differenz = x_Position_Spieler - position.x
 	
-	var bewegung = (differenz / bodenhoehe)*1000
+	var bewegung = differenz*2.2
 	
-	if xPosSpieler < position.x:
+	#passend zur Spielerposition zur Münze die Bewegung festlegen
+	if x_Position_Spieler < position.x:
 		Bewegung.x = bewegung
-	elif xPosSpieler > position.x:
+	elif x_Position_Spieler > position.x:
 		Bewegung.x = bewegung
 	else:
 		Bewegung.x = 0

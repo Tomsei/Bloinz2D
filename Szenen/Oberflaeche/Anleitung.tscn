@@ -40,9 +40,9 @@ tile_data = PoolIntArray( 0, 2, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 
 
 [node name="Vermeide" type="Label" parent="."]
 margin_left = 260.0
-margin_top = 90.0
+margin_top = 103.0
 margin_right = 365.0
-margin_bottom = 104.0
+margin_bottom = 117.0
 text = "Vermeide Böses"
 
 [node name="BadCoin1" type="Sprite" parent="Vermeide"]
@@ -59,9 +59,9 @@ texture = ExtResource( 4 )
 
 [node name="Sammle" type="Label" parent="."]
 margin_left = 98.0
-margin_top = 90.0
+margin_top = 103.0
 margin_right = 193.0
-margin_bottom = 104.0
+margin_bottom = 117.0
 text = "Sammle Gutes"
 
 [node name="GoodCoin1" type="Sprite" parent="Sammle"]
@@ -125,7 +125,6 @@ max_value = 25.0
 value = 12.0
 editable = false
 scrollable = false
-ticks_on_borders = false
 
 [node name="LifeBar_rand" type="Sprite" parent="LifeBar"]
 position = Vector2( 140.011, 11.0284 )
@@ -151,3 +150,10 @@ margin_top = 39.413
 margin_right = 309.427
 margin_bottom = 53.413
 text = "Sehr gut"
+
+[node name="Label" type="Label" parent="."]
+margin_left = 66.3347
+margin_top = 34.5576
+margin_right = 146.335
+margin_bottom = 48.5576
+text = "Spiel starten"

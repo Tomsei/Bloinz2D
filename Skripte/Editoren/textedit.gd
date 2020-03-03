@@ -27,6 +27,9 @@ func _ready():
 		hauptverzeichnis_benutzer = OS.get_user_data_dir()
 	# Initiiere Parameter.
 	init()
+	
+	# Zentriert das Fenster in der Bildschirmmitte
+	preload("res://Szenen/Spielverwaltung/UI.tscn").instance().bildschirm_zentrieren()
 
 func init():
 	OS.set_window_size(Vector2(1030,680))
@@ -89,8 +92,10 @@ func _on_TabContainer_tab_changed(tab):
 func init_Skripte():
 	Skriptpfade["Spieler"] = "res://Skripte/Aktionen/Spieler.gd"
 	Skriptpfade["Münze"] = "res://Skripte/Aktionen/Muenze/Muenze.gd"
+	Skriptpfade["Gute Münze Allgemein"] = "res://Skripte/Aktionen/Muenze/goodCoin_allgemein.gd"
 	Skriptpfade["Gute Münze 1"] = "res://Skripte/Aktionen/Muenze/goodCoin1.gd"
 	Skriptpfade["Gute Münze 2"] = "res://Skripte/Aktionen/Muenze/goodCoin2.gd"
+	Skriptpfade["Böse Münze Allgemein"] = "res://Skripte/Aktionen/Muenze/badCoin_allgemein.gd"
 	Skriptpfade["Böse Münze 1"] = "res://Skripte/Aktionen/Muenze/badCoin1.gd"
 	Skriptpfade["Böse Münze 2"] = "res://Skripte/Aktionen/Muenze/badCoin2.gd"
 	Skriptpfade["Zufalls Münze"] = "res://Skripte/Aktionen/Muenze/randomCoin.gd"
@@ -100,6 +105,13 @@ func init_Skripte():
 func init_Icons():
 	Icons["Spieler"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/Player_Icon.png")
 	Icons["Böse Münze 1"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/BadCoin1_Icon.png")
+	Icons["Böse Münze 2"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/BadCoin2_Icon.png")
+	Icons["Gute Münze 1"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/GoodCoin1_Icon.png")
+	Icons["Gute Münze 2"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/GoodCoin1_Icon.png")
+	Icons["Zufalls Münze"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/randomCoin_Icon.png")
+	Icons["Gute Münze Allgemein"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/GoodCoin_allgemein_Icon.png")
+	Icons["Böse Münze Allgemein"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/BadCoin_allgemein_Icon.png")
+	Icons["Münze"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/Muenze_Icon.png")
 	Icons["Standard"] = persistenz.lade_bildtextur("res://Bilder/Tabicons/Standard.png")
 
 func init_Codeeditoren():
@@ -119,6 +131,8 @@ func init_Codeeditoren():
 		tabcontainer.get_child(i).text = lade_datei(Skriptpfade.get(Codeeditornamen[i]))
 		# Soll Kommentarfarbe hinzufuegen.
 		tabcontainer.get_child(i).add_color_region("#", ".", Color(0,1.0,0), true)
+		# Benutzeranweisungen werden speziell angezeigt.
+		tabcontainer.get_child(i).add_color_region("\"", "\"", Color(1.0,0.0,0), true)
 		# Zeilen duerfen versteckt werden.
 		tabcontainer.get_child(i).hiding_enabled = true
 		# Farbliche Hervorhebung aktivieren.
@@ -165,7 +179,10 @@ func erstelle_funktionknopf(knopftext):
 func finde_funktionen(textedit, skriptindex):
 	for i in (textedit.get_line_count()):
 		setze_funktion(textedit, textedit.get_line(i), i, skriptindex)
-		setze_variable(textedit, textedit.get_line(i), i, skriptindex)
+		if skriptindex == 2 || skriptindex == 5:
+			variablen.append( {} )
+		else:
+			setze_variable(textedit, textedit.get_line(i), i, skriptindex)
 	weise_variablen_funktionen_zu(skriptindex)
 
 # Falls eine Funktion in der uebergebenen Zeile gefunden wird, wird sie in eine Variable geschrieben.
@@ -258,6 +275,9 @@ func zeige_alles():
 
 # Weist die Variablen welche in einer Funktion genutzt werden dieser zu.
 func weise_variablen_funktionen_zu(skriptindex):
+	# Das BadCoinAllgemein Skript hat keine zu lesenen Variablen.
+	if skriptindex == 6 || skriptindex == 7:
+		return ""
 	# Hole zu letzt gefundene Funktionen
 	var gelesene_funktionen = funktionen[skriptindex].keys()
 	var gelesene_variablen = variablen[skriptindex].keys()

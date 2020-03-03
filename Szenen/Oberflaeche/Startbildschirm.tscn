@@ -26,7 +26,7 @@ texture_pressed = ExtResource( 2 )
 script = ExtResource( 3 )
 
 [node name="Bloinz2D" type="Sprite" parent="."]
-position = Vector2( 223, 112.676 )
+position = Vector2( 224, 112.676 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 4 )
 

@@ -10,6 +10,7 @@ onready var sprungkraftSlider = sliderOptionen.get_node("Sprungkraft").get_node(
 onready var blobSlider = sliderOptionen.get_node("tempoBlob").get_node("BlobSlider")
 onready var raketenSlider = sliderOptionen.get_node("raketenAbstand").get_node("RaketenSlider")
 
+var persistenz = preload("res://Szenen/Spielverwaltung/Persistenz.tscn").instance()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -49,15 +50,24 @@ func _on_SchwierigkeitSlider_value_changed(value):
 func _on_SprungkraftSlider_value_changed(value):
 	$SprungkraftAktuell.text = str(value)
 	einstellungen.sprungkraftGeaendert = true
+	
+	# Schreibt Veraenderung in das Skript.
+	persistenz.schreibe_variable_in_datei("Sprungkraft", value, "res://Skripte/Aktionen/Spieler.gd")
 
 
 func _on_BlobSlider_value_changed(value):
 	$BlobAktuell.text = str(value)
 	einstellungen.geschwindigkeitGeaendert = true
+	
+	# Schreibt Veraenderung in das Skript.
+	persistenz.schreibe_variable_in_datei("speed", value, "res://Skripte/Aktionen/Spieler.gd")
 
 func _on_RaketenSlider_value_changed(value):
 	$RaketeAktuell.text = str(value)
 	einstellungen.raketenzeitGeaendert = true
+	
+	# Schreibt Veraenderung in das Skript.
+	persistenz.schreibe_variable_in_datei("raketenZeit", value, "res://Skripte/Spielverwaltung/Logik.gd")
 
 
 

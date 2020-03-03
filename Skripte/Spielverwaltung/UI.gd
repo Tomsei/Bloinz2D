@@ -7,28 +7,37 @@ onready var spiel = get_tree().get_root().get_node("Main").get_node("Spiel")
 onready var ende = get_tree().get_root().get_node("Main").get_node("Ende")
 onready var anleitung = get_tree().get_root().get_node("Main").get_node("Anleitung")
 
-func _ready():
-	pass
 
 func _process(delta):
 	# Noch in die Logik verschieben!
 	if spieler != null:
-		$PunkteAnzeige.value = spieler.blobGroesse 
-		$PunkteAnzeige/PunkteAnzeigePunkt.value = spieler.blobGroesse
+		$PunkteAnzeige.value = spieler.blob_Groesse 
+		$PunkteAnzeige/PunkteAnzeigePunkt.value = spieler.blob_Groesse
 
 
 func _on_Pause_toggled(button_pressed):
-	if get_tree().paused == true:
-		get_tree().paused = false
-		anleitung.visible = false
-		get_node("AnleitungOeffnen").visible = false
-	else:
+	print(button_pressed);
+	if button_pressed:
 		get_tree().paused = true
-		get_node("AnleitungOeffnen").visible = true
+	else:
+		get_tree().paused = false
+		if anleitung.visible == true:
+			anleitung.visible = false
+			get_node("AnleitungOeffnen").visible = true
 
 
 func _on_AnleitungOeffnen_button_up():
-	print("test")
+	get_node("Pause").pressed = true
+	_on_Pause_toggled(true)
 	get_node("AnleitungOeffnen").visible = false
 	anleitung.visible = true
 
+# Zentriert das Fenster in der Bildschirmmitte
+func bildschirm_zentrieren():
+	# Aktuelle Bildschirmgroesse
+	var screen_size = OS.get_screen_size()
+	# Aktuelle Fenstergroesse
+	var window_size = OS.get_window_size()
+	
+	# Setzt das Fenster in die Mitte des Bildschirms
+	OS.set_window_position(screen_size*0.5 - window_size*0.5)
